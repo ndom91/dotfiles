@@ -1,0 +1,645 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+;         GLOBALS
+;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[colors]
+background = #001b2b34
+foreground = #d8dee9
+transparent = #00ffffff
+
+pink1  = #44475a
+pink2  = #6272a4
+pink3  = #bd93f9
+pink4  = #ff79c6
+pink5  = #c46c90
+pink6  = #dc7aa2
+
+base08 = #ec5f67
+red    = #ec5f67
+base09 = #f99157
+orange = #f99157
+base0a = #fac863
+yellow = #fac863
+base0b = #99c794
+green  = #99c794
+base0c = #5fb3b3
+teal   = #5fb3b3
+base0d = #6699cc
+blue   = #6699cc
+base0e = #c594c5
+purple = #c594c5
+base0f = #ab7967
+brown  = #ab7967
+
+[bar/master]
+width = 100%
+height = 32
+fix-center = true
+; Hack to remove the bottom padding only
+border-bottom-size = 0
+
+line-size = 3
+
+separator =  " "
+
+background = ${colors.background}
+foreground = ${colors.foreground}
+
+font-0 = Ubuntu Mono:size=10
+; 1px lower for up/down
+font-1 = Ubuntu Mono:size=10;1
+; 2px lower for datetime
+font-2 = Ubuntu Mono:size=10;1
+font-4 = Siji:pixelsize=10
+font-3 = FontAwesome:pixelsize=13
+font-5 = "UbuntuMono Nerd Font:size=12;2"
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+;       BAR TOP (MAIN)
+;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[bar/top]
+; DVI-I-1-1
+monitor = ${env:MONITOR}
+inherit = bar/master
+modules-left = workspacesnum 
+modules-center = title
+modules-right = powermenu pulseaudio
+
+tray-position = left
+tray-scale = 0.8
+tray-padding = 8
+tray-background = ${colors.pink2}
+
+format-connected-padding = 1
+label-connected-padding-left = 1
+
+accumulate-stats = true
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+;     BAR BOTTOM (MAIN) 
+;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[bar/bottom]
+monitor = ${env:MONITOR}
+inherit = bar/master
+
+bottom = true
+
+modules-right = cpu ram temperature ip root pkg
+; modules-center = workspaces
+modules-left = time battery-standard backlight network-traffic
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+;     BAR OTHER MONITORS
+;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[bar/topright]
+; DVI-I-2-2
+monitor = ${env:MONITOR}
+inherit = bar/master
+modules-left = workspacesnum
+modules-center = title
+
+[bar/topleft]
+; DP-1
+monitor = ${env:MONITOR}
+inherit = bar/master
+modules-left = workspacesnum
+modules-center = title
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+;   MODULE NETWORK TRAFFIC
+;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[module/network-traffic]
+type = custom/script
+exec = ~/.config/polybar/network_traffic.sh
+tail = true
+format-prefix-foreground = ${colors.pink4}
+format-underline = ${colors.pink4}
+format-padding = 1
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+;       MODULE IP
+;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[module/ip]
+type = custom/script
+exec = curl -s https://ifconfig.me
+interval = 90
+label-padding = 0
+
+format-prefix = 歷
+format-prefix-foreground = ${colors.pink4}
+format-underline = ${colors.pink4}
+format-padding = 1
+
+label = %output%
+label-padding-left = 1
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+;     MODULE NETWORK
+;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[module/network]
+type = internal/network
+interface = eth0
+ping-interval = 3
+
+[module/wired-network]
+type = internal/network
+interface = enp0s20f0u1u1i5
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+;     MODULE PULSEAUDIO
+;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+[module/pulseaudio]
+type = internal/pulseaudio
+
+sink = alsa_output.pci-0000_00_1b.0.analog-stereo
+
+interval = 5
+
+label-volume = %percentage%
+format-volume = V: <label-volume>
+format-volume-padding = 1
+
+label-muted =
+label-muted-foreground = ${colors.red}
+format-muted-padding = 1
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+;     MODULE TITLE
+;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[module/title]
+type = internal/xwindow
+
+label = %title:0:70:...%
+format-underline = ${colors.foreground}
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+;     MODULE POWERMENU
+;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[module/powermenu]
+type = custom/menu
+
+; Padding doesn't seem to be working
+label-open = "   "
+label-open-foreground = ${colors.red}
+label-close =  cancel
+label-close-foreground = ${colors.red}
+label-separator = " | "
+height = 26
+fontsize = 26
+
+menu-0-0 = reboot
+menu-0-0-exec = menu-open-1
+menu-0-1 = power off
+menu-0-1-exec = menu-open-2
+menu-0-2 = suspend
+menu-0-2-exec = menu-open-3
+menu-0-3 = hibernate
+menu-0-3-exec = menu-open-4
+
+menu-1-0 = cancel
+menu-1-0-exec = menu-open-0
+menu-1-1 = reboot
+menu-1-1-exec = tilix -e 'sudo reboot'
+
+menu-2-0 = power off
+menu-2-0-exec = tilix -e 'sudo poweroff'
+menu-2-1 = cancel
+menu-2-1-exec = menu-open-0
+
+menu-3-0 = suspend
+menu-3-0-exec = tilix -e 'i3exit suspend'
+menu-3-1 = cancel
+menu-3-1-exec = menu-open-0
+
+menu-4-0 = hibernate
+menu-4-0-exec = tilix -e 'i3exit hibernate'
+menu-4-1 = cancel
+menu-4-1-exec = menu-open-0
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+;     MODULE BATTERY
+;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[module/battery-standard]
+type = custom/script
+;exec = "cat /sys/class/power_supply/BAT0/capacity"
+exec = $HOME/.config/polybar/battery_alert.sh
+interval = 3
+
+format-prefix = ﮣ
+format-prefix-foreground = ${colors.pink3}
+format-underline = ${colors.pink3}
+format-padding = 1
+
+label = %output%
+label-padding-left = 1
+
+[module/battery]
+type = internal/battery
+battery = BAT0
+full-at = 98
+
+format-charging = <animation-charging> <label-charging>
+format-charging-prefix= /
+format-discharging = <ramp-capacity> <label-discharging>
+label-full =  %percentage%
+
+ramp-capacity-0 = 
+ramp-capacity-0-foreground = ${colors.alert}
+ramp-capacity-1 = 
+ramp-capacity-1-foreground = ${colors.warning}
+ramp-capacity-2 = 
+ramp-capacity-3 = 
+ramp-capacity-4 = 
+ramp-capacity-foreground = ${colors.foreground-alt}
+
+animation-charging-0 = 
+animation-charging-1 = 
+animation-charging-2 = 
+animation-charging-3 = 
+animation-charging-4 = 
+animation-charging-foreground = ${colors.foreground-alt}
+animation-charging-framerate = 750
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+;     MODULE CPU
+;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[module/cpu]
+type = internal/cpu
+interval = 0.5
+
+format-prefix = ﬙
+format-size = 4
+format-prefix-foreground = ${colors.pink1}
+format-underline = ${colors.pink1}
+format-padding = 1
+
+label = %{A:termite -e htop &:}%percentage:2%%%{A}
+label-padding-left = 1
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+;     MODULE RAM
+;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[module/ram]
+type = internal/memory
+interval = 3
+
+format-prefix = 
+format-prefix-foreground = ${colors.pink2}
+format-underline = ${colors.pink2}
+format-padding = 1
+
+label = %{A:termite -e htop &:}%percentage_used:2%%%{A}
+label-padding-left = 1
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+;     MODULE TEMP
+;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[module/temperature]
+type = custom/script
+exec = $HOME/.config/polybar/temperature.sh
+interval = 10
+
+format-prefix = 
+format-prefix-foreground = ${colors.pink3}
+format-underline = ${colors.pink3}
+format-padding = 1
+
+label = %output% °C
+label-padding-left = 1
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+;     MODULE HOME
+;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[module/home]
+type = internal/fs
+interval = 3600
+mount-0 = /mnt/
+
+; format-mounted-prefix = 
+format-mounted-prefix = /:
+format-mounted-prefix-foreground = ${colors.pink5}
+format-mounted-overline = ${colors.pink5}
+format-mounted-padding = 1
+
+label-mounted = %{A:termite -e ranger &:}%free%%{A}
+label-mounted-padding-left = 0
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+;     MODULE ROOT
+;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[module/root]
+type = internal/fs
+interval = 3600
+mount-0 = /
+
+format-mounted-prefix = 
+format-mounted-prefix-foreground = ${colors.pink6}
+format-mounted-underline = ${colors.pink6}
+format-padding-right = 5
+
+;label-mounted = %free%
+label-mounted = %used% [%percentage_used%%]
+label-mounted-padding-left = 1
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+;     MODULE PKG (ARCH)
+;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[module/pkg]
+type = custom/script
+
+interval = 600
+format = <label>
+format-prefix = 
+format-prefix-foreground = ${colors.red}
+format-underline = ${colors.red}
+format-padding = 1
+label = %output% Up
+label-padding-left = 1
+
+; Check if connected to the internet by pinging duckduckgo
+exec-if = "ping -q -w 2 -c 1 1.1.1.1 > /dev/null"
+exec = $HOME/.config/polybar/pkg.sh
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+;   MODULE i3 WORKSPACES
+;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[module/workspaces]
+type = internal/i3
+format = <label-mode> <label-state>
+index-sort = true
+
+label-focused = 
+label-focused-padding = 1
+
+label-unfocused = 
+label-unfocused-padding = 1
+label-unfocused-underlinde = ${colors.purple}
+
+label-urgent = 
+label-urgent-padding = 1
+label-urgent-foreground = ${colors.red}
+
+label-visible = 
+label-visible-foreground = ${colors.purple}
+label-visible-padding = 1
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; MODULE BACKLIGHT (LAPTOP)
+;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[module/backlight]
+type = internal/backlight
+card = intel_backlight
+
+format-prefix = ﲍ
+format-prefix-foreground = ${colors.pink4}
+format-padding = 1
+format-underline = ${colors.pink4}
+
+label = %percentage%
+label-padding-left = 1
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+;     MODULE BATTERY
+;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[module/batteryold]
+type = internal/battery
+full-at = 98
+battery = BAT0
+adapter = AC0
+
+time-format = %H:%M
+; format-charging = <animation-charging> <label-charging>
+format-charging = <label-charging>
+format-charging-foreground = ${colors.pink3}
+format-charging-underline = ${colors.pink3}
+format-charging-padding = 1
+
+format-discharging = <label-discharging>
+format-full-overline = ${colors.pink3}
+format-full-padding = 1
+
+label-charging = %{F#b7b8b9}%percentage:2%%%{F-} %time%
+label-discharging = %percentage:2%% %time% %{o- -o}
+label-full =  %percentage%% B
+format-padding = 1
+
+; Red
+ramp-capacity-0 = %{F#ec5f67 o#ec5f67 +o} %{F-}
+ramp-capacity-1 = %{F#ec5f67 o#ec5f67 +o} %{F-}
+; Yellow
+ramp-capacity-2 = %{F#fac863 o#fac863 +o} %{F-}
+ramp-capacity-3 = %{F#fac863 o#fac863 +o} %{F-}
+; Green
+ramp-capacity-4 = %{F#99c794 o#99c794 +o} %{F-}
+
+animation-charging-0 = 
+animation-charging-1 = 
+animation-charging-2 = 
+animation-charging-3 = 
+animation-charging-4 = 
+
+label-padding-left = 1
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+;     MODULE TIME
+;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[module/time]
+type = internal/date
+interval = 1
+
+;format-prefix = 
+;format-prefix-foreground = ${colors.pink2}
+format-underline = ${colors.pink2}
+format-padding = 1
+
+date = %a, %d %b
+time = %T
+label = %{T3}%date% %time%%{T-}
+;label-padding-left = 1
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+;     MODULE ARROWS
+;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[module/arrow1]
+; grey to Blue
+type = custom/text
+content = "%{T6} %{T-}"
+content-font = 2
+content-foreground = #C3E88D
+content-background = #292d3e
+
+[module/arrow2]
+; grey to Blue
+type = custom/text
+content = "%{T6} %{T-}"
+content-font = 2
+content-foreground = #82AAFF
+content-background = #C3E88D
+
+[module/arrow3]
+; grey to Blue
+type = custom/text
+content = "%{T2} %{T-}"
+content-font = 2
+content-foreground = #C792EA
+content-background = #82AAFF
+
+[module/arrow4]
+; grey to Blue
+type = custom/text
+content = "%{T2} %{T-}"
+content-font = 2
+content-foreground = #FFE585
+content-background = #C792EA
+
+[module/arrow5]
+; grey to Blue
+type = custom/text
+content = "%{T2} %{T-}"
+content-font = 2
+content-foreground = #F07178
+content-background = #FFE585
+
+[module/arrow6]
+; grey to Blue
+type = custom/text
+content = "%{T2} %{T-}"
+content-font = 2
+content-foreground = #1D2330
+content-background = #F07178
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+;   MODULE WORKSPACES[NUM]
+;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[module/workspacesnum]
+type = internal/i3
+
+pin-workspaces = true
+enable-scroll = false
+fuzzy-match = true
+
+format = <label-state> <label-mode>
+
+; Available tokens:
+;   %mode%
+; Default: %mode%
+label-mode = %mode%
+label-mode-padding = 2
+label-mode-background = #e60053
+
+; Available tokens:
+;   %name%
+;   %icon%
+;   %index%
+;   %output%
+; Default: %icon%  %name%
+label-focused = %index%
+label-focused-foreground = #ffffff
+; label-focused-background = ${colors.pink4}
+label-focused-overline = ${colors.pink4}
+label-focused-padding = 2
+
+; Available tokens:
+;   %name%
+;   %icon%
+;   %index%
+;   %output%
+; Default: %icon%  %name%
+label-unfocused = %index%
+label-unfocused-padding = 2
+
+; Available tokens:
+;   %name%
+;   %icon%
+;   %index%
+;   %output%
+; Default: %icon%  %name%
+label-visible = %index%
+label-visible-underline = #555555
+label-visible-padding = 2
+
+; Available tokens:
+;   %name%
+;   %icon%
+;   %index%
+;   %output%
+; Default: %icon%  %name%
+label-urgent = %index%
+label-urgent-foreground = #000000
+label-urgent-background = #bd2c40
+label-urgent-padding = 2
+
+; Separator in between workspaces
+label-separator = |
+label-separator-padding = 0
+label-separator-foreground = ${colors.pink4}
+
+

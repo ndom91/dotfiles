@@ -1,0 +1,208 @@
+# i3 config file (v4)
+#
+# Please see http://i3wm.org/docs/userguide.html for a complete reference!
+
+set $mod Mod4
+set $control Control
+set $altleft Mod1
+
+focus_follows_mouse no
+
+# Font for window titles. Will also be used by the bar unless a different font
+# is used in the bar {} block below.
+# font pango:Operator Mono 10
+font pango:Ubuntu Mono 10
+
+# gaps
+for_window [class=".*"] border pixel 10
+gaps inner 30
+gaps outer 10
+gaps vertical 0
+
+# colors
+set_from_resource $color1   color1  #000000
+set_from_resource $color9   color9  #000000
+set_from_resource $color2   color2  #000000
+set_from_resource $color10  color10 #000000
+set_from_resource $color3   color3  #000000
+set_from_resource $color11  color11 #000000
+set_from_resource $color4   color4  #000000
+set_from_resource $color12  color12 #000000
+set_from_resource $color5   color5  #000000
+set_from_resource $color13  color13 #000000
+set_from_resource $color6   color6  #000000
+set_from_resource $color14  color14 #000000
+set_from_resource $color7   color7  #000000
+set_from_resource $color15  color15 #000000
+
+# Use custom colors for black
+set $white       #ffffff
+set $darkwhite   #ececec
+set $darkwhite2  #999999
+set $black       #282828
+set $darkblack   #1d2021
+set $transparent #00000000
+
+#                       BORDER      BACKGROUND    TEXT        INDICATOR   CHILD_BORDER
+client.focused          #CAA9FA     #CAA9FA       $darkwhite  #CAA9FA     #CAA9FA
+client.unfocused        #999999     #999999       $darkwhite  #999999     #999999
+client.urgent           $color4     $color3       $color3     $color3     $color1
+
+# Use Mouse+$mod to drag floating windows to their wanted position
+floating_modifier $mod
+
+# take a screenshot of a screen region and copy it to a clipboard
+bindsym --release Shift+Print exec "scregcp -s /home/ndo/Pictures/screenshots/"
+
+# take a screenshot of a whole window and copy it to a clipboard
+bindsym --release Print exec "scregcp /home/ndo/Pictures/screenshots/"
+
+# start a terminal
+# bindsym $mod+Return exec urxvt -e bash -c "tmux -q has-session && exec tmux attach-session -d || exec tmux new-session -n$USER -s$USER@$HOSTNAME"
+# bindsym $mod+Return exec urxvt -e bash -c "exec tmux new-session"
+bindsym $mod+Return exec alacritty
+bindsym $mod+Shift+f exec nemo
+bindsym $Control+$altleft+l exec "/home/ndo/.config/i3/i3lock-fancy-multimonitor/lock -n -p"
+bindsym $Control+Shift+period exec emojione-picker
+
+# kill focused window
+bindsym $mod+Shift+q kill
+
+# dmenu
+bindsym $mod+d exec "dmenu_run -bw -i  -nb '#292d3e' -nf '#bbc5ff' -sb '#ff79c6'  -sf '#292d3e' -fn 'Operator Mono Light-14' -p '>'"
+bindsym $mod+m exec /home/ndo/.config/i3/dmenu-emoji.sh
+
+# flameshot screenshot
+bindsym $mod+Shift+s exec "flameshot gui"
+bindsym $mod+Shift+v exec "~/.dotfiles/scripts/screencast.sh"
+
+# change focus
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
+
+# move focused window
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
+
+# split in horizontal orientation
+bindsym $mod+c split h
+
+# split in vertical orientation
+bindsym $mod+v split v
+
+# enter fullscreen mode for the focused container
+bindsym $mod+f fullscreen toggle
+
+# change container layout (stacked, tabbed, toggle split)
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+
+# toggle tiling / floating
+bindsym $mod+Shift+space floating toggle
+
+# change focus between tiling / floating windows
+bindsym $mod+space focus mode_toggle
+
+# focus the parent container
+bindsym $mod+a focus parent
+
+# focus the child container
+#bindsym $mod+d focus child
+
+# switch to workspace
+bindsym $mod+1 workspace1
+bindsym $mod+2 workspace 2
+bindsym $mod+3 workspace 3:newtelco
+bindsym $mod+4 workspace 4:personal
+bindsym $mod+5 workspace 5:checkly
+bindsym $mod+6 workspace 6
+bindsym $mod+7 workspace 7
+bindsym $mod+8 workspace 8
+bindsym $mod+9 workspace 9
+bindsym $mod+0 workspace 10
+
+# move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace 1
+bindsym $mod+Shift+2 move container to workspace 2
+bindsym $mod+Shift+3 move container to workspace 3:newtelco
+bindsym $mod+Shift+4 move container to workspace 4:personal
+bindsym $mod+Shift+5 move container to workspace 5:checkly
+bindsym $mod+Shift+6 move container to workspace 6
+bindsym $mod+Shift+7 move container to workspace 7
+bindsym $mod+Shift+8 move container to workspace 8
+bindsym $mod+Shift+9 move container to workspace 9
+bindsym $mod+Shift+0 move container to workspace 10
+
+# reload the configuration file
+bindsym $mod+Shift+c reload
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $mod+Shift+r restart
+
+mode "resize" {
+  bindsym h resize shrink width 5 px or 5 ppt
+  bindsym l resize grow width 5 px or 5 ppt
+  bindsym j resize shrink height 5 px or 5 ppt
+  bindsym k resize grow height 5 px or 5 ppt
+
+  bindsym Return mode "default"
+  bindsym Escape mode "default"
+}
+
+bindsym $mod+r mode "resize"
+
+# Audio
+# bindsym XF86AudioRaiseVolume exec pactl set-sink-volume 0 +5% #increase sound volume
+# bindsym XF86AudioLowerVolume exec pactl set-sink-volume 0 -5% #decrease sound volume
+
+
+# Application Settings
+for_window [window_role="pop-up"] floating enable
+for_window [window_role="task_dialog"] floating enable
+for_window [class="Nemo"] floating enable
+for_window [class="*file-roller*"] floating enable
+for_window [class="org.remmina.Remmina" title="Remmina Remote Desktop Client"] floating enable
+for_window [instance="^crx.*$" window_role="pop-up"]  floating enable
+for_window [instance="^crx.*$" window_role="pop-up"]  sticky   enable
+for_window [title="i3_help"] floating enable sticky enable border normal
+for_window [title="File Transfer*"] floating enable
+for_window [class="Lxappearance"] floating enable sticky enable border normal
+for_window [class="GParted"] floating enable border normal
+for_window [class=Viewnior|mupdf] floating enable
+for_window [class="Geany"] floating enable
+for_window [class="(?i)virtualbox"] floating enable normal
+for_window [class="(?i)virtualbox"] fullscreen enable
+for_window [class="Electron"] floating enable
+for_window [class="1Password"] floating enable normal
+for_window [class="epicgameslauncher.exe"] floating enable border normal
+for_window [class="Blueman-manager"] floating enable normal
+for_window [class="Solaar"] floating enable normal
+for_window [class="Gnome-boxes"] floating enable normal
+for_window [class="battle.net.exe"] floating enable normal
+for_window [instance="^.*ypress.*"] floating enable normal
+for_window [instance="engrampa"] floating enable normal
+for_window [instance="steam"] floating enable normal
+
+# Autostart
+# exec_always --no-startup-id "DISPLAY=:0.0 feh --bg-fill /home/ndo/Pictures/personal/Wallpapers/wallhaven-3zw6g9.png"
+# exec_always volctl
+exec --no-startup-id ntdisplay
+exec --no-startup-id xset +fp /home/ndo/.local/share/fonts
+exec --no-startup-id xset fp rehash
+exec --no-startup-id /usr/bin/clipit
+exec --no-startup-id flameshot
+exec --no-startup-id /home/ndo/.fehbg
+exec --no-startup-id pasystray
+exec --no-startup-id pnmixer
+exec_always --no-startup-id picom -b --config /home/ndo/.config/i3/picom.conf
+exec_always --no-startup-id setxkbmap -layout us
+exec_always --no-startup-id setxkbmap -option caps:escape
+exec_always --no-startup-id emojione-picker
+exec_always --no-startup-id remmina -i
+exec_always --no-startup-id nm-applet
+exec_always --no-startup-id "sudo solaar"
+exec_always --no-startup-id $HOME/.config/polybar/launch.sh

@@ -1,0 +1,2 @@
+#!/bin/sh
+feh --no-fehbg --bg-scale '/home/ndo/Pictures/personal/Wallpapers/4k-wallpaper-dark-dawn-1809644.jpg' '/home/ndo/.local/share/azote/backgrounds-feh/flipped-4k-wallpaper-dark-dawn-1809644.jpg' 

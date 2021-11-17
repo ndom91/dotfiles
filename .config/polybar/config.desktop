@@ -1,0 +1,644 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+;         GLOBALS
+;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; NerdFont CheatSheet
+; https://www.nerdfonts.com/cheat-sheet
+;
+
+[colors]
+background = #001b2b34
+foreground = #d8dee9
+transparent = #00ffffff
+
+pink1  = #44475a
+pink2  = #6272a4
+pink3  = #bd93f9
+pink4  = #ff79c6
+pink5  = #c46c90
+pink6  = #dc7aa2
+
+white  = #ffffff
+base08 = #ec5f67
+red    = #ec5f67
+base09 = #f99157
+orange = #f99157
+base0a = #fac863
+yellow = #fac863
+base0b = #99c794
+green  = #99c794
+base0c = #5fb3b3
+teal   = #5fb3b3
+base0d = #6699cc
+blue   = #6699cc
+base0e = #c594c5
+purple = #c594c5
+base0f = #ab7967
+brown  = #ab7967
+
+[bar/master]
+monitor = DisplayPort-0
+
+width = 100%
+height = 32
+border-bottom-size = 0
+; Hack to remove the bottom padding only
+line-size = 4
+separator = " "
+
+background = ${colors.background}
+foreground = ${colors.foreground}
+
+font-0 = Ubuntu Mono:size=10
+; 1px lower for up/down
+font-1 = Ubuntu Mono:size=10;1
+; 2px lower for datetime
+font-2 = Ubuntu Mono:size=10;1
+font-3 = FontAwesome:pixelsize=13
+font-4 = Siji:pixelsize=10
+font-5 = "UbuntuMono Nerd Font:size=10;2"
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+;       BAR TOP (MAIN)
+;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[bar/top]
+inherit = bar/master
+modules-left = workspacesnum
+modules-center = title
+modules-right = github checkly qbittorrent powermenu
+
+tray-position = left
+tray-scale = 1.0
+tray-maxsize = 18
+tray-background = #00
+; tray-foreground = ${colors.pink2}
+tray-foreground = #ffffff
+tray-padding = 1
+tray-offset-x = 0
+tray-offset-y = 0
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+;     BAR BOTTOM (MAIN)
+;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[bar/bottom]
+inherit = bar/master
+
+bottom = true
+
+modules-left = time btc pkg network-traffic
+; modules-center = workspaces
+modules-center =
+modules-right = cpu ram temperature root ip
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+;     BAR OTHER MONITORS
+;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[bar/topleft]
+inherit = bar/master
+modules-left = workspacesnum
+
+monitor = DisplayPort-1
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+;       MODULE IP
+;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[module/ip]
+type = custom/script
+exec-if = "ping -q -w 2 -c 1 1.1.1.1 > /dev/null"
+exec = curl -s https://ifconfig.me
+interval = 30
+
+format-prefix-foreground = ${colors.pink1}
+format-underline = ${colors.pink1}
+format-prefix = 
+format-size = 8
+
+label =  %output%
+label-padding-left = 1
+format-padding = 1
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+;     MODULE CHECKLY RUNS
+;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[module/checkly]
+type = custom/script
+;format = <label>
+format-overline = ${colors.pink2}
+format-foreground = ${colors.white}
+format-padding = 2
+label-padding-left = 1
+format-prefix = 
+exec-if = "ping -q -w 2 -c 1 1.1.1.1 > /dev/null"
+exec = "/home/ndo/.config/polybar/checkly_checks.sh"
+interval = 60
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+;     MODULE SPEEDTEST
+;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[module/speedtest]
+format = <label>
+format-underline = ${colors.purple}
+format-padding = 1
+type = custom/script
+exec-if = "ping -q -w 2 -c 1 1.1.1.1 > /dev/null"
+exec = "/home/ndo/.config/polybar/polybar-speedtest"
+interval = 300
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+;   MODULE NETWORK TRAFFIC
+;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[module/network-traffic]
+type = custom/script
+exec = ~/.config/polybar/network_traffic.sh
+tail = true
+format-prefix-foreground = ${colors.pink4}
+format-underline = ${colors.pink4}
+format-padding = 1
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+;     MODULE NETWORK
+;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[module/network]
+type = internal/network
+accumulate-stats = true
+interface = eth0
+ping-interval = 3
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+;     MODULE PULSEAUDIO
+;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+[module/pulseaudio]
+type = internal/pulseaudio
+sink = alsa_output.pci-0000_00_1b.0.analog-stereo
+interval = 5
+
+label-volume = %percentage%
+format-volume = <label-volume>
+format-volume-padding = 1
+
+label-muted =🔇
+label-muted-foreground = ${colors.red}
+format-muted-padding = 1
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+;     MODULE TITLE
+;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[module/title]
+type = internal/xwindow
+
+label = %title:0:70:..%
+format-overline = ${colors.pink1}
+format-foreground = ${colors.white}
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+;     MODULE POWERMENU
+;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[module/powermenu]
+type = custom/menu
+
+; Padding doesn't seem to be working
+label-open = "   "
+label-open-foreground = ${colors.pink6}
+label-close =  cancel
+label-close-foreground = ${colors.pink6}
+label-separator = " | "
+
+menu-0-0 = reboot
+menu-0-0-exec = menu-open-1
+menu-0-1 = power off
+menu-0-1-exec = menu-open-2
+
+menu-1-0 = cancel
+menu-1-0-exec = menu-open-0
+menu-1-1 = reboot
+menu-1-1-exec = termite -e 'sudo reboot'
+
+menu-2-0 = power off
+menu-2-0-exec = termite -e 'sudo poweroff'
+menu-2-1 = cancel
+menu-2-1-exec = menu-open-0
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+;     MODULE CPU
+;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[module/cpu]
+type = internal/cpu
+interval = 0.5
+
+format-prefix-foreground = ${colors.pink1}
+format-underline = ${colors.pink1}
+format-padding = 1
+
+format-prefix = 
+label = %{A:termite -e htop &:}%percentage:2%%%{A}
+label-padding-left = 1
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+;     MODULE RAM
+;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[module/ram]
+type = internal/memory
+interval = 3
+
+format-prefix-foreground = ${colors.pink2}
+format-underline = ${colors.pink2}
+format-padding = 1
+
+format-prefix = 
+label = %{A:termite -e htop &:}%percentage_used:2%%%{A}
+label-padding-left = 1
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+;     MODULE GITHUB
+;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+[module/github]
+type = custom/script
+format-prefix = 
+format-padding = 1
+exec = /home/ndo/.npm-global/bin/polybar-github $HOME/.config/polybar/.env/github 0f64db0e6bfe15fe5277ab34b4d60892305c086b 30 all+participating true
+click-left = echo left >> $HOME/.config/polybar/.env/github
+click-middle = echo middle >> $HOME/.config/polybar/.env/github
+click-right = echo right >> $HOME/.config/polybar/.env/github
+scroll-up = echo scrollUp >> $HOME/.config/polybar/.env/github
+scroll-down = echo scrollDown >> $HOME/.config/polybar/.env/github
+tail = true
+
+[module/github2]
+type = internal/github
+token = ${file:/home/ndo/.config/polybar/github.token}
+user = ndom91
+empty-notifications = true
+interval = 30
+
+format-prefix-foreground = ${colors.pink3}
+format-underline = ${colors.pink3}
+format-padding = 1
+format-prefix = 
+
+label = %notifications%
+label-padding-left = 1
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+;     MODULE TEMP
+;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[module/temperature]
+type = custom/script
+exec = $HOME/.config/polybar/temperature.sh
+interval = 10
+
+format-prefix-foreground = ${colors.pink3}
+format-underline = ${colors.pink3}
+format-padding = 1
+format-prefix = 
+
+label = %output%°C
+label-padding-left = 2
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+;     MODULE ROOT
+;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[module/root]
+type = internal/fs
+interval = 3600
+mount-0 = /
+
+format-mounted-prefix = 
+format-mounted-prefix-foreground = ${colors.pink5}
+format-mounted-underline = ${colors.pink5}
+format-mounted-padding = 1
+
+;label-mounted = %{A:termite -e "ranger /" &:}%free%%{A}
+label-mounted = %used% [%percentage_used%%]
+label-mounted-padding-left = 1
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+;     MODULE BTC
+;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[module/btc]
+type = custom/script
+
+interval = 1200
+format = <label>
+format-underline = ${colors.pink2}
+format-prefix-foreground = ${colors.pink2}
+format-padding = 1
+format-prefix = 
+label = %output%
+label-padding-left = 1
+
+; Check if connected to the internet by pinging duckduckgo
+exec-if = "ping -q -w 2 -c 1 1.1.1.1 > /dev/null"
+exec = $HOME/.config/polybar/btc.sh
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+;     MODULE PKG (ARCH)
+;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[module/pkg]
+type = custom/script
+
+interval = 1200
+format = <label>
+format-underline = ${colors.pink3}
+format-prefix-foreground = ${colors.pink3}
+format-padding = 1
+format-prefix = 
+label = %output%
+label-padding-left = 1
+
+; Check if connected to the internet by pinging duckduckgo
+exec-if = "ping -q -w 2 -c 1 1.1.1.1 > /dev/null"
+exec = $HOME/.config/polybar/pkg.sh
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+;   MODULE i3 WORKSPACES
+;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[module/workspaces]
+type = internal/i3
+format = <label-mode> <label-state>
+index-sort = true
+
+label-focused = 
+label-focused-padding = 1
+
+label-unfocused = 
+label-unfocused-padding = 1
+label-unfocused-underlinde = ${colors.purple}
+
+label-urgent = 
+label-urgent-padding = 1
+label-urgent-foreground = ${colors.red}
+
+label-visible = 
+label-visible-foreground = ${colors.purple}
+label-visible-padding = 1
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; MODULE BACKLIGHT (LAPTOP)
+;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[module/backlight]
+type = internal/backlight
+card = intel_backlight
+
+format-prefix-foreground = ${colors.pink4}
+format-padding = 1
+format-underline = ${colors.pink4}
+
+label = %percentage%
+label-padding-left = 0
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+;     MODULE BATTERY
+;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[module/batteryold]
+type = internal/battery
+full-at = 98
+battery = BAT0
+adapter = AC0
+
+time-format = %H:%M
+format-charging = <label-charging>
+format-charging-foreground = ${colors.pink3}
+format-charging-underline = ${colors.pink3}
+format-charging-padding = 1
+
+format-discharging = <ramp-capacity> <label-discharging>
+format-full-underline = ${colors.pink3}
+format-full-padding = 1
+
+label-charging = %{F#b7b8b9}%percentage:2%%%{F-} %time%
+label-discharging = %percentage:2%% %time% %{o- -o}
+label-full =  %percentage%% B
+format-padding = 1
+
+; Red
+ramp-capacity-0 = %{F#ec5f67 o#ec5f67 +o} %{F-}
+ramp-capacity-1 = %{F#ec5f67 o#ec5f67 +o} %{F-}
+; Yellow
+ramp-capacity-2 = %{F#fac863 o#fac863 +o} %{F-}
+ramp-capacity-3 = %{F#fac863 o#fac863 +o} %{F-}
+; Green
+ramp-capacity-4 = %{F#99c794 o#99c794 +o} %{F-}
+
+animation-charging-0 = 
+animation-charging-1 = 
+animation-charging-2 = 
+animation-charging-3 = 
+animation-charging-4 = 
+
+label-padding-left = 1
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+;     QBITTORRENT
+;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+[module/qbittorrent]
+type = custom/script
+format-overline = ${colors.pink1}
+format-foreground = ${colors.white}
+exec = "~/.config/polybar/polybar-qbittorrent/polybar-qbittorrent"
+interval = 30
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+;     MODULE TIME
+;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[module/time]
+type = internal/date
+interval = 1
+
+format-prefix = 
+format-prefix-foreground = ${colors.pink2}
+format-underline = ${colors.pink2}
+format-padding = 1
+
+date = %a, %d %b
+time = %T
+label = %{T3}%date% %time%%{T-}
+label-margin-top = 10
+label-padding-left = 1
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+;     MODULE ARROWS
+;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[module/arrow1]
+; grey to Blue
+type = custom/text
+content = "%{T6} %{T-}"
+content-font = 2
+content-foreground = #C3E88D
+content-background = #292d3e
+
+[module/arrow2]
+; grey to Blue
+type = custom/text
+content = "%{T6} %{T-}"
+content-font = 2
+content-foreground = #82AAFF
+content-background = #C3E88D
+
+[module/arrow3]
+; grey to Blue
+type = custom/text
+content = "%{T2} %{T-}"
+content-font = 2
+content-foreground = #C792EA
+content-background = #82AAFF
+
+[module/arrow4]
+; grey to Blue
+type = custom/text
+content = "%{T2} %{T-}"
+content-font = 2
+content-foreground = #FFE585
+content-background = #C792EA
+
+[module/arrow5]
+; grey to Blue
+type = custom/text
+content = "%{T2} %{T-}"
+content-font = 2
+content-foreground = #F07178
+content-background = #FFE585
+
+[module/arrow6]
+; grey to Blue
+type = custom/text
+content = "%{T2} %{T-}"
+content-font = 2
+content-foreground = #1D2330
+content-background = #F07178
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+;   MODULE WORKSPACES[NUM]
+;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[module/workspacesnum]
+type = internal/i3
+
+pin-workspaces = true
+enable-scroll = true
+fuzzy-match = true
+
+format = <label-state> <label-mode>
+
+ws-icon-0 = 1;♚
+ws-icon-1 = 2;♛
+ws-icon-2 = 3;華
+ws-icon-3 = 4;♝
+ws-icon-4 = 5;♞
+ws-icon-5 = 5;♞
+ws-icon-6 = 6;♞
+ws-icon-7 = 7;♞
+ws-icon-8 = 8;♞
+ws-icon-9 = 9;♞
+ws-icon-default = ♟
+
+; Available tokens:
+;   %mode%
+; Default: %mode%
+label-mode = %mode%
+label-mode-padding = 2
+label-mode-background = #e60053
+
+; Available tokens:
+;   %name%
+;   %icon%
+;   %index%
+;   %output%
+; Default: %icon%  %name%
+
+label-focused = %name%
+label-focused-foreground = ${colors.pink6}
+label-focused-overline = ${colors.pink6}
+label-focused-padding = 2
+
+label-unfocused = %index%
+label-unfocused-foreground = ${colors.pink8}
+label-unfocused-padding = 2
+
+label-visible = %index%
+label-visible-overline = ${colors.pink2}
+label-visible-foreground = ${colors.pink8}
+label-visible-padding = 2
+
+label-urgent = %index%
+label-urgent-foreground = ${colors.white}
+label-urgent-background = ${colors.pink6}
+label-urgent-padding = 2
+
+; Separator in between workspaces
+label-separator = |
+label-separator-padding = 0
+label-separator-foreground = ${colors.pink2}
+

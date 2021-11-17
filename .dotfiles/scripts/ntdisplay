@@ -1,0 +1,70 @@
+#!/bin/bash
+
+function getMonitors() {
+  MON=$(polybar --list-monitors | wc -l)
+  echo "$MON"
+}
+
+function laptopMonitor() {
+  xrandr --output eDP1 --scale 0.7x0.7
+}
+
+function officeMonitor () {
+xrandr \
+  --output DVI-I-2-2 --primary --mode 1920x1080 --pos 3000x840 --rotate normal \
+  --output DVI-I-1-1 --mode 1920x1080 --pos 1080x840 --rotate normal \
+  --output DP1 --mode 1920x1080 --pos 0x840 --rotate left \
+  --output eDP1 --off
+  # --output HDMI-1 --off \
+  # --output DP2 --mode 1920x1080 --pos 0x0 --rotate left \
+  # --output DP1 --primary --mode 1920x1080 --pos 3000x840 --rotate normal  \
+	# --output DP2 --off \
+}
+
+function setPowerSaving() {
+  # echo "Username: $USER"
+  # echo "    EUID: $EUID"
+  # sudo sh -c "echo 'on' > /sys/bus/usb/devices/1-1.4.2/power/control" # Massdrop USB Hub
+  # sudo sh -c "echo 'on' > /sys/bus/usb/devices/1-1.2.3/power/control" # Razer Wireless Mouse
+  sudo sh -c "echo 'on' > /sys/bus/usb/devices/1-1.4/power/control" # Massdrop CTRL + Varmilo Keyboard
+  sudo sh -c "echo 'on' > /sys/bus/usb/devices/1-1.2.2/power/control" # Razer Basilisk Wired Mouse
+}
+
+monCount=$(getMonitors)
+
+if [[ "$monCount" -gt 1 ]]; then
+  echo "Office"
+  officeMonitor
+  setPowerSaving
+  # sudo sh -c 'echo $SUDO_USER'
+else
+  echo "Laptop"
+  laptopMonitor
+fi
+
+#################################
+#
+#            NOTES
+#
+#
+# --output eDP-1 --scale 0.5x0.5 --auto \
+#
+# eDP-1 = Laptop
+# DVI-I-2-2 = Right Monitor
+# DVI-I-1-1 = Middle Monitor
+# DP-1 = Left Rotated Monitor
+#
+# RESOLUTION SETTINGS
+# xrandr --output eDP-1 --scale 0.5x0.5 --auto
+# xrandr --output DVI-I-2-2 -scale 0.9999x0.9999 --auto
+# xrandr --output DVI-I-1-1 --mode 1920x1080 --rate 60
+# xrandr --output DP-1 --auto --rotate left
+#
+# MONITOR ORDER
+# xrandr --output DVI-I-2-2 --left-of eDP-1
+# xrandr --output DVI-I-1-1 --left-of DVI-I-2-2
+# xrandr --output DP-1 --left-of DVI-I-1-1
+#
+# xrandr --output DVI-I-2-2 --primary
+# PRIMARY MONITOR
+#

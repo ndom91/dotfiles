@@ -1,0 +1,228 @@
+vim.cmd(
+  [[
+  augroup packer_user_config
+    autocmd!
+    autocmd BufWritePost plugins.lua source <afile> | PackerCompile
+  augroup end
+]]
+)
+
+local packer = require("packer")
+
+packer.init(
+  {
+    git = {
+      clone_timeout = 300,
+      subcommands = {
+        install = "clone --depth %i --progress"
+      }
+    },
+    profile = {
+      enable = true
+    }
+  }
+)
+
+packer.startup(
+  function(use)
+    -- nerd font icons
+    use "kyazdani42/nvim-web-devicons"
+
+    -- telescope
+    use "nvim-lua/plenary.nvim"
+    use "nvim-lua/popup.nvim"
+    use {
+      "nvim-telescope/telescope.nvim",
+      config = function()
+        require "plugin_configs.telescope"
+      end
+    }
+
+    -- builtin lsp
+    use {
+      "neovim/nvim-lspconfig",
+      config = function()
+        require "plugin_configs.lsp-config"
+      end
+    }
+
+    use "williamboman/nvim-lsp-installer"
+
+    -- lsp diagnostics
+    use {
+      "folke/trouble.nvim",
+      requires = {"kyazdani42/nvim-web-devicons"},
+      config = function()
+        require("trouble").setup {}
+      end
+    }
+
+    -- nvim-tree
+    use {
+      "kyazdani42/nvim-tree.lua",
+      requires = {"kyazdani42/nvim-web-devicons"},
+      config = function()
+        require "plugin_configs.nvim-tree"
+      end
+    }
+
+    -- format
+    use {
+      "lukas-reineke/format.nvim",
+      -- requires = {"kyaznvim-tree"},
+      -- event = "BufWinEnter",
+      config = function()
+        require "plugin_configs.format"
+      end
+    }
+
+    -- auto-completion
+    use {
+      "hrsh7th/nvim-cmp",
+      config = function()
+        require "plugin_configs.nvim-cmp"
+      end
+    }
+    use "hrsh7th/cmp-buffer"
+    use "hrsh7th/cmp-nvim-lsp"
+    use "hrsh7th/cmp-path"
+    use "hrsh7th/cmp-cmdline"
+    use "hrsh7th/cmp-vsnip"
+    use "hrsh7th/vim-vsnip"
+    use "onsails/lspkind-nvim"
+
+    -- treesitter
+    use {
+      "nvim-treesitter/nvim-treesitter",
+      run = ":TSUpdate",
+      config = function()
+        require "plugin_configs.treesitter"
+      end
+    }
+
+    -- lua development
+    use "folke/lua-dev.nvim"
+
+    -- comments
+    use {
+      "numToStr/Comment.nvim",
+      config = function()
+        require "plugin_configs.comment"
+      end
+    }
+
+    -- todo comments
+    use {
+      "folke/todo-comments.nvim",
+      requires = "nvim-lua/plenary.nvim",
+      config = function()
+        require("todo-comments").setup {}
+      end
+    }
+
+    -- autopairs
+    use "windwp/nvim-autopairs"
+
+    -- indent
+    use "lukas-reineke/indent-blankline.nvim"
+
+    -- comments integration with treesitter
+    use {
+      "JoosepAlviste/nvim-ts-context-commentstring",
+      after = "nvim-treesitter"
+    }
+
+    -- lualine
+    use {
+      "nvim-lualine/lualine.nvim",
+      requires = {"kyazdani42/nvim-web-devicons"},
+      config = function()
+        require "plugin_configs.lualine"
+      end
+    }
+
+    -- tabline
+    use {
+      "akinsho/bufferline.nvim",
+      config = function()
+        require "plugin_configs.bufferline"
+      end
+    }
+
+    -- theme
+    use "folke/tokyonight.nvim"
+    -- use "rmehri01/onenord.nvim"
+    -- use "wadackel/vim-dogrun"
+    -- use "challenger-deep-theme/vim"
+    -- use "EdenEast/nightfox.nvim"
+    -- use(
+    --   {
+    --     "rose-pine/neovim",
+    --     as = "rose-pine",
+    --     config = function()
+    --       vim.g.rose_pine_variant = "base"
+    --       vim.g.rose_pine_disable_background = true
+    --       vim.cmd("colorscheme rose-pine")
+    --     end
+    --   }
+    -- )
+
+    -- git
+    use {
+      "lewis6991/gitsigns.nvim",
+      requires = {
+        "nvim-lua/plenary.nvim"
+      },
+      config = function()
+        require("gitsigns").setup(
+          {
+            signs = {
+              add = {hl = "GitSignsAdd", text = "│", numhl = "GitSignsAddNr", linehl = "GitSignsAddLn"},
+              change = {hl = "GitSignsChange", text = "│", numhl = "GitSignsChangeNr", linehl = "GitSignsChangeLn"},
+              delete = {hl = "GitSignsDelete", text = "_", numhl = "GitSignsDeleteNr", linehl = "GitSignsDeleteLn"},
+              topdelete = {hl = "GitSignsDelete", text = "‾", numhl = "GitSignsDeleteNr", linehl = "GitSignsDeleteLn"},
+              changedelete = {
+                hl = "GitSignsChange",
+                text = "~",
+                numhl = "GitSignsChangeNr",
+                linehl = "GitSignsChangeLn"
+              }
+            }
+          }
+        )
+      end
+    }
+
+    -- hex colorizer
+    use {
+      "norcalli/nvim-colorizer.lua",
+      config = function()
+        require("colorizer").setup(
+          {
+            "*",
+            css = {rgb_fn = true},
+            html = {names = false}
+          }
+        )
+      end
+    }
+
+    -- toggle-term
+    use {
+      "akinsho/toggleterm.nvim",
+      config = function()
+        require "plugin_configs.toggleterm"
+      end
+    }
+
+    use {
+      "glepnir/dashboard-nvim",
+      config = function()
+        require "plugin_configs.dashboard"
+      end
+    }
+
+    -- vimscript plugins
+    use "tpope/vim-surround"
+  end
+)

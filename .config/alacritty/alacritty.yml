@@ -1,0 +1,111 @@
+# TokyoNight Alacritty Colors
+background_opacity: 0.9
+colors:
+  # Default colors
+  primary:
+    background: '0x1a1b26'
+    foreground: '0xc0caf5'
+  # Normal colors
+  normal:
+    black:   '0x15161E'
+    red:     '0xf7768e'
+    green:   '0x9ece6a'
+    yellow:  '0xe0af68'
+    blue:    '0x7aa2f7'
+    magenta: '0xbb9af7'
+    cyan:    '0x7dcfff'
+    white:   '0xa9b1d6'
+  # Bright colors
+  bright:
+    black:   '0x414868'
+    red:     '0xf7768e'
+    green:   '0x9ece6a'
+    yellow:  '0xe0af68'
+    blue:    '0x7aa2f7'
+    magenta: '0xbb9af7'
+    cyan:    '0x7dcfff'
+    white:   '0xc0caf5'
+  indexed_colors:
+    - { index: 16, color: '0xff9e64' }
+    - { index: 17, color: '0xdb4b4b' }
+
+env:
+  TERM: alacritty
+font:
+  bold:
+    family: DejaVu SansMono Nerd Font
+    style: Bold
+  bold_italic:
+    family: DejaVu SansMono Nerd Font
+    style: Bold Italic
+  italic:
+    family: DejaVu SansMono Nerd Font
+    style: Italic
+  normal:
+    family: DejaVu SansMono Nerd Font
+    style: Regular
+  offset:
+    x: 0
+    y: 0
+  size: 8
+key_bindings:
+- action: Paste
+  key: V
+  mods: Control|Shift
+- action: Copy
+  key: C
+  mods: Control|Shift
+- action: PasteSelection
+  key: Insert
+  mods: Shift
+- action: ResetFontSize
+  key: Key0
+  mods: Control
+- action: IncreaseFontSize
+  key: Equals
+  mods: Control
+- action: DecreaseFontSize
+  key: Minus
+  mods: Control
+- action: Paste
+  key: Paste
+- action: Copy
+  key: Copy
+- action: ClearLogNotice
+  key: L
+  mods: Control
+- chars: "\f"
+  key: L
+  mods: Control
+- action: ScrollPageUp
+  key: PageUp
+  mode: ~Alt
+  mods: Shift
+- action: ScrollPageDown
+  key: PageDown
+  mode: ~Alt
+  mods: Shift
+- action: ScrollToTop
+  key: Home
+  mode: ~Alt
+  mods: Shift
+- action: ScrollToBottom
+  key: End
+  mode: ~Alt
+  mods: Shift
+scrolling:
+  history: 10000
+shell:
+  args:
+  - -l
+  - -c
+  - tmux new-session
+  program: /bin/bash
+window:
+  class:
+    general: Alacritty
+    instance: Alacritty
+  padding:
+    x: 0
+    y: 0
+  title: Alacritty
