@@ -33,7 +33,7 @@ curl -Lks https://init.ndo.dev > /bin/bash
   - [folke/todo-comments.nvim](https://github.com/folke/todo-comments.nvim) - Highlight TODO / FIXME
   - [windwp/nvim-autopairs](https://github.com/windwp/nvim-autopairs) - Autocomplete bracket pairs
   - [lukas-reineke/indent-blankline.nvim](https://github.com/lukas-reineke/indent-blankline.nvim) - Autoindent
-  - [JoosephAlviste/nvim-ts-context-commenstring](https://github.com/JoosephAlviste/nvim-ts-context-commenstring) - Change comment string depending on section of file (i.e. in Vue SFC)
+  - [JoosephAlviste/nvim-ts-context-commenstring](https://github.com/JoosephAlviste/nvim-ts-context-commenstring) - Dynamic comment string
   - [nvim-lualine/lualine.nvim](https://github.com/nvim-lualine/lualine.nvim) - Statusline
   - [akinsho/bufferline.nvim](https://github.com/akinsho/bufferline.nvim) - Tab bar
   - [folke/tokyonight.nvim](https://github.com/folke/tokyonight.nvim) - Beautiful dark theme
