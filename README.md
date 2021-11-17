@@ -5,10 +5,43 @@
 ### 🎉 Setup
 
 ```
-curl -Lks https://init.ndo.dev > /bin/sh
+curl -Lks https://init.ndo.dev > /bin/bash
 ```
 
 ### ️🚧 Details
+
+- neovim
+
+  - [wbthomason/packer](https://github.com/wbthomason/packer) - Package manager
+  - [kyazdani42/nvim-web-devicons](https://github.com/kyazdani42/nvim-web-devicons) - Filetype Icons
+  - [nvim-lua/plenary.nvim](https://github.com/nvim-lua/plenary.nvim) - Lua functions required by everything else
+  - [nvim-lua/popup.nvim](https://github.com/nvim-lua/popup.nvim) - Popup primitives
+  - [nvim-telescope/telescope.nvim](https://github.com/nvim-telescope/telescope.nvim) - Fuzzy finder and search tool
+  - [neovim/nvim-lspconfig](https://github.com/neovim/nvim-lspconfig) - LSP Client
+  - [williamboman/nvim-lsp-intaller](https://github.com/williamboman/nvim-lsp-intaller) - Easy installer for LSP language servers
+  - [folke/trouble.nvim](https://github.com/folke/trouble.nvim) - Show LSP Diagnostics
+  - [kyazdani42/nvim-tree.lua](https://github.com/kyazdani42/nvim-tree.lua) - Filetree
+  - [lukas-reineke/format.nvim](https://github.com/lukas-reineke/format.nvim) - Formatter
+  - [hrsh7th/nvim-cmp](https://github.com/hrsh7th/nvim-cmp) - Nvim Completion
+  - [hrsh7th/cmp-buffer](https://github.com/hrsh7th/cmp-buffer) - Buffer completion source
+  - [hrsh7th/cmp-nvim-lsp](https://github.com/hrsh7th/cmp-nvim-lsp) - LSP completion source
+  - [hrsh7th/cmp-path](https://github.com/hrsh7th/cmp-path) - Path completion source
+  - [hrsh7th/cmp-vsnip](https://github.com/hrsh7th/cmp-vsnip) - Snippet completion source
+  - [onsails/lspkind-nvim](https://github.com/onsails/lspkind-nvim) - Pretty icons in completion suggestions
+  - [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter) - AST provider
+  - [numToStr/Comment.nvim](https://github.com/numToStr/Comment.nvim) - Quick comment
+  - [folke/todo-comments.nvim](https://github.com/folke/todo-comments.nvim) - Highlight TODO / FIXME
+  - [windwp/nvim-autopairs](https://github.com/windwp/nvim-autopairs) - Autocomplete bracket pairs
+  - [lukas-reineke/indent-blankline.nvim](https://github.com/lukas-reineke/indent-blankline.nvim) - Autoindent
+  - [JoosephAlviste/nvim-ts-context-commenstring](https://github.com/JoosephAlviste/nvim-ts-context-commenstring) - Change comment string depending on section of file (i.e. in Vue SFC)
+  - [nvim-lualine/lualine.nvim](https://github.com/nvim-lualine/lualine.nvim) - Statusline
+  - [akinsho/bufferline.nvim](https://github.com/akinsho/bufferline.nvim) - Tab bar
+  - [folke/tokyonight.nvim](https://github.com/folke/tokyonight.nvim) - Beautiful dark theme
+  - [lewis6991/gitsigns.nvim](https://github.com/lewis6991/gitsigns.nvim) - Git status gutter signs
+  - [norcalli/nvim-colorizer.lua](https://github.com/norcalli/nvim-colorizer.lua) - Highlight CSS colors
+  - [glepnir/dashboard-nvim](https://github.com/glepnir/dashboard-nvim) - Autostart dashboard
+  - [tpope/vim-surround](https://github.com/tpope/vim-surround) - Surround movements
+  - [Github/copilot](https://github.com/github/copilot) - Code helper
 
 - CLI
   - [bash](https://git.savannah.gnu.org/cgit/bash.git) - Unix shell
