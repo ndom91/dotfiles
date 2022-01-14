@@ -150,22 +150,24 @@ packer.startup(
     }
 
     -- theme
-    use "folke/tokyonight.nvim"
+    -- use "folke/tokyonight.nvim"
     -- use "rmehri01/onenord.nvim"
     -- use "wadackel/vim-dogrun"
     -- use "challenger-deep-theme/vim"
     -- use "EdenEast/nightfox.nvim"
-    -- use(
-    --   {
-    --     "rose-pine/neovim",
-    --     as = "rose-pine",
-    --     config = function()
-    --       vim.g.rose_pine_variant = "base"
-    --       vim.g.rose_pine_disable_background = true
-    --       vim.cmd("colorscheme rose-pine")
-    --     end
-    --   }
-    -- )
+    use(
+      {
+        "rose-pine/neovim",
+        as = "rose-pine",
+        config = function()
+          vim.g.rose_pine_variant = "main"
+          vim.g.rose_pine_bold_vertical_split_line = true
+          vim.g.rose_pine_disable_background = true
+          vim.g.rose_pine_disable_float_background = true
+          vim.cmd("colorscheme rose-pine")
+        end
+      }
+    )
 
     -- git
     use {

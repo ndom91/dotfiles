@@ -55,6 +55,10 @@ extract() {
   fi
 }
 
+toGif() {
+  ffmpeg -i "$1" -vf "fps=10,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse" -loop 0 "${1%.*}.gif"
+}
+
 # paste.ndo.dev instance of hastebin
 function haste {
   local output returnfile contents

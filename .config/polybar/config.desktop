@@ -9,7 +9,8 @@
 ;
 
 [colors]
-background = #001b2b34
+;background = #aa001b2b
+background = #59222222
 foreground = #d8dee9
 transparent = #00ffffff
 
@@ -75,7 +76,8 @@ modules-right = github checkly qbittorrent powermenu
 tray-position = left
 tray-scale = 1.0
 tray-maxsize = 18
-tray-background = #00
+;tray-background = #00
+tray-background = #59222222
 ; tray-foreground = ${colors.pink2}
 tray-foreground = #ffffff
 tray-padding = 1

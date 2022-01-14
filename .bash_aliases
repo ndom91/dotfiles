@@ -64,7 +64,6 @@ alias activeSysd='for i in $(cd /etc/systemd/system/multi-user.target.wants && l
 [[ "$(command -v xclip)" ]] && alias xc='xclip -selection c'
 [[ "$(command -v tailscale)" ]] && alias ts='tailscale'
 [[ "$(command -v rtm)" ]] && alias rtmrl='rtm ls priority:1 OR priority:2 OR priority:3 OR list:PERSONAL OR dueBefore:tomorrow OR tag:todo'
-[[ "$(command -v gam)" ]] && alias gam="/home/ndo/bin/gamadv-xtd3/gam"
 [[ "$(command -v bat)" ]] && alias cat='bat --theme=Dracula'
 [[ "$(command -v docker)" ]] && alias dockeriprune='sudo docker rmi $(sudo docker images --filter "dangling=true" -q --no-trunc)'
 [[ "$(command -v solaar)" ]] && alias solaar="sudo /usr/bin/solaar"
@@ -107,6 +106,9 @@ alias .....='cd ../../../../'
 alias .4='cd ../../../../../'
 alias .5='cd ../../../../../../'
 
+### GAM
+alias gam="/home/ndo/bin/gamadv-xtd3/gam"
+
 ### NEXT-AUTH ###
 alias na='cd /opt/next-auth/next-auth'
 alias naa='cd /opt/next-auth/adapters'
@@ -117,3 +119,6 @@ alias pvetunnel='ssh -L 8005:192.168.1.201:8006 nt-hulk'
 alias grafanatunnel='ssh -L 3000:10.0.1.60:3000 ndo-pve'
 alias win10tunnel='ssh -L 3389:192.168.11.169:3389 nt-hulk'
 alias casapitunnel='ssh -L 8123:127.0.0.1:8123 tunnelpi'
+
+# CHECKLY
+alias checkly-cli='/opt/checkly/checkly-cli/bin/run'

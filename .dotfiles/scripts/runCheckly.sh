@@ -1,16 +1,53 @@
 #!/usr/bin/env bash
-# Manage local Checkly Development Environment with tmux
 set -uf -o pipefail
 
+###############################################################################
+#
+#                   Checkly Local Dev Tmux Script
+#
+#                 ..         .:-====--:          .
+#              .#%##%%+. -+%%##@@@@@@%##%*=. -*%###%+
+#              %#-+**=#@%#+=====*@@#======*%@@+=**==@=
+#              #%-*@@@*:....::-==+*===-:.....=%@@@==@-
+#               %%+@*.   ...    :===:    ..    -@#+@+       .
+#                #@:  .+%@@@@+   .-   :#@@@@#=   *@-  .=*%@@@@+
+#               ##   *@@%-::+@*      .@@-:.=@@@-  =@+%#**%%@@%@-
+#              #%   #@%@##@@@@@. ... =@%@@@*%@%@-  -@+-====+*%@%
+#             *@-  .@@@@@@@@%@%  *%: :@%@@@@@@%@#   *@*+=====-*@.
+#            -@+-*- =%@@@@@@@*. *#%#- -%@@@@@@%*. +=-#@@@%*===+@.
+#            %#-=+%*.  ...::     :-.    .::..   -%#==+@@@@@@%++@
+#           :@+====+%#=*%%##@+        .#%##%#++%#=====#@@@@@@@@#
+#           =@+====+#%*+=====@-       #%-====+#%*=====%@=*@@@%@-
+#           =@%#====+=======%%--------+@*=======+===+%@@===#@@#
+#           -@=*%#*+====+*%%*====---====#@#+====++#%%=#%===-#%
+#            @*-==*######*===:.       .-==+*#####*+===@@+==#%.
+#            =@============:            .-==========-#@@@*%*
+#             *@#%##%%#+==.               -==*%%##%%#@@%@%-
+#              @*-====+%%:                 +@#======%@@%=
+#             .@+=-...:=*@.               =@+-:...==#%-
+#              +@+     .=@+               @#-     :#@.
+#               :%#-   .*@:               *@=   .=%*.
+#                 :+##%#*##+=-:.    ..:-+*%**%##*=
+#                          .-=++****++=-:
+#
+#   Author:  Nico Domino
+#   Usage:  Make sure the variables match your local setup.
+#
+###############################################################################
+
+### USER VARIABLES ###
+# Define base directory where you cloned your Checkly repositories
+# i.e. $CHECKLY_DIR/checkly-backend, $CHECKLY_DIR/checkly-webapp should exist
+CHECKLY_DIR="/opt/checkly"
+###
+
+PROGRAM=$(basename "$0")
 LIGHTBLUE="$(printf '\e[96m')"
 GREEN="$(printf '\e[32m')"
 YELLOW="$(printf '\e[33m')"
 RED="$(printf '\e[31m')"
 BOLD="$(printf '\e[1m')"
 RESET="$(printf '\e[0m')"
-
-CHECKLY_DIR="/opt/checkly" # Define base directory where you cloned your Checkly repositories
-PROGRAM=$(basename "$0")
 
 usage() {
   echo ""
@@ -22,6 +59,8 @@ usage() {
   echo "  -s, --status, status      check status of dev processes"
   echo "  -r, --restart, restart    restart checkly dev processes"
   echo "    (-r -f to restart frontend only)"
+  echo "    (-r -b to restart backend only)"
+  echo "    (-r -c to restart containers only)"
   echo "  -S, --stop, stop          kill checkly dev processes"
   echo "  -a, --all, all            run all check dev components"
   echo "  -f, --frontend, frontend  run check-webapp vue frontend"
@@ -108,7 +147,7 @@ fi
 # Main switch statement to determine action based on argument passed
 while [ "$#" -gt 0 ]; do
   i=$1
-  echo $i
+  # echo $i
 
   case "$i" in
   -h | --help | help)
@@ -130,8 +169,8 @@ while [ "$#" -gt 0 ]; do
     # Check Docker Containers
     containerCount=$(checkContainers)
 
-    if [ "$containerCount" -eq 3 ]; then
-      echo -e "[*] ${BOLD}${LIGHTBLUE}Checkly${RESET} Docker ${BOLD}${GREEN}ACTIVE${RESET} with ${BOLD}3${RESET} containers"
+    if [ "$containerCount" -gt 3 ]; then
+      echo -e "[*] ${BOLD}${LIGHTBLUE}Checkly${RESET} Docker ${BOLD}${GREEN}ACTIVE${RESET} with ${BOLD}$containerCount${RESET} containers"
     elif [[ containerCount -lt 3 ]] && [[ containerCount -gt 0 ]]; then
       echo -e "[*] ${BOLD}${LIGHTBLUE}Checkly${RESET} Docker ${BOLD}${YELLOW}DEGRADED${RESET} with ${BOLD}$containerCount${RESET} containers"
     elif [[ containerCount -eq 0 ]]; then
@@ -139,21 +178,25 @@ while [ "$#" -gt 0 ]; do
     fi
     exit 0
     ;;
-  -r | --restart | restart | -rf | -rb)
-    if [[ "$#" > 1 ]] || [[ "$1" =~ -r(f|b) ]]; then
+  -r | --restart | restart | -rf | -rb | -rc)
+    if [[ "$#" > 1 ]] || [[ "$1" =~ -r(f|c|b) ]]; then
       if [[ "$@" == *"f"* ]]; then
-        tmux kill-window -t checkly:webapp
-        pkill -f 'node /opt/checkly/checkly-webapp'
+        tmux kill-window -t checkly:webapp &>/dev/null
+        pkill -f 'node /opt/checkly/checkly-webapp' &>/dev/null
         start frontend
       elif [[ "$@" == *"b"* ]]; then
-        echo "Restarting Backend!"
-        tmux kill-window -t checkly:api
-        tmux kill-window -t checkly:functions
-        tmux kill-window -t checkly:daemons
-        pkill -f 'node daemons/'
-        pkill -f 'node /opt/checkly/checkly-backend'
-        pkill -f 'node /opt/checkly/checkly-lambda-runners'
+        echo "[*] Restarting Backend!"
+        tmux kill-window -t checkly:api &>/dev/null
+        tmux kill-window -t checkly:functions &>/dev/null
+        tmux kill-window -t checkly:daemons &>/dev/null
+        pkill -f 'node daemons/' &>/dev/null
+        pkill -f 'node /opt/checkly/checkly-backend' &>/dev/null
+        pkill -f 'node /opt/checkly/checkly-lambda-runners' &>/dev/null
         start backend
+      elif [[ "$@" == *"c"* ]]; then
+        echo "[*] Restarting containers!"
+        containerCount=$(checkContainers)
+        docker container restart $(docker container ls -a -q --filter name=devenv*) 1>/dev/null
       fi
       exit 0
     fi
@@ -167,7 +210,7 @@ while [ "$#" -gt 0 ]; do
     if [ "$containerCount" -gt 0 ]; then
       read -r -p "[*] Restart Docker containers? [y/N] " response
       if [ "$response" != "${response#[Yy]}" ]; then
-        docker container restart $(docker container ls -q --filter name=devenv*) 1>/dev/null
+        docker container restart $(docker container ls -a -q --filter name=devenv*) 1>/dev/null
       fi
     fi
     start all
@@ -177,7 +220,7 @@ while [ "$#" -gt 0 ]; do
     if [ "$containerCount" -gt 0 ]; then
       read -r -p "[*] Stop Docker containers? [y/N] " response
       if [ "$response" != "${response#[Yy]}" ]; then
-        docker container stop $(docker container ls -q --filter name=devenv*) 1>/dev/null
+        docker container stop $(docker container ls -a -q --filter name=devenv*) 1>/dev/null
       fi
     fi
     if ! checkTmux; then
