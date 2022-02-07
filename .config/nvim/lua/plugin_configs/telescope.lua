@@ -6,7 +6,7 @@ require("telescope").setup {
         ["<C-c>"] = "delete_buffer"
       }
     },
-    file_ignore_patterns = {"node_modules", ".next", "static"}
+    file_ignore_patterns = {"node_modules", ".next", "static", "lcov-report"}
   },
   pickers = {},
   extensions = {}

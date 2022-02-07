@@ -155,6 +155,11 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
+# Dunst Notifications
+bindsym $control+Shift+space exec "dunstctl close-all"
+bindsym $control+space exec "dunstctl close"
+bindsym $control+Shift+grave exec "dunstctl history-pop"
+
 # Audio
 # bindsym XF86AudioRaiseVolume exec pactl set-sink-volume 0 +5% #increase sound volume
 # bindsym XF86AudioLowerVolume exec pactl set-sink-volume 0 -5% #decrease sound volume
@@ -190,7 +195,7 @@ for_window [instance="steam"] floating enable normal
 # Autostart
 # exec_always --no-startup-id "DISPLAY=:0.0 feh --bg-fill /home/ndo/Pictures/personal/Wallpapers/wallhaven-3zw6g9.png"
 # exec_always volctl
-exec --no-startup-id ntdisplay
+# exec --no-startup-id ntdisplay
 exec --no-startup-id xset +fp /home/ndo/.local/share/fonts
 exec --no-startup-id xset fp rehash
 exec --no-startup-id /usr/bin/clipit
