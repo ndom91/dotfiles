@@ -32,8 +32,11 @@ cmp.setup(
         {name = "vsnip"}
       },
       {
-        {name = "buffer"}
+        {name = "buffer", keyword_length = 5}
       }
-    )
+    ),
+    view = {
+      entries = "native"
+    }
   }
 )

@@ -62,7 +62,7 @@ require "format".setup {
   typescriptreact = {
     {
       cmd = {
-        "prettier -w"
+        "prettier -w --parser typescript"
       }
     }
   },

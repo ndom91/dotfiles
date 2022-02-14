@@ -37,6 +37,7 @@ packer.startup(
         require "plugin_configs.telescope"
       end
     }
+    use {"nvim-telescope/telescope-ui-select.nvim"}
 
     -- builtin lsp
     use {
@@ -158,13 +159,8 @@ packer.startup(
     use(
       {
         "rose-pine/neovim",
-        as = "rose-pine",
         config = function()
-          vim.g.rose_pine_variant = "main"
-          vim.g.rose_pine_bold_vertical_split_line = true
-          vim.g.rose_pine_disable_background = true
-          vim.g.rose_pine_disable_float_background = true
-          vim.cmd("colorscheme rose-pine")
+          require "plugin_configs.rose-pine"
         end
       }
     )
@@ -221,6 +217,18 @@ packer.startup(
       "glepnir/dashboard-nvim",
       config = function()
         require "plugin_configs.dashboard"
+      end
+    }
+    use "liuchengxu/vista.vim"
+
+    use {
+      "rcarriga/nvim-notify",
+      config = function()
+        -- require "plugin_configs.notify"
+        -- local notify = require("notify").setup({
+        --   background_colour = "Normal"
+        -- })
+        vim.notify = require("notify")
       end
     }
 
