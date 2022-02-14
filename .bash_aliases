@@ -110,9 +110,9 @@ alias .5='cd ../../../../../../'
 alias gam="/home/ndo/bin/gamadv-xtd3/gam"
 
 ### NEXT-AUTH ###
-alias na='cd /opt/next-auth/next-auth'
-alias naa='cd /opt/next-auth/adapters'
-alias nad='cd /opt/next-auth/docs'
+alias na='cd /opt/next-auth/next-auth/'
+alias naa='cd /opt/next-auth/next-auth/packages/'
+alias nad='cd /opt/next-auth/next-auth/packages/docs'
 
 #### SSH Tunnels ####
 alias pvetunnel='ssh -L 8005:192.168.1.201:8006 nt-hulk'

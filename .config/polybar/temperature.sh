@@ -9,7 +9,8 @@ SENSORS=/usr/bin/sensors
 
 count=
 sum=0.0
-for temp in $($SENSORS | grep "^Tdie\|^Core 0" | grep -e '.*C' | cut -f 2 -d '+' | cut -f 1 -d ' ' | sed 's/°C//'); do
+# for temp in $($SENSORS | grep "^Tdie\|^Core 0" | grep -e '.*C' | cut -f 2 -d '+' | cut -f 1 -d ' ' | sed 's/°C//'); do
+for temp in $($SENSORS | grep "^Tctl\|^Core 0" | grep -e '.*C' | cut -f 2 -d '+' | cut -f 1 -d ' ' | sed 's/°C//'); do
   sum=$(echo "$sum"+"$temp" | bc)
   # echo $temp, $sum
   ((count += 1))
