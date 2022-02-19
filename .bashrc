@@ -8,6 +8,8 @@
 # github: ndom91
 #
 # https://github.com/ndom91/dotfiles
+# Using many `sensible-bash` options
+# See: https://github.com/mrzool/bash-sensible
 
 # DEFAULTS
 export EDITOR="vim"
@@ -20,10 +22,10 @@ export BAT_THEME="dracula"
 export RIPGREP_CONFIG_PATH="$HOME/.ripgreprc"
 
 # GUI
-if [ -n "$XDG_CURRENT_DESKTOP" ]; then
-  export QT_QPA_PLATFORMTHEME='gtk2'
-  export QT_STYLE_OVERRIDE='gtk2'
-fi
+# if [ -n "$XDG_CURRENT_DESKTOP" ]; then
+#   export QT_QPA_PLATFORMTHEME='gtk2'
+#   export QT_STYLE_OVERRIDE='gtk2'
+# fi
 
 # If not in an interactive shell return
 [[ $- != *i* ]] && return
@@ -34,15 +36,31 @@ shopt -s cdspell
 shopt -s dirspell
 shopt -s direxpand
 
+# sensible-bash
+PROMPT_DIRTRIM=2
+set -o noclobber
+bind Space:magic-space
+shopt -s globstar 2> /dev/null
+shopt -s nocaseglob
+bind "set completion-ignore-case on"
+bind "set completion-map-case on"
+bind "set show-all-if-ambiguous on"
+bind "set mark-symlinked-directories on"
+
 # tab complete for sudo commands
 complete -cf sudo
 
 # History Control
 shopt -s histappend
-HISTCONTROL=ignoreboth
+HISTCONTROL="erasedups:ignoreboth"
 HISTSIZE=1000000
 HISTFILESIZE=1000000
-HISTIGNORE='ls:bg:fg:history'
+HISTIGNORE="ls:bg:fg:history:clear:exit"
+
+# Use standard ISO 8601 timestamp
+# %F equivalent to %Y-%m-%d
+# %T equivalent to %H:%M:%S (24-hours format)
+HISTTIMEFORMAT='%F %T '
 
 # PATH
 export PATH="/usr/local/bin:$PATH"
@@ -133,11 +151,15 @@ else
 fi
 
 #### LANGUAGES ####
-# js
+# node
 # - install: `curl -fsSL install-node.vercel.app | sh`
 export NPM_PACKAGES="${HOME}/.npm-global"
 export NODE_PATH="$NPM_PACKAGES/lib/node_modules:$NODE_PATH"
 export PATH="$HOME/.npm-global/bin:$PATH"
+
+# BUN
+BUN_INSTALL="/home/ndo/.bun"
+PATH="$BUN_INSTALL/bin:$PATH"
 
 # rust
 if [ "$(command -v cargo)" ]; then
@@ -181,7 +203,3 @@ fi
 # AWS
 export AWS_DEFAULT_REGION=eu-central-1
 export AWS_REGION=eu-central-1
-
-# BUN
-BUN_INSTALL="/home/ndo/.bun"
-PATH="$BUN_INSTALL/bin:$PATH"

@@ -49,18 +49,18 @@ fi
 
 # DEBUG OUTPUT
 # [ "${detection}" = "/etc/os-release" ] && cat << EOF
-# 
+#
 # /etc/os-release information:
 # NAME            : ${NAME}
 # VERSION         : ${VERSION}
 # ID              : ${ID}
 # ID_LIKE         : ${ID_LIKE}
 # VERSION_ID      : ${VERSION_ID}
-# 
+#
 # EOF
-# 
+#
 # cat << EOF
-# 
+#
 # We detected these:
 # Distribution    : ${distribution}
 # Version         : ${version}
@@ -68,7 +68,7 @@ fi
 # Package Manager : ${package_installer}
 # Packages Tree   : ${tree}
 # Detection Method: ${detection}
-# 
+#
 # EOF
 
 execute "which rsgsg" "Listing ~dotfiles"
@@ -88,9 +88,9 @@ printf "${BOLD} Welcome to your init script, Nico!${NO_COLOR}\n\n"
 setup() {
   start_spinner "${BOLD}${GREY}>${NO_COLOR} Cloning ndom91/dotfiles into bare repo at ~/"
 
-  if ! [ "git clone --quiet --bare https://ndom91:$gitPw@github.com/ndom91/dotfiles.git $HOME/dotfiles" ]; then
+  if ! [ "git clone --quiet --bare https://github.com/ndom91/dotfiles.git $HOME/dotfiles" ]; then
     dotfiles clean -n -f | egrep -Eo '\.+[a-zA-Z1-9_./]+' | xargs -I{} mv {}{,.bak}
-    git clone --quiet --bare https://ndom91:$gitPw@github.com/ndom91/dotfiles.git $HOME/dotfiles >>/dev/null
+    git clone --quiet --bare https://github.com/ndom91/dotfiles.git $HOME/dotfiles >>/dev/null
   fi
 
   stop_spinner $?
