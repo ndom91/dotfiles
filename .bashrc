@@ -33,8 +33,11 @@ export RIPGREP_CONFIG_PATH="$HOME/.ripgreprc"
 # Bash Options
 shopt -s checkwinsize
 shopt -s cdspell
+shopt -s autocd
 shopt -s dirspell
 shopt -s direxpand
+
+CDPATH=".:/opt/"
 
 # sensible-bash
 PROMPT_DIRTRIM=2
