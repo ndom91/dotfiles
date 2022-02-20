@@ -1,0 +1,19 @@
+name: scp files to server
+on: [push]
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: copy file via ssh key
+      uses: appleboy/scp-action@master
+      env:
+        HOST: ${{ secrets.HOST }}
+        USERNAME: ${{ secrets.USERNAME }}
+        KEY: ${{ secrets.KEY }}
+        PORT: ${{ secrets.PORT }}
+      with:
+        source: ".dotfiles/setup/init.sh"
+        target: "/var/www/html/shell"
+        overwrite: true
