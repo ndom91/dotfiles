@@ -55,7 +55,14 @@ require("bufferline").setup {
     offsets = {
       {
         filetype = "NvimTree",
-        text = "Explorer",
+        text = function()
+          return vim.fn.getcwd()
+        end,
+        text_align = "center"
+      },
+      {
+        filetype = "vista",
+        text = "Vista",
         text_align = "center"
       }
     },

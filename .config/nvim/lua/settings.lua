@@ -12,6 +12,7 @@ vim.g.vimsyn_embed = "lPrjt"
 vim.g.swapfile = false
 
 o.autoindent = true
+o.autoread = true
 o.completeopt = "menu,menuone,noselect"
 o.clipboard = "unnamedplus"
 o.cursorline = true
@@ -44,7 +45,7 @@ o.tabstop = 2
 o.termguicolors = true
 o.wildignore = "*/.next/*,*/node_modules/*,*/.git/*,DS_Store,*/venv/*,*/__pycache__/*,*.pyc,*/tmp/*,*/temp*"
 o.wildmenu = true
-o.wildmode = "full"
+-- o.wildmode = "full"
 o.wildoptions = "pum"
 o.wrap = false
 

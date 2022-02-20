@@ -92,6 +92,22 @@ packer.startup(
     use "hrsh7th/vim-vsnip"
     use "onsails/lspkind-nvim"
 
+    -- lsp function signature
+    use {
+      "ray-x/lsp_signature.nvim",
+      config = function()
+        cfg = {
+          hint_enable = false,
+          bind = true,
+          transparency = 30,
+          handler_opts = {
+            border = "rounded"
+          }
+        }
+        require "lsp_signature".setup(cfg)
+      end
+    }
+
     -- treesitter
     use {
       "nvim-treesitter/nvim-treesitter",
@@ -229,6 +245,17 @@ packer.startup(
         --   background_colour = "Normal"
         -- })
         vim.notify = require("notify")
+      end
+    }
+    use {
+      "pwntester/octo.nvim",
+      requires = {
+        "nvim-lua/plenary.nvim",
+        "nvim-telescope/telescope.nvim",
+        "kyazdani42/nvim-web-devicons"
+      },
+      config = function()
+        require "octo".setup()
       end
     }
 
