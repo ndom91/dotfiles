@@ -172,6 +172,27 @@ packer.startup(
     -- use "wadackel/vim-dogrun"
     -- use "challenger-deep-theme/vim"
     -- use "EdenEast/nightfox.nvim"
+    -- use(
+    --   {
+    --     "catppuccin/nvim",
+    --     as = "catppuccin",
+    --     config = function()
+    --       require("catppuccin").setup(
+    --         {
+    --           transparent_background = true,
+    --           term_colors = true,
+    --           integration = {
+    --             nvimtree = {
+    --               enabled = true,
+    --               transparent_panel = true
+    --             },
+    --             lsp_trouble = true
+    --           }
+    --         }
+    --       )
+    --     end
+    --   }
+    -- )
     use(
       {
         "rose-pine/neovim",
@@ -258,7 +279,6 @@ packer.startup(
         require "octo".setup()
       end
     }
-
     -- vimscript plugins
     use "tpope/vim-surround"
   end

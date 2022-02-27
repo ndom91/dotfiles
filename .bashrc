@@ -68,7 +68,6 @@ HISTTIMEFORMAT='%F %T '
 # PATH
 export PATH="/usr/local/bin:$PATH"
 export PATH="/var/lib/snapd/snap/bin:$PATH"
-export PATH="$NPM_PACKAGES/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
 
 # make `less` more friendly for non-text input files,
@@ -161,8 +160,10 @@ export NODE_PATH="$NPM_PACKAGES/lib/node_modules:$NODE_PATH"
 export PATH="$HOME/.npm-global/bin:$PATH"
 
 # BUN
-BUN_INSTALL="/home/ndo/.bun"
-PATH="$BUN_INSTALL/bin:$PATH"
+if [ "$(command -v bun)" ]; then
+  export BUN_INSTALL="/home/ndo/.bun"
+  export PATH="$BUN_INSTALL/bin:$PATH"
+fi
 
 # rust
 if [ "$(command -v cargo)" ]; then
@@ -206,3 +207,8 @@ fi
 # AWS
 export AWS_DEFAULT_REGION=eu-central-1
 export AWS_REGION=eu-central-1
+
+# colorscript
+if [ -f "$HOME/.dotfiles/colorscripts/crunchbang-mini.sh" ]; then
+  "$HOME/.dotfiles/colorscripts/crunchbang-mini.sh"
+fi

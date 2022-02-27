@@ -85,3 +85,8 @@ window:
     x: 0
     y: 0
   title: Alacritty
+
+live_config_reload: true
+render_timer: true
+tabspaces: 2
+draw_bold_text_with_bright_colors: true

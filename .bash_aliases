@@ -31,7 +31,7 @@ alias dot='/usr/bin/git --git-dir=$HOME/public-dotfiles/ --work-tree=$HOME'
 #### APPLICATIONS ####
 if [ -f /usr/bin/exa ]; then
   alias ll='exa --icons -l -a --group-directories-first --time-style long-iso --classify --group'
-  alias ls='exa --icons'
+  alias ls='exa --icons --group-directories-first --classify'
   alias tree='exa --long --tree --time-style long-iso --icons --group'
 else
   alias ll='ls -hal'
@@ -105,6 +105,9 @@ alias ....='cd ../../../'
 alias .....='cd ../../../../'
 alias .4='cd ../../../../../'
 alias .5='cd ../../../../../../'
+
+### SystemD
+alias jctl='journalctl -p 3 -xb'
 
 ### GAM
 alias gam="/home/ndo/bin/gamadv-xtd3/gam"
