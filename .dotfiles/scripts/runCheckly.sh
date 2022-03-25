@@ -38,7 +38,8 @@ set -uf -o pipefail
 ### USER VARIABLES ###
 # Define base directory where you cloned your Checkly repositories
 # i.e. $CHECKLY_DIR/checkly-backend, $CHECKLY_DIR/checkly-webapp should exist
-CHECKLY_DIR="/opt/checkly"
+CHECKLY_DIR=/opt/checkly
+DOCKER_MACHINE=ndo-docker
 ###
 
 PROGRAM=$(basename "$0")
@@ -51,6 +52,9 @@ RESET="$(printf '\e[0m')"
 
 usage() {
   echo ""
+  echo "Flags:"
+  echo "  -m, --machine             activate docker-machine for next cmds"
+  echo ""
   echo "Usage:"
   echo ""
   echo -e "  ${LIGHTBLUE}$PROGRAM${RESET} [-hsrfb]"
@@ -62,6 +66,7 @@ usage() {
   echo "    (-r -b to restart backend only)"
   echo "    (-r -c to restart containers only)"
   echo "  -S, --stop, stop          kill checkly dev processes"
+  echo "  -c, --clean, clean        kill all checkly processes 2"
   echo "  -a, --all, all            run all check dev components"
   echo "  -f, --frontend, frontend  run check-webapp vue frontend"
   echo "  -b, --backend, backend    run checkly-backend api/functions/daemons"
@@ -82,7 +87,7 @@ start() {
   }
   backend() {
     tmux neww -t checkly: -n api -d "cd $CHECKLY_DIR/checkly-backend/api && npm run start:watch"
-    tmux neww -t checkly: -n functions -d "cd $CHECKLY_DIR/checkly-lambda-runners/functions && npm run start:local"
+    tmux neww -t checkly: -n functions -d "cd $CHECKLY_DIR/checkly-lambda-runners-merge/functions && npm run start:local"
     tmux neww -t checkly: -n daemons -d "cd $CHECKLY_DIR/checkly-backend/api && npm run start:all-daemons:watch"
   }
 
@@ -112,7 +117,7 @@ start() {
   done
 }
 
-checkContainers() {
+countRunningContainers() {
   running="$(docker inspect --format="{{.State.Running}}" $(docker container ls -q --filter name=devenv) 2>/dev/null | wc -l)"
   echo $running
 }
@@ -125,15 +130,21 @@ checkTmux() {
   fi
 }
 
-# Check if vital dependencies are met
+# Check if tmux exists
 if [ ! "$(command -v tmux)" ]; then
   echo -e "[${RED}Error${RESET}] Please install tmux before continuing!"
   exit 1
 fi
 
+# Check if docker + docker-compose exists
 if [ ! "$(command -v docker)" ] || [ ! "$(command -v docker-compose)" ]; then
   echo -e "[${RED}Error${RESET}] Please install docker and docker-compose before continuing!"
   exit 1
+fi
+
+# Check if we're in a docker-machine env
+if [ -n "${DOCKER_HOST-}" ]; then
+  echo -e "[*] Using ${LIGHTBLUE}docker-machine${RESET}: $DOCKER_MACHINE_NAME"
 fi
 
 # Check to ensure atleast some arguments are passed
@@ -146,12 +157,15 @@ fi
 
 # Main switch statement to determine action based on argument passed
 while [ "$#" -gt 0 ]; do
-  i=$1
-  # echo $i
+  i="$1"
 
   case "$i" in
   -h | --help | help)
     usage
+    ;;
+  -m | --machine)
+    if [[ -z "${DOCKER_HOST-}" ]]; then eval $(docker-machine env $DOCKER_MACHINE); fi
+    shift
     ;;
   -s | --status | status)
     # Check Tmux Windows
@@ -167,15 +181,27 @@ while [ "$#" -gt 0 ]; do
     fi
 
     # Check Docker Containers
-    containerCount=$(checkContainers)
+    containerCount=$(countRunningContainers)
 
     if [ "$containerCount" -gt 3 ]; then
-      echo -e "[*] ${BOLD}${LIGHTBLUE}Checkly${RESET} Docker ${BOLD}${GREEN}ACTIVE${RESET} with ${BOLD}$containerCount${RESET} containers"
-    elif [[ containerCount -lt 3 ]] && [[ containerCount -gt 0 ]]; then
-      echo -e "[*] ${BOLD}${LIGHTBLUE}Checkly${RESET} Docker ${BOLD}${YELLOW}DEGRADED${RESET} with ${BOLD}$containerCount${RESET} containers"
-    elif [[ containerCount -eq 0 ]]; then
-      echo -e "[*] ${BOLD}${LIGHTBLUE}Checkly${RESET} Docker ${BOLD}${RED}INACTIVE${RESET}"
+      echo -e "[*] ${BOLD}${LIGHTBLUE}Checkly${RESET} docker ${BOLD}${GREEN}ACTIVE${RESET} with ${BOLD}$containerCount${RESET} containers"
+    elif [[ "$containerCount" -lt 3 ]] && [[ "$containerCount" -gt 0 ]]; then
+      echo -e "[*] ${BOLD}${LIGHTBLUE}Checkly${RESET} docker ${BOLD}${YELLOW}DEGRADED${RESET} with ${BOLD}$containerCount${RESET} containers"
+    elif [[ "$containerCount" -eq 0 ]]; then
+      echo -e "[*] ${BOLD}${LIGHTBLUE}Checkly${RESET} docker ${BOLD}${RED}INACTIVE${RESET}"
+      read -r -p "[*] No containers running on this host. Check docker-machine? [y/N] " response
+      if [ "$response" != "${response#[Yy]}" ]; then
+        eval $(docker-machine env $DOCKER_MACHINE)
+        machineContainerCount=$(countRunningContainers)
+        if [ "$machineContainerCount" -gt 3 ]; then
+          echo -e "[*] ${BOLD}${LIGHTBLUE}Checkly${RESET} docker-machine ${BOLD}${GREEN}ACTIVE${RESET} with ${BOLD}$machineContainerCount${RESET} containers"
+        elif [[ "$machineContainerCount" -lt 3 ]] && [[ "$containerCount" -gt 0 ]]; then
+          echo -e "[*] ${BOLD}${LIGHTBLUE}Checkly${RESET} docker-machine ${BOLD}${YELLOW}DEGRADED${RESET} with ${BOLD}$machineContainerCount${RESET} containers"
+        fi
+      fi
     fi
+
+
     exit 0
     ;;
   -r | --restart | restart | -rf | -rb | -rc)
@@ -191,11 +217,15 @@ while [ "$#" -gt 0 ]; do
         tmux kill-window -t checkly:daemons &>/dev/null
         pkill -f 'node daemons/' &>/dev/null
         pkill -f 'node /opt/checkly/checkly-backend' &>/dev/null
-        pkill -f 'node /opt/checkly/checkly-lambda-runners' &>/dev/null
+        pkill -f 'node /opt/checkly/checkly-lambda-runners-merge' &>/dev/null
         start backend
       elif [[ "$@" == *"c"* ]]; then
         echo "[*] Restarting containers!"
-        containerCount=$(checkContainers)
+        containerCount=$(countRunningContainers)
+        if [[ "$containerCount" -eq 0 ]]; then
+          echo -e "[${YELLOW}Warn${RESET}] No containers running on host, checking docker-machine!"
+          eval $(docker-machine env $DOCKER_MACHINE)
+        fi
         docker container restart $(docker container ls -a -q --filter name=devenv*) 1>/dev/null
       fi
       exit 0
@@ -206,7 +236,7 @@ while [ "$#" -gt 0 ]; do
     else
       echo -e "[*] No tmux session named ${LIGHTBLUE}checkly${RESET}!"
     fi
-    containerCount=$(checkContainers)
+    containerCount=$(countRunningContainers)
     if [ "$containerCount" -gt 0 ]; then
       read -r -p "[*] Restart Docker containers? [y/N] " response
       if [ "$response" != "${response#[Yy]}" ]; then
@@ -215,8 +245,25 @@ while [ "$#" -gt 0 ]; do
     fi
     start all
     ;;
+  -c | --clean | clean)
+    echo -e "[*] ${RED}Killing${RESET} all ${LIGHTBLUE}Checkly${RESET} processes!"
+    tmux kill-session -t checkly
+    pkill -f 'node daemons/' &>/dev/null
+    pkill -f 'node /opt/checkly/checkly-backend' &>/dev/null
+    pkill -f 'node /opt/checkly/checkly-lambda-runners-merge' &>/dev/null
+    containerCount=$(countRunningContainers)
+    if [[ $containerCount -eq 0 ]]; then
+      echo -e "[*] No containers running on host, checking docker-machine!"
+      eval $(docker-machine env $DOCKER_MACHINE)
+      machineContainerCount=$(countRunningContainers)
+      echo -e "[*] Stopping all $machineContainerCount containers on ${DOCKER_MACHINE_NAME-}!"
+      docker container stop $(docker container ls -a -q --filter name=devenv*) 1>/dev/null
+    fi
+    docker container stop $(docker container ls -a -q --filter name=devenv*) 1>/dev/null
+    exit 0
+    ;;
   -S | --stop | stop)
-    containerCount=$(checkContainers)
+    containerCount=$(countRunningContainers)
     if [ "$containerCount" -gt 0 ]; then
       read -r -p "[*] Stop Docker containers? [y/N] " response
       if [ "$response" != "${response#[Yy]}" ]; then
