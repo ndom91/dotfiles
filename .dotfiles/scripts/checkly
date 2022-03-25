@@ -31,7 +31,14 @@ set -uf -o pipefail
 #                          .-=++****++=-:
 #
 #   Author:  Nico Domino
-#   Usage:  Make sure the variables match your local setup.
+#   Updated: 2022-03-25
+#   Desc: This checkly cli script is designed to primarily start and manage the
+#         local development environment consisiting of the following repositories:
+#           - checkly/checkly-backend
+#           - checkly/checkly-webapp
+#           - checkly/checkly-lambda-runners
+#   Note: When running "checkly status", a setup in good health will have 5 active
+#         tmux windows as well as 6 active docker containers.
 #
 ###############################################################################
 
@@ -39,6 +46,7 @@ set -uf -o pipefail
 # Define base directory where you cloned your Checkly repositories
 # i.e. $CHECKLY_DIR/checkly-backend, $CHECKLY_DIR/checkly-webapp should exist
 CHECKLY_DIR=/opt/checkly
+# If you use docker-machine and need it active, enter your machine name here
 DOCKER_MACHINE=ndo-docker
 ###
 
@@ -52,31 +60,24 @@ RESET="$(printf '\e[0m')"
 
 usage() {
   echo ""
-  echo "Flags:"
-  echo "  -m, --machine             activate docker-machine for next cmds"
+  echo " ${RED}${BOLD}Usage${RESET}:"
+  echo -e "  ${LIGHTBLUE}$PROGRAM${RESET} [-m] [status|restart|stop|clean]"
   echo ""
-  echo "Usage:"
+  echo " ${RED}${BOLD}Flags${RESET}:"
+  echo -e "  -m, --machine             activate ${BOLD}docker-machine${RESET} for current action"
   echo ""
-  echo -e "  ${LIGHTBLUE}$PROGRAM${RESET} [-hsrfb]"
-  echo ""
-  echo "  -h, --help, help          print this message"
-  echo "  -s, --status, status      check status of dev processes"
-  echo "  -r, --restart, restart    restart checkly dev processes"
+  echo " ${RED}${BOLD}Actions${RESET}:"
+  echo -e "  ${BOLD}-h${RESET}, --help, help          print this message"
+  echo -e "  ${BOLD}-s${RESET}, --status, status      check status of dev environment"
+  echo -e "  ${BOLD}-r${RESET}, --restart, restart    restart checkly dev processes"
   echo "    (-r -f to restart frontend only)"
   echo "    (-r -b to restart backend only)"
   echo "    (-r -c to restart containers only)"
-  echo "  -S, --stop, stop          kill checkly dev processes"
-  echo "  -c, --clean, clean        kill all checkly processes 2"
-  echo "  -a, --all, all            run all check dev components"
-  echo "  -f, --frontend, frontend  run check-webapp vue frontend"
-  echo "  -b, --backend, backend    run checkly-backend api/functions/daemons"
-  echo ""
-  echo -e "  see ${LIGHTBLUE}Checkly${RESET} Notion for more details"
-  echo ""
-  echo -e "  You need the following three repos:"
-  echo -e "  ${LIGHTBLUE}checkly${RESET}/checkly-backend"
-  echo -e "  ${LIGHTBLUE}checkly${RESET}/checkly-lambda-runners"
-  echo -e "  ${LIGHTBLUE}checkly${RESET}/checkly-webapp"
+  echo -e "  ${BOLD}-S${RESET}, --stop, stop          stop checkly dev processes"
+  echo -e "  ${BOLD}-c${RESET}, --clean, clean        kill all checkly processes"
+  echo -e "  ${BOLD}-a${RESET}, --all, all            start all check dev components"
+  echo -e "  ${BOLD}-f${RESET}, --frontend, frontend  run check-webapp vue frontend only"
+  echo -e "  ${BOLD}-b${RESET}, --backend, backend    run checkly-backend api/functions/daemons"
   echo ""
   exit 0
 }
@@ -150,7 +151,7 @@ fi
 # Check to ensure atleast some arguments are passed
 if [ $# -eq 0 ]; then
   echo ""
-  echo "No arguments passed. Please check usage below.."
+  echo " No arguments passed. Please double check usage details.."
   usage
   exit 1
 fi
@@ -165,6 +166,7 @@ while [ "$#" -gt 0 ]; do
     ;;
   -m | --machine)
     if [[ -z "${DOCKER_HOST-}" ]]; then eval $(docker-machine env $DOCKER_MACHINE); fi
+    echo -e "[*] Using ${LIGHTBLUE}docker-machine${RESET}: $DOCKER_MACHINE_NAME"
     shift
     ;;
   -s | --status | status)
@@ -189,7 +191,7 @@ while [ "$#" -gt 0 ]; do
       echo -e "[*] ${BOLD}${LIGHTBLUE}Checkly${RESET} docker ${BOLD}${YELLOW}DEGRADED${RESET} with ${BOLD}$containerCount${RESET} containers"
     elif [[ "$containerCount" -eq 0 ]]; then
       echo -e "[*] ${BOLD}${LIGHTBLUE}Checkly${RESET} docker ${BOLD}${RED}INACTIVE${RESET}"
-      read -r -p "[*] No containers running on this host. Check docker-machine? [y/N] " response
+      read -r -p "[*] No Checkly containers running on this host. Check docker-machine? [y/N] " response
       if [ "$response" != "${response#[Yy]}" ]; then
         eval $(docker-machine env $DOCKER_MACHINE)
         machineContainerCount=$(countRunningContainers)
@@ -282,14 +284,14 @@ while [ "$#" -gt 0 ]; do
     start all
     ;;
   -b | --backend | backend)
-    echo "Starting Backend!"
     start backend
     ;;
   -f | --frontend | frontend)
     start frontend
     ;;
   *)
-    echo "Command Unknown $i"
+    echo "Unknown command: $i"
+    usage
     shift
     ;;
   esac
