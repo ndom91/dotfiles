@@ -1,8 +1,8 @@
 local nvim_lsp = require "lspconfig"
 
-local on_attach = function(_, bufnr)
+local on_attach = function(client, bufnr)
+  require "lsp-format".on_attach(client)
   vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
-
   local opts = {noremap = true, silent = true}
   vim.api.nvim_buf_set_keymap(bufnr, "n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
   vim.api.nvim_buf_set_keymap(bufnr, "n", "<C-k>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)

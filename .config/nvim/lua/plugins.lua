@@ -69,7 +69,7 @@ packer.startup(
 
     -- format
     use {
-      "lukas-reineke/format.nvim",
+      "lukas-reineke/lsp-format.nvim",
       -- requires = {"kyaznvim-tree"},
       -- event = "BufWinEnter",
       config = function()
