@@ -64,6 +64,7 @@ bindsym $mod+Return exec alacritty
 bindsym $mod+Shift+f exec nemo
 bindsym $Control+$altleft+l exec "/home/ndo/.config/i3/i3lock-fancy-multimonitor/lock -n -p"
 bindsym $Control+Shift+period exec emojione-picker
+bindsym $altleft+space exec ulauncher-toggle
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -191,6 +192,7 @@ for_window [class="battle.net.exe"] floating enable normal
 for_window [instance="^.*ypress.*"] floating enable normal
 for_window [instance="engrampa"] floating enable normal
 for_window [instance="steam"] floating enable normal
+for_window [class="Ulauncher"] border pixel 0 floating
 
 # Autostart
 # exec_always --no-startup-id "DISPLAY=:0.0 feh --bg-fill /home/ndo/Pictures/personal/Wallpapers/wallhaven-3zw6g9.png"
@@ -203,6 +205,7 @@ exec --no-startup-id flameshot
 exec --no-startup-id /home/ndo/.fehbg
 exec --no-startup-id pasystray
 exec --no-startup-id pnmixer
+exec_always --no-startup-id ulauncher
 exec_always --no-startup-id picom -b --config /home/ndo/.config/i3/picom.conf
 exec_always --no-startup-id setxkbmap -layout us
 exec_always --no-startup-id setxkbmap -option caps:escape
