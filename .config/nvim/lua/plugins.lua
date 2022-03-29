@@ -279,6 +279,10 @@ packer.startup(
         require "octo".setup()
       end
     }
+
+    use {
+      "simrat39/rust-tools.nvim"
+    }
     -- vimscript plugins
     use "tpope/vim-surround"
   end
