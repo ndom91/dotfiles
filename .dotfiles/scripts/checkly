@@ -90,6 +90,7 @@ start() {
     tmux neww -t checkly: -n api -d "cd $CHECKLY_DIR/checkly-backend/api && npm run start:watch"
     tmux neww -t checkly: -n functions -d "cd $CHECKLY_DIR/checkly-lambda-runners-merge/functions && npm run start:local"
     tmux neww -t checkly: -n daemons -d "cd $CHECKLY_DIR/checkly-backend/api && npm run start:all-daemons:watch"
+    tmux neww -t checkly: -n datapipeline -d "cd $CHECKLY_DIR/checkly-data-pipeline/check-results-consumer && npm run start:local"
   }
 
   if ! tmux has-session -t checkly 2>/dev/null; then
@@ -217,9 +218,11 @@ while [ "$#" -gt 0 ]; do
         tmux kill-window -t checkly:api &>/dev/null
         tmux kill-window -t checkly:functions &>/dev/null
         tmux kill-window -t checkly:daemons &>/dev/null
+        tmux kill-window -t checkly:datapipeline &>/dev/null
         pkill -f 'node daemons/' &>/dev/null
         pkill -f 'node /opt/checkly/checkly-backend' &>/dev/null
         pkill -f 'node /opt/checkly/checkly-lambda-runners-merge' &>/dev/null
+        pkill -f 'node /opt/checkly/checkly-data-pipline/check-results-consumer' &>/dev/null
         start backend
       elif [[ "$@" == *"c"* ]]; then
         echo "[*] Restarting containers!"
@@ -253,6 +256,7 @@ while [ "$#" -gt 0 ]; do
     pkill -f 'node daemons/' &>/dev/null
     pkill -f 'node /opt/checkly/checkly-backend' &>/dev/null
     pkill -f 'node /opt/checkly/checkly-lambda-runners-merge' &>/dev/null
+    pkill -f 'node /opt/checkly/checkly-data-pipline/check-results-consumer' &>/dev/null
     containerCount=$(countRunningContainers)
     if [[ $containerCount -eq 0 ]]; then
       echo -e "[*] No containers running on host, checking docker-machine!"
