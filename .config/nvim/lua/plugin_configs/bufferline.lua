@@ -54,6 +54,13 @@ require("bufferline").setup {
     },
     offsets = {
       {
+        filetype = "neo-tree",
+        text = function()
+          return vim.fn.getcwd()
+        end,
+        text_align = "center"
+      },
+      {
         filetype = "NvimTree",
         text = function()
           return vim.fn.getcwd()

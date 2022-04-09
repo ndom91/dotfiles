@@ -21,7 +21,7 @@ end
 local capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())
 
 -- Enable the following language servers
-local servers = {"jsonls", "tsserver", "bashls", "eslint", "vuels", "yamlls", "html", "cssls", "tailwindcss", "rust"}
+local servers = {"jsonls", "tsserver", "bashls", "eslint", "vuels", "yamlls", "html", "cssls", "tailwindcss", "rust_analyzer"}
 -- local servers = require "lspinstall".installed_servers()
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
