@@ -58,15 +58,6 @@ packer.startup(
       end
     }
 
-    -- nvim-tree
-    -- use {
-    --   "kyazdani42/nvim-tree.lua",
-    --   requires = {"kyazdani42/nvim-web-devicons"},
-    --   config = function()
-    --     require "plugin_configs.nvim-tree"
-    --   end
-    -- }
-
     -- neo-tree
     use "MunifTanjim/nui.nvim" 
     use {
@@ -85,8 +76,6 @@ packer.startup(
     -- format
     use {
       "lukas-reineke/lsp-format.nvim",
-      -- requires = {"kyaznvim-tree"},
-      -- event = "BufWinEnter",
       config = function()
         require "plugin_configs.format"
       end
@@ -99,6 +88,7 @@ packer.startup(
         require "plugin_configs.nvim-cmp"
       end
     }
+
     use "hrsh7th/cmp-buffer"
     use "hrsh7th/cmp-nvim-lsp"
     use "hrsh7th/cmp-path"
@@ -208,6 +198,7 @@ packer.startup(
     --     end
     --   }
     -- )
+
     use(
       {
         "rose-pine/neovim",
@@ -271,18 +262,16 @@ packer.startup(
         require "plugin_configs.dashboard"
       end
     }
+
     use "liuchengxu/vista.vim"
 
     use {
       "rcarriga/nvim-notify",
       config = function()
-        -- require "plugin_configs.notify"
-        -- local notify = require("notify").setup({
-        --   background_colour = "Normal"
-        -- })
         vim.notify = require("notify")
       end
     }
+
     use {
       "pwntester/octo.nvim",
       requires = {
@@ -295,10 +284,12 @@ packer.startup(
       end
     }
 
+    -- vimscript plugins
+    use "tpope/vim-surround"
+
+    -- Rust
     use {
       "simrat39/rust-tools.nvim"
     }
-    -- vimscript plugins
-    use "tpope/vim-surround"
   end
 )
