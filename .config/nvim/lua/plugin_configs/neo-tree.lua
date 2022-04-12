@@ -65,9 +65,10 @@ require("neo-tree").setup({
   },
   window = {
     position = "left",
-    width = 40,
+    width = 35,
     mappings = {
       ["<space>"] = "toggle_node",
+      ["o"] = "toggle_node",
       ["<2-LeftMouse>"] = "open",
       ["<cr>"] = "open",
       ["<c-n>"] = "open",
@@ -92,7 +93,7 @@ require("neo-tree").setup({
   filesystem = {
     filtered_items = {
       visible = false, -- when true, they will just be displayed differently than normal items
-      hide_dotfiles = true,
+      hide_dotfiles = false,
       hide_gitignored = true,
       hide_by_name = {
         ".DS_Store",
@@ -150,4 +151,4 @@ require("neo-tree").setup({
   }
 })
 
-vim.cmd([[nnoremap <c-n> :Neotree toggle<cr>]])
+vim.api.nvim_set_keymap('n', '<c-n>', '<cmd>Neotree toggle<cr>', { silent = true })

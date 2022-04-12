@@ -64,7 +64,7 @@ alias activeSysd='for i in $(cd /etc/systemd/system/multi-user.target.wants && l
 [[ "$(command -v xclip)" ]] && alias xc='xclip -selection c'
 [[ "$(command -v tailscale)" ]] && alias ts='tailscale'
 [[ "$(command -v rtm)" ]] && alias rtmrl='rtm ls priority:1 OR priority:2 OR priority:3 OR list:PERSONAL OR dueBefore:tomorrow OR tag:todo'
-[[ "$(command -v bat)" ]] && alias cat='bat --theme=Dracula'
+[[ "$(command -v bat)" ]] && alias cat='bat --theme=Dracula '
 [[ "$(command -v docker)" ]] && alias dockeriprune='sudo docker rmi $(sudo docker images --filter "dangling=true" -q --no-trunc)'
 [[ "$(command -v solaar)" ]] && alias solaar="sudo /usr/bin/solaar"
 [[ "$(command -v lazygit)" ]] && alias lg="lazygit"
@@ -125,3 +125,4 @@ alias casapitunnel='ssh -L 8123:127.0.0.1:8123 tunnelpi'
 
 # CHECKLY
 alias checkly-cli='/opt/checkly/checkly-cli/bin/run'
+alias dockermachine='eval $(docker-machine env ndo-docker)'
