@@ -53,78 +53,6 @@ complete() {
     printf "${GREEN}✓${NO_COLOR} $@\n"
 }
 
-function _spinner() {
-    # https://github.com/tlatsas/bash-spinner
-    # $1 start/stop
-    #
-    # on start: $2 display message
-    # on stop : $2 process exit status
-    #           $3 spinner function pid (supplied from stop_spinner)
-
-    local on_success="DONE"
-    local on_fail="FAIL"
-    local white="\e[1;37m"
-    local green="\e[1;32m"
-    local red="\e[1;31m"
-    local nc="\e[0m"
-
-    case $1 in
-        start)
-            # calculate the column where spinner and status msg will be displayed
-            let column=$(tput cols)-${#2}-8
-            # display message and position the cursor in $column column
-            echo -ne "${2}"
-            printf "%${column}s"
-
-            # start spinner
-            i=1
-            sp='\|/-'
-            delay=${SPINNER_DELAY:-0.15}
-
-            while :
-            do
-                printf "\b${sp:i++%${#sp}:1}"
-                sleep "$delay"
-            done
-            ;;
-        stop)
-            if [[ -z ${3} ]]; then
-                echo "spinner is not running.."
-                exit 1
-            fi
-
-            kill "$3" > /dev/null 2>&1
-
-            # inform the user uppon success or failure
-            echo -en "\b["
-            if [[ $2 -eq 0 ]]; then
-                echo -en "${green}${on_success}${nc}"
-            else
-                echo -en "${red}${on_fail}${nc}"
-            fi
-            echo -e "]"
-            ;;
-        *)
-            echo "invalid argument, try {start/stop}"
-            exit 1
-            ;;
-    esac
-}
-
-function start_spinner {
-    # $1 : msg to display
-    _spinner "start" "${1}" &
-    # set global spinner pid
-    _sp_pid=$!
-    disown
-}
-
-function stop_spinner {
-    # $1 : command exit status
-    _spinner "stop" "$1" $_sp_pid
-    unset _sp_pid
-}
-
 function not_installed() {
   [ ! -x "$(command -v "$@")" ]
 }
@@ -305,7 +233,7 @@ get_os_release() {
   eval "$(grep -E "^(NAME|ID|ID_LIKE|VERSION|VERSION_ID)=" "${os_release_file}")"
   for x in "${ID}" ${ID_LIKE}; do
     case "${x,,}" in
-      alpine | arch | centos | clear-linux-os | debian | fedora | gentoo | manjaro | opensuse-leap | rhel | sabayon | sles | suse | ubuntu)
+      alpine | arch | centos | clear-linux-os | debian | fedora | gentoo | manjaro | opensuse-leap | rhel | sabayon | sles | suse | ubuntu | endeavour)
         distribution="${x}"
         version="${VERSION_ID}"
         codename="${VERSION}"
@@ -527,33 +455,30 @@ EOF
 info "${BOLD} Bootstrapping...${NO_COLOR}\n\n"
 
 setup() {
-  start_spinner "${BOLD}${GREY}>${NO_COLOR} Cloning ndom91/dotfiles into bare repo at ~/"
+  info "Cloning ndom91/dotfiles into bare repo at ~/"
 
   if ! [ "git clone --quiet --bare https://github.com/ndom91/dotfiles.git $HOME/dotfiles" ]; then
     dotfiles clean -n -f | egrep -Eo '\.+[a-zA-Z1-9_./]+' | xargs -I{} mv {}{,.bak}
-    git clone --quiet --bare https://github.com/ndom91/dotfiles.git $HOME/dotfiles >>/dev/null
+    git clone --quiet --bare https://github.com/ndom91/dotfiles.git $HOME/dotfiles 2> /dev/null
   fi
-
-  stop_spinner $?
 
   dotfiles checkout
 
   if [ $? -eq 0 ]; then
-    complete 'Checked out config.'
+    complete "Checked out config."
   else
-    warn 'Existing files blocking git checkout'
-    start_spinner "${BOLD}${GREY}>${NO_COLOR} Backing up existing files"
+    warn "Existing files blocking git checkout"
+    info "Backing up existing files"
     until dotfiles checkout 2>&1; do
       dotfiles checkout 2>&1 | egrep -Eo '\.+[a-zA-Z1-9_./]+' | xargs -I{} mv {}{,.bak}
     done
-    stop_spinner $?
   fi
 
   dotfiles checkout
-  info 'Setting dotfiles alias and config settings'
+  info "Setting dotfiles alias and config settings"
   dotfiles config status.showUntrackedFiles no
-  info 'Sourcing new .bashrc'
-  source ~/.bashrc
+  info "Sourcing new .bashrc"
+  source "$HOME/.bashrc"
 }
 
 if not_installed git; then
@@ -563,10 +488,6 @@ fi
 
 setup
 
-complete 'Dotfiles setup script complete!'
-info 'To continue, use `deploy.sh` to install other package bundles!'
+complete "Dotfiles setup script complete!"
+info "To continue, use '$HOME/dotfiles/setup/deploy.sh' to install other package bundles!"
 
-# if [[ -n ${VIM} ]]; then
-#   complete 'Deploying vim setup script'
-#   ./deploy.sh vim
-# fi
