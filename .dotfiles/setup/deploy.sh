@@ -11,8 +11,8 @@
 #
 
 
-# shellcheck source=../scripts/helpers.sh
-. ../scripts/helpers.sh
+# shellcheck source=../utils/helpers.sh
+. ../utils/helpers.sh
 
 if [ -z "${PLATFORM-}" ]; then
   PLATFORM="$(detect_platform)"
