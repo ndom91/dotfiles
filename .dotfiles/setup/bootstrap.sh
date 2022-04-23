@@ -233,7 +233,7 @@ get_os_release() {
   eval "$(grep -E "^(NAME|ID|ID_LIKE|VERSION|VERSION_ID)=" "${os_release_file}")"
   for x in "${ID}" ${ID_LIKE}; do
     case "${x,,}" in
-      alpine | arch | centos | clear-linux-os | debian | fedora | gentoo | manjaro | opensuse-leap | rhel | sabayon | sles | suse | ubuntu | endeavour)
+      alpine | arch | centos | clear-linux-os | debian | fedora | gentoo | manjaro | opensuse-leap | rhel | sabayon | sles | suse | ubuntu | endeavouros)
         distribution="${x}"
         version="${VERSION_ID}"
         codename="${VERSION}"
@@ -456,8 +456,10 @@ info "${BOLD} Bootstrapping...${NO_COLOR}\n\n"
 
 setup() {
   info "Cloning ndom91/dotfiles into bare repo at ~/"
+  git clone --quiet --bare https://github.com/ndom91/dotfiles.git $HOME/dotfiles
 
-  if ! [ "git clone --quiet --bare https://github.com/ndom91/dotfiles.git $HOME/dotfiles" ]; then
+  if [ $? -ne 0 ]; then
+    warn "Error cloning repo, trying again..."
     dotfiles clean -n -f | egrep -Eo '\.+[a-zA-Z1-9_./]+' | xargs -I{} mv {}{,.bak}
     git clone --quiet --bare https://github.com/ndom91/dotfiles.git $HOME/dotfiles 2> /dev/null
   fi
