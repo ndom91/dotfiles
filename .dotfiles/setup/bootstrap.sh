@@ -459,7 +459,7 @@ setup() {
 
   if [ $? -ne 0 ]; then
     warn "Error cloning repo, trying again..."
-    dotfiles clean -n -f | grep -Eo '\.+[a-zA-Z1-9_./]+' 2> /dev/null | xargs -I{} mv {}{,.bak} > /dev/null
+    dotfiles clean -n -f | grep -Eo '\.+[a-zA-Z1-9_./\-]+' 2> /dev/null | xargs -I{} mv {}{,.bak} > /dev/null
     git clone --quiet --bare https://github.com/ndom91/dotfiles.git "$HOME"/dotfiles > /dev/null
   fi
 
