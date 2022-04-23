@@ -3,50 +3,22 @@
   email = yo@ndo.dev
   signingkey = 2DCE07BE62610800B1E4BEDE955D29B1F039BC43
 
-[credential]
-  helper = cache --timeout=360000
-
 [init]
   defaultBranch = main
 
+[credential]
+  helper = cache --timeout=360000
+
 [core]
   editor = nvim
-  pager = delta
+  pager = most
   excludesfile = ~/.gitignore-global
-
-[interactive]
-  diffFilter = delta --color-only --features=interactive
-
-[delta]
-  features = decorations
-  theme = Dark Neon
-  line-numbers = true
-  side-by-side = true
-
-[delta "interactive"]
-  keep-plus-minus-markers = true
-
-[delta "decorations"]
-  commit-decoration-style = blue ol
-  commit-style = raw
-  file-style = omit
-  hunk-header-decoration-style = blue box
-  hunk-header-file-style = red
-  hunk-header-line-number-style = "#067a00"
-  hunk-header-style = file line-number syntax
-
-[diff]
-  colorMoved = default
 
 [color]
   ui = true
   branch = auto
   diff = auto
   status = auto
-
-[merge]
-  tool = nvim
-  conflictstyle = diff3
 
 [color "branch"]
   current = yellow reverse
@@ -82,6 +54,13 @@
   undo = reset HEAD~1
   # change last commit message
   recommit = commit --amend
+
+[diff]
+  colorMoved = default
+
+[merge]
+  tool = nvim
+  conflictstyle = diff3
 
 [pull]
   rebase = false
