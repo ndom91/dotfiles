@@ -1,0 +1,103 @@
+[user]
+  name = ndom91
+  email = yo@ndo.dev
+  signingkey = 2DCE07BE62610800B1E4BEDE955D29B1F039BC43
+
+[credential]
+  helper = cache --timeout=360000
+
+[init]
+  defaultBranch = main
+
+[core]
+  editor = nvim
+  pager = delta
+  excludesfile = ~/.gitignore-global
+
+[interactive]
+  diffFilter = delta --color-only --features=interactive
+
+[delta]
+  features = decorations
+  theme = Dark Neon
+  line-numbers = true
+  side-by-side = true
+
+[delta "interactive"]
+  keep-plus-minus-markers = true
+
+[delta "decorations"]
+  commit-decoration-style = blue ol
+  commit-style = raw
+  file-style = omit
+  hunk-header-decoration-style = blue box
+  hunk-header-file-style = red
+  hunk-header-line-number-style = "#067a00"
+  hunk-header-style = file line-number syntax
+
+[diff]
+  colorMoved = default
+
+[color]
+  ui = true
+  branch = auto
+  diff = auto
+  status = auto
+
+[merge]
+  tool = nvim
+  conflictstyle = diff3
+
+[color "branch"]
+  current = yellow reverse
+  local = yellow
+  remote = green
+
+[color "diff"]
+  meta = yellow bold
+  frag = magenta bold
+  old = red
+  new = cyan
+
+[color "status"]
+  added = yellow
+  changed = green
+  untracked = cyan
+
+[alias]
+  # shows last modified local branches
+  last = branch --sort=-committerdate
+  # shows list of files that have a merge conflict
+  conflicts = diff --name-only --diff-filter=U
+  changes = log  --color --graph --oneline --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'
+  # unstages a file. use like 'git unstage filename'
+  unstage = reset HEAD --
+  # resets all uncomitted changes and files
+  abort = reset --hard HEAD
+  # shows diff only for files staged to commit
+  new = diff --cached
+  # shows only changes to files in current directory
+  here = status .
+  # undo last commit
+  undo = reset HEAD~1
+  # change last commit message
+  recommit = commit --amend
+
+[pull]
+  rebase = false
+  default = current
+
+[commit]
+  verbose = true
+	gpgSign = true
+
+[push]
+  default = current
+
+[branch]
+  autosetupmerge = always
+  autosetuprebase = always
+
+[url "git@github.com:"]
+  insteadOf = https://github.com/
+
