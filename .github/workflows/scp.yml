@@ -14,6 +14,6 @@ jobs:
         KEY: ${{ secrets.KEY }}
         PORT: ${{ secrets.PORT }}
       with:
-        source: ".dotfiles/setup/init.sh"
+        source: ".dotfiles/setup/bootstrap.sh"
         target: "/var/www/html/shell"
         overwrite: true
