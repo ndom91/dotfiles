@@ -490,5 +490,5 @@ fi
 setup
 
 complete "Dotfiles setup script complete!"
-info "To continue, use '$HOME/dotfiles/setup/deploy.sh' to install other package bundles!"
+info "To continue, use '$HOME/.dotfiles/setup/deploy.sh' to install other package bundles!"
 
