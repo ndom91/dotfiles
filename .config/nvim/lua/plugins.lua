@@ -166,6 +166,7 @@ packer.startup(
     -- tabline
     use {
       "akinsho/bufferline.nvim",
+      tag = "*",
       config = function()
         require "plugin_configs.bufferline"
       end

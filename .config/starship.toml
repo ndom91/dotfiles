@@ -1,70 +1,58 @@
-format = """
-[](#26233a)\
-$username\
-[](bg:#403d52 fg:#26233a)\
-$directory\
-[](fg:#403d52 bg:#b4637a)\
-$git_branch\
-$git_status\
-[](fg:#b4637a bg:#907aa9)\
-$nodejs\
-$rust\
-[ ](fg:#907aa9)\
-"""
+add_newline = false
 
-# Disable the blank line at the start of the prompt
-# add_newline = false
+[gcloud]
+disabled = true
 
-# You can also replace your username with a neat symbol like  to save some space
-[username]
-show_always = true
-style_user = "bg:#26233a"
-style_root = "bg:#26233a"
-format = '[$user ]($style)'
+[aws]
+disabled = true
 
-[directory]
-style = "bg:#403d52"
-format = "[ $path ]($style)"
-truncation_length = 3
-truncation_symbol = "…/"
+[conda]
+symbol = " "
 
-# Here is how you can shorten some long paths by text replacement
-# similar to mapped_locations in Oh My Posh:
-[directory.substitutions]
-"checkly" = "🦝"
-# "Documents" = " "
-# "Downloads" = " "
-# "Music" = " "
-# "Pictures" = " "
-# Keep in mind that the order matters. For example:
-# "Important Documents" = "  "
-# will not be replaced, because "Documents" was already substituted before.
-# So either put "Important Documents" before "Documents" or use the substituted version:
-# "Important  " = "  "
+[dart]
+symbol = " "
+
+[docker_context]
+symbol = " "
+
+[elixir]
+symbol = " "
+
+[elm]
+symbol = " "
 
 [git_branch]
-symbol = ""
-# symbol = "🗂 "
-# symbol = ""
-style = "bg:#b4637a"
-format = '[[ $symbol $branch ](bg:#b4637a)]($style)'
+symbol = " "
 
-[git_status]
-style = "bg:#b4637a"
-format = '[[($all_status$ahead_behind )](bg:#b4637a)]($style)'
+[golang]
+symbol = " "
+
+[hg_branch]
+symbol = " "
+
+[java]
+symbol = " "
+
+[julia]
+symbol = " "
+
+[memory_usage]
+symbol = " "
+
+[nim]
+symbol = " "
+
+[nix_shell]
+symbol = " "
 
 [nodejs]
-symbol = ""
-style = "bg:#907aa9"
-format = '[[ $symbol ($version) ](bg:#907aa9)]($style)'
+symbol = " "
+
+[package]
+symbol = " "
 
 [rust]
-symbol = "🦀"
-style = "bg:#907aa9"
-format = '[[ $symbol ($version) ](bg:#907aa9)]($style)'
+symbol = " "
 
-[time]
-disabled = false
-time_format = "%R" # Hour:Minute Format
-style = "bg:#907aa9"
-format = '[[ ♥ $time ](bg:#907aa9)]($style)'
+[directory.substitutions]
+"checkly" = "🦝"

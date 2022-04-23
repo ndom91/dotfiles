@@ -201,7 +201,7 @@ fi
 
 # fnm
 if [ "$(command -v fnm)" ]; then
-  eval "$(fnm env)"
+  eval "$(fnm env --use-on-cd)"
 fi
 
 # AWS

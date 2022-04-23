@@ -68,6 +68,8 @@ alias activeSysd='for i in $(cd /etc/systemd/system/multi-user.target.wants && l
 [[ "$(command -v docker)" ]] && alias dockeriprune='sudo docker rmi $(sudo docker images --filter "dangling=true" -q --no-trunc)'
 [[ "$(command -v solaar)" ]] && alias solaar="sudo /usr/bin/solaar"
 [[ "$(command -v lazygit)" ]] && alias lg="lazygit"
+[[ "$(command -v diskonaut)" ]] && alias diskgraph="diskonaut"
+[[ "$(command -v dua)" ]] && alias disklist="dua i"
 
 # Git
 if [ "$(command -v git)" ]; then
