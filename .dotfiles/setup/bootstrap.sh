@@ -8,7 +8,6 @@
 apk=$(command -v apk 2> /dev/null)
 apt_get=$(command -v apt-get 2> /dev/null)
 brew=$(command -v brew 2> /dev/null)
-pkg=$(command -v pkg 2> /dev/null)
 pacman=$(command -v pacman 2> /dev/null)
 yum=$(command -v yum 2> /dev/null)
 
@@ -313,7 +312,7 @@ autodetect_distribution() {
 }
 
 function dotfiles() {
-  /usr/bin/git --git-dir=$HOME/dotfiles/ --work-tree=$HOME $@
+  /usr/bin/git --git-dir="$HOME"/dotfiles/ --work-tree="$HOME" "${@}"
 }
 
 # Installers
@@ -322,7 +321,7 @@ install_pacman() {
   if [ "${DRYRUN}" -eq 1 ]; then
     echo >&2 " >> IMPORTANT << "
     echo >&2 "    Please make sure your system is up to date"
-    echo >&2 "    by running:  ${sudo} pacman -Syu  "
+    echo >&2 "    by running:  sudo pacman -Syu  "
     echo >&2
   fi
 
@@ -331,7 +330,7 @@ install_pacman() {
     echo >&2 "Running in non-interactive mode"
     # http://unix.stackexchange.com/questions/52277/pacman-option-to-assume-yes-to-every-question/52278
     # Try the noconfirm option, if that fails, go with the legacy way for non-interactive
-    sudo pacman --noconfirm --needed -S "${@}" || yes | run ${sudo} pacman --needed -S "${@}"
+    sudo pacman --noconfirm --needed -S "${@}" || yes | run sudo pacman --needed -S "${@}"
   else
     sudo pacman --needed -S "${@}"
   fi
@@ -452,16 +451,16 @@ Detection Method: ${detection}
 EOF
 
 
-info "${BOLD} Bootstrapping...${NO_COLOR}\n\n"
+info "${BOLD}Bootstrapping...${NO_COLOR}"
 
 setup() {
   info "Cloning ndom91/dotfiles into bare repo at ~/"
-  git clone --quiet --bare https://github.com/ndom91/dotfiles.git $HOME/dotfiles
+  git clone --quiet --bare https://github.com/ndom91/dotfiles.git "$HOME"/dotfiles 2> /dev/null
 
   if [ $? -ne 0 ]; then
     warn "Error cloning repo, trying again..."
-    dotfiles clean -n -f | egrep -Eo '\.+[a-zA-Z1-9_./]+' | xargs -I{} mv {}{,.bak}
-    git clone --quiet --bare https://github.com/ndom91/dotfiles.git $HOME/dotfiles 2> /dev/null
+    dotfiles clean -n -f | grep -Eo '\.+[a-zA-Z1-9_./]+' | xargs -I{} mv {}{,.bak}
+    git clone --quiet --bare https://github.com/ndom91/dotfiles.git "$HOME"/dotfiles 2> /dev/null
   fi
 
   dotfiles checkout
@@ -472,7 +471,7 @@ setup() {
     warn "Existing files blocking git checkout"
     info "Backing up existing files"
     until dotfiles checkout 2>&1; do
-      dotfiles checkout 2>&1 | egrep -Eo '\.+[a-zA-Z1-9_./]+' | xargs -I{} mv {}{,.bak}
+      dotfiles checkout 2>&1 | grep -Eo '\.+[a-zA-Z1-9_./\-]+' | xargs -I{} mv {}{,.bak}
     done
   fi
 
@@ -480,7 +479,7 @@ setup() {
   info "Setting dotfiles alias and config settings"
   dotfiles config status.showUntrackedFiles no
   info "Sourcing new .bashrc"
-  source "$HOME/.bashrc"
+  source "$HOME"/.bashrc
 }
 
 if not_installed git; then
