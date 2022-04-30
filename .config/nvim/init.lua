@@ -4,6 +4,10 @@ if fn.empty(fn.glob(install_path)) > 0 then
   packer_bootstrap = fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
 end
 
+-- autoreload when editing init.lua
+local packer_group = vim.api.nvim_create_augroup('Packer', { clear = true })
+vim.api.nvim_create_autocmd('BufWritePost', { command = 'source <afile> | PackerCompile', group = packer_group, pattern = '~/.config/nvim/**/*.lua' })
+
 -- make sure that globals.lua is required first, as we want to use the
 -- functions and helpers we add there EVERYWHERE in our configuration
 require 'globals'

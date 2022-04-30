@@ -71,7 +71,6 @@ nnoremap("<leader>gc", "<cmd>Telescope git_commits prompt_prefix=🔍<CR>")
 nnoremap("<leader>gb", "<cmd>Telescope git_branches prompt_prefix=🔍<CR>")
   
 -- Buffers
--- nnoremap("<leader>x", '<cmd>lua require("bufferline").handle_close_buffer(vim.fn.bufnr("%"))<CR>')
 nnoremap("<c-x>", '<cmd>lua require("bufferline").handle_close(vim.fn.bufnr("%"))<CR>')
 nnoremap("<Tab>", ":bnext<CR>")
 nnoremap("<S-Tab>", ":bprev<CR>")
@@ -79,8 +78,6 @@ nnoremap("<S-Tab>", ":bprev<CR>")
 -- nvim-tree
 nnoremap("<c-n>", "<cmd>NvimTreeToggle<CR>")
 
--- lsp
--- see plugin_configs/lsp-config.lua
-
 -- trouble
 nnoremap("<leader>tr", "<cmd>TroubleToggle<cr>")
+
