@@ -139,10 +139,6 @@ if [ -d ~/.wasmer ]; then
   fi
 fi
 
-if [ "$(command -v dbeaver)" ]; then
-  alias dbeaver="GTK_THEME=Adwaita-dark /opt/dbeaver/dbeaver &"
-fi
-
 # Starship Bash Prompt
 # https://starship.rs/
 if [ -f /usr/bin/starship ] || [ -f /usr/local/bin/starship ]; then
