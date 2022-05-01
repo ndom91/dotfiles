@@ -1,4 +1,11 @@
-require("bufferline").setup {
+local present, bufferline = pcall(require, "bufferline")
+
+if not present then
+  vim.notify "Could not load bufferline"
+  return
+end
+
+bufferline.setup {
   options = {
     indicator_icon = "▎",
     buffer_close_icon = "",
@@ -23,31 +30,19 @@ require("bufferline").setup {
         local hint = vim.diagnostic.get_count(0, [[Hint]])
 
         if error ~= 0 then
-          result[1] = {
-            text = "  " .. error,
-            guifg = "#ff6c6b"
-          }
+          result[1] = { text = "  " .. error, guifg = "#ff6c6b" }
         end
 
         if warning ~= 0 then
-          result[2] = {
-            text = "  " .. warning,
-            guifg = "#ECBE7B"
-          }
+          result[2] = { text = "  " .. warning, guifg = "#ECBE7B" }
         end
 
         if hint ~= 0 then
-          result[3] = {
-            text = "  " .. hint,
-            guifg = "#98be65"
-          }
+          result[3] = { text = "  " .. hint, guifg = "#98be65" }
         end
 
         if info ~= 0 then
-          result[4] = {
-            text = "  " .. info,
-            guifg = "#51afef"
-          }
+          result[4] = { text = "  " .. info, guifg = "#51afef" }
         end
         return result
       end
@@ -67,11 +62,7 @@ require("bufferline").setup {
         end,
         text_align = "center"
       },
-      {
-        filetype = "vista",
-        text = "Vista",
-        text_align = "center"
-      }
+      { filetype = "vista", text = "Vista", text_align = "center" }
     },
     show_buffer_icons = true,
     show_buffer_close_icons = false,

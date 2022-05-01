@@ -25,75 +25,28 @@ packer.startup(function(use)
   use {
     "nvim-telescope/telescope.nvim",
     config = function()
-      require "plugin_configs.telescope"
+      require "plugins.telescope"
     end
   }
   use { "nvim-telescope/telescope-ui-select.nvim" }
 
-  -- builtin lsp
+  -- lsp
   use {
     "neovim/nvim-lspconfig",
     config = function()
-      require "plugin_configs.lsp-config"
+      require "plugins.lsp.lsp-config"
     end
   }
 
   use "williamboman/nvim-lsp-installer"
 
   use {
-    "folke/trouble.nvim",
-    requires = { "kyazdani42/nvim-web-devicons" },
-    config = function()
-      require("trouble").setup {}
-    end
-  }
-  use {
     'tami5/lspsaga.nvim',
     config = function()
-      require "plugin_configs.lsp-saga"
+      require "plugins.lsp.lsp-saga"
     end
   }
 
-  -- neo-tree
-  use "MunifTanjim/nui.nvim"
-  use {
-    "nvim-neo-tree/neo-tree.nvim",
-    branch = "v2.x",
-    requires = {
-      "nvim-lua/plenary.nvim",
-      "kyazdani42/nvim-web-devicons", -- not strictly required, but recommended
-      "MunifTanjim/nui.nvim"
-    },
-    config = function()
-      require "plugin_configs.neo-tree"
-    end
-  }
-
-  use({
-    "jose-elias-alvarez/null-ls.nvim",
-    config = function()
-      require("plugin_configs.null-ls")
-    end,
-    requires = { "nvim-lua/plenary.nvim" }
-  })
-
-  use "b0o/schemastore.nvim"
-  use "jose-elias-alvarez/nvim-lsp-ts-utils"
-
-  -- auto-completion
-  use {
-    "hrsh7th/nvim-cmp",
-    config = function()
-      require "plugin_configs.nvim-cmp"
-    end
-  }
-
-  use "hrsh7th/cmp-buffer"
-  use "hrsh7th/cmp-nvim-lsp"
-  use "hrsh7th/cmp-path"
-  use "hrsh7th/cmp-cmdline"
-  use "hrsh7th/cmp-vsnip"
-  use "hrsh7th/vim-vsnip"
   use "onsails/lspkind-nvim"
 
   -- lsp function signature
@@ -110,12 +63,63 @@ packer.startup(function(use)
     end
   }
 
+  use({
+    "jose-elias-alvarez/null-ls.nvim",
+    config = function()
+      require("plugins.lsp.null-ls")
+    end,
+    requires = { "nvim-lua/plenary.nvim" }
+  })
+
+  use "b0o/schemastore.nvim"
+  use "jose-elias-alvarez/nvim-lsp-ts-utils"
+
+  use {
+    "folke/trouble.nvim",
+    requires = { "kyazdani42/nvim-web-devicons" },
+    config = function()
+      require("trouble").setup {}
+    end
+  }
+
+  -- neo-tree
+  use "MunifTanjim/nui.nvim"
+  use {
+    "nvim-neo-tree/neo-tree.nvim",
+    branch = "v2.x",
+    requires = {
+      "nvim-lua/plenary.nvim",
+      "kyazdani42/nvim-web-devicons", -- not strictly required, but recommended
+      "MunifTanjim/nui.nvim"
+    },
+    config = function()
+      require "plugins.neo-tree"
+    end
+  }
+
+  -- auto-completion
+  use {
+    "hrsh7th/nvim-cmp",
+    config = function()
+      require "plugins.nvim-cmp"
+    end
+  }
+
+  use({ "hrsh7th/cmp-nvim-lsp-signature-help", after = "nvim-cmp" })
+  use({ "hrsh7th/cmp-nvim-lsp", after = "nvim-cmp" })
+  use({ "hrsh7th/cmp-buffer", after = "nvim-cmp" })
+  use({ "hrsh7th/cmp-path", after = "nvim-cmp" })
+  use({ "hrsh7th/cmp-nvim-lua", after = "nvim-cmp" })
+  use({ "hrsh7th/cmp-cmdline", after = "nvim-cmp" })
+  use({ "hrsh7th/cmp-vsnip", after = "nvim-cmp" })
+  use({ "hrsh7th/vim-vsnip", after = "nvim-cmp" })
+
   -- treesitter
   use {
     "nvim-treesitter/nvim-treesitter",
     run = ":TSUpdate",
     config = function()
-      require "plugin_configs.treesitter"
+      require "plugins.treesitter"
     end
   }
 
@@ -123,7 +127,7 @@ packer.startup(function(use)
   use {
     "numToStr/Comment.nvim",
     config = function()
-      require "plugin_configs.comment"
+      require "plugins.comment"
     end
   }
 
@@ -141,9 +145,11 @@ packer.startup(function(use)
     "lukas-reineke/indent-blankline.nvim",
     config = function()
       require("indent_blankline").setup {
+        filetype_exclude = { "alpha", "neo-tree", "lsp-installer", "packer" },
         space_char_blankline = " ",
         show_current_context = true,
-        show_current_context_start = true
+        show_current_context_start = false,
+        use_treesitter = true
       }
     end
   }
@@ -156,7 +162,7 @@ packer.startup(function(use)
     "nvim-lualine/lualine.nvim",
     requires = { "kyazdani42/nvim-web-devicons" },
     config = function()
-      require "plugin_configs.lualine"
+      require "plugins.lualine"
     end
   }
 
@@ -165,7 +171,7 @@ packer.startup(function(use)
     "akinsho/bufferline.nvim",
     tag = "*",
     config = function()
-      require "plugin_configs.bufferline"
+      require "plugins.bufferline"
     end
   }
 
@@ -200,53 +206,18 @@ packer.startup(function(use)
   use({
     "rose-pine/neovim",
     config = function()
-      require "plugin_configs.rose-pine"
+      require "plugins.rose-pine"
     end
   })
 
-  -- git
   use {
     "lewis6991/gitsigns.nvim",
     requires = { "nvim-lua/plenary.nvim" },
     config = function()
-      require("gitsigns").setup({
-        signs = {
-          add = {
-            hl = "GitSignsAdd",
-            text = "│",
-            numhl = "GitSignsAddNr",
-            linehl = "GitSignsAddLn"
-          },
-          change = {
-            hl = "GitSignsChange",
-            text = "│",
-            numhl = "GitSignsChangeNr",
-            linehl = "GitSignsChangeLn"
-          },
-          delete = {
-            hl = "GitSignsDelete",
-            text = "_",
-            numhl = "GitSignsDeleteNr",
-            linehl = "GitSignsDeleteLn"
-          },
-          topdelete = {
-            hl = "GitSignsDelete",
-            text = "‾",
-            numhl = "GitSignsDeleteNr",
-            linehl = "GitSignsDeleteLn"
-          },
-          changedelete = {
-            hl = "GitSignsChange",
-            text = "~",
-            numhl = "GitSignsChangeNr",
-            linehl = "GitSignsChangeLn"
-          }
-        }
-      })
+      require "plugins.gitsigns"
     end
   }
 
-  -- hex colorizer
   use {
     "norcalli/nvim-colorizer.lua",
     config = function()
@@ -258,20 +229,27 @@ packer.startup(function(use)
     end
   }
 
-  -- toggle-term
   use {
     "akinsho/toggleterm.nvim",
     config = function()
-      require "plugin_configs.toggleterm"
+      require "plugins.toggleterm"
     end
   }
 
   use {
     "glepnir/dashboard-nvim",
     config = function()
-      require "plugin_configs.dashboard"
+      require "plugins.dashboard"
     end
   }
+
+  use({
+    "bennypowers/nvim-regexplainer",
+    config = function()
+      require("plugins.regexplainer")
+    end,
+    requires = { "nvim-lua/plenary.nvim", "MunifTanjim/nui.nvim" }
+  })
 
   use {
     "rcarriga/nvim-notify",
@@ -280,7 +258,8 @@ packer.startup(function(use)
     end
   }
 
-  -- vimscript plugins
-  use "tpope/vim-surround"
+  -- tpope plugins
+  use("tpope/vim-surround") -- Change surrounding arks
+  use("tpope/vim-repeat") -- extends . repeat
 
 end)

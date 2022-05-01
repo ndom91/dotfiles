@@ -1,4 +1,11 @@
-local notify = require("notify").setup({
+local present, notify = pcall(require, "notify")
+
+if not present then
+  vim.notify "Could not load notify"
+  return
+end
+
+notify.setup({
   -- Animation style (see below for details)
   stages = "fade_in_slide_out",
 
@@ -32,8 +39,8 @@ local notify = require("notify").setup({
     WARN = "",
     INFO = "",
     DEBUG = "",
-    TRACE = "✎",
-  },
+    TRACE = "✎"
+  }
 })
 
 vim.notify = notify

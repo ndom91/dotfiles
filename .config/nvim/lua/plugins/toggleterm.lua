@@ -1,6 +1,13 @@
+local present, toggleterm = pcall(require, "toggleterm")
+
+if not present then
+  vim.notify "Could not load toggleterm"
+  return
+end
+
 local Terminal = require("toggleterm.terminal").Terminal
 
-require("toggleterm").setup {
+toggleterm.setup {
   size = function(term)
     if term.direction == "horizontal" then
       return 20

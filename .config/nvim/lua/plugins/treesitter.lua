@@ -1,12 +1,12 @@
-require("nvim-treesitter.configs").setup {
-  context_commentstring = {
-    enable = true,
-    enable_autocmd = false
-  },
-  highlight = {
-    enable = true,
-    use_languagetree = false
-  },
+local present, treesitter_configs = pcall(require, "nvim-treesitter.configs")
+
+if not present then
+  vim.notify "Could not load nvim-treesitter.configs"
+  return
+end
+
+treesitter_configs.setup {
+  highlight = { enable = true, use_languagetree = false },
   refactor = {
     highlight_definitions = { enable = true },
     highlight_current_scope = { enable = false },
@@ -25,9 +25,7 @@ require("nvim-treesitter.configs").setup {
       }
     }
   },
-  indent = {
-    enable = true
-  },
+  indent = { enable = true },
   ensure_installed = {
     "bash",
     "css",

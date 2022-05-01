@@ -1,11 +1,11 @@
-local nvim_lsp = require "lspconfig"
-local lsp_installer = require("nvim-lsp-installer")
 local telescope_builtin = require("telescope.builtin")
 
-local show_diagnostics = function(opts)
+local M = {}
+
+local function show_diagnostics(opts)
   opts = opts or {}
   vim.diagnostic.setloclist({ open_loclist = false })
-  require("telescope.builtin").loclist(opts)
+  telescope_builtin.loclist(opts)
 end
 
 local function map(type, input, output, unique_identifier, description,
@@ -39,7 +39,7 @@ local function generate_buf_keymapper(bufnr)
   end
 end
 
-local on_attach = function(client, bufnr)
+function M.set_default_on_buffer(client, bufnr)
   local buf_set_keymap = generate_buf_keymapper(bufnr)
 
   local function buf_set_option(...)
@@ -141,65 +141,4 @@ local on_attach = function(client, bufnr)
   buf_set_keymap("n", "<leader>lsa", ":LspInfo()<CR>", "lsp_info", "LSP Info")
 end
 
--- nvim-cmp supports additional completion capabilities
-local capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp
-                                                                     .protocol
-                                                                     .make_client_capabilities())
-
--- Enable the following language servers
-capabilities.textDocument.completion.completionItem.snippetSupport = true
-local servers = {
-  jsonls = {
-    settings = {
-      json = {
-        schemas = require("schemastore").json.schemas({
-          select = {
-            "package.json",
-            ".eslintrc",
-            "GitHub Action",
-            "prettierrc.json"
-          }
-        })
-      }
-    }
-  },
-  tsserver = {
-    init_options = require("nvim-lsp-ts-utils").init_options,
-    on_attach = function(client, bufnr)
-      on_attach(client, bufnr)
-
-      -- tsserver, stop messing with prettier da fuck!
-      client.resolved_capabilities.document_formatting = false
-      client.resolved_capabilities.document_range_formatting = false
-    end
-  },
-  bashls = {},
-  eslint = {},
-  vuels = {},
-  yamlls = {},
-  html = {},
-  cssls = {},
-  tailwindcss = {}
-}
-
-local default_lsp_config = {
-  on_attach = on_attach,
-  capabilities = capabilities,
-  flags = { debounce_text_changes = 200, allow_incremental_sync = true }
-}
-
--- ensure installed
-for server_name, server_config in pairs(servers) do
-  local ok, server = lsp_installer.get_server(server_name)
-  -- Check that the server is supported in nvim-lsp-installer
-  if ok then
-    local merged_config = vim.tbl_deep_extend("force", default_lsp_config,
-                                              server_config)
-    server:setup(merged_config)
-
-    if not server:is_installed() then
-      print("Installing " .. name)
-      server:install()
-    end
-  end
-end
+return M
