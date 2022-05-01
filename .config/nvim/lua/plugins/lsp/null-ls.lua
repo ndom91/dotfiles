@@ -8,6 +8,7 @@ if not null_ls_status_ok then return end
 -- yay shellcheck
 -- yay shfmt
 -- yay lua-format
+-- yay yamllint
 
 null_ls.setup({
   debug = true,
@@ -30,6 +31,7 @@ null_ls.setup({
     null_ls.builtins.diagnostics.eslint_d,
     null_ls.builtins.diagnostics.actionlint,
     null_ls.builtins.diagnostics.shellcheck,
+    null_ls.builtins.diagnostics.yamllint,
     null_ls.builtins.code_actions.eslint_d,
     null_ls.builtins.code_actions.shellcheck,
     null_ls.builtins.code_actions.gitsigns
