@@ -11,7 +11,7 @@ curl -Lks https://init.ndo.dev > /bin/bash
 ## ️🚧 Details
 
 - neovim
-  - See: [`.config/nvim/lua/plugins.lua#L26`](https://github.com/ndom91/dotfiles/blob/main/.config/nvim/lua/plugins.lua#L26)
+  - [`.config/nvim/lua/plugins.lua`](https://github.com/ndom91/dotfiles/blob/main/.config/nvim/lua/plugins.lua)
 
 - CLI
   - [bash](https://git.savannah.gnu.org/cgit/bash.git) - Unix shell
