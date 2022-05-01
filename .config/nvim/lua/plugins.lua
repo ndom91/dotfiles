@@ -71,7 +71,24 @@ packer.startup(function(use)
     requires = { "nvim-lua/plenary.nvim" }
   })
 
+  use({
+    "j-hui/fidget.nvim",
+    config = function()
+      require("plugins.fidget-nvim")
+    end
+  })
+
+  use("rrethy/vim-illuminate")
+
+  use({
+    "bkad/CamelCaseMotion",
+    config = function()
+      vim.g.camelcasemotion_key = "<leader>"
+    end
+  })
+
   use "b0o/schemastore.nvim"
+
   use "jose-elias-alvarez/nvim-lsp-ts-utils"
 
   use {
@@ -145,7 +162,13 @@ packer.startup(function(use)
     "lukas-reineke/indent-blankline.nvim",
     config = function()
       require("indent_blankline").setup {
-        filetype_exclude = { "alpha", "neo-tree", "lsp-installer", "packer" },
+        filetype_exclude = {
+          "alpha",
+          "neo-tree",
+          "lsp-installer",
+          "packer",
+          "dashboard"
+        },
         space_char_blankline = " ",
         show_current_context = true,
         show_current_context_start = false,
@@ -202,6 +225,14 @@ packer.startup(function(use)
   --     end
   --   }
   -- )
+
+  use {
+    's1n7ax/nvim-window-picker',
+    tag = 'v1.*',
+    config = function()
+      require "plugins.window-picker"
+    end
+  }
 
   use({
     "rose-pine/neovim",

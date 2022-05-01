@@ -1,6 +1,13 @@
--- local null_ls = require("null-ls")
 local null_ls_status_ok, null_ls = pcall(require, "null-ls")
 if not null_ls_status_ok then return end
+
+-- Required packages:
+-- yay prettier_d_slim
+-- yay eslint_d
+-- yay actionlint
+-- yay shellcheck
+-- yay shfmt
+-- yay lua-format
 
 null_ls.setup({
   debug = true,
