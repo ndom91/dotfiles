@@ -9,17 +9,6 @@ return function(on_attach, capabilities)
       client.resolved_capabilities.document_formatting = false
       client.resolved_capabilities.document_range_formatting = false
     end,
-    settings = {
-      json = {
-        schemas = require("schemastore").json.schemas({
-          select = {
-            "package.json",
-            ".eslintrc",
-            "GitHub Action",
-            "prettierrc.json"
-          }
-        })
-      }
-    }
+    settings = { json = { schemas = require("schemastore").json.schemas() } }
   }
 end

@@ -1,6 +1,6 @@
 return function(on_attach)
   return {
-    init_options = require("nvim-lsp-ts-utils").init_options,
+    -- init_options = require("nvim-lsp-ts-utils").init_options,
     on_attach = function(client, bufnr)
       on_attach(client, bufnr)
 

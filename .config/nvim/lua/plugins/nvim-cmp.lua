@@ -27,7 +27,11 @@ cmp.setup({
     ["<CR>"] = cmp.mapping.confirm({ select = true })
   },
   formatting = {
-    format = lspkind.cmp_format({ with_text = false, maxwidth = 50 })
+    format = lspkind.cmp_format({
+      with_text = true,
+      maxwidth = 50,
+      mode = 'symbol_text'
+    })
   },
   sources = cmp.config.sources({
     { name = "copilot" },
@@ -38,5 +42,5 @@ cmp.setup({
     { name = "path" },
     { name = "buffer", keyword_length = 2, max_item_count = 10 }
   }),
-  view = { entries = "native" }
+  view = { entries = "custom" }
 })
