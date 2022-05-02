@@ -124,6 +124,7 @@ alias pvetunnel='ssh -L 8005:192.168.1.201:8006 nt-hulk'
 alias grafanatunnel='ssh -L 3000:10.0.1.60:3000 ndo-pve'
 alias win10tunnel='ssh -L 3389:192.168.11.169:3389 nt-hulk'
 alias casapitunnel='ssh -L 8123:127.0.0.1:8123 tunnelpi'
+alias mirrorReboot="ssh mmpi 'pm2 restart 0'"
 
 # CHECKLY
 alias checkly-cli='/opt/checkly/checkly-cli/bin/run'

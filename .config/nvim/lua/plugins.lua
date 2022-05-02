@@ -288,7 +288,6 @@ packer.startup(function(use)
       vim.notify = require("notify")
     end
   }
-
   -- tpope plugins
   use("tpope/vim-surround") -- Change surrounding arks
   use("tpope/vim-repeat") -- extends . repeat

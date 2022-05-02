@@ -30,6 +30,7 @@ cmp.setup({
     format = lspkind.cmp_format({ with_text = false, maxwidth = 50 })
   },
   sources = cmp.config.sources({
+    { name = "copilot" },
     { name = "nvim_lsp_signature_help" },
     { name = "nvim_lsp" },
     { name = "nvim_lua" },

@@ -99,7 +99,8 @@ neo_tree.setup({
       hide_by_name = { ".DS_Store", "thumbs.db", "node_modules" },
       never_show = { -- remains hidden even if visible is toggled to true
         ".DS_Store",
-        "thumbs.db"
+        "thumbs.db",
+        "node_modules"
       }
     },
     follow_current_file = true, -- This will find and focus the file in the active buffer every

@@ -20,7 +20,7 @@ end
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 local servers = {
   tsserver = require("plugins.lsp.servers.tsserver")(on_attach),
-  jsonls = require("plugins.lsp.servers.jsonls")(capabilities),
+  jsonls = require("plugins.lsp.servers.jsonls")(on_attach, capabilities),
   yamlls = require("plugins.lsp.servers.yamlls")(capabilities),
   bashls = {},
   eslint = {},
