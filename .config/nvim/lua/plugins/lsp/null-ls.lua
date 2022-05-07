@@ -13,7 +13,12 @@ if not null_ls_status_ok then return end
 null_ls.setup({
   debug = true,
   sources = {
-    null_ls.builtins.formatting.eslint_d,
+    null_ls.builtins.formatting.eslint_d.with({
+      extra_args = {
+        -- "--rule '{ space-in-brackets: always }'",
+        -- "--rule '{ object-curly-spacing: always }'"
+      }
+    }),
     null_ls.builtins.formatting.lua_format.with({
       extra_args = {
         "--indent-width=2",
@@ -27,7 +32,14 @@ null_ls.setup({
     }),
     null_ls.builtins.formatting.shfmt
         .with({ extra_args = { "-i", "2", "-ci" } }),
-    null_ls.builtins.formatting.prettier_d_slim,
+    null_ls.builtins.formatting.prettier_d_slim.with({
+      extra_args = {
+        "--single-quote",
+        "--bracket-spacing",
+        "--arrow-spacing",
+        "--no-semi"
+      }
+    }),
     null_ls.builtins.diagnostics.eslint_d,
     null_ls.builtins.diagnostics.actionlint,
     null_ls.builtins.diagnostics.shellcheck,

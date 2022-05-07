@@ -43,7 +43,7 @@ CDPATH=".:/opt/"
 PROMPT_DIRTRIM=2
 set -o noclobber
 bind Space:magic-space
-shopt -s globstar 2> /dev/null
+shopt -s globstar 2>/dev/null
 shopt -s nocaseglob
 bind "set completion-ignore-case on"
 bind "set completion-map-case on"
@@ -156,7 +156,7 @@ export NODE_PATH="$NPM_PACKAGES/lib/node_modules:$NODE_PATH"
 export PATH="$HOME/.npm-global/bin:$PATH"
 
 # BUN
-if [ "$(command -v bun)" ]; then
+if [ -f "$HOME/.bun/bin/bun" ]; then
   export BUN_INSTALL="/home/ndo/.bun"
   export PATH="$BUN_INSTALL/bin:$PATH"
 fi

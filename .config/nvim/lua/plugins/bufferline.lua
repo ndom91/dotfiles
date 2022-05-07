@@ -13,36 +13,42 @@ bufferline.setup {
     close_icon = "",
     left_trunc_marker = "",
     right_trunc_marker = "",
+    right_mouse_command = "bdelete! %d",
     max_name_length = 25,
     max_prefix_length = 15, -- prefix used when a buffer is de-duplicated
     tab_size = 25,
     diagnostics = "nvim_lsp",
     diagnostics_update_in_insert = false,
+    -- diagnostics_indicator = function(count, level, diagnostics_dict, context)
+    --   return "(" .. count .. ")"
+    -- end,
     diagnostics_indicator = function(count, level, diagnostics_dict, context)
-      return "(" .. count .. ")"
+      local icon = level:match("error") and " " or " "
+      return " " .. icon .. count
     end,
     custom_areas = {
       right = function()
         local result = {}
-        local error = vim.diagnostic.get_count(0, [[Error]])
-        local warning = vim.diagnostic.get_count(0, [[Warning]])
-        local info = vim.diagnostic.get_count(0, [[Information]])
-        local hint = vim.diagnostic.get_count(0, [[Hint]])
+        local seve = vim.diagnostic.severity
+        local error = #vim.diagnostic.get(0, { severity = seve.ERROR })
+        local warning = #vim.diagnostic.get(0, { severity = seve.WARN })
+        local info = #vim.diagnostic.get(0, { severity = seve.INFO })
+        local hint = #vim.diagnostic.get(0, { severity = seve.HINT })
 
         if error ~= 0 then
-          result[1] = { text = "  " .. error, guifg = "#ff6c6b" }
+          result[1] = { text = "  " .. error, guifg = "#eb6f92" }
         end
 
         if warning ~= 0 then
-          result[2] = { text = "  " .. warning, guifg = "#ECBE7B" }
+          result[2] = { text = "  " .. warning, guifg = "#000000" } -- "#f6c177" }
         end
 
         if hint ~= 0 then
-          result[3] = { text = "  " .. hint, guifg = "#98be65" }
+          result[3] = { text = "  " .. hint, guifg = "#9ccfd8" }
         end
 
         if info ~= 0 then
-          result[4] = { text = "  " .. info, guifg = "#51afef" }
+          result[4] = { text = "  " .. info, guifg = "#c4a7e7" }
         end
         return result
       end
@@ -61,9 +67,9 @@ bufferline.setup {
           return vim.fn.getcwd()
         end,
         text_align = "center"
-      },
-      { filetype = "vista", text = "Vista", text_align = "center" }
+      }
     },
+    color_icons = true,
     show_buffer_icons = true,
     show_buffer_close_icons = false,
     show_close_icon = false,

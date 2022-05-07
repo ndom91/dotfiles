@@ -289,7 +289,9 @@ packer.startup(function(use)
     end
   }
   -- tpope plugins
-  use("tpope/vim-surround") -- Change surrounding arks
-  use("tpope/vim-repeat") -- extends . repeat
+  use { "tpope/vim-surround" } -- Change surrounding arks
+  use { "tpope/vim-repeat" } -- extends . repeat
+  use { "tpope/vim-dadbod" } -- db client
+  use { "kristijanhusak/vim-dadbod-ui" }
 
 end)
