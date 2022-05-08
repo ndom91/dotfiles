@@ -25,7 +25,7 @@ local servers = {
   bashls = {},
   eslint = {},
   vuels = {},
-  html = {},
+  html = require("plugins.lsp.servers.html")(on_attach),
   cssls = {},
   tailwindcss = {}
 }

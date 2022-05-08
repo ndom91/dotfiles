@@ -5,7 +5,7 @@
 
 check=$(yay -Qu | wc -l)
 if [[ "$check" != "0" ]]; then
-  echo $check
+  echo "$check"
 else
   echo "0"
 fi
