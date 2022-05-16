@@ -129,3 +129,7 @@ alias mirrorReboot="ssh mmpi 'pm2 restart 0'"
 # CHECKLY
 alias checkly-cli='/opt/checkly/checkly-cli/bin/run'
 alias dockermachine='eval $(docker-machine env ndo-docker)'
+alias cwa='cd /opt/checkly/checkly-webapp'
+alias cbe='cd /opt/checkly/checkly-backend'
+alias clr='cd /opt/checkly/checkly-lambda-runners'
+alias chq='cd /opt/checkly/checklyhq.com'
