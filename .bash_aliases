@@ -70,6 +70,7 @@ alias activeSysd='for i in $(cd /etc/systemd/system/multi-user.target.wants && l
 [[ "$(command -v lazygit)" ]] && alias lg="lazygit"
 [[ "$(command -v diskonaut)" ]] && alias diskgraph="diskonaut"
 [[ "$(command -v dua)" ]] && alias disklist="dua i"
+# [[ "$(command -v pnpm)" ]] && alias npm="pnpm"
 
 # Git
 if [ "$(command -v git)" ]; then
@@ -86,6 +87,7 @@ if [ "$(command -v git)" ]; then
   alias glb='git checkout $(git for-each-ref --sort=-committerdate --count=20 --format="%(refname:short)" refs/heads/ | fzf)'
   alias ds='dot status'
   alias ddi='dot diff'
+  alias gitroot='cd "$(git rev-parse --show-toplevel)"'
 fi
 
 # Typo Fixes
@@ -125,6 +127,7 @@ alias grafanatunnel='ssh -L 3000:10.0.1.60:3000 ndo-pve'
 alias win10tunnel='ssh -L 3389:192.168.11.169:3389 nt-hulk'
 alias casapitunnel='ssh -L 8123:127.0.0.1:8123 tunnelpi'
 alias mirrorReboot="ssh mmpi 'pm2 restart 0'"
+alias clidle="ssh clidle.ddns.net -p 3000"
 
 # CHECKLY
 alias checkly-cli='/opt/checkly/checkly-cli/bin/run'

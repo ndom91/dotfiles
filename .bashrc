@@ -1,4 +1,4 @@
-#           _                 ___  _
+#
 #  _ __   __| | ___  _ __ ___ / _ \/ |
 # | '_ \ / _` |/ _ \| '_ ` _ \ (_) | |
 # | | | | (_| | (_) | | | | | \__, | |
@@ -12,7 +12,13 @@
 # See: https://github.com/mrzool/bash-sensible
 
 # DEFAULTS
-export EDITOR="vim"
+if [[ "$(command -v nvim)" ]]; then
+  export EDITOR=nvim
+elif [[ "$(command -v vim)" ]]; then
+  export EDITOR=vim
+else
+  export EDITOR=vi
+fi
 export PAGER="less -R"
 export READER="zathura"
 export BROWSER="brave"
@@ -154,6 +160,15 @@ fi
 export NPM_PACKAGES="${HOME}/.npm-global"
 export NODE_PATH="$NPM_PACKAGES/lib/node_modules:$NODE_PATH"
 export PATH="$HOME/.npm-global/bin:$PATH"
+
+export NPM_CONFIG_EDITOR="$EDITOR"
+export NPM_CONFIG_INIT_AUTHOR_NAME='ndom91'
+export NPM_CONFIG_INIT_AUTHOR_EMAIL='yo@ndo.dev'
+export NPM_CONFIG_INIT_AUTHOR_URL='https://ndo.dev'
+export NPM_CONFIG_INIT_LICENSE='MIT'
+export NPM_CONFIG_INIT_VERSION='0.0.1'
+export NPM_CONFIG_PROGRESS='true'
+export NPM_CONFIG_SAVE='true'
 
 # BUN
 if [ -f "$HOME/.bun/bin/bun" ]; then
