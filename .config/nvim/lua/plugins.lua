@@ -151,10 +151,10 @@ packer.startup(function(use)
   -- todo comments
   use {
     "folke/todo-comments.nvim",
-    requires = "nvim-lua/plenary.nvim",
-    config = function()
-      require("todo-comments").setup {}
-    end
+    requires = "nvim-lua/plenary.nvim"
+    -- config = function()
+    --   require("todo-comments").setup {}
+    -- end
   }
 
   -- indent
@@ -267,12 +267,12 @@ packer.startup(function(use)
     end
   }
 
-  use {
-    "glepnir/dashboard-nvim",
-    config = function()
-      require "plugins.dashboard"
-    end
-  }
+  -- use {
+  --   "glepnir/dashboard-nvim",
+  --   config = function()
+  --     require "plugins.dashboard"
+  --   end
+  -- }
 
   -- use({
   --   "bennypowers/nvim-regexplainer",
@@ -291,7 +291,7 @@ packer.startup(function(use)
   -- tpope plugins
   use { "tpope/vim-surround" } -- Change surrounding arks
   use { "tpope/vim-repeat" } -- extends . repeat
-  use { "tpope/vim-dadbod" } -- db client
+  -- use { "tpope/vim-dadbod" } -- db client
   -- use { "kristijanhusak/vim-dadbod-ui" }
 
 end)

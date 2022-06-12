@@ -50,8 +50,11 @@ db.custom_center = {
   }
 }
 
-vim.g.indentLine_fileTypeExclude = { 'dashboard' }
-vim.g.dashboard_default_executive = "telescope.nvim"
+db.hide_statusline = false
+db.hide_tabline = false
+
+-- vim.g.indentLine_fileTypeExclude = { 'dashboard' }
+-- vim.g.dashboard_default_executive = "telescope.nvim"
 
 -- Set git status as dashboard footer
 local utils = require('telescope.utils')
