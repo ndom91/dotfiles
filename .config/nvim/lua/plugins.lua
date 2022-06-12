@@ -80,14 +80,14 @@ packer.startup(function(use)
 
   use("rrethy/vim-illuminate")
 
-  use({
-    "bkad/CamelCaseMotion",
-    config = function()
-      vim.g.camelcasemotion_key = "<leader>"
-    end
-  })
+  -- use({
+  --   "bkad/CamelCaseMotion",
+  --   config = function()
+  --     vim.g.camelcasemotion_key = "<leader>"
+  --   end
+  -- })
 
-  use "b0o/schemastore.nvim"
+  -- use "b0o/schemastore.nvim"
 
   -- use "jose-elias-alvarez/nvim-lsp-ts-utils"
 
@@ -274,13 +274,13 @@ packer.startup(function(use)
     end
   }
 
-  use({
-    "bennypowers/nvim-regexplainer",
-    config = function()
-      require("plugins.regexplainer")
-    end,
-    requires = { "nvim-lua/plenary.nvim", "MunifTanjim/nui.nvim" }
-  })
+  -- use({
+  --   "bennypowers/nvim-regexplainer",
+  --   config = function()
+  --     require("plugins.regexplainer")
+  --   end,
+  --   requires = { "nvim-lua/plenary.nvim", "MunifTanjim/nui.nvim" }
+  -- })
 
   use {
     "rcarriga/nvim-notify",
@@ -292,6 +292,6 @@ packer.startup(function(use)
   use { "tpope/vim-surround" } -- Change surrounding arks
   use { "tpope/vim-repeat" } -- extends . repeat
   use { "tpope/vim-dadbod" } -- db client
-  use { "kristijanhusak/vim-dadbod-ui" }
+  -- use { "kristijanhusak/vim-dadbod-ui" }
 
 end)
