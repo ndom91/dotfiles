@@ -19,6 +19,8 @@ require("telescope").setup {
     buffer_previewer_maker = new_maker,
     mappings = { i = {}, n = { ["<C-c>"] = "delete_buffer" } },
     file_ignore_patterns = {
+      "pnpm-lock.yaml",
+      "package-lock.json",
       "node_modules",
       ".next",
       "static",

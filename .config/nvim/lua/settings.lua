@@ -4,6 +4,15 @@ local opt = vim.opt
 vim.g.mapleader = " "
 vim.g.vimsyn_embed = "lPrjt"
 vim.g.swapfile = false
+vim.api.nvim_set_var('markdown_fenced_languages', {
+  "html",
+  "javascript",
+  "vim",
+  "css",
+  "javascriptreact",
+  "typescript",
+  "yaml"
+})
 
 opt.completeopt = "menu,menuone,noselect"
 opt.clipboard = "unnamedplus"

@@ -40,11 +40,9 @@ null_ls.setup({
         "--no-semi"
       }
     }),
-    -- null_ls.builtins.diagnostics.eslint_d,
     null_ls.builtins.diagnostics.actionlint,
     null_ls.builtins.diagnostics.shellcheck,
     null_ls.builtins.diagnostics.yamllint,
-    -- null_ls.builtins.code_actions.eslint,
     null_ls.builtins.code_actions.shellcheck,
     null_ls.builtins.code_actions.gitsigns
   },

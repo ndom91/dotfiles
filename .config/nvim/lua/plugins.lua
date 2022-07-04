@@ -47,9 +47,9 @@ packer.startup(function(use)
     end
   }
 
-  use "onsails/lspkind-nvim"
+  use "onsails/lspkind-nvim" -- icons on completion
 
-  -- lsp function signature
+  -- lsp function signature help on wildmenu
   use {
     "ray-x/lsp_signature.nvim",
     config = function()
@@ -72,22 +72,13 @@ packer.startup(function(use)
   })
 
   use({
-    "j-hui/fidget.nvim",
+    "j-hui/fidget.nvim", -- floating status text in bottom right
     config = function()
       require("plugins.fidget-nvim")
     end
   })
 
-  use("rrethy/vim-illuminate")
-
-  -- use({
-  --   "bkad/CamelCaseMotion",
-  --   config = function()
-  --     vim.g.camelcasemotion_key = "<leader>"
-  --   end
-  -- })
-
-  -- use "b0o/schemastore.nvim"
+  use("rrethy/vim-illuminate") -- highlight same word under cursor
 
   -- use "jose-elias-alvarez/nvim-lsp-ts-utils"
 
@@ -114,7 +105,12 @@ packer.startup(function(use)
     end
   }
 
-  -- auto-completion
+  -- autocompletion snippets
+  use "L3MON4D3/LuaSnip"
+  use "saadparwaiz1/cmp_luasnip"
+  use "rafamadriz/friendly-snippets"
+
+  -- autocompletion
   use {
     "hrsh7th/nvim-cmp",
     config = function()
@@ -128,8 +124,6 @@ packer.startup(function(use)
   use({ "hrsh7th/cmp-path", after = "nvim-cmp" })
   use({ "hrsh7th/cmp-nvim-lua", after = "nvim-cmp" })
   use({ "hrsh7th/cmp-cmdline", after = "nvim-cmp" })
-  use({ "hrsh7th/cmp-vsnip", after = "nvim-cmp" })
-  use({ "hrsh7th/vim-vsnip", after = "nvim-cmp" })
 
   -- treesitter
   use {
@@ -150,11 +144,11 @@ packer.startup(function(use)
 
   -- todo comments
   use {
-    "folke/todo-comments.nvim",
-    requires = "nvim-lua/plenary.nvim"
-    -- config = function()
-    --   require("todo-comments").setup {}
-    -- end
+    "folke/todo-comments.nvim", -- special highlight  @TODO, @FIXME, etc comments
+    requires = "nvim-lua/plenary.nvim",
+    config = function()
+      require("todo-comments").setup {}
+    end
   }
 
   -- indent
@@ -177,10 +171,10 @@ packer.startup(function(use)
     end
   }
 
-  -- comments integration with treesitter
+  -- use correct comments when there are multiple languages in 1 file, i.e. Vue SFC's
   use { "JoosepAlviste/nvim-ts-context-commentstring", after = "nvim-treesitter" }
 
-  -- lualine
+  -- lualine (statusbar)
   use {
     "nvim-lualine/lualine.nvim",
     requires = { "kyazdani42/nvim-web-devicons" },
@@ -226,23 +220,23 @@ packer.startup(function(use)
   --   }
   -- )
 
-  use {
-    's1n7ax/nvim-window-picker',
-    tag = 'v1.*',
-    config = function()
-      require "plugins.window-picker"
-    end
-  }
-
   use({
-    "rose-pine/neovim",
+    "rose-pine/neovim", -- current theme
     config = function()
       require "plugins.rose-pine"
     end
   })
 
+  -- use {
+  --   's1n7ax/nvim-window-picker',
+  --   tag = 'v1.*',
+  --   config = function()
+  --     require "plugins.window-picker"
+  --   end
+  -- }
+
   use {
-    "lewis6991/gitsigns.nvim",
+    "lewis6991/gitsigns.nvim", -- gutter git signs + git blame virtual text
     requires = { "nvim-lua/plenary.nvim" },
     config = function()
       require "plugins.gitsigns"
@@ -250,7 +244,7 @@ packer.startup(function(use)
   }
 
   use {
-    "norcalli/nvim-colorizer.lua",
+    "norcalli/nvim-colorizer.lua", -- colorize hex codes / color names
     config = function()
       require("colorizer").setup({
         "*",
@@ -261,37 +255,30 @@ packer.startup(function(use)
   }
 
   use {
-    "akinsho/toggleterm.nvim",
+    "akinsho/toggleterm.nvim", -- terminal splits / floating windows
     config = function()
       require "plugins.toggleterm"
     end
   }
 
-  -- use {
-  --   "glepnir/dashboard-nvim",
-  --   config = function()
-  --     require "plugins.dashboard"
-  --   end
-  -- }
-
-  -- use({
-  --   "bennypowers/nvim-regexplainer",
-  --   config = function()
-  --     require("plugins.regexplainer")
-  --   end,
-  --   requires = { "nvim-lua/plenary.nvim", "MunifTanjim/nui.nvim" }
-  -- })
+  use {
+    "glepnir/dashboard-nvim", -- initial launch dashboard
+    config = function()
+      require "plugins.dashboard"
+    end
+  }
 
   use {
-    "rcarriga/nvim-notify",
+    "rcarriga/nvim-notify", -- floating toast notifications
     config = function()
       vim.notify = require("notify")
     end
   }
+
+  -- use { 'wfxr/minimap.vim', run = ':!cargo install --locked code-minimap' }
+
   -- tpope plugins
   use { "tpope/vim-surround" } -- Change surrounding arks
   use { "tpope/vim-repeat" } -- extends . repeat
-  -- use { "tpope/vim-dadbod" } -- db client
-  -- use { "kristijanhusak/vim-dadbod-ui" }
 
 end)
