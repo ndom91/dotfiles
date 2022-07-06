@@ -72,6 +72,8 @@ alias activeSysd='for i in $(cd /etc/systemd/system/multi-user.target.wants && l
 [[ "$(command -v dua)" ]] && alias disklist="dua i"
 # [[ "$(command -v pnpm)" ]] && alias npm="pnpm"
 
+alias brave="brave --silent-debugger-extension-api"
+
 # Git
 if [ "$(command -v git)" ]; then
   alias cob='git checkout $(git branch -a | cut -c 3- | pick)'

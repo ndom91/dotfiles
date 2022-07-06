@@ -206,7 +206,7 @@ exec --no-startup-id /home/ndo/.fehbg
 exec --no-startup-id pasystray
 exec --no-startup-id pnmixer
 exec --no-startup-id xrandr --output DisplayPort-0 --primary --mode 3440x1440 --pos 1080x480 --rotate normal --output DisplayPort-1 --mode 1920x1080 --pos 0x0 --rotate right --output DisplayPort-2 --off --output HDMI-A-0 --off
-exec_always --no-startup-id volctl
+exec --no-startup-id volctl
 exec_always --no-startup-id ulauncher
 exec_always --no-startup-id picom -b --config /home/ndo/.config/i3/picom.conf
 exec_always --no-startup-id setxkbmap -layout us
