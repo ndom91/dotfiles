@@ -5,11 +5,7 @@ local M = {}
 local servers = {
   html = {},
   jsonls = {
-    settings = {
-      json = {
-        schemas = require("schemastore").json.schemas(),
-      },
-    },
+    settings = { json = { schemas = require("schemastore").json.schemas() } }
   },
   dockerls = {},
   bashls = {},
@@ -19,18 +15,16 @@ local servers = {
   cssls = {},
   vuels = {},
   yamlls = {
-    schemastore = {
-      enable = true,
-    },
+    schemastore = { enable = true },
     settings = {
       yaml = {
         hover = true,
         completion = true,
         validate = true,
-        schemas = require("schemastore").json.schemas(),
-      },
-    },
-  },
+        schemas = require("schemastore").json.schemas()
+      }
+    }
+  }
   -- gopls = {},
   -- pyright = {
   --   analysis = {
@@ -131,23 +125,17 @@ local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 capabilities.textDocument.foldingRange = {
   -- dynamicRegistration = false,
-  lineFoldingOnly = true,
+  lineFoldingOnly = true
 }
 capabilities.textDocument.completion.completionItem.resolveSupport = {
-  properties = {
-    "documentation",
-    "detail",
-    "additionalTextEdits",
-  },
+  properties = { "documentation", "detail", "additionalTextEdits" }
 }
 M.capabilities = require("cmp_nvim_lsp").update_capabilities(capabilities) -- for nvim-cmp
 
 local opts = {
   on_attach = M.on_attach,
   capabilities = M.capabilities,
-  flags = {
-    debounce_text_changes = 150,
-  },
+  flags = { debounce_text_changes = 150 }
 }
 
 -- Setup LSP handlers

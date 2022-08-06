@@ -5,9 +5,7 @@ local nls_utils = require "null-ls.utils"
 local b = nls.builtins
 
 local with_diagnostics_code = function(builtin)
-  return builtin.with {
-    diagnostics_format = "#{m} [#{c}]",
-  }
+  return builtin.with { diagnostics_format = "#{m} [#{c}]" }
 end
 
 -- local with_root_file = function(builtin, file)
@@ -21,12 +19,12 @@ end
 local sources = {
   -- formatting
   b.formatting.prettier_d_slim.with {
-          extra_args = {
-        "--single-quote",
-        "--bracket-spacing",
-        "--arrow-spacing",
-        "--no-semi"
-      }
+    extra_args = {
+      "--single-quote",
+      "--bracket-spacing",
+      "--arrow-spacing",
+      "--no-semi"
+    }
   },
   b.formatting.eslint_d,
   b.formatting.shfmt.with({ extra_args = { "-i", "2", "-ci" } }),
@@ -46,21 +44,19 @@ local sources = {
   -- with_root_file(b.formatting.stylua, "stylua.toml"),
 
   -- diagnostics
-  -- b.diagnostics.write_good,
-  -- b.diagnostics.markdownlint,
   b.diagnostics.eslint_d,
   b.diagnostics.tsc,
-  -- b.diagnostics.codespell,
   with_diagnostics_code(b.diagnostics.shellcheck),
+  -- b.diagnostics.write_good,
+  -- b.diagnostics.markdownlint,
+  -- b.diagnostics.codespell,
   -- b.diagnostics.zsh,
   -- b.diagnostics.stylelint,
 
   -- code actions
-  b.code_actions.gitsigns.with {
-    disabled_filetypes = { "NeogitCommitMessage" },
-  },
+  b.code_actions.gitsigns.with { disabled_filetypes = { "NeogitCommitMessage" } },
   b.code_actions.eslint_d,
-  b.code_actions.shellcheck,
+  b.code_actions.shellcheck
   -- b.code_actions.gitrebase,
   -- b.code_actions.refactoring,
   -- b.code_actions.proselint,
@@ -76,7 +72,7 @@ function M.setup(opts)
     save_after_format = false,
     sources = sources,
     on_attach = opts.on_attach,
-    root_dir = nls_utils.root_pattern ".git",
+    root_dir = nls_utils.root_pattern ".git"
   }
 end
 

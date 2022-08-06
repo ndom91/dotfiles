@@ -9,9 +9,7 @@ local function lsp_client(msg)
   msg = msg or ""
   local buf_clients = vim.lsp.buf_get_clients()
   if next(buf_clients) == nil then
-    if type(msg) == "boolean" or #msg == 0 then
-      return ""
-    end
+    if type(msg) == "boolean" or #msg == 0 then return "" end
     return msg
   end
 
@@ -43,7 +41,6 @@ local function lsp_client(msg)
   return "[" .. table.concat(buf_client_names, ", ") .. "]"
 end
 
-
 lualine.setup {
   options = {
     icons_enabled = true,
@@ -56,16 +53,22 @@ lualine.setup {
   },
   sections = {
     lualine_a = { "mode" },
-    lualine_b = { "filename", "branch", "diff", {
-          "diagnostics",
-          sources = { "nvim_diagnostic" },
-          symbols = { error = " ", warn = " ", info = " ", hint = " " },
-          colored = false,
-        },
+    lualine_b = {
+      "filename",
+      "branch",
+      "diff",
+      {
+        "diagnostics",
+        sources = { "nvim_diagnostic" },
+        symbols = { error = " ", warn = " ", info = " ", hint = " " },
+        colored = false
+      }
     },
-      -- { "diagnostics", sources = { "nvim_lsp" } } },
+    -- { "diagnostics", sources = { "nvim_lsp" } } },
     -- lualine_c = { "filename" },
-    lualine_c = { { lsp_client, icon = " ", color = { fg = "#a9a1e1", gui = "bold" } } },
+    lualine_c = {
+      { lsp_client, icon = " ", color = { fg = "#a9a1e1", gui = "bold" } }
+    },
     lualine_x = { "encoding", "fileformat", "filetype" },
     lualine_y = { "progress" },
     lualine_z = { "location" }
@@ -80,5 +83,5 @@ lualine.setup {
   },
   tabline = {},
   -- extensions = {"nvim-tree", "quickfix"}
-  extensions = { }
+  extensions = {}
 }
