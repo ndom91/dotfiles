@@ -1,21 +1,67 @@
-vim.cmd([[
-  augroup packer_user_config
-    autocmd!
-    autocmd BufWritePost plugins.lua source <afile> | PackerCompile
-  augroup end
-]])
+-- vim.cmd([[
+--   augroup packer_user_config
+--     autocmd!
+--     autocmd BufWritePost plugins.lua source <afile> | PackerCompile
+--   augroup end
+-- ]])
+--
+-- local packer = require("packer")
+--
+-- packer.init({
+--   git = {
+--     clone_timeout = 300,
+--     subcommands = { install = "clone --depth %i --progress" }
+--   },
+--   profile = { enable = true }
+-- })
 
-local packer = require("packer")
+local M = {}
 
-packer.init({
-  git = {
-    clone_timeout = 300,
-    subcommands = { install = "clone --depth %i --progress" }
-  },
-  profile = { enable = true }
-})
+function M.setup()
+  -- Indicate first time installation
+  local packer_bootstrap = false
 
-packer.startup(function(use)
+  -- packer.nvim configuration
+  local conf = {
+    profile = {
+      enable = true,
+      threshold = 0, -- the amount in ms that a plugins load time must be over for it to be included in the profile
+    },
+
+    display = {
+      open_fn = function()
+        return require("packer.util").float { border = "rounded" }
+      end,
+    },
+  }
+
+  -- Check if packer.nvim is installed
+  -- Run PackerCompile if there are changes in this file
+  local function packer_init()
+    local fn = vim.fn
+    local install_path = fn.stdpath "data" .. "/site/pack/packer/start/packer.nvim"
+    if fn.empty(fn.glob(install_path)) > 0 then
+      packer_bootstrap = fn.system {
+        "git",
+        "clone",
+        "--depth",
+        "1",
+        "https://github.com/wbthomason/packer.nvim",
+        install_path,
+      }
+      vim.cmd [[packadd packer.nvim]]
+    end
+
+    -- Run PackerCompile if there are changes in this file
+    -- vim.cmd "autocmd BufWritePost plugins.lua source <afile> | PackerCompile"
+    local packer_grp = vim.api.nvim_create_augroup("packer_user_config", { clear = true })
+    vim.api.nvim_create_autocmd(
+      { "BufWritePost" },
+      { pattern = "init.lua", command = "source <afile> | PackerCompile", group = packer_grp }
+    )
+  end
+
+local function plugins(use)
   -- nerd font icons
   use "kyazdani42/nvim-web-devicons"
 
@@ -34,9 +80,29 @@ packer.startup(function(use)
   use {
     "neovim/nvim-lspconfig",
     config = function()
-      require "plugins.lsp.lsp-config"
-    end
+      -- require "plugins.lsp.lsp-config"
+      require("plugins.lsp").setup()
+    end,
+    wants = {
+      "cmp-nvim-lsp",
+      "null-ls.nvim",
+      "vim-illuminate"
+    },
+    requires = {
+      "rrethy/vim-illuminate",
+      "jose-elias-alvarez/null-ls.nvim",
+        {
+          "j-hui/fidget.nvim",
+          config = function()
+            require("fidget").setup {}
+          end,
+        },
+        "b0o/schemastore.nvim",
+    }
   }
+
+  -- use "lvimuser/lsp-inlayhints.nvim"
+  -- use "b0o/schemastore.nvim"
 
   use "williamboman/nvim-lsp-installer"
 
@@ -63,13 +129,13 @@ packer.startup(function(use)
     end
   }
 
-  use({
-    "jose-elias-alvarez/null-ls.nvim",
-    config = function()
-      require("plugins.lsp.null-ls")
-    end,
-    requires = { "nvim-lua/plenary.nvim" }
-  })
+  -- use({
+  --   "jose-elias-alvarez/null-ls.nvim",
+  --   -- config = function()
+  --   --   require("plugins.lsp.nll-ls")
+  --   -- end,
+  --   requires = { "nvim-lua/plenary.nvim" }
+  -- })
 
   use({
     "j-hui/fidget.nvim", -- floating status text in bottom right
@@ -78,7 +144,7 @@ packer.startup(function(use)
     end
   })
 
-  use("rrethy/vim-illuminate") -- highlight same word under cursor
+  -- use("rrethy/vim-illuminate") -- highlight same word under cursor
 
   -- use "jose-elias-alvarez/nvim-lsp-ts-utils"
 
@@ -106,24 +172,36 @@ packer.startup(function(use)
   }
 
   -- autocompletion snippets
-  use "L3MON4D3/LuaSnip"
-  use "saadparwaiz1/cmp_luasnip"
-  use "rafamadriz/friendly-snippets"
+  -- use "L3MON4D3/LuaSnip"
+  -- use "saadparwaiz1/cmp_luasnip"
+  -- use "rafamadriz/friendly-snippets"
 
   -- autocompletion
   use {
     "hrsh7th/nvim-cmp",
     config = function()
       require "plugins.nvim-cmp"
-    end
+    end,
+    wants = { "LuaSnip" },
+    requires = {
+      "hrsh7th/cmp-nvim-lsp-signature-help",
+      "hrsh7th/cmp-nvim-lsp",
+      "hrsh7th/cmp-buffer",
+      "hrsh7th/cmp-path",
+      "hrsh7th/cmp-nvim-lua",
+      "hrsh7th/cmp-cmdline",
+      "saadparwaiz1/cmp_luasnip",
+      "rafamadriz/friendly-snippets",
+      "L3MON4D3/LuaSnip"
+    }
   }
 
-  use({ "hrsh7th/cmp-nvim-lsp-signature-help", after = "nvim-cmp" })
-  use({ "hrsh7th/cmp-nvim-lsp", after = "nvim-cmp" })
-  use({ "hrsh7th/cmp-buffer", after = "nvim-cmp" })
-  use({ "hrsh7th/cmp-path", after = "nvim-cmp" })
-  use({ "hrsh7th/cmp-nvim-lua", after = "nvim-cmp" })
-  use({ "hrsh7th/cmp-cmdline", after = "nvim-cmp" })
+  -- use({ "hrsh7th/cmp-nvim-lsp-signature-help", after = "nvim-cmp" })
+  -- use({ "hrsh7th/cmp-nvim-lsp" })
+  -- use({ "hrsh7th/cmp-buffer", after = "nvim-cmp" })
+  -- use({ "hrsh7th/cmp-path", after = "nvim-cmp" })
+  -- use({ "hrsh7th/cmp-nvim-lua", after = "nvim-cmp" })
+  -- use({ "hrsh7th/cmp-cmdline", after = "nvim-cmp" })
 
   -- treesitter
   use {
@@ -281,4 +359,24 @@ packer.startup(function(use)
   use { "tpope/vim-surround" } -- Change surrounding arks
   use { "tpope/vim-repeat" } -- extends . repeat
 
-end)
+
+    -- Bootstrap Neovim
+    if packer_bootstrap then
+      print "Neovim restart is required after installation!"
+      require("packer").sync()
+    end
+  end
+
+  -- Init and start packer
+  packer_init()
+  local packer = require "packer"
+
+  -- Performance
+  pcall(require, "impatient")
+  -- pcall(require, "packer_compiled")
+
+  packer.init(conf)
+  packer.startup(plugins)
+end
+
+return M
