@@ -19,9 +19,9 @@ fi
 if [ -x /usr/bin/dircolors ]; then
   test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
   alias ls='ls --color=auto'
-  alias grep='grep --color=auto'
-  alias fgrep='fgrep --color=auto'
-  alias egrep='egrep --color=auto'
+  alias grep='grep --color=auto --exclude-dir={node_modules,.bzr,CVS,.git,.hg,.svn,.idea,.tox}'
+  alias fgrep='fgrep --color=auto --exclude-dir={node_modules,.bzr,CVS,.git,.hg,.svn,.idea,.tox}'
+  alias egrep='egrep --color=auto --exclude-dir={node_modules,.bzr,CVS,.git,.hg,.svn,.idea,.tox}'
 fi
 
 #### DOTFILES GIT BARE REPO ####
@@ -55,7 +55,7 @@ alias daymode='echo 3000 > /sys/class/backlight/intel_backlight/brightness > /de
 alias activeSysd='for i in $(cd /etc/systemd/system/multi-user.target.wants && ls *.service); do script -q -c "systemctl status -n 0 --no-pager $i" |head -n 1; script -q -c "systemctl status -n 0 --no-pager $i" |grep --color=never "Active: "; done;'
 
 # Custom Applications
-[[ "$(command -v rg)" ]] && alias grep='rg'
+[[ "$(command -v rg)" ]] && alias grep='rg -S --iglob !.bun --iglob !node_modules --iglob !*.bzr --iglob !*.git --iglob !*.hg --iglob !*.svn --iglob !*.idea --iglob !*.tox'
 [[ "$(command -v fd)" ]] && alias find='fd'
 [[ "$(command -v nvim)" ]] && alias vim='nvim'
 [[ "$(command -v vifm)" ]] && alias vifm='~/.config/vifm/scripts/vifmrun'

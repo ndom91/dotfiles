@@ -150,7 +150,7 @@ fi
 if [ -f /usr/bin/starship ] || [ -f /usr/local/bin/starship ]; then
   eval "$(starship init bash)"
 else
-  curl -fsSL https://starship.rs/install.sh | bash -s -- -y
+  curl -fsSL https://starship.rs/install.sh | sh -s -- -y
   eval "$(starship init bash)"
 fi
 
@@ -169,6 +169,10 @@ export NPM_CONFIG_INIT_LICENSE='MIT'
 export NPM_CONFIG_INIT_VERSION='0.0.1'
 export NPM_CONFIG_PROGRESS='true'
 export NPM_CONFIG_SAVE='true'
+
+# PNPM
+export PATH="$HOME/.pnpm-global:$PATH"
+export PNPM_HOME="$HOME/.pnpm-global"
 
 # BUN
 if [ -f "$HOME/.bun/bin/bun" ]; then

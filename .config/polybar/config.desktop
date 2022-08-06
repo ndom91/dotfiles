@@ -41,6 +41,8 @@ brown  = #ab7967
 
 [bar/master]
 monitor = DisplayPort-0
+override-redirect = true
+wm-restack = i3
 
 width = 100%
 height = 32
@@ -176,6 +178,7 @@ interval = 300
 type = custom/script
 exec = ~/.config/polybar/network_traffic.sh
 tail = true
+;interval = 3
 format-prefix-foreground = ${colors.pink4}
 format-underline = ${colors.pink4}
 format-padding = 1

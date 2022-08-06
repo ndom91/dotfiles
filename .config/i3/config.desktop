@@ -17,7 +17,7 @@ font pango:Ubuntu Light 10
 for_window [class=".*"] border pixel 10
 gaps inner 30
 gaps outer 10
-gaps vertical 0
+gaps vertical 20
 
 # colors
 set_from_resource $color1   color1  #000000
