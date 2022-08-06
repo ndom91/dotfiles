@@ -20,19 +20,14 @@ end
 
 function M.format()
   if M.autoformat then
-    local view = vim.fn.winsaveview()
+    -- local view = vim.fn.winsaveview()
     vim.lsp.buf.format {
-      async = true,
       filter = function(client)
-        return client.name ~= "tsserver"
-          and client.name ~= "jsonls"
-          and client.name ~= "html"
-          -- and client.name ~= "sumneko_lua"
-          -- and client.name ~= "jdt.ls"
-        -- and client.name ~= "kotlin_language_server"
-      end,
+        return client.name ~= "tsserver" and client.name ~= "jsonls" and
+                   client.name ~= "html"
+      end
     }
-    vim.fn.winrestview(view)
+    -- vim.fn.winrestview(view)
     print "Buffer formatted"
   end
 end
@@ -50,13 +45,14 @@ function M.setup(client, bufnr)
   client.server_capabilities.documentFormattingProvder = enable
   client.server_capabilities.documentRangeFormattingProvider = enable
   if client.server_capabilities.documentFormattingProvider then
-    local lsp_format_grp = api.nvim_create_augroup("LspFormat", { clear = true })
+    local lsp_format_grp =
+        api.nvim_create_augroup("LspFormat", { clear = true })
     api.nvim_create_autocmd("BufWritePre", {
       callback = function()
-        vim.schedule(M.format)
+        M.format()
       end,
       group = lsp_format_grp,
-      buffer = bufnr,
+      buffer = bufnr
     })
   end
 end
@@ -67,7 +63,8 @@ function M.has_formatter(filetype)
 end
 
 function M.list_registered(filetype)
-  local registered_providers = nls_utils.list_registered_providers_names(filetype)
+  local registered_providers = nls_utils.list_registered_providers_names(
+                                   filetype)
   return registered_providers[method] or {}
 end
 

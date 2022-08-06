@@ -86,6 +86,10 @@ function M.on_attach(client, bufnr)
   -- See `:help omnifunc` and `:help ins-completion` for more information.
   vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
 
+  vim.api.nvim_buf_create_user_command(bufnr, 'Format', vim.lsp.buf.format or
+                                           vim.lsp.buf.formatting, {
+    desc = 'Format current buffer with LSP'
+  })
   -- Use LSP as the handler for formatexpr.
   -- See `:help formatexpr` for more information.
   vim.api.nvim_buf_set_option(bufnr, "formatexpr", "v:lua.vim.lsp.formatexpr()")

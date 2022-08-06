@@ -153,11 +153,6 @@ function M.setup()
       end
     }
 
-    -- autocompletion snippets
-    -- use "L3MON4D3/LuaSnip"
-    -- use "saadparwaiz1/cmp_luasnip"
-    -- use "rafamadriz/friendly-snippets"
-
     -- autocompletion
     use {
       "hrsh7th/nvim-cmp",
@@ -177,13 +172,6 @@ function M.setup()
         "L3MON4D3/LuaSnip"
       }
     }
-
-    -- use({ "hrsh7th/cmp-nvim-lsp-signature-help", after = "nvim-cmp" })
-    -- use({ "hrsh7th/cmp-nvim-lsp" })
-    -- use({ "hrsh7th/cmp-buffer", after = "nvim-cmp" })
-    -- use({ "hrsh7th/cmp-path", after = "nvim-cmp" })
-    -- use({ "hrsh7th/cmp-nvim-lua", after = "nvim-cmp" })
-    -- use({ "hrsh7th/cmp-cmdline", after = "nvim-cmp" })
 
     -- treesitter
     use {
@@ -207,7 +195,7 @@ function M.setup()
       "folke/todo-comments.nvim", -- special highlight  @TODO, @FIXME, etc comments
       requires = "nvim-lua/plenary.nvim",
       config = function()
-        require("todo-comments").setup {}
+        require "plugins.todo-comments"
       end
     }
 
