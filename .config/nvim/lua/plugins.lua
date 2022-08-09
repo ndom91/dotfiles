@@ -138,8 +138,23 @@ function M.setup()
       end
     }
 
-    -- neo-tree
+    -- UI Elements
     use "MunifTanjim/nui.nvim"
+    -- use "stevearc/dressing.nvim"
+    -- use {
+    --   "mrjones2014/legendary.nvim",
+    --   config = function()
+    --     require("plugins.legendary")
+    --   end
+    -- }
+    use {
+      'rmagatti/goto-preview',
+      config = function()
+        require('goto-preview').setup {}
+      end
+    }
+
+    -- neo tree
     use {
       "nvim-neo-tree/neo-tree.nvim",
       branch = "v2.x",

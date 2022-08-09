@@ -62,12 +62,13 @@ nnoremap("<leader>/", "<cmd>Telescope live_grep prompt_prefix=🔍<CR>")
 nnoremap("<leader>:", "<cmd>Telescope command_history prompt_prefix=🔍<CR>")
 nnoremap("<leader>r", "<cmd>Telescope oldfiles prompt_prefix=🔍<CR>")
 nnoremap("<leader>h", "<cmd>Telescope help_tags prompt_prefix=🔍<CR>")
-nnoremap("gD", "<cmd>Telescope lsp_type_definitions prompt_prefix=🔍<CR>")
-nnoremap("gd", "<cmd>Telescope lsp_definitions prompt_prefix=🔍<CR>")
-nnoremap("gi", "<cmd>Telescope lsp_implementations prompt_prefix=🔍<CR>")
-nnoremap("gr", "<cmd>Telescope lsp_references prompt_prefix=🔍<CR>")
-nnoremap("<leader>so",
-         "<cmd>Telescope lsp_document_symbols prompt_prefix=🔍<CR>")
+-- nnoremap("gD", "<cmd>Telescope lsp_type_definitions prompt_prefix=🔍<CR>")
+-- nnoremap("gd", "<cmd>Telescope lsp_definitions prompt_prefix=🔍<CR>")
+-- nnoremap("gd", "<cmd>lua vim.lsp.buf.definition()<CR>")
+-- nnoremap("gi", "<cmd>Telescope lsp_implementations prompt_prefix=🔍<CR>")
+-- nnoremap("gr", "<cmd>Telescope lsp_references prompt_prefix=🔍<CR>")
+-- nnoremap("<leader>so",
+--          "<cmd>Telescope lsp_document_symbols prompt_prefix=🔍<CR>")
 nnoremap("<leader>gc", "<cmd>Telescope git_commits prompt_prefix=🔍<CR>")
 nnoremap("<leader>gb", "<cmd>Telescope git_branches prompt_prefix=🔍<CR>")
 
@@ -76,9 +77,6 @@ nnoremap("<c-x>",
          '<cmd>lua require("bufferline").handle_close(vim.fn.bufnr("%"))<CR>')
 nnoremap("<Tab>", ":bnext<CR>")
 nnoremap("<S-Tab>", ":bprev<CR>")
-
--- nvim-tree
-nnoremap("<c-n>", "<cmd>NvimTreeToggle<CR>")
 
 -- trouble
 nnoremap("<leader>tr", "<cmd>TroubleToggle<cr>")

@@ -14,14 +14,14 @@ treesitter_configs.setup {
       enable = false,
       keymaps = {
         -- mapping to rename reference under cursor
-        smart_rename = "grr"
+        -- smart_rename = "grr"
       }
     },
     navigation = {
       enable = false,
       keymaps = {
-        goto_definition = "gnd", -- mapping to go to definition of symbol under cursor
-        list_definitions = "gnD" -- mapping to list all definitions in current file
+        -- goto_definition = "gnd", -- mapping to go to definition of symbol under cursor
+        -- list_definitions = "gnD" -- mapping to list all definitions in current file
       }
     }
   },

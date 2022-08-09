@@ -18,6 +18,7 @@ end
 
 local sources = {
   -- formatting
+  -- NODE
   b.formatting.prettier_d_slim.with {
     extra_args = {
       "--single-quote",
@@ -39,14 +40,22 @@ local sources = {
       "--no-keep-simple-function-one-line"
     }
   }),
+  -- PYTHON
+  -- b.formatting.black,
+  b.formatting.autopep8,
+
   -- b.formatting.shellharden,
   -- b.formatting.fixjson,
   -- with_root_file(b.formatting.stylua, "stylua.toml"),
 
   -- diagnostics
+  -- NODE
   b.diagnostics.eslint_d,
   b.diagnostics.tsc,
   with_diagnostics_code(b.diagnostics.shellcheck),
+  -- PYTHON
+  b.diagnostics.flake8,
+
   -- b.diagnostics.write_good,
   -- b.diagnostics.markdownlint,
   -- b.diagnostics.codespell,

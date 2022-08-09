@@ -1,7 +1,5 @@
 local M = {}
 
--- local util = require "lspconfig.util"
-
 local servers = {
   html = {},
   jsonls = {
@@ -9,7 +7,33 @@ local servers = {
   },
   dockerls = {},
   bashls = {},
-  tsserver = { disable_formatting = true },
+  tsserver = {
+    disable_formatting = true,
+    settings = {
+      javascript = {
+        inlayHints = {
+          includeInlayEnumMemberValueHints = true,
+          includeInlayFunctionLikeReturnTypeHints = true,
+          includeInlayFunctionParameterTypeHints = true,
+          includeInlayParameterNameHints = "all", -- 'none' | 'literals' | 'all';
+          includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+          includeInlayPropertyDeclarationTypeHints = true,
+          includeInlayVariableTypeHints = true
+        }
+      },
+      typescript = {
+        inlayHints = {
+          includeInlayEnumMemberValueHints = true,
+          includeInlayFunctionLikeReturnTypeHints = true,
+          includeInlayFunctionParameterTypeHints = true,
+          includeInlayParameterNameHints = "all", -- 'none' | 'literals' | 'all';
+          includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+          includeInlayPropertyDeclarationTypeHints = true,
+          includeInlayVariableTypeHints = true
+        }
+      }
+    }
+  },
   vimls = {},
   tailwindcss = {},
   cssls = {},
@@ -72,13 +96,10 @@ local servers = {
   --     },
   --   },
   -- },
-  -- jdtls = {},
   -- graphql = {},
   -- omnisharp = {},
-  -- kotlin_language_server = {},
   -- emmet_ls = {},
   -- marksman = {},
-  -- angularls = {},
 }
 
 function M.on_attach(client, bufnr)
@@ -107,28 +128,12 @@ function M.on_attach(client, bufnr)
   if client.server_capabilities.definitionProvider then
     vim.api.nvim_buf_set_option(bufnr, "tagfunc", "v:lua.vim.lsp.tagfunc")
   end
-
-  -- Configure for jdtls
-  -- if client.name == "jdt.ls" then
-  --   require("jdtls").setup_dap { hotcodereplace = "auto" }
-  --   require("jdtls.dap").setup_dap_main_class_configs()
-  --   vim.lsp.codelens.refresh()
-  -- end
-  --
-  -- -- aerial.nvim
-  -- require("aerial").on_attach(client, bufnr)
-  --
-  -- -- nvim-navic
-  -- if client.server_capabilities.documentSymbolProvider then
-  --   local navic = require "nvim-navic"
-  --   navic.attach(client, bufnr)
-  -- end
 end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 capabilities.textDocument.foldingRange = {
-  -- dynamicRegistration = false,
+  dynamicRegistration = false,
   lineFoldingOnly = true
 }
 capabilities.textDocument.completion.completionItem.resolveSupport = {
@@ -151,9 +156,6 @@ function M.setup()
 
   -- Installer
   require("plugins.lsp.installer").setup(servers, opts)
-
-  -- Inlay hints
-  -- require("plugins.lsp.inlay-hints").setup()
 end
 
 local diagnostics_active = true

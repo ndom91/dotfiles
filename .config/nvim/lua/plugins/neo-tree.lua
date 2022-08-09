@@ -25,7 +25,17 @@ neo_tree.setup({
   popup_border_style = "rounded",
   enable_git_status = true,
   enable_diagnostics = true,
+  sort_case_insensitive = false, -- used when sorting files and directories in the tree
+  sort_function = nil, -- use a custom function for sorting files and directories in the tree 
+  -- sort_function = function (a,b)
+  --       if a.type == b.type then
+  --           return a.path > b.path
+  --       else
+  --           return a.type > b.type
+  --       end
+  --   end , -- this sorts files and directories descendantly
   default_component_configs = {
+    container = { enable_character_fade = true },
     indent = {
       indent_size = 2,
       padding = 1, -- extra padding on left hand side
@@ -47,7 +57,11 @@ neo_tree.setup({
       default = "*"
     },
     modified = { symbol = "[+]", highlight = "NeoTreeModified" },
-    name = { trailing_slash = false, use_git_status_colors = true },
+    name = {
+      trailing_slash = false,
+      use_git_status_colors = true,
+      highlight = "NeoTreeFileName"
+    },
     git_status = {
       symbols = {
         -- Change type
@@ -67,6 +81,7 @@ neo_tree.setup({
   window = {
     position = "left",
     width = 35,
+    mapping_options = { noremap = true, nowait = true },
     mappings = {
       ["<space>"] = "toggle_node",
       ["o"] = "toggle_node",
@@ -77,14 +92,27 @@ neo_tree.setup({
       ["s"] = "open_vsplit",
       ["t"] = "open_tabnew",
       ["C"] = "close_node",
-      ["a"] = "add",
+      -- ["a"] = "add",
+      ["a"] = {
+        "add",
+        -- some commands may take optional config options, see `:h neo-tree-mappings` for details
+        config = {
+          show_path = "relative" -- "none", "relative", "absolute"
+        }
+      },
       ["A"] = "add_directory",
       ["d"] = "delete",
       ["r"] = "rename",
       ["y"] = "copy_to_clipboard",
       ["x"] = "cut_to_clipboard",
       ["p"] = "paste_from_clipboard",
-      ["c"] = "copy", -- takes text input for destination
+      ["c"] = {
+        "copy",
+        -- some commands may take optional config options, see `:h neo-tree-mappings` for details
+        config = {
+          show_path = "absolute" -- "none", "relative", "absolute"
+        }
+      },
       ["m"] = "move", -- takes text input for destination
       ["q"] = "close_window",
       ["R"] = "refresh"
@@ -93,7 +121,7 @@ neo_tree.setup({
   nesting_rules = {},
   filesystem = {
     filtered_items = {
-      visible = false, -- when true, they will just be displayed differently than normal items
+      visible = true, -- when true, they will just be displayed differently than normal items
       hide_dotfiles = false,
       hide_gitignored = true,
       hide_by_name = { ".DS_Store", "thumbs.db", "node_modules" },
@@ -105,6 +133,7 @@ neo_tree.setup({
     },
     follow_current_file = true, -- This will find and focus the file in the active buffer every
     -- time the current file is changed while the tree is open.
+    group_empty_dirs = true,
     hijack_netrw_behavior = "open_default", -- netrw disabled, opening a directory opens neo-tree
     -- in whatever position is specified in window.position
     -- "open_current",  -- netrw disabled, opening a directory opens within the
@@ -119,11 +148,16 @@ neo_tree.setup({
         ["H"] = "toggle_hidden",
         ["/"] = "fuzzy_finder",
         ["f"] = "filter_on_submit",
-        ["<c-x>"] = "clear_filter"
+        ["<c-x>"] = "clear_filter",
+        ["[g"] = "prev_git_modified",
+        ["]g"] = "next_git_modified"
       }
     }
   },
   buffers = {
+    follow_current_file = true, -- This will find and focus the file in the active buffer every
+    -- time the current file is changed while the tree is open.
+    group_empty_dirs = true, -- when true, empty folders will be grouped together
     show_unloaded = true,
     window = {
       mappings = {
@@ -149,5 +183,6 @@ neo_tree.setup({
   }
 })
 
-vim.api.nvim_set_keymap('n', '<c-n>', '<cmd>Neotree toggle<cr>',
-                        { silent = true })
+-- vim.api.nvim_set_keymap('n', '<c-n>', '<cmd>Neotree toggle<cr>',
+--                         { silent = true })
+vim.api.nvim_set_keymap('n', '\\', '<cmd>Neotree toggle<cr>', { silent = true })

@@ -42,14 +42,14 @@ lspsaga.setup {
 }
 
 -- keymaps
-nnoremap("vd", "<cmd>lua require'lspsaga.provider'.preview_definition()<CR>")
-nnoremap("[d", ":Lspsaga diagnostic_jump_next<CR>")
-nnoremap("]d", ":Lspsaga diagnostic_jump_prev<CR>")
+-- nnoremap("vd", "<cmd>lua require'lspsaga.provider'.preview_definition()<CR>")
+-- nnoremap("[d", ":Lspsaga diagnostic_jump_next<CR>")
+-- nnoremap("]d", ":Lspsaga diagnostic_jump_prev<CR>")
 
 -- nnoremap("<leader>lg", "<cmd>lua require('lspsaga.floaterm').open_float_terminal('lazygit')<CR>")
 -- tnoremap("<leader>q", "<cmd>lua require('lspsaga.floaterm').close_float_terminal('lazygit')<CR>")
 
 nnoremap("<leader>rn", ":Lspsaga rename<CR>")
-nnoremap("<leader>k", ":Lspsaga signature_help<CR>")
+-- nnoremap("<leader>k", ":Lspsaga signature_help<CR>")
 nnoremap("<leader>a", ":Lspsaga code_action<CR>")
-nnoremap("<leader>gh", ":Lspsaga lsp_finder<CR>")
+-- nnoremap("<leader>gh", ":Lspsaga lsp_finder<CR>")
