@@ -1,3 +1,5 @@
+local autocmd = vim.api.nvim_create_autocmd
+
 local cmd = vim.cmd
 
 -- highlight yank for a brief second for visual feedback
@@ -13,3 +15,10 @@ cmd "autocmd! CursorHold * lua vim.diagnostic.open_float(nil, { focusable = fals
 --   end,
 --   {bang = true}
 -- )
+-- 
+autocmd("FileType", {
+  pattern = "prompt",
+  callback = function()
+    require("cmp").setup.buffer { enabled = false }
+  end
+})

@@ -1,5 +1,6 @@
 local M = {}
 
+-- Servers from: https://github.com/williamboman/mason-lspconfig.nvim/blob/main/doc/server-mapping.md
 local servers = {
   html = {},
   jsonls = {
@@ -37,7 +38,8 @@ local servers = {
   vimls = {},
   tailwindcss = {},
   cssls = {},
-  vuels = {},
+  veturls = {}, -- vue
+  lua_language_server = {},
   yamlls = {
     schemastore = { enable = true },
     settings = {
@@ -131,14 +133,16 @@ function M.on_attach(client, bufnr)
 end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
+
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 capabilities.textDocument.foldingRange = {
-  dynamicRegistration = false,
+  -- dynamicRegistration = false,
   lineFoldingOnly = true
 }
 capabilities.textDocument.completion.completionItem.resolveSupport = {
   properties = { "documentation", "detail", "additionalTextEdits" }
 }
+
 M.capabilities = require("cmp_nvim_lsp").update_capabilities(capabilities) -- for nvim-cmp
 
 local opts = {

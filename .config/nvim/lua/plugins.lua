@@ -62,31 +62,9 @@ function M.setup()
     }
     use { "nvim-telescope/telescope-ui-select.nvim" }
 
-    -- lsp
-    use {
-      "neovim/nvim-lspconfig",
-      config = function()
-        -- require "plugins.lsp.lsp-config"
-        require("plugins.lsp").setup()
-      end,
-      wants = { "cmp-nvim-lsp", "null-ls.nvim", "vim-illuminate" },
-      requires = {
-        "rrethy/vim-illuminate",
-        "jose-elias-alvarez/null-ls.nvim",
-        {
-          "j-hui/fidget.nvim",
-          config = function()
-            require("fidget").setup {}
-          end
-        },
-        "b0o/schemastore.nvim"
-      }
-    }
-
+    -- use("rrethy/vim-illuminate") -- highlight same word under cursor
+    -- use "jose-elias-alvarez/nvim-lsp-ts-utils"
     -- use "lvimuser/lsp-inlayhints.nvim"
-    -- use "b0o/schemastore.nvim"
-
-    use "williamboman/nvim-lsp-installer"
 
     use {
       'tami5/lspsaga.nvim',
@@ -111,13 +89,38 @@ function M.setup()
       end
     }
 
-    -- use({
-    --   "jose-elias-alvarez/null-ls.nvim",
-    --   -- config = function()
-    --   --   require("plugins.lsp.nll-ls")
-    --   -- end,
-    --   requires = { "nvim-lua/plenary.nvim" }
-    -- })
+    use {
+      "zbirenbaum/copilot.lua",
+      event = { "VimEnter" },
+      config = function()
+        vim.defer_fn(function()
+          require("copilot").setup {
+            cmp = {
+              enabled = true,
+              method = "getCompletionsCycling",
+              ft_disable = {
+                "markdown",
+                "neo-tree",
+                "terminal",
+                "dashboard",
+                "telescope.nvim",
+                "terraform",
+                "lsp-installer",
+                "packer",
+                "neo-tree-popup",
+                "quickfix",
+                "notify"
+              }
+            }
+          }
+        end, 100)
+      end
+    }
+    use {
+      "zbirenbaum/copilot-cmp",
+      module = "copilot_cmp",
+      after = "copilot.lua"
+    }
 
     use({
       "j-hui/fidget.nvim", -- floating status text in bottom right
@@ -125,10 +128,6 @@ function M.setup()
         require("plugins.fidget-nvim")
       end
     })
-
-    -- use("rrethy/vim-illuminate") -- highlight same word under cursor
-
-    -- use "jose-elias-alvarez/nvim-lsp-ts-utils"
 
     use {
       "folke/trouble.nvim",
@@ -147,12 +146,6 @@ function M.setup()
     --     require("plugins.legendary")
     --   end
     -- }
-    use {
-      'rmagatti/goto-preview',
-      config = function()
-        require('goto-preview').setup {}
-      end
-    }
 
     -- neo tree
     use {
@@ -172,7 +165,7 @@ function M.setup()
     use {
       "hrsh7th/nvim-cmp",
       config = function()
-        require "plugins.nvim-cmp"
+        require("plugins.nvim-cmp").setup()
       end,
       wants = { "LuaSnip" },
       requires = {
@@ -185,6 +178,39 @@ function M.setup()
         "saadparwaiz1/cmp_luasnip",
         "rafamadriz/friendly-snippets",
         "L3MON4D3/LuaSnip"
+      }
+    }
+
+    -- AI completion
+    use { "github/copilot.vim", event = "InsertEnter", disable = true }
+
+    -- lsp
+    use {
+      "neovim/nvim-lspconfig",
+      config = function()
+        require("plugins.lsp").setup()
+      end,
+      wants = {
+        "mason.nvim",
+        "mason-lspconfig.nvim",
+        "mason-tool-install.nvim",
+        "cmp-nvim-lsp",
+        "null-ls.nvim",
+        "vim-illuminate"
+      },
+      requires = {
+        "rrethy/vim-illuminate",
+        "jose-elias-alvarez/null-ls.nvim",
+        {
+          "j-hui/fidget.nvim",
+          config = function()
+            require("fidget").setup {}
+          end
+        },
+        "b0o/schemastore.nvim",
+        "williamboman/mason.nvim",
+        "williamboman/mason-lspconfig.nvim",
+        "WhoIsSethDaniel/mason-tool-installer.nvim"
       }
     }
 

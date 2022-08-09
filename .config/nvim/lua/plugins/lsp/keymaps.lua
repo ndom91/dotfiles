@@ -39,7 +39,7 @@ local function keymappings(client, bufnr)
   keymap("n", "gD", "<Cmd>lua vim.lsp.buf.declaration()<CR>", opts)
   keymap("n", "gh", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
   keymap("n", "gI", "<cmd>Telescope lsp_implementations<CR>", opts)
-  keymap("n", "gb", "<cmd>lua require('goto-preview').goto_preview_type_definition()<CR>", opts)
+  -- keymap("n", "gb", "<cmd>lua require('goto-preview').goto_preview_type_definition()<CR>", opts)
 end
 
 function M.setup(client, bufnr)

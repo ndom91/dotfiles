@@ -1,6 +1,6 @@
 local M = {}
 
--- local utils = require "utils"
+local utils = require "utils"
 local nls_utils = require "plugins.lsp.null-ls.utils"
 local nls_sources = require "null-ls.sources"
 local api = vim.api
@@ -12,9 +12,9 @@ M.autoformat = true
 function M.toggle()
   M.autoformat = not M.autoformat
   if M.autoformat then
-    -- utils.info("Enabled format on save", "Formatting")
+    utils.info("Enabled format on save", "Formatting")
   else
-    -- utils.warn("Disabled format on save", "Formatting")
+    utils.warn("Disabled format on save", "Formatting")
   end
 end
 

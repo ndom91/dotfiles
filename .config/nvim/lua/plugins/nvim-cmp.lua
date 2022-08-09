@@ -34,12 +34,25 @@ local kind_icons = {
 
 function M.setup()
   local has_words_before = function()
+    if vim.api.nvim_buf_get_option(0, "buftype") == "prompt" then
+      return false
+    end
     local line, col = unpack(vim.api.nvim_win_get_cursor(0))
     return col ~= 0 and
                vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col,
                                                                           col)
                    :match "%s" == nil
   end
+
+  -- local has_words_before = function()
+  --   if vim.api.nvim_buf_get_option(0, "buftype") == "prompt" then
+  --     return false
+  --   end
+  --   local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+  --   return col ~= 0 and
+  --              vim.api.nvim_buf_get_text(0, line - 1, 0, line - 1, col, {})[1]:match(
+  --                  "^%s*$") == nil
+  -- end
 
   local luasnip = require "luasnip"
   -- local neogen = require "neogen"
@@ -57,10 +70,28 @@ function M.setup()
       end
     },
     formatting = {
+
+      -- format = function(entry, vim_item)
+      --   if entry.source.name == "copilot" then
+      --     vim_item.kind = "[] Copilot"
+      --     vim_item.kind_hl_group = "CmpItemKindCopilot"
+      --     return vim_item
+      --   end
+      --   return lspkind.cmp_format({ with_text = false, maxwidth = 50 })(entry,
+      --                                                                   vim_item)
+      -- end
       format = function(entry, vim_item)
         -- Kind icons
         vim_item.kind = string.format("%s %s", kind_icons[vim_item.kind],
                                       vim_item.kind) -- This concatonates the icons with the name of the item kind
+
+        -- copilot
+        if entry.source.name == "copilot" then
+          vim_item.kind = "[] Copilot"
+          vim_item.kind_hl_group = "CmpItemKindCopilot"
+          return vim_item
+        end
+
         -- Source
         vim_item.menu = ({
           nvim_lsp = "[LSP]",
@@ -125,6 +156,14 @@ function M.setup()
           fallback()
         end
       end, { "i", "s", "c" }),
+
+      ["<Tab>"] = vim.schedule_wrap(function(fallback)
+        if cmp.visible() and has_words_before() then
+          cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
+        else
+          fallback()
+        end
+      end),
       -- ["<Tab>"] = cmp.mapping(function(fallback)
       --   if cmp.visible() then
       --     cmp.select_next_item()
@@ -181,14 +220,15 @@ function M.setup()
       }
     },
     sources = {
+      { name = "copilot", group_index = 1 },
       { name = "nvim_lsp" },
-      { name = "nvim_lsp_signature_help" },
+      -- { name = "nvim_lsp_signature_help" },
       { name = "luasnip" },
       { name = "treesitter" },
       { name = "buffer" },
-      { name = "nvim_lua" },
-      { name = "path" },
-      { name = "crates" }
+      -- { name = "nvim_lua" },
+      { name = "path" }
+      -- { name = "crates" }
       -- { name = "spell" },
       -- { name = "emoji" },
       -- { name = "calc" },
@@ -205,15 +245,18 @@ function M.setup()
   cmp.setup.cmdline("/", { sources = { { name = "buffer" } } })
 
   -- Use cmdline & path source for ':'
-  cmp.setup.cmdline(":", {
-    sources = cmp.config
-        .sources({ { name = "path" } }, { { name = "cmdline" } })
-  })
+  -- cmp.setup.cmdline(":", {
+  --   sources = cmp.config
+  --       .sources({ { name = "path" } }, { { name = "cmdline" } })
+  -- })
+
+  -- Copilot Setup
+  vim.api.nvim_set_hl(0, "CmpItemKindCopilot", { fg = "#6CC644" })
 
   -- Auto pairs
-  local cmp_autopairs = require "nvim-autopairs.completion.cmp"
-  cmp.event:on("confirm_done",
-               cmp_autopairs.on_confirm_done { map_char = { tex = "" } })
+  -- local cmp_autopairs = require "nvim-autopairs.completion.cmp"
+  -- cmp.event:on("confirm_done",
+  --              cmp_autopairs.on_confirm_done { map_char = { tex = "" } })
 end
 
 return M
