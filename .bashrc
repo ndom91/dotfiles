@@ -147,7 +147,7 @@ fi
 
 # Starship Bash Prompt
 # https://starship.rs/
-if [ -f /usr/bin/starship ] || [ -f /usr/local/bin/starship ]; then
+if [ -f /bin/starship ] || [ -f /usr/local/bin/starship ]; then
   eval "$(starship init bash)"
 else
   curl -fsSL https://starship.rs/install.sh | sh -s -- -y

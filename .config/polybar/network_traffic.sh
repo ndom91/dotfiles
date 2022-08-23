@@ -61,9 +61,7 @@ while true; do
     bytes[past_rx_$interface]=${bytes[now_rx_$interface]}
     bytes[past_tx_$interface]=${bytes[now_tx_$interface]}
   done
-
-  # echo " $(print_bytes $down) 祝 $(print_bytes $up)"
-  echo " $(print_bits $down) 祝 $(print_bits $up)"
-
+  echo " $(print_bytes $down) 祝 $(print_bytes $up)"
+  #echo " $(print_bits $down) 祝 $(print_bits $up)"
   sleep $INTERVAL
 done

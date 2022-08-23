@@ -1,58 +1,57 @@
-add_newline = false
+format = """
+$username\
+$hostname\
+$directory\
+$nodejs\
+$python\
+$git_branch\
+$git_state\
+$git_status\
+$cmd_duration\
+$line_break\
+$character"""
 
-[gcloud]
-disabled = true
+[directory]
+truncation_length = 2
+# truncation_symbol = "…/"
+truncate_to_repo = false
+style = "#d5a8e3"
 
-[aws]
-disabled = true
-
-[conda]
-symbol = " "
-
-[dart]
-symbol = " "
-
-[docker_context]
-symbol = " "
-
-[elixir]
-symbol = " "
-
-[elm]
-symbol = " "
+[character]
+success_symbol = "[▲](bright-pink)"
+error_symbol = "[▼](bright-red)"
+vicmd_symbol = "[❮](green)"
 
 [git_branch]
-symbol = " "
+format = "[$branch]($style)"
+style = "#4C566A"
 
-[golang]
-symbol = " "
+[git_status]
+# format = "[[(*$conflicted$untracked$modified$staged$renamed$deleted)](218) ($ahead_behind$stashed)]($style)"
+format = "[[(*$conflicted$untracked$modified$staged$renamed$deleted)](218) ($ahead_behind)]($style)"
+style = "cyan"
+conflicted = "​"
+untracked = "​"
+modified = "​"
+staged = "​"
+renamed = "​"
+deleted = "​"
+stashed = "≡"
 
-[hg_branch]
-symbol = " "
+[git_state]
+format = '\([$state( $progress_current/$progress_total)]($style)\) '
+style = "black"
 
-[java]
-symbol = " "
+[cmd_duration]
+format = " [$duration]($style) "
+style = "yellow"
 
-[julia]
-symbol = " "
-
-[memory_usage]
-symbol = " "
-
-[nim]
-symbol = " "
-
-[nix_shell]
-symbol = " "
+[python]
+format = "[$virtualenv]($style) "
+style = "bright-black"
 
 [nodejs]
-symbol = " "
+format = "[$symbol($version)]($style) "
+style = "#88C0D0"
+version_format = "${raw}"
 
-[package]
-symbol = " "
-
-[rust]
-symbol = " "
-
-[directory.substitutions]
-"checkly" = "🦝"

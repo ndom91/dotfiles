@@ -42,11 +42,17 @@ function M.setup(client, bufnr)
     enable = not (client.name == "null-ls")
   end
 
+  if client.name == "vue-language-server" then                                                                                                   
+    client.server_capabilities.document_formatting = false -- 0.7 and earlier
+    client.server_capabilities.documentFormattingProvider = false -- 0.8 and later
+  end
+
   client.server_capabilities.documentFormattingProvder = enable
   client.server_capabilities.documentRangeFormattingProvider = enable
+
   if client.server_capabilities.documentFormattingProvider then
     local lsp_format_grp =
-        api.nvim_create_augroup("LspFormat", { clear = true })
+        api.nvim_create_augroup("LspFormatting", { clear = true })
     api.nvim_create_autocmd("BufWritePre", {
       callback = function()
         M.format()

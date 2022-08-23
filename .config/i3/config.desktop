@@ -71,7 +71,11 @@ bindsym $mod+Shift+q kill
 
 # dmenu
 bindsym $mod+d exec "dmenu_run -bw -i  -nb '#292d3e' -nf '#bbc5ff' -sb '#ff79c6'  -sf '#292d3e' -fn 'Operator Mono Light-14' -p '>'"
-bindsym $mod+m exec /home/ndo/.config/i3/dmenu-emoji.sh
+# Local bash script
+# bindsym $mod+m exec /home/ndo/.config/i3/dmenu-emoji.sh 
+
+# https://github.com/valeriangalliat/dmenumoji
+bindsym $mod+m exec /usr/local/bin/dmenumoji
 
 # flameshot screenshot
 bindsym $mod+Shift+s exec "flameshot gui"

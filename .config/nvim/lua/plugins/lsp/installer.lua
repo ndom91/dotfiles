@@ -29,7 +29,7 @@ function M.setup(servers, options)
       "shfmt",
       "yamllint",
       "tailwindcss-language-server",
-      -- "vue-language-server",
+      --[[ "vue-language-server", ]]
       "bash-language-server",
       "typescript-language-server",
       "yaml-language-server",

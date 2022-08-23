@@ -16,9 +16,9 @@ cmd "autocmd! CursorHold * lua vim.diagnostic.open_float(nil, { focusable = fals
 --   {bang = true}
 -- )
 -- 
-autocmd("FileType", {
-  pattern = "prompt",
-  callback = function()
-    require("cmp").setup.buffer { enabled = false }
-  end
-})
+-- autocmd("FileType", {
+--   pattern = "prompt",
+--   callback = function()
+--     require("cmp").setup.buffer { enabled = false }
+--   end
+-- })
