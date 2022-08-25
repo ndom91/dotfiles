@@ -7,7 +7,7 @@ end
 
 bufferline.setup {
   options = {
-    indicator_icon = "▎",
+    indicator = { icon = "▎" },
     buffer_close_icon = "",
     modified_icon = "●",
     close_icon = "",

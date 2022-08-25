@@ -42,7 +42,7 @@ local sources = {
   }),
   -- PYTHON
   -- b.formatting.black,
-  b.formatting.autopep8,
+  --[[ b.formatting.autopep8, ]]
 
   -- b.formatting.shellharden,
   -- b.formatting.fixjson,
@@ -54,7 +54,7 @@ local sources = {
   b.diagnostics.tsc,
   with_diagnostics_code(b.diagnostics.shellcheck),
   -- PYTHON
-  b.diagnostics.flake8,
+  --[[ b.diagnostics.flake8, ]]
 
   -- b.diagnostics.write_good,
   -- b.diagnostics.markdownlint,
@@ -78,7 +78,7 @@ function M.setup(opts)
   nls.setup {
     -- debug = true,
     debounce = 150,
-    save_after_format = false,
+    save_after_format = true,
     sources = sources,
     on_attach = opts.on_attach,
     root_dir = nls_utils.root_pattern ".git"
