@@ -54,6 +54,7 @@ opt.relativenumber = true
 opt.scrolloff = 8
 opt.shiftwidth = 2
 opt.shortmess:append("atsc")
+opt.shortmess:remove("S")
 opt.smartcase = true
 opt.smartindent = true
 opt.softtabstop = 2

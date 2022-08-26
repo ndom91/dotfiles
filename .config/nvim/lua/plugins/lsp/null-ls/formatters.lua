@@ -22,9 +22,10 @@ function M.format()
   if M.autoformat then
     -- local view = vim.fn.winsaveview()
     vim.lsp.buf.format {
+      timeout_ms = 2000,
       filter = function(client)
-        return client.name ~= "tsserver" and client.name ~= "jsonls" and
-                   client.name ~= "html"
+        --[[ return client.name ~= "tsserver" and client.name ~= "jsonls" and ]]
+        return client.name ~= "jsonls" and client.name ~= "html"
       end
     }
     -- vim.fn.winrestview(view)
@@ -42,17 +43,17 @@ function M.setup(client, bufnr)
     enable = not (client.name == "null-ls")
   end
 
-  if client.name == "vue-language-server" then                                                                                                   
-    client.server_capabilities.document_formatting = false -- 0.7 and earlier
-    client.server_capabilities.documentFormattingProvider = false -- 0.8 and later
-  end
-
+  --[[ if client.name == "vue-language-server" then ]]
+  --[[   client.server_capabilities.document_formatting = false -- 0.7 and earlier ]]
+  --[[   client.server_capabilities.documentFormattingProvider = false -- 0.8 and later ]]
+  --[[ else ]]
+  --[[ end ]]
   client.server_capabilities.documentFormattingProvder = enable
   client.server_capabilities.documentRangeFormattingProvider = enable
 
   if client.server_capabilities.documentFormattingProvider then
-    local lsp_format_grp =
-        api.nvim_create_augroup("LspFormatting", { clear = true })
+    local lsp_format_grp = api.nvim_create_augroup("LspFormatting",
+                                                   { clear = true })
     api.nvim_create_autocmd("BufWritePre", {
       callback = function()
         M.format()

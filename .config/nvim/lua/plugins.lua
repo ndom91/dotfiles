@@ -62,9 +62,14 @@ function M.setup()
     }
     use { "nvim-telescope/telescope-ui-select.nvim" }
 
-    -- use("rrethy/vim-illuminate") -- highlight same word under cursor
     -- use "jose-elias-alvarez/nvim-lsp-ts-utils"
-    -- use "lvimuser/lsp-inlayhints.nvim"
+    --
+    use {
+      "lvimuser/lsp-inlayhints.nvim",
+      config = function()
+        require("lsp-inlayhints").setup()
+      end
+    }
 
     use {
       'tami5/lspsaga.nvim',
@@ -196,10 +201,11 @@ function M.setup()
         "mason-tool-install.nvim",
         "cmp-nvim-lsp",
         "null-ls.nvim",
-        "vim-illuminate"
+        "lsp-inlayhints"
+        --[[ "vim-illuminate" ]]
       },
       requires = {
-        "rrethy/vim-illuminate",
+        --[[ "rrethy/vim-illuminate", ]]
         "jose-elias-alvarez/null-ls.nvim",
         {
           "j-hui/fidget.nvim",
@@ -278,7 +284,7 @@ function M.setup()
     -- bufferline (tabs)
     use {
       "akinsho/bufferline.nvim",
-      tag = "*",
+      tag = "v2.*",
       config = function()
         require "plugins.bufferline"
       end
@@ -360,12 +366,21 @@ function M.setup()
       end
     }
 
+    -- Notification
     use {
-      "rcarriga/nvim-notify", -- floating toast notifications
+      "rcarriga/nvim-notify",
+      --[[ event = "BufReadPre", ]]
       config = function()
-        vim.notify = require("notify")
-      end
+        require("plugins.notify").setup()
+      end,
+      --[[ disable = false, ]]
     }
+    --[[ use { ]]
+    --[[   "rcarriga/nvim-notify", -- floating toast notifications ]]
+    --[[   config = function() ]]
+    --[[     vim.notify = require "plugins.notify" ]]
+    --[[   end ]]
+    --[[ } ]]
 
     -- use { 'wfxr/minimap.vim', run = ':!cargo install --locked code-minimap' }
 

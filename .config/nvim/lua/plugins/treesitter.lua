@@ -6,7 +6,8 @@ if not present then
 end
 
 treesitter_configs.setup {
-  highlight = { enable = true, use_languagetree = false },
+  --[[ highlight = { enable = true, use_languagetree = false }, ]]
+  highlight = { enable = true },
   refactor = {
     highlight_definitions = { enable = true },
     highlight_current_scope = { enable = false },
@@ -26,6 +27,10 @@ treesitter_configs.setup {
     }
   },
   indent = { enable = true },
+  rainbow = { enable = true, extended_mode = true, max_file_lines = nil },
+  context_commentstring = { enable = true },
+
+  sync_install = false,
   ensure_installed = {
     "bash",
     "css",

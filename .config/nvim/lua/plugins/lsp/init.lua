@@ -39,6 +39,7 @@ local servers = {
   tailwindcss = {},
   cssls = {},
   veturls = {}, -- vue
+  --[[ vue_language_server = {}, -- vue ]]
   lua_language_server = {},
   yamlls = {
     schemastore = { enable = true },
@@ -130,6 +131,10 @@ function M.on_attach(client, bufnr)
   if client.server_capabilities.definitionProvider then
     vim.api.nvim_buf_set_option(bufnr, "tagfunc", "v:lua.vim.lsp.tagfunc")
   end
+  
+  -- inlay-hints
+  local ih = require "lsp-inlayhints"
+  ih.on_attach(client, bufnr)
 end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()

@@ -65,7 +65,7 @@ local sources = {
   -- code actions
   b.code_actions.gitsigns.with { disabled_filetypes = { "NeogitCommitMessage" } },
   b.code_actions.eslint_d,
-  b.code_actions.shellcheck
+  b.code_actions.shellcheck,
   -- b.code_actions.gitrebase,
   -- b.code_actions.refactoring,
   -- b.code_actions.proselint,

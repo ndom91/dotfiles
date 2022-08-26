@@ -5,10 +5,6 @@ if not present then
   return
 end
 
-require("nvim-treesitter.configs").setup({
-  context_commentstring = { enable = true, enable_autocmd = false }
-})
-
 Comment.setup {
   pre_hook = function(ctx)
     local U = require 'Comment.utils'

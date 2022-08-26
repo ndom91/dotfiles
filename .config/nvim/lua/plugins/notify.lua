@@ -1,46 +1,64 @@
-local present, notify = pcall(require, "notify")
+--[[ local present, notify = pcall(require, "notify") ]]
+--[[]]
+--[[ if not present then ]]
+--[[   vim.notify "Could not load notify" ]]
+--[[   return ]]
+--[[ end ]]
+--[[]]
+--[[ notify.setup({ ]]
+--[[   -- Animation style (see below for details) ]]
+--[[   stages = "fade_in_slide_out", ]]
+--[[]]
+--[[   -- Function called when a new window is opened, use for changing win settings/config ]]
+--[[   on_open = nil, ]]
+--[[]]
+--[[   -- Function called when a window is closed ]]
+--[[   on_close = nil, ]]
+--[[]]
+--[[   -- Render function for notifications. See notify-render() ]]
+--[[   render = "default", ]]
+--[[]]
+--[[   -- Default timeout for notifications ]]
+--[[   timeout = 5000, ]]
+--[[]]
+--[[   -- Max number of columns for messages ]]
+--[[   max_width = nil, ]]
+--[[   -- Max number of lines for a message ]]
+--[[   max_height = nil, ]]
+--[[]]
+--[[   -- For stages that change opacity this is treated as the highlight behind the window ]]
+--[[   -- Set this to either a highlight group, an RGB hex value e.g. "#000000" or a function returning an RGB code for dynamic values ]]
+--[[   background_colour = "#26233a", ]]
+--[[]]
+--[[   -- Minimum width for notification windows ]]
+--[[   minimum_width = 50, ]]
+--[[]]
+--[[   -- Icons for the different levels ]]
+--[[   icons = { ]]
+--[[     ERROR = "", ]]
+--[[     WARN = "", ]]
+--[[     INFO = "", ]]
+--[[     DEBUG = "", ]]
+--[[     TRACE = "✎" ]]
+--[[   } ]]
+--[[ }) ]]
 
-if not present then
-  vim.notify "Could not load notify"
-  return
+--[[ vim.notify = notify ]]
+
+local M = {}
+
+function M.setup()
+  local notify = require "notify"
+  notify.setup {
+    icons = {
+      ERROR = "",
+      WARN = "",
+      INFO = "",
+      DEBUG = "",
+      TRACE = "✎"
+    }
+  }
+  vim.notify = notify
 end
 
-notify.setup({
-  -- Animation style (see below for details)
-  stages = "fade_in_slide_out",
-
-  -- Function called when a new window is opened, use for changing win settings/config
-  on_open = nil,
-
-  -- Function called when a window is closed
-  on_close = nil,
-
-  -- Render function for notifications. See notify-render()
-  render = "default",
-
-  -- Default timeout for notifications
-  timeout = 5000,
-
-  -- Max number of columns for messages
-  max_width = nil,
-  -- Max number of lines for a message
-  max_height = nil,
-
-  -- For stages that change opacity this is treated as the highlight behind the window
-  -- Set this to either a highlight group, an RGB hex value e.g. "#000000" or a function returning an RGB code for dynamic values
-  background_colour = "Normal",
-
-  -- Minimum width for notification windows
-  minimum_width = 50,
-
-  -- Icons for the different levels
-  icons = {
-    ERROR = "",
-    WARN = "",
-    INFO = "",
-    DEBUG = "",
-    TRACE = "✎"
-  }
-})
-
-vim.notify = notify
+return M

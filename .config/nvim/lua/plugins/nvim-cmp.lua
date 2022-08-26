@@ -222,12 +222,12 @@ function M.setup()
     sources = {
       { name = "copilot", group_index = 1 },
       { name = "nvim_lsp" },
-      -- { name = "nvim_lsp_signature_help" },
+      { name = "nvim_lsp_signature_help" },
       { name = "luasnip" },
       { name = "treesitter" },
       { name = "buffer" },
-      -- { name = "nvim_lua" },
-      { name = "path" }
+      { name = "path" },
+      { name = "nvim_lua" }
       -- { name = "crates" }
       -- { name = "spell" },
       -- { name = "emoji" },
