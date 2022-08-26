@@ -133,8 +133,8 @@ function M.on_attach(client, bufnr)
   end
   
   -- inlay-hints
-  local ih = require "lsp-inlayhints"
-  ih.on_attach(client, bufnr)
+  --[[ local ih = require "lsp-inlayhints" ]]
+  --[[ ih.on_attach(client, bufnr) ]]
 end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()

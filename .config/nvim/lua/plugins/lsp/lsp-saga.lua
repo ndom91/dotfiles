@@ -51,5 +51,5 @@ nnoremap("vd", "<cmd>lua require'lspsaga.provider'.preview_definition()<CR>")
 
 -- nnoremap("<leader>lg", "<cmd>lua require('lspsaga.floaterm').open_float_terminal('lazygit')<CR>")
 -- tnoremap("<leader>q", "<cmd>lua require('lspsaga.floaterm').close_float_terminal('lazygit')<CR>")
--- nnoremap("<leader>k", ":Lspsaga signature_help<CR>")
+nnoremap("<leader>k", ":Lspsaga signature_help<CR>")
 -- nnoremap("<leader>gh", ":Lspsaga lsp_finder<CR>")

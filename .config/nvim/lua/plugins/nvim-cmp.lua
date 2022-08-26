@@ -220,7 +220,8 @@ function M.setup()
       }
     },
     sources = {
-      { name = "copilot", group_index = 1 },
+      --[[ { name = "copilot", group_index = 1 }, ]]
+      { name = "copilot" },
       { name = "nvim_lsp" },
       { name = "nvim_lsp_signature_help" },
       { name = "luasnip" },

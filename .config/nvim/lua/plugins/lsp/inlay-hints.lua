@@ -21,7 +21,7 @@ function M.setup()
   hints.setup {
     inlay_hints = {
       parameter_hints = {
-        show = false,
+        show = true,
         -- prefix = "<- ",
         separator = ", "
       },

@@ -20,15 +20,16 @@ end
 
 function M.format()
   if M.autoformat then
-    -- local view = vim.fn.winsaveview()
+    local view = vim.fn.winsaveview()
     vim.lsp.buf.format {
+      async = true,
       timeout_ms = 2000,
       filter = function(client)
-        --[[ return client.name ~= "tsserver" and client.name ~= "jsonls" and ]]
-        return client.name ~= "jsonls" and client.name ~= "html"
+        return client.name ~= "tsserver" and client.name ~= "jsonls" and
+                   client.name ~= "html"
       end
     }
-    -- vim.fn.winrestview(view)
+    vim.fn.winrestview(view)
     print "Buffer formatted"
   end
 end
