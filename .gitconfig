@@ -16,9 +16,11 @@
 
 [color]
   ui = true
+  pager = true
   branch = auto
   diff = auto
   status = auto
+  interactive = auto
 
 [color "branch"]
   current = yellow reverse
