@@ -22,7 +22,7 @@
 
 [delta]
   navigate = true    # use n and N to move between diff sections
-  light = true      # set to true if you're in a terminal w/ a light background color (e.g. the default macOS terminal)
+  light = false      # set to true if you're in a terminal w/ a light background color (e.g. the default macOS terminal)
 
 [color]
   ui = true
@@ -80,7 +80,10 @@
 
 [commit]
   verbose = true
-  # gpgSign = true
+  gpgSign = true
+
+[gpg]
+  format = ssh
 
 [push]
   default = current
