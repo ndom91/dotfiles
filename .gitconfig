@@ -11,8 +11,18 @@
 
 [core]
   editor = nvim
-  pager = most
+  pager = delta
   excludesfile = ~/.gitignore-global
+
+[interactive]
+  diffFilter = delta --color-only
+
+[add.interactive]
+  useBuiltin = false # required for git 2.37.0
+
+[delta]
+  navigate = true    # use n and N to move between diff sections
+  light = true      # set to true if you're in a terminal w/ a light background color (e.g. the default macOS terminal)
 
 [color]
   ui = true
@@ -70,15 +80,21 @@
 
 [commit]
   verbose = true
-	gpgSign = true
+  # gpgSign = true
 
 [push]
   default = current
+  autoSetupRemote = true
+
+[remote]
+  pushDefault = origin
 
 [branch]
   autosetupmerge = always
-  autosetuprebase = always
+  # autosetuprebase = always
 
-[url "git@github.com:"]
-  insteadOf = https://github.com/
+[url "git@github.com:checkly"]
+  insteadOf = https://github.com/checkly
+[url "git@github.com:ndom91"]
+  insteadOf = https://github.com/ndom91
 
