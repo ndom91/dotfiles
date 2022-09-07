@@ -1,7 +1,7 @@
 [user]
   name = ndom91
   email = yo@ndo.dev
-  signingkey = 2DCE07BE62610800B1E4BEDE955D29B1F039BC43
+  signingkey = ~/.ssh/id_ndo4.pub
 
 [init]
   defaultBranch = main
@@ -14,8 +14,8 @@
   pager = delta
   excludesfile = ~/.gitignore-global
 
-[interactive]
-  diffFilter = delta --color-only
+[pager]
+  difftool = true
 
 [add.interactive]
   useBuiltin = false # required for git 2.37.0
@@ -26,7 +26,6 @@
 
 [color]
   ui = true
-  pager = true
   branch = auto
   diff = auto
   status = auto
@@ -68,7 +67,15 @@
   recommit = commit --amend
 
 [diff]
-  colorMoved = default
+  # colorMoved = default
+  tool = difftastic
+  external = difft
+
+[difftool]
+  prompt = false
+
+[difftool "difftastic"]
+  cmd = difft "$LOCAL" "$REMOTE"
 
 [merge]
   tool = nvim
