@@ -22,7 +22,6 @@ function M.format()
   if M.autoformat then
     local view = vim.fn.winsaveview()
     vim.lsp.buf.format {
-      async = true,
       timeout_ms = 2000,
       filter = function(client)
         return client.name ~= "tsserver" and client.name ~= "jsonls" and

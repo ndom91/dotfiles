@@ -201,6 +201,7 @@ function M.setup()
         "mason-tool-install.nvim",
         "cmp-nvim-lsp",
         "null-ls.nvim",
+        "typescript.nvim",
         "lsp-inlayhints"
         --[[ "vim-illuminate" ]]
       },
@@ -216,9 +217,12 @@ function M.setup()
         "b0o/schemastore.nvim",
         "williamboman/mason.nvim",
         "williamboman/mason-lspconfig.nvim",
-        "WhoIsSethDaniel/mason-tool-installer.nvim"
+        "WhoIsSethDaniel/mason-tool-installer.nvim",
+        "jose-elias-alvarez/typescript.nvim"
       }
     }
+
+    use "jose-elias-alvarez/typescript.nvim"
 
     -- treesitter
     use {
@@ -372,7 +376,7 @@ function M.setup()
       --[[ event = "BufReadPre", ]]
       config = function()
         require("plugins.notify").setup()
-      end,
+      end
       --[[ disable = false, ]]
     }
     --[[ use { ]]
