@@ -18,7 +18,8 @@ fi
 emoji=$(grep "^$emoji" "$PROGDIR/emoji.txt" | sed 's/ .*//')
 
 if [ "$1" = copy ]; then
-  printf "$emoji" | xclip -selection clipboard
+  # printf "$emoji" | xclip -selection clipboard
+  echo "$emoji" | xclip -selection c
   echo "Copied $emoji to clipboard!"
 else
   xdotool type -delay 100 "$emoji"

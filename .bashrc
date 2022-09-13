@@ -24,7 +24,7 @@ export READER="zathura"
 export BROWSER="brave"
 export VIDEO="vlc"
 export XDG_CONFIG_HOME="$HOME/.config"
-export BAT_THEME="dracula"
+export BAT_THEME="Coldark-Dark"
 export RIPGREP_CONFIG_PATH="$HOME/.ripgreprc"
 
 # GUI

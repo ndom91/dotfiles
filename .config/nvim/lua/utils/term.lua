@@ -2,11 +2,10 @@ local M = {}
 
 local Terminal = require("toggleterm.terminal").Terminal
 
-local git_tui = "lazygit"
--- local git_tui = "gitui"
-
-local git_client = Terminal:new{
-  cmd = git_tui,
+local lazygit = Terminal:new({
+  cmd = "lazygit",
+  hidden = true,
+  direction = "float",
   dir = "git_dir",
   size = 40,
   float_opts = {
@@ -15,13 +14,11 @@ local git_client = Terminal:new{
     height = 60,
     winblend = 0,
     highlights = { border = "Special", background = "Normal" }
-  },
-  hidden = true,
-  direction = "float",
-}
+  }
+})
 
-function M.git_client_toggle()
-  git_client:toggle()
+function M._lazygit_toggle()
+  lazygit:toggle()
 end
 
 return M

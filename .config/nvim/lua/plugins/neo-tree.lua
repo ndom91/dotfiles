@@ -86,12 +86,15 @@ neo_tree.setup({
       ["<space>"] = "toggle_node",
       ["o"] = "toggle_node",
       ["<2-LeftMouse>"] = "open",
+      ["<esc>"] = "revert_preview",
+      ["P"] = { "toggle_preview", config = { use_float = true } },
       ["<cr>"] = "open",
       ["<c-n>"] = "open",
       ["S"] = "open_split",
       ["s"] = "open_vsplit",
       ["t"] = "open_tabnew",
       ["C"] = "close_node",
+      ["z"] = "close_all_nodes",
       -- ["a"] = "add",
       ["a"] = {
         "add",
@@ -125,6 +128,12 @@ neo_tree.setup({
       hide_dotfiles = false,
       hide_gitignored = true,
       hide_by_name = { ".DS_Store", "thumbs.db", "node_modules" },
+      always_show = {
+        ".env",
+        ".env.local",
+        ".env.development",
+        ".env.production"
+      },
       never_show = { -- remains hidden even if visible is toggled to true
         ".DS_Store",
         "thumbs.db",
@@ -139,7 +148,7 @@ neo_tree.setup({
     -- "open_current",  -- netrw disabled, opening a directory opens within the
     -- window like netrw would, regardless of window.position
     -- "disabled",    -- netrw left alone, neo-tree does not handle opening dirs
-    use_libuv_file_watcher = false, -- This will use the OS level file watchers to detect changes
+    use_libuv_file_watcher = true, -- This will use the OS level file watchers to detect changes
     -- instead of relying on nvim autocmd events.
     window = {
       mappings = {

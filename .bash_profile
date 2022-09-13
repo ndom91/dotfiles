@@ -7,3 +7,5 @@ unset DOCKER_HOST
 
 source ~/.bashrc
 
+
+if [ -e /home/ndo/.nix-profile/etc/profile.d/nix.sh ]; then . /home/ndo/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer

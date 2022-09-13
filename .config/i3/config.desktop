@@ -63,7 +63,7 @@ bindsym --release Print exec "scregcp /home/ndo/Pictures/screenshots/"
 bindsym $mod+Return exec alacritty
 bindsym $mod+Shift+f exec nemo
 bindsym $Control+$altleft+l exec "/home/ndo/.config/i3/i3lock-fancy-multimonitor/lock -n -p"
-bindsym $Control+Shift+period exec emojione-picker
+# bindsym $Control+Shift+period exec emojione-picker
 bindsym $altleft+space exec ulauncher-toggle
 
 # kill focused window
@@ -216,7 +216,7 @@ exec_always --no-startup-id ulauncher
 exec_always --no-startup-id picom -b --config /home/ndo/.config/i3/picom.conf
 exec_always --no-startup-id setxkbmap -layout us
 exec_always --no-startup-id setxkbmap -option caps:escape
-exec_always --no-startup-id emojione-picker
+# exec_always --no-startup-id emojione-picker
 exec_always --no-startup-id remmina -i
 exec_always --no-startup-id nm-applet
 exec_always --no-startup-id "sudo solaar"
