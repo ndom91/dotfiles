@@ -34,7 +34,7 @@ function M.setup(servers, options)
       "yaml-language-server",
       "lua-language-server"
     },
-    auto_update = false,
+    auto_update = true,
     run_on_start = true
   }
 

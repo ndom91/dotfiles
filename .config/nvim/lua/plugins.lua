@@ -144,13 +144,6 @@ function M.setup()
 
     -- UI Elements
     use "MunifTanjim/nui.nvim"
-    -- use "stevearc/dressing.nvim"
-    -- use {
-    --   "mrjones2014/legendary.nvim",
-    --   config = function()
-    --     require("plugins.legendary")
-    --   end
-    -- }
 
     -- neo tree
     use {
@@ -158,7 +151,7 @@ function M.setup()
       branch = "v2.x",
       requires = {
         "nvim-lua/plenary.nvim",
-        "kyazdani42/nvim-web-devicons", -- not strictly required, but recommended
+        "kyazdani42/nvim-web-devicons",
         "MunifTanjim/nui.nvim"
       },
       config = function()
@@ -203,10 +196,8 @@ function M.setup()
         "null-ls.nvim",
         "typescript.nvim",
         "lsp-inlayhints"
-        --[[ "vim-illuminate" ]]
       },
       requires = {
-        --[[ "rrethy/vim-illuminate", ]]
         "jose-elias-alvarez/null-ls.nvim",
         {
           "j-hui/fidget.nvim",
@@ -232,6 +223,8 @@ function M.setup()
         require "plugins.treesitter"
       end
     }
+    use { 'nvim-treesitter/nvim-treesitter-context' }
+    use { 'JoosepAlviste/nvim-ts-context-commentstring' }
 
     -- comments
     use {
@@ -268,12 +261,6 @@ function M.setup()
           use_treesitter = true
         }
       end
-    }
-
-    -- use correct comments when there are multiple languages in 1 file, i.e. Vue SFC's
-    use {
-      "JoosepAlviste/nvim-ts-context-commentstring",
-      after = "nvim-treesitter"
     }
 
     -- lualine (statusbar)

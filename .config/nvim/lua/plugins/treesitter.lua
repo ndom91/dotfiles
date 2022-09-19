@@ -31,28 +31,5 @@ treesitter_configs.setup {
   context_commentstring = { enable = true },
 
   sync_install = false,
-  ensure_installed = {
-    "bash",
-    "css",
-    "dockerfile",
-    "graphql",
-    "html",
-    "http",
-    "javascript",
-    "json",
-    "jsdoc",
-    "lua",
-    "make",
-    "markdown",
-    "python",
-    "prisma",
-    "query",
-    "rust",
-    "svelte",
-    "tsx",
-    "typescript",
-    "scss",
-    "vue",
-    "yaml"
-  }
+  ensure_installed = "all"
 }

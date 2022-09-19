@@ -110,10 +110,11 @@ function M.on_attach(client, bufnr)
   -- See `:help omnifunc` and `:help ins-completion` for more information.
   vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
 
-  vim.api.nvim_buf_create_user_command(bufnr, 'Format', vim.lsp.buf.format or
-                                           vim.lsp.buf.formatting, {
-    desc = 'Format current buffer with LSP'
-  })
+  --[[ vim.api.nvim_buf_create_user_command(bufnr, 'Format', vim.lsp.buf.format or ]]
+  --[[                                          vim.lsp.buf.formatting, { ]]
+  --[[   desc = 'Format current buffer with LSP' ]]
+  --[[ }) ]]
+
   -- Use LSP as the handler for formatexpr.
   -- See `:help formatexpr` for more information.
   vim.api.nvim_buf_set_option(bufnr, "formatexpr", "v:lua.vim.lsp.formatexpr()")
@@ -131,17 +132,22 @@ function M.on_attach(client, bufnr)
   if client.server_capabilities.definitionProvider then
     vim.api.nvim_buf_set_option(bufnr, "tagfunc", "v:lua.vim.lsp.tagfunc")
   end
-  
+
   -- inlay-hints
-  --[[ local ih = require "lsp-inlayhints" ]]
-  --[[ ih.on_attach(client, bufnr) ]]
+  --[[ if client.name ~= "null-ls" then ]]
+  --[[   local ih = require "lsp-inlayhints" ]]
+  --[[   ih.on_attach(client, bufnr) ]]
+  --[[ end ]]
 end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 
+--[[ capabilities.textDocument.dynamicRegistration = true ]]
+--[[ capabilities.textDocument.completion.dynamicRegistration = true ]]
+
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 capabilities.textDocument.foldingRange = {
-  -- dynamicRegistration = false,
+  dynamicRegistration = false,
   lineFoldingOnly = true
 }
 capabilities.textDocument.completion.completionItem.resolveSupport = {

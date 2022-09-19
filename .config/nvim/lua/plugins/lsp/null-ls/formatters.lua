@@ -23,10 +23,16 @@ function M.format()
     local view = vim.fn.winsaveview()
     vim.lsp.buf.format {
       timeout_ms = 2000,
+      async = true,
       filter = function(client)
-        return client.name ~= "tsserver" and client.name ~= "jsonls" and
-                   client.name ~= "html"
-      end
+        return client.name ~= "tsserver"
+          and client.name ~= "jsonls"
+          and client.name ~= "html"
+          and client.name ~= "sumneko_lua"
+          and client.name ~= "jdt.ls"
+          and client.name ~= ""
+        -- and client.name ~= "kotlin_language_server"
+      end,
     }
     vim.fn.winrestview(view)
     print "Buffer formatted"
@@ -42,6 +48,10 @@ function M.setup(client, bufnr)
   else
     enable = not (client.name == "null-ls")
   end
+  
+  if not enable then
+    return
+  end
 
   --[[ if client.name == "vue-language-server" then ]]
   --[[   client.server_capabilities.document_formatting = false -- 0.7 and earlier ]]
@@ -56,7 +66,7 @@ function M.setup(client, bufnr)
                                                    { clear = true })
     api.nvim_create_autocmd("BufWritePre", {
       callback = function()
-        M.format()
+        vim.schedule(M.format())
       end,
       group = lsp_format_grp,
       buffer = bufnr

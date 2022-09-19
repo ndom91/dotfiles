@@ -20,7 +20,9 @@ local function keymappings(client, bufnr)
   keymap("n", "<leader>ld", "<cmd>Telescope diagnostics<CR>", opts)
   keymap("n", "<leader>lf", "<cmd>Lspsaga lsp_finder<CR>", opts)
   keymap("n", "<leader>li", "<cmd>LspInfo<CR>", opts)
-  keymap("n", "<leader>ls", "<cmd>Telescope lsp_document_symbols<CR>", opts)
+  keymap("n", "<leader>ls",
+         "<cmd>lua require('telescope.builtin').lsp_document_symbols()<CR>",
+         opts)
   keymap("n", "<leader>lL", "<cmd>lua vim.lsp.codelens.refresh()<CR>", opts)
   keymap("n", "<leader>ll", "<cmd>lua vim.lsp.codelens.run()<CR>", opts)
   keymap("n", "<leader>lD",
@@ -37,7 +39,7 @@ local function keymappings(client, bufnr)
 
   -- Goto
   keymap("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
-  keymap("n", "gD", "<Cmd>lua vim.lsp.buf.declaration()<CR>", opts)
+  keymap("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", opts)
   keymap("n", "gh", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
   keymap("n", "gi", "<cmd>Telescope lsp_implementations<CR>", opts)
   -- keymap("n", "gd", "<cmd>lua require('goto-preview').goto_preview_definition()<CR>", opts)
