@@ -38,9 +38,10 @@ local servers = {
   vimls = {},
   tailwindcss = {},
   cssls = {},
-  veturls = {}, -- vue
+  -- ["vetur-vls"] = {}, -- vue
+  vuels = {}, -- vue
   --[[ vue_language_server = {}, -- vue ]]
-  lua_language_server = {},
+  sumneko_lua = {},
   yamlls = {
     schemastore = { enable = true },
     settings = {
@@ -154,7 +155,8 @@ capabilities.textDocument.completion.completionItem.resolveSupport = {
   properties = { "documentation", "detail", "additionalTextEdits" }
 }
 
-M.capabilities = require("cmp_nvim_lsp").update_capabilities(capabilities) -- for nvim-cmp
+-- M.capabilities = require("cmp_nvim_lsp").update_capabilities(capabilities) -- deprecated as of nvim-cmp 1.0.0
+M.capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities) -- for nvim-cmp
 
 local opts = {
   on_attach = M.on_attach,
