@@ -71,9 +71,10 @@ modules-center = title
 modules-right = powermenu pulseaudio
 
 tray-position = left
-tray-scale = 0.8
+tray-scale = 1.0
 tray-padding = 8
-tray-background = ${colors.pink2}
+# tray-background = ${colors.pink2}
+tray-background = #00
 
 format-connected-padding = 1
 label-connected-padding-left = 1
