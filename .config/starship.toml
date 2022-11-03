@@ -55,3 +55,8 @@ format = "[$symbol($version)]($style) "
 style = "#88C0D0"
 version_format = "${raw}"
 
+[aws]
+disabled=true
+
+[terraform]
+disabled=true

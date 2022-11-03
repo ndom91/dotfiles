@@ -62,9 +62,10 @@ complete -cf sudo
 # History Control
 shopt -s histappend
 HISTCONTROL="erasedups:ignoreboth"
-HISTSIZE=1000000
-HISTFILESIZE=1000000
 HISTIGNORE="ls:bg:fg:history:clear:exit"
+# HISTSIZE=1000000
+# HISTFILESIZE=1000000
+# Using `atuin` binary instead for shell history
 
 # Use standard ISO 8601 timestamp
 # %F equivalent to %Y-%m-%d
@@ -100,7 +101,7 @@ fi
 
 # Aliases
 if [ -f ~/.bash_aliases ]; then
-  . ~/.bash_aliases
+  source "$HOME/.bash_aliases"
 fi
 
 # remap caps lock to esc
@@ -110,8 +111,8 @@ fi
 
 # SSH i3 Rename Window Alias
 ssh() {
-  if [ "$(ps -p $(ps -p $$ -o ppid=) -o comm=)" = "tmux: server" ]; then
-    tmux rename-window "$(echo $* | rev | cut -d ' ' -f1 | rev | cut -d . -f 1)"
+  if [ "$(ps -p "$(ps -p $$ -o ppid=)" -o comm=)" = "tmux: server" ]; then
+    tmux rename-window "$(echo "$@" | rev | cut -d ' ' -f1 | rev | cut -d . -f 1)"
     command ssh "$@"
     tmux set-window-option automatic-rename "on" 1>/dev/null
   else
@@ -208,7 +209,7 @@ if [ "$(command -v perl)" ]; then
   export PERL5LIB
   PERL_LOCAL_LIB_ROOT="$HOME/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"
   export PERL_LOCAL_LIB_ROOT
-  PERL_MB_OPT="--install_base \"$HOME/perl5\""
+  PERL_MB_OPT="--install_base "$HOME/perl5""
   export PERL_MB_OPT
   PERL_MM_OPT="INSTALL_BASE=$HOME/perl5"
   export PERL_MM_OPT
@@ -216,7 +217,7 @@ fi
 
 # fnm
 if [ "$(command -v fnm)" ]; then
-  eval "$(fnm env --use-on-cd)"
+  eval "$(fnm env --use-on-cd --version-file-strategy recursive)"
 fi
 
 # AWS
@@ -226,4 +227,10 @@ export AWS_REGION=eu-central-1
 # colorscript
 if [ -f "$HOME/.dotfiles/colorscripts/crunchbang-mini.sh" ]; then
   "$HOME/.dotfiles/colorscripts/crunchbang-mini.sh"
+fi
+
+# atuin - shell history
+if [ "$(command -v atuin)" ]; then
+  [[ -f ~/.bash-preexec.sh ]] && source "$HOME/.bash-preexec.sh"
+  eval "$(atuin init bash)"
 fi
