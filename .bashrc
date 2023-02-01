@@ -234,3 +234,6 @@ if [ "$(command -v atuin)" ]; then
   [[ -f ~/.bash-preexec.sh ]] && source "$HOME/.bash-preexec.sh"
   eval "$(atuin init bash)"
 fi
+
+# add Pulumi to the PATH
+export PATH=$PATH:$HOME/.pulumi/bin

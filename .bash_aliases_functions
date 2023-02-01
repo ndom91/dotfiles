@@ -95,3 +95,15 @@ function haste {
   echo "Upload failed."
   return 1
 }
+
+wttr() {
+  ARG="$1"
+  WTTR_PARAMS="${ARG:=F0}"
+  command shift
+  local args=""
+  # wttr.io params - see https://wttr.in/:help
+  for p in $WTTR_PARAMS "$@"; do
+    args+=" --data-urlencode $p "
+  done
+  curl -fGsS -H "Accept-Language: ${LANG%_*}" $args --compressed "wttr.in/Berlin"
+}

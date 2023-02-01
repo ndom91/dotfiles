@@ -55,8 +55,7 @@ alias daymode='echo 3000 > /sys/class/backlight/intel_backlight/brightness > /de
 alias activeSysd='for i in $(cd /etc/systemd/system/multi-user.target.wants && ls *.service); do script -q -c "systemctl status -n 0 --no-pager $i" |head -n 1; script -q -c "systemctl status -n 0 --no-pager $i" |grep --color=never "Active: "; done;'
 
 # Custom Applications
-[[ "$(command -v rg)" ]] && alias grep='rg -S --iglob !.bun --iglob !node_modules --iglob !*.bzr --iglob !*.git --iglob !*.hg --iglob !*.svn --iglob !*.idea --iglob !*.tox'
-[[ "$(command -v fd)" ]] && alias find='fd'
+[[ "$(command -v rg)" ]] && alias rg='rg -S --iglob !.bun --iglob !node_modules --iglob !*.bzr --iglob !*.git --iglob !*.hg --iglob !*.svn --iglob !*.idea --iglob !*.tox'
 [[ "$(command -v nvim)" ]] && alias vim='nvim'
 [[ "$(command -v vifm)" ]] && alias vifm='~/.config/vifm/scripts/vifmrun'
 [[ "$(command -v haste)" ]] && alias haste='HASTE_SERVER=https://paste.ndo.dev haste'
@@ -68,8 +67,11 @@ alias activeSysd='for i in $(cd /etc/systemd/system/multi-user.target.wants && l
 [[ "$(command -v docker)" ]] && alias dockeriprune='sudo docker rmi $(sudo docker images --filter "dangling=true" -q --no-trunc)'
 [[ "$(command -v solaar)" ]] && alias solaar="sudo /usr/bin/solaar"
 [[ "$(command -v lazygit)" ]] && alias lg="lazygit"
+[[ "$(command -v lazydocker)" ]] && alias ld="lazydocker"
 [[ "$(command -v diskonaut)" ]] && alias diskgraph="diskonaut"
 [[ "$(command -v dua)" ]] && alias disklist="dua i"
+[[ "$(command -v nerdctl)" ]] && alias nerdctl="nerdctl --address /var/run/docker/containerd/containerd.sock"
+# [[ "$(command -v fd)" ]] && alias find='fd'
 # [[ "$(command -v pnpm)" ]] && alias npm="pnpm"
 
 alias brave="brave --silent-debugger-extension-api"
@@ -86,7 +88,7 @@ if [ "$(command -v git)" ]; then
   alias g='git'
   alias gpb='git push origin `git rev-parse --abbrev-ref HEAD`'
   alias gpl='git pull origin `git rev-parse --abbrev-ref HEAD`'
-  alias glb='git checkout $(git for-each-ref --sort=-committerdate --count=20 --format="%(refname:short)" refs/heads/ | fzf)'
+  alias glb='git checkout $(git for-each-ref --sort=-committerdate --count=20 --format="%(refname:short)" refs/heads/ | gum filter --reverse)'
   alias ds='dot status'
   alias ddi='dot diff'
   alias gitroot='cd "$(git rev-parse --show-toplevel)"'
@@ -133,7 +135,7 @@ alias clidle="ssh clidle.ddns.net -p 3000"
 
 # CHECKLY
 alias checkly-cli='/opt/checkly/checkly-cli/bin/run'
-alias dockermachine='eval $(docker-machine env ndo-docker)'
+alias dockermachine='eval $(docker-machine env checkly-pi)'
 alias cwa='cd /opt/checkly/checkly-webapp'
 alias cbe='cd /opt/checkly/checkly-backend'
 alias clr='cd /opt/checkly/checkly-lambda-runners'
