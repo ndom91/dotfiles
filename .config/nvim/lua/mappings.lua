@@ -73,3 +73,6 @@ nnoremap("<S-Tab>", ":bprev<CR>")
 
 -- trouble
 nnoremap("<leader>tr", "<cmd>TroubleToggle<cr>")
+
+-- document-colorizer
+nnoremap("<leader>lC", "<cmd>lua require('document-color').buf_toggle()<CR>")

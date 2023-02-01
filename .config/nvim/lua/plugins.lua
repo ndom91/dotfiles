@@ -145,6 +145,16 @@ function M.setup()
     -- UI Elements
     use "MunifTanjim/nui.nvim"
 
+    -- Tailwind token colorizer
+    use {
+      'mrshmllow/document-color.nvim',
+      config = function()
+        docColors = require("document-color")
+        docColors.setup { mode = "background" }
+        docColors.buf_attach()
+      end
+    }
+
     -- neo tree
     use {
       "nvim-neo-tree/neo-tree.nvim",
@@ -337,8 +347,12 @@ function M.setup()
       config = function()
         require("colorizer").setup({
           "*",
-          css = { rgb_fn = true },
-          html = { names = false }
+          -- css = { rgb_fn = true }, -- disabled in favor of document-color
+          -- html = { names = false },
+          '!css',
+          '!html',
+          '!tsx',
+          '!dart'
         })
       end
     }

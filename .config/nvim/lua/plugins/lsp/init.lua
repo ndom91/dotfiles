@@ -146,6 +146,7 @@ local capabilities = vim.lsp.protocol.make_client_capabilities()
 --[[ capabilities.textDocument.dynamicRegistration = true ]]
 --[[ capabilities.textDocument.completion.dynamicRegistration = true ]]
 
+capabilities.textDocument.colorProvider = { dynamicRegistration = true }
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 capabilities.textDocument.foldingRange = {
   dynamicRegistration = false,

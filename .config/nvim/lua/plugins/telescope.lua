@@ -28,7 +28,9 @@ require("telescope").setup {
       "lcov-report",
       "dist",
       "pack/github",
-      ".nuxt"
+      ".nuxt",
+      ".docusaurus",
+      "build"
     }
   },
   pickers = {

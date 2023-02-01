@@ -127,7 +127,7 @@ neo_tree.setup({
       visible = true, -- when true, they will just be displayed differently than normal items
       hide_dotfiles = false,
       hide_gitignored = true,
-      hide_by_name = { ".DS_Store", "thumbs.db", "node_modules" },
+      hide_by_name = { ".DS_Store", "thumbs.db", "node_modules", ".docusaurus" },
       always_show = {
         ".env",
         ".env.local",
@@ -137,7 +137,8 @@ neo_tree.setup({
       never_show = { -- remains hidden even if visible is toggled to true
         ".DS_Store",
         "thumbs.db",
-        "node_modules"
+        "node_modules",
+        ".docusaurus"
       }
     },
     follow_current_file = true, -- This will find and focus the file in the active buffer every
