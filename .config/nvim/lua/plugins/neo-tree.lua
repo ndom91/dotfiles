@@ -10,13 +10,13 @@ vim.cmd([[ let g:neo_tree_remove_legacy_commands = 1 ]])
 
 -- If you want icons for diagnostic errors, you'll need to define them somewhere:
 vim.fn.sign_define("DiagnosticSignError",
-                   { text = " ", texthl = "DiagnosticSignError" })
+  { text = " ", texthl = "DiagnosticSignError" })
 vim.fn.sign_define("DiagnosticSignWarn",
-                   { text = " ", texthl = "DiagnosticSignWarn" })
+  { text = " ", texthl = "DiagnosticSignWarn" })
 vim.fn.sign_define("DiagnosticSignInfo",
-                   { text = " ", texthl = "DiagnosticSignInfo" })
+  { text = " ", texthl = "DiagnosticSignInfo" })
 vim.fn.sign_define("DiagnosticSignHint",
-                   { text = "", texthl = "DiagnosticSignHint" })
+  { text = "", texthl = "DiagnosticSignHint" })
 -- NOTE: this is changed from v1.x, which used the old style of highlight groups
 -- in the form "LspDiagnosticsSignWarning"
 
@@ -26,7 +26,7 @@ neo_tree.setup({
   enable_git_status = true,
   enable_diagnostics = true,
   sort_case_insensitive = false, -- used when sorting files and directories in the tree
-  sort_function = nil, -- use a custom function for sorting files and directories in the tree 
+  sort_function = nil, -- use a custom function for sorting files and directories in the tree
   -- sort_function = function (a,b)
   --       if a.type == b.type then
   --           return a.path > b.path
@@ -103,10 +103,24 @@ neo_tree.setup({
           show_path = "relative" -- "none", "relative", "absolute"
         }
       },
+      ["Y"] = function(state)
+        local node = state.tree:get_node()
+        local content = node.path:gsub(state.path, ""):sub(2) -- relative
+        vim.fn.setreg('"', content)
+        vim.fn.setreg("1", content)
+        vim.fn.setreg("+", content)
+      end,
+      ["y"] = function(state)
+        local node = state.tree:get_node()
+        local content = node.path -- absolute
+        vim.fn.setreg('"', content)
+        vim.fn.setreg("1", content)
+        vim.fn.setreg("+", content)
+      end,
+      -- ["y"] = "copy_to_clipboard",
       ["A"] = "add_directory",
       ["d"] = "delete",
       ["r"] = "rename",
-      ["y"] = "copy_to_clipboard",
       ["x"] = "cut_to_clipboard",
       ["p"] = "paste_from_clipboard",
       ["c"] = {
@@ -149,7 +163,7 @@ neo_tree.setup({
     -- "open_current",  -- netrw disabled, opening a directory opens within the
     -- window like netrw would, regardless of window.position
     -- "disabled",    -- netrw left alone, neo-tree does not handle opening dirs
-    use_libuv_file_watcher = true, -- This will use the OS level file watchers to detect changes
+    use_libuv_file_watcher = false, -- This will use the OS level file watchers to detect changes
     -- instead of relying on nvim autocmd events.
     window = {
       mappings = {
@@ -193,6 +207,4 @@ neo_tree.setup({
   }
 })
 
--- vim.api.nvim_set_keymap('n', '<c-n>', '<cmd>Neotree toggle<cr>',
---                         { silent = true })
 vim.api.nvim_set_keymap('n', '\\', '<cmd>Neotree toggle<cr>', { silent = true })

@@ -1,102 +1,72 @@
 local M = {}
 
 function M.setup()
-  -- Indicate first time installation
-  local packer_bootstrap = false
-
-  -- packer.nvim configuration
-  local conf = {
-    profile = {
-      enable = true,
-      threshold = 0 -- the amount in ms that a plugins load time must be over for it to be included in the profile
-    },
-
-    display = {
-      open_fn = function()
-        return require("packer.util").float { border = "rounded" }
-      end
-    }
-  }
-
-  -- Check if packer.nvim is installed
-  -- Run PackerCompile if there are changes in this file
-  local function packer_init()
-    local fn = vim.fn
-    local install_path = fn.stdpath "data" ..
-                             "/site/pack/packer/start/packer.nvim"
-    if fn.empty(fn.glob(install_path)) > 0 then
-      packer_bootstrap = fn.system {
+  local function lazy_init()
+    local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+    if not vim.loop.fs_stat(lazypath) then
+      vim.fn.system({
         "git",
         "clone",
-        "--depth",
-        "1",
-        "https://github.com/wbthomason/packer.nvim",
-        install_path
-      }
-      vim.cmd [[packadd packer.nvim]]
+        "--filter=blob:none",
+        "https://github.com/folke/lazy.nvim.git",
+        "--branch=stable", -- latest stable release
+        lazypath,
+      })
     end
-
-    -- Run PackerCompile if there are changes in this file
-    -- vim.cmd "autocmd BufWritePost plugins.lua source <afile> | PackerCompile"
-    local packer_grp = vim.api.nvim_create_augroup("packer_user_config",
-                                                   { clear = true })
-    vim.api.nvim_create_autocmd({ "BufWritePost" }, {
-      pattern = "init.lua",
-      command = "source <afile> | PackerCompile",
-      group = packer_grp
-    })
+    vim.opt.rtp:prepend(lazypath)
   end
 
-  local function plugins(use)
+  local plugins = {
     -- nerd font icons
-    use "kyazdani42/nvim-web-devicons"
+    "nvim-tree/nvim-web-devicons",
 
     -- telescope
-    use "nvim-lua/plenary.nvim"
-    use "nvim-lua/popup.nvim"
-    use {
+    "nvim-lua/plenary.nvim",
+    "nvim-lua/popup.nvim",
+    {
       "nvim-telescope/telescope.nvim",
       config = function()
         require "plugins.telescope"
       end
-    }
-    use { "nvim-telescope/telescope-ui-select.nvim" }
+    },
+    { "nvim-telescope/telescope-ui-select.nvim" },
 
-    -- use "jose-elias-alvarez/nvim-lsp-ts-utils"
-    --
-    use {
+    {
       "lvimuser/lsp-inlayhints.nvim",
-      config = function()
-        require("lsp-inlayhints").setup()
-      end
-    }
+      config = true
+    },
 
-    use {
+    {
       'tami5/lspsaga.nvim',
+      enabled = false,
       config = function()
         require "plugins.lsp.lsp-saga"
       end
-    }
+    },
 
-    use "onsails/lspkind-nvim" -- icons on completion
+    "onsails/lspkind-nvim", -- icons on completion
 
     -- lsp function signature help on wildmenu
-    use {
+    {
       "ray-x/lsp_signature.nvim",
       config = function()
-        cfg = {
+        local cfg = {
           hint_enable = false,
           bind = true,
           transparency = 30,
           handler_opts = { border = "rounded" }
         }
-        require"lsp_signature".setup(cfg)
+        require "lsp_signature".setup(cfg)
       end
-    }
+    },
 
-    use {
+    {
       "zbirenbaum/copilot.lua",
-      event = { "VimEnter" },
+      -- event = { "VimEnter" },
+      event = { "BufRead" },
+      dependencies = {
+        'zbirenbaum/copilot-cmp'
+      },
       config = function()
         vim.defer_fn(function()
           require("copilot").setup {
@@ -120,63 +90,73 @@ function M.setup()
           }
         end, 100)
       end
-    }
-    use {
+    },
+
+    {
       "zbirenbaum/copilot-cmp",
       module = "copilot_cmp",
-      after = "copilot.lua"
-    }
+    },
 
-    use({
+    {
       "j-hui/fidget.nvim", -- floating status text in bottom right
       config = function()
         require("plugins.fidget-nvim")
       end
-    })
+    },
 
-    use {
+    {
       "folke/trouble.nvim",
-      requires = { "kyazdani42/nvim-web-devicons" },
+      dependencies = { "nvim-tree/nvim-web-devicons" },
       config = function()
         require("trouble").setup {}
       end
-    }
+    },
+
+    "folke/neodev.nvim",
 
     -- UI Elements
-    use "MunifTanjim/nui.nvim"
+    "MunifTanjim/nui.nvim",
 
     -- Tailwind token colorizer
-    use {
+    {
       'mrshmllow/document-color.nvim',
+      enabled = false,
       config = function()
-        docColors = require("document-color")
+        local docColors = require("document-color")
         docColors.setup { mode = "background" }
         docColors.buf_attach()
       end
-    }
+    },
+
+    -- terminal image viewer
+    {
+      'edluffy/hologram.nvim',
+      enabled = false,
+      config = function()
+        require("hologram").setup { auto_display = true }
+      end
+    },
 
     -- neo tree
-    use {
+    {
       "nvim-neo-tree/neo-tree.nvim",
       branch = "v2.x",
-      requires = {
+      dependencies = {
         "nvim-lua/plenary.nvim",
-        "kyazdani42/nvim-web-devicons",
+        "nvim-tree/nvim-web-devicons",
         "MunifTanjim/nui.nvim"
       },
       config = function()
         require "plugins.neo-tree"
       end
-    }
+    },
 
     -- autocompletion
-    use {
+    {
       "hrsh7th/nvim-cmp",
-      config = function()
-        require("plugins.nvim-cmp").setup()
-      end,
-      wants = { "LuaSnip" },
-      requires = {
+      config = true,
+      -- wants = { "LuaSnip" },
+      dependencies = {
         "hrsh7th/cmp-nvim-lsp-signature-help",
         "hrsh7th/cmp-nvim-lsp",
         "hrsh7th/cmp-buffer",
@@ -187,74 +167,195 @@ function M.setup()
         "rafamadriz/friendly-snippets",
         "L3MON4D3/LuaSnip"
       }
-    }
+    },
 
     -- AI completion
-    use { "github/copilot.vim", event = "InsertEnter", disable = true }
+    { "github/copilot.vim",
+      event = "InsertEnter",
+      enabled = false
+    },
 
-    -- lsp
-    use {
-      "neovim/nvim-lspconfig",
-      config = function()
-        require("plugins.lsp").setup()
-      end,
-      wants = {
-        "mason.nvim",
-        "mason-lspconfig.nvim",
-        "mason-tool-install.nvim",
-        "cmp-nvim-lsp",
-        "null-ls.nvim",
-        "typescript.nvim",
-        "lsp-inlayhints"
+    -- lsp-zero
+    {
+      'VonHeikemen/lsp-zero.nvim',
+      branch = 'v1.x',
+      dependencies = {
+        -- LSP Support
+        { 'neovim/nvim-lspconfig' },
+        { 'williamboman/mason.nvim' },
+        { 'williamboman/mason-lspconfig.nvim' },
+        { "lvimuser/lsp-inlayhints.nvim" },
+        { 'b0o/schemastore.nvim' },
+
+        -- Autocompletion
+        { 'hrsh7th/nvim-cmp' },
+        { 'hrsh7th/cmp-buffer' },
+        { 'hrsh7th/cmp-path' },
+        { 'saadparwaiz1/cmp_luasnip' },
+        { 'hrsh7th/cmp-nvim-lsp' },
+        { 'hrsh7th/cmp-nvim-lua' },
+
+        -- Snippets
+        { 'L3MON4D3/LuaSnip' },
+        { 'rafamadriz/friendly-snippets' },
+
+        -- Languages
+        { 'jose-elias-alvarez/typescript.nvim' }
+
       },
-      requires = {
-        "jose-elias-alvarez/null-ls.nvim",
-        {
-          "j-hui/fidget.nvim",
-          config = function()
-            require("fidget").setup {}
-          end
-        },
-        "b0o/schemastore.nvim",
-        "williamboman/mason.nvim",
-        "williamboman/mason-lspconfig.nvim",
-        "WhoIsSethDaniel/mason-tool-installer.nvim",
-        "jose-elias-alvarez/typescript.nvim"
-      }
-    }
+      config = function()
+        local lsp = require('lsp-zero').preset({
+          name = 'recommended',
+        })
+        lsp.nvim_workspace()
+        lsp.setup_nvim_cmp({
+          sources = {
+            { name = "copilot" },
+            {
+              name = "nvim_lsp",
+              max_item_count = 10
+            },
+            { name = "nvim_lsp_signature_help" },
+            { name = "luasnip" },
+            { name = "treesitter" },
+            {
+              name = "buffer",
+              max_item_count = 5
+            },
+            { name = "path" },
+            { name = "nvim_lua" }
+          },
+          format = function(entry, vim_item)
+            -- Kind icons
+            -- vim_item.kind = string.format("%s %s", kind_icons[vim_item.kind],
+            --                               vim_item.kind) -- This concatonates the icons with the name of the item kind
 
-    use "jose-elias-alvarez/typescript.nvim"
+            -- copilot
+            if entry.source.name == "copilot" then
+              vim_item.kind = "[] Copilot"
+              vim_item.kind_hl_group = "CmpItemKindCopilot"
+              return vim_item
+            end
+
+            -- Source
+            vim_item.menu = ({
+                  nvim_lsp = "[LSP]",
+                  luasnip = "[Snip]",
+                  buffer = "[Buffer]",
+                  nvim_lua = "[Lua]",
+                  treesitter = "[Treesitter]",
+                  path = "[Path]",
+                  nvim_lsp_signature_help = "[Signature]"
+                })[entry.source.name]
+
+            return vim_item
+          end
+        })
+
+        lsp.ensure_installed({
+          'tsserver',
+          'html',
+          'jsonls',
+          'dockerls',
+          'bashls',
+          'vimls',
+          'tailwindcss',
+          'lua_ls',
+          'cssls',
+          'volar',
+          'yamlls',
+        })
+
+        lsp.configure('jsonls', {
+          settings = { json = { schemas = require("schemastore").json.schemas() } }
+        })
+
+        lsp.configure('yamlls', {
+          schemastore = { enable = true },
+          settings = {
+            yaml = {
+              hover = true,
+              completion = true,
+              validate = true,
+              schemas = require("schemastore").json.schemas()
+            }
+          }
+        })
+
+        lsp.configure('tsserver', {
+          disable_formatting = true,
+          settings = {
+            javascript = {
+              inlayHints = {
+                includeInlayEnumMemberValueHints = true,
+                includeInlayFunctionLikeReturnTypeHints = true,
+                includeInlayFunctionParameterTypeHints = true,
+                includeInlayParameterNameHints = "all", -- 'none' | 'literals' | 'all';
+                includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+                includeInlayPropertyDeclarationTypeHints = true,
+                includeInlayVariableTypeHints = true
+              }
+            },
+            typescript = {
+              inlayHints = {
+                includeInlayEnumMemberValueHints = true,
+                includeInlayFunctionLikeReturnTypeHints = true,
+                includeInlayFunctionParameterTypeHints = true,
+                includeInlayParameterNameHints = "all", -- 'none' | 'literals' | 'all';
+                includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+                includeInlayPropertyDeclarationTypeHints = true,
+                includeInlayVariableTypeHints = true
+              }
+            }
+          }
+        })
+
+        lsp.on_attach(function(client, bufnr)
+          local opts = { buffer = bufnr }
+          local bind = vim.keymap.set
+
+          bind('n', '<leader>lf', '<cmd>LspZeroFormat<cr>', opts)
+          bind('n', '<leader>a', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+          bind('n', '<leader>re', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+          -- more keybindings...
+        end)
+
+        lsp.setup()
+      end
+    },
+
+    -- use "jose-elias-alvarez/typescript.nvim"
 
     -- treesitter
-    use {
+    {
       "nvim-treesitter/nvim-treesitter",
-      run = ":TSUpdate",
+      build = ":TSUpdate",
       config = function()
         require "plugins.treesitter"
       end
-    }
-    use { 'nvim-treesitter/nvim-treesitter-context' }
-    use { 'JoosepAlviste/nvim-ts-context-commentstring' }
+    },
+    { 'nvim-treesitter/nvim-treesitter-context' },
+    { 'JoosepAlviste/nvim-ts-context-commentstring' },
 
     -- comments
-    use {
+    {
       "numToStr/Comment.nvim",
       config = function()
         require "plugins.comment"
       end
-    }
+    },
 
     -- todo comments
-    use {
+    {
       "folke/todo-comments.nvim", -- special highlight  @TODO, @FIXME, etc comments
-      requires = "nvim-lua/plenary.nvim",
+      dependencies = "nvim-lua/plenary.nvim",
       config = function()
         require "plugins.todo-comments"
       end
-    }
+    },
 
     -- indent
-    use {
+    {
       "lukas-reineke/indent-blankline.nvim",
       config = function()
         require("indent_blankline").setup {
@@ -271,36 +372,41 @@ function M.setup()
           use_treesitter = true
         }
       end
-    }
+    },
 
     -- lualine (statusbar)
-    use {
+    {
       "nvim-lualine/lualine.nvim",
-      requires = { "kyazdani42/nvim-web-devicons" },
+      dependencies = { "nvim-tree/nvim-web-devicons" },
       config = function()
         require "plugins.lualine"
       end
-    }
+    },
 
     -- bufferline (tabs)
-    use {
+    {
       "akinsho/bufferline.nvim",
-      tag = "v2.*",
+      version = "v3.*",
+      lazy = false,
+      keys = {
+        { "<c-x>",   '<cmd>lua require("bufferline").handle_close(vim.fn.bufnr("%"))<CR>', desc = "Bufferline Close" },
+        { "<Tab>",   ":bnext<CR>" },
+        { "<S-Tab>", ":bprev<CR>" }
+      },
       config = function()
         require "plugins.bufferline"
       end
-    }
+    },
 
     -- theme
-    -- use "folke/tokyonight.nvim"
-    -- use "rmehri01/onenord.nvim"
-    -- use "wadackel/vim-dogrun"
-    -- use "challenger-deep-theme/vim"
-    -- use "EdenEast/nightfox.nvim"
-    -- use(
-    --   {
+    -- "folke/tokyonight.nvim",
+    -- "rmehri01/onenord.nvim",
+    -- "wadackel/vim-dogrun",
+    -- "challenger-deep-theme/vim",
+    -- "EdenEast/nightfox.nvim",
+    -- {
     --     "catppuccin/nvim",
-    --     as = "catppuccin",
+    --     name = "catppuccin",
     --     config = function()
     --       require("catppuccin").setup(
     --         {
@@ -316,33 +422,34 @@ function M.setup()
     --         }
     --       )
     --     end
-    --   }
-    -- )
+    --   },
 
-    use({
+    {
       "rose-pine/neovim", -- current theme
+      lazy = false, -- load first
+      priority = 1000, -- before anything else
       config = function()
         require "plugins.rose-pine"
       end
-    })
+    },
 
     -- use {
     --   's1n7ax/nvim-window-picker',
-    --   tag = 'v1.*',
+    --   version = 'v1.*',
     --   config = function()
     --     require "plugins.window-picker"
     --   end
     -- }
 
-    use {
+    {
       "lewis6991/gitsigns.nvim", -- gutter git signs + git blame virtual text
-      requires = { "nvim-lua/plenary.nvim" },
+      dependencies = { "nvim-lua/plenary.nvim" },
       config = function()
         require "plugins.gitsigns"
       end
-    }
+    },
 
-    use {
+    {
       "norcalli/nvim-colorizer.lua", -- colorize hex codes / color names
       config = function()
         require("colorizer").setup({
@@ -355,61 +462,76 @@ function M.setup()
           '!dart'
         })
       end
-    }
+    },
 
-    use {
+    {
       "akinsho/toggleterm.nvim", -- terminal splits / floating windows
       config = function()
         require "plugins.toggleterm"
       end
-    }
+    },
 
-    use {
+    {
       "glepnir/dashboard-nvim", -- initial launch dashboard
+      event = 'VimEnter',
       config = function()
-        require "plugins.dashboard"
-      end
-    }
+        require('dashboard').setup {
+          theme = 'hyper',
+          config = {
+            week_header = {
+              enable = true,
+            },
+            shortcut = {
+              { desc = ' Update', group = '@property', action = 'Lazy update', key = 'u' },
+              {
+                icon = ' ',
+                icon_hl = '@variable',
+                desc = 'Files',
+                group = 'Label',
+                action = 'Telescope find_files',
+                key = 'f',
+              },
+              {
+                desc = ' Apps',
+                group = 'DiagnosticHint',
+                action = 'Telescope app',
+                key = 'a',
+              },
+              {
+                desc = ' dotfiles',
+                group = 'Number',
+                action = 'Telescope dotfiles',
+                key = 'd',
+              },
+            }, },
+        }
+      end,
+      dependencies = { 'nvim-tree/nvim-web-devicons' }
+    },
 
     -- Notification
-    use {
+    {
       "rcarriga/nvim-notify",
-      --[[ event = "BufReadPre", ]]
-      config = function()
-        require("plugins.notify").setup()
-      end
-      --[[ disable = false, ]]
-    }
+      config = true,
+    },
     --[[ use { ]]
     --[[   "rcarriga/nvim-notify", -- floating toast notifications ]]
     --[[   config = function() ]]
     --[[     vim.notify = require "plugins.notify" ]]
     --[[   end ]]
     --[[ } ]]
-
-    -- use { 'wfxr/minimap.vim', run = ':!cargo install --locked code-minimap' }
+    -- use { 'wfxr/minimap.vim', build = ':!cargo install --locked code-minimap' }
 
     -- tpope plugins
-    use { "tpope/vim-surround" } -- Change surrounding arks
-    use { "tpope/vim-repeat" } -- extends . repeat
-
-    -- Bootstrap Neovim
-    if packer_bootstrap then
-      print "Neovim restart is required after installation!"
-      require("packer").sync()
-    end
-  end
+    { "tpope/vim-surround" }, -- Change surrounding arks
+    { "tpope/vim-repeat" }, -- extends . repeat
+  }
 
   -- Init and start packer
-  packer_init()
-  local packer = require "packer"
+  lazy_init()
+  local lazy = require "lazy"
 
-  -- Performance
-  pcall(require, "impatient")
-  -- pcall(require, "packer_compiled")
-
-  packer.init(conf)
-  packer.startup(plugins)
+  lazy.setup(plugins, opts)
 end
 
 return M
