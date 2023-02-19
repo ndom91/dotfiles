@@ -1,22 +1,4 @@
-local M = {}
-
-function M.setup()
-  local function lazy_init()
-    local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-    if not vim.loop.fs_stat(lazypath) then
-      vim.fn.system({
-        "git",
-        "clone",
-        "--filter=blob:none",
-        "https://github.com/folke/lazy.nvim.git",
-        "--branch=stable", -- latest stable release
-        lazypath,
-      })
-    end
-    vim.opt.rtp:prepend(lazypath)
-  end
-
-  local plugins = {
+return {
     -- nerd font icons
     "nvim-tree/nvim-web-devicons",
 
@@ -31,10 +13,7 @@ function M.setup()
     },
     { "nvim-telescope/telescope-ui-select.nvim" },
 
-    {
-      "lvimuser/lsp-inlayhints.nvim",
-      config = true
-    },
+    { "lvimuser/lsp-inlayhints.nvim",           config = true },
 
     {
       'tami5/lspsaga.nvim',
@@ -64,9 +43,7 @@ function M.setup()
       "zbirenbaum/copilot.lua",
       -- event = { "VimEnter" },
       event = { "BufRead" },
-      dependencies = {
-        'zbirenbaum/copilot-cmp'
-      },
+      dependencies = { 'zbirenbaum/copilot-cmp' },
       config = function()
         vim.defer_fn(function()
           require("copilot").setup {
@@ -92,10 +69,7 @@ function M.setup()
       end
     },
 
-    {
-      "zbirenbaum/copilot-cmp",
-      module = "copilot_cmp",
-    },
+    { "zbirenbaum/copilot-cmp", module = "copilot_cmp" },
 
     {
       "j-hui/fidget.nvim", -- floating status text in bottom right
@@ -155,7 +129,7 @@ function M.setup()
     {
       "hrsh7th/nvim-cmp",
       config = true,
-      -- wants = { "LuaSnip" },
+      wants = { "LuaSnip" },
       dependencies = {
         "hrsh7th/cmp-nvim-lsp-signature-help",
         "hrsh7th/cmp-nvim-lsp",
@@ -170,161 +144,7 @@ function M.setup()
     },
 
     -- AI completion
-    { "github/copilot.vim",
-      event = "InsertEnter",
-      enabled = false
-    },
-
-    -- lsp-zero
-    {
-      'VonHeikemen/lsp-zero.nvim',
-      branch = 'v1.x',
-      dependencies = {
-        -- LSP Support
-        { 'neovim/nvim-lspconfig' },
-        { 'williamboman/mason.nvim' },
-        { 'williamboman/mason-lspconfig.nvim' },
-        { "lvimuser/lsp-inlayhints.nvim" },
-        { 'b0o/schemastore.nvim' },
-
-        -- Autocompletion
-        { 'hrsh7th/nvim-cmp' },
-        { 'hrsh7th/cmp-buffer' },
-        { 'hrsh7th/cmp-path' },
-        { 'saadparwaiz1/cmp_luasnip' },
-        { 'hrsh7th/cmp-nvim-lsp' },
-        { 'hrsh7th/cmp-nvim-lua' },
-
-        -- Snippets
-        { 'L3MON4D3/LuaSnip' },
-        { 'rafamadriz/friendly-snippets' },
-
-        -- Languages
-        { 'jose-elias-alvarez/typescript.nvim' }
-
-      },
-      config = function()
-        local lsp = require('lsp-zero').preset({
-          name = 'recommended',
-        })
-        lsp.nvim_workspace()
-        lsp.setup_nvim_cmp({
-          sources = {
-            { name = "copilot" },
-            {
-              name = "nvim_lsp",
-              max_item_count = 10
-            },
-            { name = "nvim_lsp_signature_help" },
-            { name = "luasnip" },
-            { name = "treesitter" },
-            {
-              name = "buffer",
-              max_item_count = 5
-            },
-            { name = "path" },
-            { name = "nvim_lua" }
-          },
-          format = function(entry, vim_item)
-            -- Kind icons
-            -- vim_item.kind = string.format("%s %s", kind_icons[vim_item.kind],
-            --                               vim_item.kind) -- This concatonates the icons with the name of the item kind
-
-            -- copilot
-            if entry.source.name == "copilot" then
-              vim_item.kind = "[] Copilot"
-              vim_item.kind_hl_group = "CmpItemKindCopilot"
-              return vim_item
-            end
-
-            -- Source
-            vim_item.menu = ({
-                  nvim_lsp = "[LSP]",
-                  luasnip = "[Snip]",
-                  buffer = "[Buffer]",
-                  nvim_lua = "[Lua]",
-                  treesitter = "[Treesitter]",
-                  path = "[Path]",
-                  nvim_lsp_signature_help = "[Signature]"
-                })[entry.source.name]
-
-            return vim_item
-          end
-        })
-
-        lsp.ensure_installed({
-          'tsserver',
-          'html',
-          'jsonls',
-          'dockerls',
-          'bashls',
-          'vimls',
-          'tailwindcss',
-          'lua_ls',
-          'cssls',
-          'volar',
-          'yamlls',
-        })
-
-        lsp.configure('jsonls', {
-          settings = { json = { schemas = require("schemastore").json.schemas() } }
-        })
-
-        lsp.configure('yamlls', {
-          schemastore = { enable = true },
-          settings = {
-            yaml = {
-              hover = true,
-              completion = true,
-              validate = true,
-              schemas = require("schemastore").json.schemas()
-            }
-          }
-        })
-
-        lsp.configure('tsserver', {
-          disable_formatting = true,
-          settings = {
-            javascript = {
-              inlayHints = {
-                includeInlayEnumMemberValueHints = true,
-                includeInlayFunctionLikeReturnTypeHints = true,
-                includeInlayFunctionParameterTypeHints = true,
-                includeInlayParameterNameHints = "all", -- 'none' | 'literals' | 'all';
-                includeInlayParameterNameHintsWhenArgumentMatchesName = true,
-                includeInlayPropertyDeclarationTypeHints = true,
-                includeInlayVariableTypeHints = true
-              }
-            },
-            typescript = {
-              inlayHints = {
-                includeInlayEnumMemberValueHints = true,
-                includeInlayFunctionLikeReturnTypeHints = true,
-                includeInlayFunctionParameterTypeHints = true,
-                includeInlayParameterNameHints = "all", -- 'none' | 'literals' | 'all';
-                includeInlayParameterNameHintsWhenArgumentMatchesName = true,
-                includeInlayPropertyDeclarationTypeHints = true,
-                includeInlayVariableTypeHints = true
-              }
-            }
-          }
-        })
-
-        lsp.on_attach(function(client, bufnr)
-          local opts = { buffer = bufnr }
-          local bind = vim.keymap.set
-
-          bind('n', '<leader>lf', '<cmd>LspZeroFormat<cr>', opts)
-          bind('n', '<leader>a', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-          bind('n', '<leader>re', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-          -- more keybindings...
-        end)
-
-        lsp.setup()
-      end
-    },
-
-    -- use "jose-elias-alvarez/typescript.nvim"
+    { "github/copilot.vim",     event = "InsertEnter", enabled = false },
 
     -- treesitter
     {
@@ -389,7 +209,11 @@ function M.setup()
       version = "v3.*",
       lazy = false,
       keys = {
-        { "<c-x>",   '<cmd>lua require("bufferline").handle_close(vim.fn.bufnr("%"))<CR>', desc = "Bufferline Close" },
+        {
+          "<c-x>",
+          '<cmd>lua require("bufferline").handle_close(vim.fn.bufnr("%"))<CR>',
+          desc = "Bufferline Close"
+        },
         { "<Tab>",   ":bnext<CR>" },
         { "<S-Tab>", ":bprev<CR>" }
       },
@@ -478,42 +302,43 @@ function M.setup()
         require('dashboard').setup {
           theme = 'hyper',
           config = {
-            week_header = {
-              enable = true,
-            },
+            week_header = { enable = true },
             shortcut = {
-              { desc = ' Update', group = '@property', action = 'Lazy update', key = 'u' },
+              {
+                desc = ' Update',
+                group = '@property',
+                action = 'Lazy update',
+                key = 'u'
+              },
               {
                 icon = ' ',
                 icon_hl = '@variable',
                 desc = 'Files',
                 group = 'Label',
                 action = 'Telescope find_files',
-                key = 'f',
+                key = 'f'
               },
               {
                 desc = ' Apps',
                 group = 'DiagnosticHint',
                 action = 'Telescope app',
-                key = 'a',
+                key = 'a'
               },
               {
                 desc = ' dotfiles',
                 group = 'Number',
                 action = 'Telescope dotfiles',
-                key = 'd',
-              },
-            }, },
+                key = 'd'
+              }
+            }
+          }
         }
       end,
       dependencies = { 'nvim-tree/nvim-web-devicons' }
     },
 
     -- Notification
-    {
-      "rcarriga/nvim-notify",
-      config = true,
-    },
+    { "rcarriga/nvim-notify", config = true },
     --[[ use { ]]
     --[[   "rcarriga/nvim-notify", -- floating toast notifications ]]
     --[[   config = function() ]]
@@ -524,14 +349,6 @@ function M.setup()
 
     -- tpope plugins
     { "tpope/vim-surround" }, -- Change surrounding arks
-    { "tpope/vim-repeat" }, -- extends . repeat
-  }
+    { "tpope/vim-repeat" } -- extends . repeat
+}
 
-  -- Init and start packer
-  lazy_init()
-  local lazy = require "lazy"
-
-  lazy.setup(plugins, opts)
-end
-
-return M

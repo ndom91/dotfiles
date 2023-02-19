@@ -1,11 +1,15 @@
-local present, treesitter_configs = pcall(require, "nvim-treesitter.configs")
+-- local present, treesitter_configs = pcall(require, "nvim-treesitter.configs")
+--
+-- if not present then
+--   vim.notify "Could not load nvim-treesitter.configs"
+--   return
+-- end
 
-if not present then
-  vim.notify "Could not load nvim-treesitter.configs"
-  return
-end
-
-treesitter_configs.setup {
+  return {
+    "nvim-treesitter/nvim-treesitter",
+    build = ":TSUpdate",
+    config = function()
+require('nvim-treesitter.configs').setup {
   --[[ highlight = { enable = true, use_languagetree = false }, ]]
   highlight = { enable = true },
   refactor = {
@@ -33,3 +37,5 @@ treesitter_configs.setup {
   sync_install = false,
   ensure_installed = "all"
 }
+    end
+  }

@@ -2,6 +2,7 @@
 local opt = vim.opt
 
 vim.g.mapleader = " "
+vim.g.maplocalleader = " "
 vim.g.vimsyn_embed = "lPrjt"
 vim.g.swapfile = false
 vim.api.nvim_set_var('markdown_fenced_languages', {
@@ -28,6 +29,7 @@ local set_cursorline = function(event, value, pattern)
     end
   })
 end
+
 set_cursorline("WinLeave", false)
 set_cursorline("WinEnter", true)
 set_cursorline("FileType", false, "TelescopePrompt")
@@ -63,7 +65,7 @@ opt.splitright = true
 opt.tabstop = 2
 opt.termguicolors = true
 opt.wildignore =
-    ".next,node_modules,.git,DS_Store,venv*,__pycache__,*pycache*,*.pyc,tmp,temp"
+".next,node_modules,.git/,DS_Store,venv*,__pycache__,*pycache*,*.pyc,tmp,temp"
 opt.wildmenu = true
 opt.wildmode = "longest:full"
 opt.pumblend = 17

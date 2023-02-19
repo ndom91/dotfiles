@@ -1,13 +1,3 @@
--- local fn = vim.fn
--- local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
--- if fn.empty(fn.glob(install_path)) > 0 then
---   packer_bootstrap = fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
--- end
---
--- -- autoreload when editing init.lua
--- local packer_group = vim.api.nvim_create_augroup('Packer', { clear = true })
--- vim.api.nvim_create_autocmd('BufWritePost', { command = 'source <afile> | PackerCompile', group = packer_group, pattern = '~/.config/nvim/**/*.lua' })
-
 -- make sure that globals.lua is required first, as we want to use the
 -- functions and helpers we add there EVERYWHERE in our configuration
 require 'globals'
@@ -17,6 +7,22 @@ require 'globals'
 -- introduce a bug on accident, its likely that the rest of your config works
 -- fine other than some plugin configuration that is going awry
 require 'settings'
-require('plugins').setup()
+
+-- lazy.nvim
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable", -- latest stable release
+    lazypath
+  })
+end
+vim.opt.rtp:prepend(lazypath)
+
+require('lazy').setup('plugins')
+
 require 'mappings'
 require 'autocmds'
