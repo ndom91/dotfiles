@@ -103,6 +103,8 @@
   autosetupmerge = always
   # autosetuprebase = always
 
+[url "git@github.com:"]
+  insteadOf = https://github.com/
 [url "git@github.com:checkly"]
   insteadOf = https://github.com/checkly
 [url "git@github.com:ndom91"]
