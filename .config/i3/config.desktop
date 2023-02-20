@@ -203,7 +203,6 @@ for_window [class="runjs"] floating enable normal
 for_window [class="beekeeper-studio"] floating enable normal
 
 # Autostart
-# exec_always --no-startup-id "DISPLAY=:0.0 feh --bg-fill /home/ndo/Pictures/personal/Wallpapers/wallhaven-3zw6g9.png"
 # exec --no-startup-id ntdisplay
 exec --no-startup-id xset +fp /home/ndo/.local/share/fonts
 exec --no-startup-id xset fp rehash
@@ -214,10 +213,10 @@ exec --no-startup-id pasystray
 exec --no-startup-id pnmixer
 exec --no-startup-id xrandr --output DisplayPort-0 --primary --mode 3440x1440 --pos 1080x480 --rotate normal --output DisplayPort-1 --mode 1920x1080 --pos 0x0 --rotate right --output DisplayPort-2 --off --output HDMI-A-0 --off
 exec --no-startup-id volctl
-exec_always --no-startup-id ulauncher
 exec_always --no-startup-id picom -b --config /home/ndo/.config/i3/picom.conf
 exec_always --no-startup-id setxkbmap -layout us
 exec_always --no-startup-id setxkbmap -option caps:escape
+exec_always --no-startup-id ulauncher
 # exec_always --no-startup-id emojione-picker
 # exec_always --no-startup-id remmina -i
 exec_always --no-startup-id nm-applet

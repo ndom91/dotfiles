@@ -1,4 +1,3 @@
-#
 # i3 config file (v4)
 # Please see http://i3wm.org/docs/userguide.html for a complete reference!
 #
@@ -228,13 +227,12 @@ exec --no-startup-id xset fp rehash
 exec --no-startup-id setxkbmap -layout us
 exec --no-startup-id setxkbmap -option caps:escape
 exec --no-startup-id /usr/bin/clipit
+exec --no-startup-id xrandr --output eDP-1 --scale 0.80x0.80
 exec_always --no-startup-id picom -b --config /home/ndo/.config/i3/picom.conf
 exec_always --no-startup-id dunst
-<<<<<<< Updated upstream
-=======
 # exec_always --no-startup-id /usr/bin/TogglDesktop.sh
 # exec_always --no-startup-id sudo solaar # Logitech Unify Receiver Config - Problem with rights on /dev/hidrawX
->>>>>>> Stashed changes
+exec_always --no-startup-id powerkit
 exec_always --no-startup-id flameshot
 exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 exec_always --no-startup-id mega-sync
@@ -242,6 +240,6 @@ exec_always --no-startup-id volti
 exec_always --no-startup-id remmina -i 
 exec_always --no-startup-id emojione-picker 
 exec_always --no-startup-id nm-applet 
-exec_always --no-startup-id "DISPLAY=:0.0 feh --bg-scale /home/ndo/Pictures/personal/Wallpapers/ArchWallpapers/OQ61WKf_purp.png"
+# exec_always --no-startup-id "DISPLAY=:0.0 feh --bg-scale /home/ndo/Pictures/personal/Wallpapers/ArchWallpapers/OQ61WKf_purp.png"
 # exec_always --no-startup-id /usr/bin/TogglDesktop.sh
 # exec_always --no-startup-id sudo solaar # Logitech Unify Receiver Config - Problem with rights on /dev/hidrawX
