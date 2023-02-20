@@ -35,7 +35,6 @@ set_cursorline("WinEnter", true)
 set_cursorline("FileType", false, "TelescopePrompt")
 
 opt.breakindent = true
-opt.showbreak = string.rep(" ", 3)
 opt.linebreak = true
 
 opt.belloff = "all"
@@ -65,7 +64,7 @@ opt.splitright = true
 opt.tabstop = 2
 opt.termguicolors = true
 opt.wildignore =
-".next,node_modules,.git/,DS_Store,venv*,__pycache__,*pycache*,*.pyc,tmp,temp"
+".next,node_modules,.git,DS_Store,venv*,__pycache__,*pycache*,*.pyc,tmp,temp"
 opt.wildmenu = true
 opt.wildmode = "longest:full"
 opt.pumblend = 17

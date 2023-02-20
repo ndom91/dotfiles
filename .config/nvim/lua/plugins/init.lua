@@ -44,9 +44,7 @@ return {
   {
     'tami5/lspsaga.nvim',
     enabled = false,
-    config = function()
-      require "plugins.lsp.lsp-saga"
-    end
+    config = true
   },
 
   -- icons on completion
@@ -121,7 +119,7 @@ return {
     }
   },
 
-  -- special copilot for cmp
+  -- cmp based copilot
   {
     "zbirenbaum/copilot.lua",
     -- event = { "VimEnter" },
@@ -152,16 +150,14 @@ return {
     end
   },
 
-  -- { "zbirenbaum/copilot-cmp", module = "copilot_cmp" },
-
-  -- AI completion
+  -- first-party github copilot plugin
   {
     "github/copilot.vim",
     event = "InsertEnter",
     enabled = false
   },
 
-  -- treesitter related
+  -- treesitter
   { 'nvim-treesitter/nvim-treesitter-context' },
   { 'JoosepAlviste/nvim-ts-context-commentstring' },
 
@@ -169,18 +165,37 @@ return {
   {
     "lukas-reineke/indent-blankline.nvim",
     config = function()
+      vim.cmd [[highlight IndentBlanklineIndent1 guifg=#E0DEF4 gui=nocombine]]
+      vim.cmd [[highlight IndentBlanklineIndent2 guifg=#908CAA gui=nocombine]]
+      vim.cmd [[highlight IndentBlanklineIndent3 guifg=#524F67 gui=nocombine]]
+      vim.cmd [[highlight IndentBlanklineIndent4 guifg=#403d42 gui=nocombine]]
+      vim.cmd [[highlight IndentBlanklineIndent5 guifg=#25233A gui=nocombine]]
+      vim.cmd [[highlight IndentBlanklineIndent6 guifg=#21202E gui=nocombine]]
+
+      vim.opt.list = true
+      vim.opt.listchars:append "space:⋅"
+
       require("indent_blankline").setup {
         filetype_exclude = {
           "alpha",
           "neo-tree",
           "lsp-installer",
+          "lazy",
           "packer",
           "dashboard"
         },
         space_char_blankline = " ",
         show_current_context = true,
         show_current_context_start = false,
-        use_treesitter = true
+        use_treesitter = true,
+        char_highlight_list = {
+          "IndentBlanklineIndent1",
+          "IndentBlanklineIndent2",
+          "IndentBlanklineIndent3",
+          "IndentBlanklineIndent4",
+          "IndentBlanklineIndent5",
+          "IndentBlanklineIndent6",
+        },
       }
     end
   },
@@ -282,7 +297,7 @@ return {
           TRACE = "✎"
         }
       })
-      vim.notify = notify
+      vim.notify = require('notify')
     end
   },
 
