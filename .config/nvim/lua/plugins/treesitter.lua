@@ -1,10 +1,3 @@
--- local present, treesitter_configs = pcall(require, "nvim-treesitter.configs")
---
--- if not present then
---   vim.notify "Could not load nvim-treesitter.configs"
---   return
--- end
-
   return {
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",

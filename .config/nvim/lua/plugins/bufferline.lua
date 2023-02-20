@@ -1,10 +1,3 @@
--- local present, bufferline = pcall(require, "bufferline")
---
--- if not present then
---   vim.notify "Could not load bufferline"
---   return
--- end
-
 return {
   "akinsho/bufferline.nvim",
   version = "v3.*",
@@ -12,7 +5,7 @@ return {
   keys = {
     {
       "<c-x>",
-      '<cmd>lua require("bufferline").handle_close(vim.fn.bufnr("%"))<CR>',
+      ':bd<cr>',
       desc = "Bufferline Close"
     },
     { "<Tab>",   ":bnext<CR>" },
@@ -30,6 +23,7 @@ return {
         right_mouse_command = "bdelete! %d",
         max_name_length = 25,
         max_prefix_length = 15, -- prefix used when a buffer is de-duplicated
+        truncate_names = true,
         tab_size = 25,
         diagnostics = "nvim_lsp",
         diagnostics_update_in_insert = false,
@@ -88,7 +82,7 @@ return {
         show_buffer_close_icons = false,
         show_close_icon = false,
         show_tab_indicators = true,
-        separator_style = "thin",
+        separator_style = "slant",
         enforce_regular_tabs = true,
         always_show_bufferline = true
       }

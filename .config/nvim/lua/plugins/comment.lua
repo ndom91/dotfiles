@@ -1,10 +1,3 @@
--- local present, Comment = pcall(require, "Comment")
---
--- if not present then
---   vim.notify "Could not load Comment"
---   return
--- end
-
 return {
   "numToStr/Comment.nvim",
   config = function()
