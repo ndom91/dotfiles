@@ -8,6 +8,7 @@ return {
     { 'williamboman/mason-lspconfig.nvim' },
     { "lvimuser/lsp-inlayhints.nvim" },
     { 'b0o/schemastore.nvim' },
+    { 'jose-elias-alvarez/null-ls.nvim' },
 
     -- Autocompletion
     { 'hrsh7th/nvim-cmp' },
@@ -184,6 +185,7 @@ return {
 
       local formatting_augroup = vim.api.nvim_create_augroup('LspFormatting', {})
 
+      -- Autoformatting
       local formatting_disabled_ls = { 'volar', 'intelephense', 'tsserver' }
       if client.supports_method 'textDocument/formatting' and not vim.tbl_contains(formatting_disabled_ls, client.name) then
         vim.api.nvim_clear_autocmds { group = formatting_augroup, buffer = bufnr }
@@ -192,16 +194,19 @@ return {
           buffer = bufnr,
           callback = function()
             vim.lsp.buf.format {
+              bufnr = bufnr,
               filter = function(buf_client)
-                return not vim.tbl_contains(formatting_disabled_ls, buf_client.name)
+                return buf_client.name == "null-ls"
+                -- return not vim.tbl_contains(formatting_disabled_ls, buf_client.name)
               end,
             }
           end,
         })
       end
-      bind('n', '<leader>lf', '<cmd>LspZeroFormat<cr>', opts)
+      -- bind('n', '<leader>lf', '<cmd>LspZeroFormat<cr>', opts)
+      bind('n', '<leader>lf', '<cmd>lua vim.buf.lsp.format()<CR>', opts)
       bind('n', '<leader>a', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-      bind('n', '<leader>re', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+      bind('n', '<leader>re', '<cmd>lua vim.lsp.buf.rename.float()<CR>', opts)
       -- more keybindings...
 
       bind('n', 'gd', vim.lsp.buf.definition, { desc = '[G]oto [D]efinition', buffer = bufnr })
@@ -218,7 +223,7 @@ return {
       bind('n', '<C-k>', vim.lsp.buf.signature_help, { desc = 'Signature Documentation', buffer = bufnr })
     end)
 
-    lsp.skip_server_setup({ 'prettierd' })
+    -- lsp.skip_server_setup({ 'prettierd' })
 
 
     -- local on_attach = function(_, bufnr)
@@ -358,5 +363,25 @@ return {
     -- }
 
     lsp.setup()
+    -- null-ls setup
+    local null_ls = require('null-ls')
+    local null_opts = lsp.build_options('null-ls', {})
+
+    null_ls.setup({
+      on_attach = function(client, bufnr)
+        null_opts.on_attach(client, bufnr)
+        ---
+        -- you can add other stuff here....
+        ---
+      end,
+      sources = {
+        -- Replace these with the tools you have installed
+        -- null_ls.builtins.formatting.prettier,
+        null_ls.builtins.code_actions.eslint_d,
+        null_ls.builtins.formatting.eslint_d,
+        null_ls.builtins.diagnostics.eslint_d,
+        -- null_ls.builtins.formatting.stylua,
+      }
+    })
   end
 }
