@@ -37,6 +37,7 @@ set_cursorline("FileType", false, "TelescopePrompt")
 opt.breakindent = true
 opt.linebreak = true
 
+opt.signcolumn = 'yes'
 opt.belloff = "all"
 opt.expandtab = true
 opt.equalalways = false

@@ -286,7 +286,8 @@ return {
     name = 'notify',
     lazy = false,
     config = function()
-      local notify = require('notify').setup({
+      local notify = require('notify')
+      notify.setup({
         render = 'minimal',
         stages = 'fade_in_slide_out',
         icons = {
@@ -297,7 +298,7 @@ return {
           TRACE = "✎"
         }
       })
-      vim.notify = require('notify')
+      vim.notify = notify
     end
   },
 
