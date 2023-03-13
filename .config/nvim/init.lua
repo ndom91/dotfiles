@@ -1,12 +1,12 @@
 -- make sure that globals.lua is required first, as we want to use the
 -- functions and helpers we add there EVERYWHERE in our configuration
-require 'globals'
+require("globals")
 
 -- everything else here, the order *shouldn't* matter as much I prefer to put
 -- plugins as far towards the end of my require statements so that if you
 -- introduce a bug on accident, its likely that the rest of your config works
 -- fine other than some plugin configuration that is going awry
-require 'settings'
+require("settings")
 
 -- lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -17,12 +17,12 @@ if not vim.loop.fs_stat(lazypath) then
     "--filter=blob:none",
     "https://github.com/folke/lazy.nvim.git",
     "--branch=stable", -- latest stable release
-    lazypath
+    lazypath,
   })
 end
 vim.opt.rtp:prepend(lazypath)
 
-require('lazy').setup('plugins')
+require("lazy").setup("plugins")
 
-require 'mappings'
-require 'autocmds'
+require("mappings")
+require("autocmds")
