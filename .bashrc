@@ -235,5 +235,15 @@ if [ "$(command -v atuin)" ]; then
   eval "$(atuin init bash)"
 fi
 
+# llama - cd + ll
+if [ "$(command -v llama)" ]; then
+  export LLAMA_EDITOR=nvim
+  # alias ll='cd "$(llama "$@")" || true'
+  function la {
+    cd "$(llama "$@")" || true
+  }
+  alias la='la'
+fi
+
 # add Pulumi to the PATH
 export PATH=$PATH:$HOME/.pulumi/bin
