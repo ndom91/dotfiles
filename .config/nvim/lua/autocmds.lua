@@ -7,5 +7,5 @@ cmd "autocmd! TextYankPost * lua vim.highlight.on_yank { on_visual = false }"
 cmd "autocmd! CursorHold * lua vim.diagnostic.open_float(nil, { focusable = false })"
 
 -- lsp-zero Format onSave
-cmd "autocmd! BufWritePost * LspZeroFormat"
+-- cmd "autocmd! BufWritePost * LspZeroFormat"
 

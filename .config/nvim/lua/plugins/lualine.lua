@@ -1,3 +1,32 @@
+local null_ls = require "null-ls"
+local nls_sources = require "null-ls.sources"
+local nls_utils = require "null-ls.utils"
+
+local function separator()
+  return "%="
+end
+
+function HasFormatter (filetype)
+  local available = nls_sources.get_available(filetype, null_ls.methods.FORMATTING)
+  return #available > 0
+end
+
+function ListLinter(filetype)
+  local registered_providers = nls_utils.list_registered_providers_names(filetype)
+  return registered_providers[null_ls.methods.DIAGNOSTICS] or {}
+end
+
+function ListHover(filetype)
+  local registered_providers = nls_utils.list_registered_providers_names(filetype)
+  return registered_providers[null_ls.methods.HOVER] or {}
+end
+
+function ListFormatter(filetype)
+  local supported_formatters = nls_sources.get_supported(filetype, "formatting")
+  table.sort(supported_formatters)
+  return supported_formatters
+end
+
 local function lsp_client(msg)
   msg = msg or ""
   local buf_clients = vim.lsp.get_active_clients()
@@ -17,18 +46,15 @@ local function lsp_client(msg)
   end
 
   -- add formatter
-  local formatters = require "plugins.lsp.null-ls.formatters"
-  local supported_formatters = formatters.list_registered(buf_ft)
+  local supported_formatters = ListFormatter(buf_ft)
   vim.list_extend(buf_client_names, supported_formatters)
 
   -- add linter
-  local linters = require "plugins.lsp.null-ls.linters"
-  local supported_linters = linters.list_registered(buf_ft)
+  local supported_linters = ListLinter(buf_ft)
   vim.list_extend(buf_client_names, supported_linters)
 
   -- add hover
-  local hovers = require "plugins.lsp.null-ls.hovers"
-  local supported_hovers = hovers.list_registered(buf_ft)
+  local supported_hovers = ListHover(buf_ft)
   vim.list_extend(buf_client_names, supported_hovers)
 
   return "[" .. table.concat(buf_client_names, ", ") .. "]"
@@ -41,8 +67,8 @@ return {
     require('lualine').setup {
       options = {
         icons_enabled = true,
-        -- theme = "tokyonight",
-        theme = "rose-pine",
+        -- theme = "rose-pine",
+        theme = "auto",
         component_separators = { left = "", right = "" },
         section_separators = { left = "", right = "" },
         disabled_filetypes = {},
@@ -59,13 +85,14 @@ return {
             sources = { "nvim_diagnostic" },
             symbols = { error = " ", warn = " ", info = " ", hint = " " },
             colored = false
-          }
+          },
+        },
+        lualine_c = {
+          { separator },
+          { lsp_client, icon = " ", color = { gui = "bold" } }
         },
         -- { "diagnostics", sources = { "nvim_lsp" } } },
         -- lualine_c = { "filename" },
-        lualine_c = {
-          { lsp_client, icon = " ", color = { fg = "#a9a1e1", gui = "bold" } }
-        },
         lualine_x = { "encoding", "fileformat", "filetype" },
         lualine_y = { "progress" },
         lualine_z = { "location" }
