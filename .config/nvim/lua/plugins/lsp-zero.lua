@@ -1,4 +1,13 @@
 -- See:https://github.com/JoosepAlviste/dotfiles/blob/master/config/nvim/lua/j/plugins/lsp/null_ls.lua
+
+local function goto_next_error()
+  vim.diagnostic.goto_next({ severity = "Error" })
+end
+
+local function goto_prev_error()
+  vim.diagnostic.goto_prev({ severity = "Error" })
+end
+
 vim.lsp.buf.rename = {
   float = function()
     local curr_name = vim.fn.expand("<cword>")
@@ -93,7 +102,7 @@ return {
         end,
       },
       mapping = cmp.mapping.preset.insert({
-        ["<C-p>"] = cmp.mapping.scroll_docs( -4),
+        ["<C-p>"] = cmp.mapping.scroll_docs(-4),
         ["<C-n>"] = cmp.mapping.scroll_docs(4),
         ["<C-Space>"] = cmp.mapping.complete({}),
         ["<CR>"] = cmp.mapping.confirm({
@@ -112,8 +121,8 @@ return {
         ["<S-Tab>"] = cmp.mapping(function(fallback)
           if cmp.visible() then
             cmp.select_prev_item()
-          elseif luasnip.jumpable( -1) then
-            luasnip.jump( -1)
+          elseif luasnip.jumpable(-1) then
+            luasnip.jump(-1)
           else
             fallback()
           end
@@ -121,11 +130,11 @@ return {
       }),
       sources = {
         { name = "copilot" },
-        { name = "nvim_lsp",               max_item_count = 10 },
+        { name = "nvim_lsp", max_item_count = 10 },
         { name = "nvim_lsp_signature_help" },
         { name = "luasnip" },
         { name = "treesitter" },
-        { name = "buffer",                 max_item_count = 5 },
+        { name = "buffer", max_item_count = 5 },
         { name = "path" },
         { name = "nvim_lua" },
       },
@@ -144,14 +153,14 @@ return {
 
           -- Source
           vim_item.menu = ({
-                nvim_lsp = "[LSP]",
-                luasnip = "[Snip]",
-                buffer = "[Buffer]",
-                nvim_lua = "[Lua]",
-                treesitter = "[Treesitter]",
-                path = "[Path]",
-                nvim_lsp_signature_help = "[Signature]",
-              })[entry.source.name]
+            nvim_lsp = "[LSP]",
+            luasnip = "[Snip]",
+            buffer = "[Buffer]",
+            nvim_lua = "[Lua]",
+            treesitter = "[Treesitter]",
+            path = "[Path]",
+            nvim_lsp_signature_help = "[Signature]",
+          })[entry.source.name]
 
           return vim_item
         end,
@@ -174,7 +183,7 @@ return {
       "bashls",
       "vimls",
       "tailwindcss",
-      "lua_ls",
+      -- "lua_ls",
       "cssls",
       "volar",
       "yamlls",
@@ -242,26 +251,19 @@ return {
         end,
       })
 
-      vim.lsp.buf.format({ timeout_ms = 2000 })
-
       bind(
         "n",
         "<leader>lf",
         "<cmd>lua vim.lsp.buf.format({ timeout_ms = 2000 })<CR>",
         { desc = "Format Buffer", buffer = bufnr }
       )
-      bind("n", "<leader>a", "<cmd>lua vim.lsp.buf.code_action()<CR>", { desc = "Code [A]ction", buffer = bufnr })
+      bind("n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", { desc = "[C]ode [A]ction", buffer = bufnr })
       bind("n", "<leader>re", "<cmd>lua vim.lsp.buf.rename.float()<CR>", { desc = "[Re]name", buffer = bufnr })
 
       bind("n", "gd", vim.lsp.buf.definition, { desc = "[G]oto [D]efinition", buffer = bufnr })
-      bind(
-        "n",
-        "gr",
-        require("telescope.builtin").lsp_references,
-        { desc = "[G]oto [R]eferences", buffer = bufnr }
-      )
+      bind("n", "gD", vim.lsp.buf.type_definition, { desc = "[G]oto Type [D]efinition", buffer = bufnr })
+      bind("n", "gr", require("telescope.builtin").lsp_references, { desc = "[G]oto [R]eferences", buffer = bufnr })
       bind("n", "gI", vim.lsp.buf.implementation, { desc = "[G]oto [I]mplementation", buffer = bufnr })
-      bind("n", "<leader>D", vim.lsp.buf.type_definition, { desc = "Type [D]efinition", buffer = bufnr })
       bind(
         "n",
         "<leader>ds",
@@ -274,6 +276,12 @@ return {
         require("telescope.builtin").lsp_dynamic_workspace_symbols,
         { desc = "[W]orkspace [S]ymbols", buffer = bufnr }
       )
+
+      -- Navigate diagnostics
+      bind("n", "[d", vim.diagnostic.goto_prev, { desc = "Next Diagnostic", buffer = bufnr })
+      bind("n", "]d", vim.diagnostic.goto_next, { desc = "Next Diagnostic", buffer = bufnr })
+      bind("n", "[e", goto_next_error, { desc = "Next Diagnostic", buffer = bufnr })
+      bind("n", "]e", goto_prev_error, { desc = "Next Diagnostic", buffer = bufnr })
 
       bind("n", "K", vim.lsp.buf.hover, { desc = "Hover Documentation", buffer = bufnr })
       bind("n", "<C-k>", vim.lsp.buf.signature_help, { desc = "Signature Documentation", buffer = bufnr })
@@ -297,20 +305,31 @@ return {
       diagnostics_format = "#{m} [#{c}]",
       root_dir = nls_utils.root_pattern(".null-ls-root", "Makefile", ".git", "package.json"),
       on_attach = function(client, bufnr)
+        if client.supports_method("textDocument/formatting") then
+          vim.api.nvim_clear_autocmds({ group = formatting_augroup, buffer = bufnr })
+          vim.api.nvim_create_autocmd("BufWritePre", {
+            group = formatting_augroup,
+            buffer = bufnr,
+            callback = function()
+              vim.lsp.buf.format({ bufnr = bufnr })
+            end,
+          })
+        end
         null_opts.on_attach(client, bufnr)
       end,
       sources = {
         -- null-ls builtins - https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md
         -- Code Actions
         null_ls.builtins.code_actions.eslint_d,
-        null_ls.builtins.code_actions.shellcheck, -- Formatting
+        null_ls.builtins.code_actions.shellcheck,
+        -- Formatting
         null_ls.builtins.formatting.eslint_d,
         null_ls.builtins.formatting.stylua.with({
-          extra_args = { "--indent_type=Spaces", "--indent_width=2" },
+          extra_args = { "--indent-type=Spaces", "--indent-width=2" },
         }),
-        -- null_ls.builtins.formatting.lua_format
-        --     .with({extra_args = {'--tab-width=2', '--column-limit=100'}}),
-        null_ls.builtins.formatting.shfmt, -- Diagnostics
+        -- null_ls.builtins.formatting.lua_format.with({extra_args = {'--tab-width=2', '--column-limit=100'}}),
+        null_ls.builtins.formatting.shfmt,
+        -- Diagnostics
         null_ls.builtins.diagnostics.eslint_d,
         null_ls.builtins.diagnostics.shellcheck,
       },
