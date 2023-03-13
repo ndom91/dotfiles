@@ -1,10 +1,10 @@
 return {
   "rose-pine/neovim", -- current theme
-  name = 'rose-pine',
+  name = "rose-pine",
   lazy = false, -- load first
   priority = 1000, -- before anything else
   config = function()
-    require('rose-pine').setup({
+    require("rose-pine").setup({
       ---@usage 'main'|'moon'
       dark_variant = "main",
       bold_vert_split = true,
@@ -28,7 +28,7 @@ return {
           h3 = "rose",
           h4 = "gold",
           h5 = "pine",
-          h6 = "foam"
+          h6 = "foam",
         },
         git_add = "pine",
         git_delete = "love",
@@ -38,15 +38,16 @@ return {
         git_merge = "iris",
         git_rename = "pine",
         git_stage = "iris",
-        git_text = "rose"
+        git_text = "rose",
         -- or set all headings at once
         -- headings = 'subtle'
-      }
+      },
     })
 
     -- set colorscheme after options
-    vim.cmd('colorscheme rose-pine')
+    vim.cmd("colorscheme rose-pine")
 
+    vim.api.nvim_set_hl(0, "TelescopeBorder", { fg = "#c4a7e7" })
     -- 	main = {
     -- 		base = '#191724',
     -- 		surface = '#1f1d2e',
@@ -66,5 +67,5 @@ return {
     -- 		opacity = 0.1,
     -- 		none = 'NONE',
     -- 	},
-  end
+  end,
 }

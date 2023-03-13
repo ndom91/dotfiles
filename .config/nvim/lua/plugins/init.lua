@@ -1,6 +1,5 @@
 return {
-  -- nerd font icons
-  "nvim-tree/nvim-web-devicons", -- telescope
+  "nvim-tree/nvim-web-devicons",
   "nvim-lua/plenary.nvim",
   "nvim-lua/popup.nvim",
   {
@@ -9,9 +8,7 @@ return {
       require("telescope").setup({
         extensions = {
           ["ui-select"] = {
-            require("telescope.themes").get_dropdown({
-              -- even more opts
-            }),
+            require("telescope.themes").get_cursor({}),
 
             -- pseudo code / specification for writing custom displays, like the one
             -- for "codeactions"
@@ -34,7 +31,7 @@ return {
   },
   { "lvimuser/lsp-inlayhints.nvim", config = true },
 
-  { "tami5/lspsaga.nvim",           enabled = false, config = true },
+  { "tami5/lspsaga.nvim", enabled = false, config = true },
 
   -- icons on completion
   "onsails/lspkind-nvim", -- lsp function signature help on wildmenu

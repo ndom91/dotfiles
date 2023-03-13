@@ -1,12 +1,12 @@
-local null_ls = require "null-ls"
-local nls_sources = require "null-ls.sources"
-local nls_utils = require "null-ls.utils"
+local null_ls = require("null-ls")
+local nls_sources = require("null-ls.sources")
+local nls_utils = require("null-ls.utils")
 
 local function separator()
   return "%="
 end
 
-function HasFormatter (filetype)
+function HasFormatter(filetype)
   local available = nls_sources.get_available(filetype, null_ls.methods.FORMATTING)
   return #available > 0
 end
@@ -31,7 +31,9 @@ local function lsp_client(msg)
   msg = msg or ""
   local buf_clients = vim.lsp.get_active_clients()
   if next(buf_clients) == nil then
-    if type(msg) == "boolean" or #msg == 0 then return "" end
+    if type(msg) == "boolean" or #msg == 0 then
+      return ""
+    end
     return msg
   end
 
@@ -64,7 +66,7 @@ return {
   "nvim-lualine/lualine.nvim",
   dependencies = { "nvim-tree/nvim-web-devicons" },
   config = function()
-    require('lualine').setup {
+    require("lualine").setup({
       options = {
         icons_enabled = true,
         -- theme = "rose-pine",
@@ -72,7 +74,7 @@ return {
         component_separators = { left = "", right = "" },
         section_separators = { left = "", right = "" },
         disabled_filetypes = {},
-        always_divide_middle = true
+        always_divide_middle = true,
       },
       sections = {
         lualine_a = { "mode" },
@@ -84,18 +86,18 @@ return {
             "diagnostics",
             sources = { "nvim_diagnostic" },
             symbols = { error = " ", warn = " ", info = " ", hint = " " },
-            colored = false
+            colored = false,
           },
         },
         lualine_c = {
           { separator },
-          { lsp_client, icon = " ", color = { gui = "bold" } }
+          { lsp_client, icon = " ", color = { gui = "bold" } },
         },
         -- { "diagnostics", sources = { "nvim_lsp" } } },
         -- lualine_c = { "filename" },
         lualine_x = { "encoding", "fileformat", "filetype" },
         lualine_y = { "progress" },
-        lualine_z = { "location" }
+        lualine_z = { "location" },
       },
       inactive_sections = {
         lualine_a = {},
@@ -103,11 +105,11 @@ return {
         lualine_c = { "filename" },
         lualine_x = { "location" },
         lualine_y = {},
-        lualine_z = {}
+        lualine_z = {},
       },
       tabline = {},
       -- extensions = {"nvim-tree", "quickfix"}
-      extensions = {}
-    }
-  end
+      extensions = {},
+    })
+  end,
 }

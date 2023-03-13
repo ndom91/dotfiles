@@ -235,6 +235,7 @@ return {
 
     lsp.on_attach(function(client, bufnr)
       local bind = vim.keymap.set
+      local builtin = require("telescope.builtin")
 
       -- Autoformatting
       vim.api.nvim_clear_autocmds({ group = formatting_augroup, buffer = bufnr })
@@ -251,37 +252,48 @@ return {
         end,
       })
 
+      -- Highlight symbol references on hover
+      if client.server_capabilities.documentHighlightProvider then
+        vim.api.nvim_create_augroup("LspDocumentHighlight", { clear = false })
+        vim.api.nvim_clear_autocmds({
+          buffer = bufnr,
+          group = "LspDocumentHighlight",
+        })
+        vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
+          group = "LspDocumentHighlight",
+          buffer = bufnr,
+          callback = vim.lsp.buf.document_highlight,
+        })
+        vim.api.nvim_create_autocmd("CursorMoved", {
+          group = "LspDocumentHighlight",
+          buffer = bufnr,
+          callback = vim.lsp.buf.clear_references,
+        })
+      end
+
       bind(
         "n",
         "<leader>lf",
         "<cmd>lua vim.lsp.buf.format({ timeout_ms = 2000 })<CR>",
         { desc = "Format Buffer", buffer = bufnr }
       )
-      bind("n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", { desc = "[C]ode [A]ction", buffer = bufnr })
-      bind("n", "<leader>re", "<cmd>lua vim.lsp.buf.rename.float()<CR>", { desc = "[Re]name", buffer = bufnr })
+      bind("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "[C]ode [A]ction", buffer = bufnr })
+      bind("n", "<leader>re", vim.lsp.buf.rename.float, { desc = "[Re]name", buffer = bufnr })
 
       bind("n", "gd", vim.lsp.buf.definition, { desc = "[G]oto [D]efinition", buffer = bufnr })
       bind("n", "gD", vim.lsp.buf.type_definition, { desc = "[G]oto Type [D]efinition", buffer = bufnr })
-      bind("n", "gr", require("telescope.builtin").lsp_references, { desc = "[G]oto [R]eferences", buffer = bufnr })
+      bind("n", "gr", builtin.lsp_references, { desc = "[G]oto [R]eferences", buffer = bufnr })
       bind("n", "gI", vim.lsp.buf.implementation, { desc = "[G]oto [I]mplementation", buffer = bufnr })
-      bind(
-        "n",
-        "<leader>ds",
-        require("telescope.builtin").lsp_document_symbols,
-        { desc = "[D]ocument [S]ymbols", buffer = bufnr }
-      )
-      bind(
-        "n",
-        "<leader>ws",
-        require("telescope.builtin").lsp_dynamic_workspace_symbols,
-        { desc = "[W]orkspace [S]ymbols", buffer = bufnr }
-      )
+      bind("n", "<leader>ds", builtin.lsp_document_symbols, { desc = "[D]ocument [S]ymbols", buffer = bufnr })
+      bind("n", "<leader>ws", builtin.lsp_dynamic_workspace_symbols, { desc = "[W]orkspace [S]ymbols", buffer = bufnr })
 
       -- Navigate diagnostics
-      bind("n", "[d", vim.diagnostic.goto_prev, { desc = "Next Diagnostic", buffer = bufnr })
+      bind("n", "[d", vim.diagnostic.goto_prev, { desc = "Prev Diagnostic", buffer = bufnr })
       bind("n", "]d", vim.diagnostic.goto_next, { desc = "Next Diagnostic", buffer = bufnr })
-      bind("n", "[e", goto_next_error, { desc = "Next Diagnostic", buffer = bufnr })
-      bind("n", "]e", goto_prev_error, { desc = "Next Diagnostic", buffer = bufnr })
+      bind("n", "<leader>dd", builtin.diagnostics, { desc = "List Diagnostics", buffer = bufnr })
+
+      bind("n", "[e", goto_next_error, { desc = "Next Error", buffer = bufnr })
+      bind("n", "]e", goto_prev_error, { desc = "Prev Error", buffer = bufnr })
 
       bind("n", "K", vim.lsp.buf.hover, { desc = "Hover Documentation", buffer = bufnr })
       bind("n", "<C-k>", vim.lsp.buf.signature_help, { desc = "Signature Documentation", buffer = bufnr })

@@ -56,13 +56,12 @@ nnoremap("Q", "<Nop>") -- disable ex mode
 
 -- Telescope
 nnoremap("<leader>.", "<cmd>Telescope find_files prompt_prefix=🔍<CR>")
-nnoremap("<leader>,",
-         "<cmd>Telescope buffers show_all_buffers=true prompt_prefix=🔍<CR>")
+nnoremap("<leader>,", "<cmd>Telescope buffers show_all_buffers=true prompt_prefix=🔍<CR>")
 nnoremap("<leader>/", "<cmd>Telescope live_grep prompt_prefix=🔍<CR>")
 nnoremap("<leader>:", "<cmd>Telescope command_history prompt_prefix=🔍<CR>")
-nnoremap("<leader>r", "<cmd>Telescope oldfiles prompt_prefix=🔍<CR>")
+nnoremap("<leader>r", "<cmd>Telescope oldfiles prompt_prefix=🔍<CR>", { desc = "Old Files" })
 nnoremap("<leader>h", "<cmd>Telescope help_tags prompt_prefix=🔍<CR>")
-nnoremap("<leader>s", "<cmd>Telescope lsp_dynamic_workspace_symbols prompt_prefix=🔍<CR>")
+nnoremap("<leader>s", "<cmd>Telescope lsp_dynamic_workspace_symbols prompt_prefix=🔍<CR>", { desc = "LSP Symbols" })
 nnoremap("<leader>gc", "<cmd>Telescope git_commits prompt_prefix=🔍<CR>")
 nnoremap("<leader>gb", "<cmd>Telescope git_branches prompt_prefix=🔍<CR>")
 
