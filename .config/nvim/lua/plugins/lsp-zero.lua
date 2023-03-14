@@ -288,12 +288,12 @@ return {
       bind("n", "<leader>ws", builtin.lsp_dynamic_workspace_symbols, { desc = "[W]orkspace [S]ymbols", buffer = bufnr })
 
       -- Navigate diagnostics
-      bind("n", "[d", vim.diagnostic.goto_prev, { desc = "Prev Diagnostic", buffer = bufnr })
-      bind("n", "]d", vim.diagnostic.goto_next, { desc = "Next Diagnostic", buffer = bufnr })
+      bind("n", "]d", vim.diagnostic.goto_prev, { desc = "Prev Diagnostic", buffer = bufnr })
+      bind("n", "[d", vim.diagnostic.goto_next, { desc = "Next Diagnostic", buffer = bufnr })
       bind("n", "<leader>dd", builtin.diagnostics, { desc = "List Diagnostics", buffer = bufnr })
 
-      bind("n", "[e", goto_next_error, { desc = "Next Error", buffer = bufnr })
-      bind("n", "]e", goto_prev_error, { desc = "Prev Error", buffer = bufnr })
+      bind("n", "]e", goto_next_error, { desc = "Next Error", buffer = bufnr })
+      bind("n", "[e", goto_prev_error, { desc = "Prev Error", buffer = bufnr })
 
       bind("n", "K", vim.lsp.buf.hover, { desc = "Hover Documentation", buffer = bufnr })
       bind("n", "<C-k>", vim.lsp.buf.signature_help, { desc = "Signature Documentation", buffer = bufnr })

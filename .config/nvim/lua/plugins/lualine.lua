@@ -68,13 +68,16 @@ return {
   config = function()
     require("lualine").setup({
       options = {
-        icons_enabled = true,
         -- theme = "rose-pine",
+        -- always_divide_middle = true,
+        icons_enabled = true,
+        globalstatus = true,
         theme = "auto",
         component_separators = { left = "", right = "" },
         section_separators = { left = "", right = "" },
-        disabled_filetypes = {},
-        always_divide_middle = true,
+        disabled_filetypes = {
+          winbar = { "neo-tree", "packer", "help", "toggleterm" },
+        },
       },
       sections = {
         lualine_a = { "mode" },
@@ -86,7 +89,7 @@ return {
             "diagnostics",
             sources = { "nvim_diagnostic" },
             symbols = { error = " ", warn = " ", info = " ", hint = " " },
-            colored = false,
+            colored = true,
           },
         },
         lualine_c = {
@@ -102,7 +105,13 @@ return {
       inactive_sections = {
         lualine_a = {},
         lualine_b = {},
-        lualine_c = { "filename" },
+        lualine_c = {
+          {
+            "filename",
+            file_status = true, -- displays file status (readonly status, modified status)
+            path = 1, -- 0 = just filename, 1 = relative path, 2 = absolute path
+          },
+        },
         lualine_x = { "location" },
         lualine_y = {},
         lualine_z = {},

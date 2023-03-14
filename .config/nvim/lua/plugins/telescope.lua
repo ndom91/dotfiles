@@ -41,7 +41,8 @@ return {
     require("telescope").setup({
       defaults = {
         buffer_previewer_maker = new_maker,
-        prompt_prefix = "🔍",
+        prompt_prefix = "🔍 ",
+        selection_caret = "👉",
         winblend = 20,
         border = { style = "rounded" },
         borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
@@ -78,6 +79,12 @@ return {
           -- "--multiline-dotall"
         },
         file_ignore_patterns = {
+          "%.jpg",
+          "%.jpeg",
+          "%.png",
+          "%.otf",
+          "%.ttf",
+          "%.lock",
           "pnpm-lock.yaml",
           "package-lock.json",
           "node_modules",
