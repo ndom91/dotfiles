@@ -1,6 +1,9 @@
 # i3 config file (v4)
-#
 # Please see http://i3wm.org/docs/userguide.html for a complete reference!
+#
+##########################################################################
+#                                  GENERAL                               #
+##########################################################################
 
 set $mod Mod4
 set $control Control
@@ -13,13 +16,22 @@ focus_follows_mouse no
 # font pango:Operator Mono 10
 font pango:Ubuntu Light 10
 
-# gaps
+# Use Mouse+$mod to drag floating windows to their wanted position
+floating_modifier $mod
+
+##########################################################################
+#                                  GAPS                                  #
+##########################################################################
+
 for_window [class=".*"] border pixel 10
 gaps inner 30
 gaps outer 10
 gaps vertical 20
 
-# colors
+##########################################################################
+#                                 COLORS                                 #
+##########################################################################
+
 set_from_resource $color1   color1  #000000
 set_from_resource $color9   color9  #000000
 set_from_resource $color2   color2  #000000
@@ -48,8 +60,9 @@ client.focused          #CAA9FA     #CAA9FA       $darkwhite  #CAA9FA     #CAA9F
 client.unfocused        #999999     #999999       $darkwhite  #999999     #999999
 client.urgent           $color4     $color3       $color3     $color3     $color1
 
-# Use Mouse+$mod to drag floating windows to their wanted position
-floating_modifier $mod
+##########################################################################
+#                                  APPS                                  #
+##########################################################################
 
 # take a screenshot of a screen region and copy it to a clipboard
 bindsym --release Shift+Print exec "scregcp -s /home/ndo/Pictures/screenshots/"
@@ -81,6 +94,20 @@ bindsym $mod+m exec /usr/local/bin/dmenumoji
 # flameshot screenshot
 bindsym $mod+Shift+s exec "flameshot gui"
 bindsym $mod+Shift+v exec "~/.dotfiles/scripts/screencast.sh"
+
+# Dunst Notifications
+bindsym $control+Shift+space exec "dunstctl close-all"
+bindsym $control+space exec "dunstctl close"
+bindsym $control+Shift+grave exec "dunstctl history-pop"
+
+# reload the configuration file
+bindsym $mod+Shift+c reload
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $mod+Shift+r restart
+
+##########################################################################
+#                                 FOCUS                                  #
+##########################################################################
 
 # change focus
 bindsym $mod+h focus left
@@ -120,6 +147,10 @@ bindsym $mod+a focus parent
 # focus the child container
 #bindsym $mod+d focus child
 
+##########################################################################
+#                             WORKSPACES                                 #
+##########################################################################
+
 # switch to workspace
 bindsym $mod+1 workspace1
 bindsym $mod+2 workspace 2
@@ -144,11 +175,6 @@ bindsym $mod+Shift+8 move container to workspace 8
 bindsym $mod+Shift+9 move container to workspace 9
 bindsym $mod+Shift+0 move container to workspace 10
 
-# reload the configuration file
-bindsym $mod+Shift+c reload
-# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
-bindsym $mod+Shift+r restart
-
 mode "resize" {
   bindsym h resize shrink width 5 px or 5 ppt
   bindsym l resize grow width 5 px or 5 ppt
@@ -161,30 +187,34 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
-# Dunst Notifications
-bindsym $control+Shift+space exec "dunstctl close-all"
-bindsym $control+space exec "dunstctl close"
-bindsym $control+Shift+grave exec "dunstctl history-pop"
-
 # Audio
 # bindsym XF86AudioRaiseVolume exec pactl set-sink-volume 0 +5% #increase sound volume
 # bindsym XF86AudioLowerVolume exec pactl set-sink-volume 0 -5% #decrease sound volume
 
-
-# Application Settings
+##########################################################################
+#                           WINDOW SETTINGS                              #
+##########################################################################
+#
 for_window [window_role="pop-up"] floating enable
 for_window [window_role="task_dialog"] floating enable
-for_window [class="Nemo"] floating enable
-for_window [class="*file-roller*"] floating enable
-for_window [class="org.remmina.Remmina" title="Remmina Remote Desktop Client"] floating enable
-for_window [instance="^crx.*$" window_role="pop-up"]  floating enable
-for_window [instance="^crx.*$" window_role="pop-up"]  sticky   enable
+for_window [instance="^crx.*$" window_role="pop-up"] floating enable
+for_window [instance="^crx.*$" window_role="pop-up"] sticky enable
+for_window [instance="^.*ypress.*"] floating enable normal
+for_window [instance="engrampa"] floating enable normal
+for_window [instance="steam"] floating enable normal
+for_window [title="^DevTools.*"] floating disable
+for_window [title="*Preferences*"] floating enable
 for_window [title="i3_help"] floating enable sticky enable border normal
 for_window [title="File Transfer*"] floating enable
+for_window [class="Nemo"] floating enable
 for_window [class="Lxappearance"] floating enable sticky enable border normal
 for_window [class="GParted"] floating enable border normal
 for_window [class=Viewnior|mupdf] floating enable
+for_window [class="Mailspring" instance="mailspring" title="Mailspring" window_role="browser-window"] floating enable
 for_window [class="Geany"] floating enable
+for_window [class="Toggl Desktop"] floating enable
+for_window [class="*file-roller*"] floating enable
+for_window [class="org.remmina.Remmina" title="Remmina Remote Desktop Client"] floating enable
 for_window [class="(?i)virtualbox"] floating enable normal
 for_window [class="(?i)virtualbox"] fullscreen enable
 for_window [class="Electron"] floating enable
@@ -194,16 +224,17 @@ for_window [class="Blueman-manager"] floating enable normal
 for_window [class="Solaar"] floating enable normal
 for_window [class="Gnome-boxes"] floating enable normal
 for_window [class="battle.net.exe"] floating enable normal
-for_window [instance="^.*ypress.*"] floating enable normal
-for_window [instance="engrampa"] floating enable normal
-for_window [instance="steam"] floating enable normal
 for_window [class="Ulauncher"] border pixel 0 floating
 for_window [class="DBeaver"] floating enable normal
 for_window [class="runjs"] floating enable normal
 for_window [class="beekeeper-studio"] floating enable normal
+for_window [class="virt-manager"] floating enable normal
 
-# Autostart
-# exec --no-startup-id ntdisplay
+##########################################################################
+#                               AUTOSTART                                #
+##########################################################################
+
+exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 exec --no-startup-id xset +fp /home/ndo/.local/share/fonts
 exec --no-startup-id xset fp rehash
 exec --no-startup-id /usr/bin/clipit
@@ -211,16 +242,16 @@ exec --no-startup-id flameshot
 exec --no-startup-id /home/ndo/.fehbg
 exec --no-startup-id pasystray
 exec --no-startup-id pnmixer
-exec --no-startup-id xrandr --output DisplayPort-0 --primary --mode 3440x1440 --pos 1080x480 --rotate normal --output DisplayPort-1 --mode 1920x1080 --pos 0x0 --rotate right --output DisplayPort-2 --off --output HDMI-A-0 --off
+exec --no-startup-id setxkbmap -layout us
+exec --no-startup-id setxkbmap -option caps:escape
 exec --no-startup-id volctl
+exec --no-startup-id xrandr --output DisplayPort-0 --primary --mode 3440x1440 --pos 1080x480 --rotate normal --output DisplayPort-1 --mode 1920x1080 --pos 0x0 --rotate right --output DisplayPort-2 --off --output HDMI-A-0 --off
 exec_always --no-startup-id lxpolkit --autostart --environment i3
 exec_always --no-startup-id picom -b --config /home/ndo/.config/i3/picom.conf
-exec_always --no-startup-id setxkbmap -layout us
-exec_always --no-startup-id setxkbmap -option caps:escape
-exec_always --no-startup-id ulauncher
-# exec_always --no-startup-id emojione-picker
-# exec_always --no-startup-id remmina -i
 exec_always --no-startup-id nm-applet
 exec_always --no-startup-id "sudo solaar"
-exec_always --no-startup-id $HOME/.config/polybar/launch.sh
+
+# exec_always --no-startup-id ulauncher
+# exec_always --no-startup-id emojione-picker
+# exec_always --no-startup-id remmina -i
 

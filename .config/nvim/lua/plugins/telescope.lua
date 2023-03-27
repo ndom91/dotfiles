@@ -26,7 +26,7 @@ return {
         args = { "--mime-type", "-b", filepath },
         on_exit = function(j)
           local mime_type = vim.split(j:result()[1], "/")[1]
-          if mime_type == "text" then
+          if (mime_type == "text") or (j:result()[1] == "application/json") then
             previewers.buffer_previewer_maker(filepath, bufnr, opts)
           else
             -- maybe we want to write something to the buffer here
@@ -41,14 +41,17 @@ return {
     require("telescope").setup({
       defaults = {
         buffer_previewer_maker = new_maker,
-        prompt_prefix = "🔍 ",
-        selection_caret = "👉",
-        winblend = 20,
-        border = { style = "rounded" },
-        borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
+        prompt_prefix = "    ",
+        selection_caret = " ",
+        entry_prefix = "  ",
+        -- winblend = 20,
+        -- border = { style = "rounded" },
+        -- borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
         set_env = { ["COLORTERM"] = "truecolor" },
         color_devicons = true,
         path_dispay = { "truncate" },
+        winblend = 0,
+        border = {},
         mappings = {
           i = {
             ["<esc>"] = actions.close,
@@ -77,6 +80,20 @@ return {
           "--trim",
           -- "--multiline",
           -- "--multiline-dotall"
+        },
+        layout_strategy = "horizontal",
+        layout_config = {
+          horizontal = {
+            prompt_position = "top",
+            preview_width = 0.55,
+            results_width = 0.8,
+          },
+          vertical = {
+            mirror = false,
+          },
+          width = 0.87,
+          height = 0.80,
+          preview_cutoff = 120,
         },
         file_ignore_patterns = {
           "%.jpg",
@@ -122,7 +139,5 @@ return {
       },
       extensions = { "ui-select" },
     })
-
-    require("plugins.telescope")
   end,
 }

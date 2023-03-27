@@ -31,7 +31,7 @@ return {
   },
   { "lvimuser/lsp-inlayhints.nvim", config = true },
 
-  { "tami5/lspsaga.nvim", enabled = false, config = true },
+  { "tami5/lspsaga.nvim",           enabled = false, config = true },
 
   -- icons on completion
   "onsails/lspkind-nvim", -- lsp function signature help on wildmenu
@@ -157,7 +157,11 @@ return {
         },
       })
     end,
-  }, -- other themes
+  },
+  {
+    "RRethy/nvim-base16"
+  },
+  -- other themes
   -- "folke/tokyonight.nvim",
   -- "rmehri01/onenord.nvim",
   -- "wadackel/vim-dogrun",

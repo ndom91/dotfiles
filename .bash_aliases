@@ -1,4 +1,4 @@
-#           _                 ___  _
+#
 #  _ __   __| | ___  _ __ ___ / _ \/ |
 # | '_ \ / _` |/ _ \| '_ ` _ \ (_) | |
 # | | | | (_| | (_) | | | | | \__, | |
@@ -95,7 +95,7 @@ if [ "$(command -v git)" ]; then
 	alias gitroot='cd "$(git rev-parse --show-toplevel)"'
 fi
 
-# Typo Fixes
+# TYPO FIXES
 alias suod='sudo'
 alias sduo='sudo'
 alias udso='sudo'
@@ -115,11 +115,15 @@ alias .....='cd ../../../../'
 alias .4='cd ../../../../../'
 alias .5='cd ../../../../../../'
 
-### SystemD
+### PID1
 alias jctl='journalctl -p 3 -xb'
 
 ### GAM
 alias gam="/home/ndo/bin/gamadv-xtd3/gam"
+
+### SOCKET
+alias npm="npx socket-npm"
+alias npx="npx socket-npx"
 
 ### NEXT-AUTH ###
 alias na='cd /opt/next-auth/next-auth/'

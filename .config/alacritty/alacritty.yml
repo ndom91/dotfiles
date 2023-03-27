@@ -4,25 +4,32 @@ env:
   TERM: alacritty
 font:
   bold:
+    # family: SauceCodePro Nerd Font Mono
     # family: DejaVu SansMono Nerd Font
-    family: Menlo for Powerline
+    # family: Menlo for Powerline
+    family: UbuntuMono Nerd Font Mono
     style: Bold
   bold_italic:
     # family: DejaVu SansMono Nerd Font
-    family: Menlo for Powerline
+    # family: SauceCodePro Nerd Font Mono
+    # family: Menlo for Powerline
+    family: UbuntuMono Nerd Font Mono
     style: Bold Italic
   italic:
     # family: DejaVu SansMono Nerd Font
-    family: Menlo for Powerline
+    # family: SauceCodePro Nerd Font Mono
+    # family: Menlo for Powerline
+    family: UbuntuMono Nerd Font Mono
     style: Italic
   normal:
     # family: DejaVu SansMono Nerd Font
-    family: Menlo for Powerline
+    #family: BlexMono Nerd Font
+    family: UbuntuMono Nerd Font Mono
     style: Regular
   offset:
     x: 0
     y: 0
-  size: 8.0
+  size: 14.0
 key_bindings:
   - action: Paste
     key: V

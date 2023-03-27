@@ -42,30 +42,24 @@ return {
         -- or set all headings at once
         -- headings = 'subtle'
       },
+      highlight_groups = {
+        TelescopeBorder = { fg = "surface", bg = "surface" },
+        TelescopeSelectionCaret = { fg = "iris", bg = "overlay" },
+        TelescopeMatching = { fg = "gold" },
+        TelescopeNormal = { bg = "surface" },
+        TelescopeSelection = { fg = "text", bg = "overlay" },
+        TelescopeMultiSelection = { fg = "text", bg = "overlay" },
+
+        TelescopeTitle = { fg = "base", bg = "iris" },
+        TelescopePreviewTitle = { fg = "base", bg = "iris" },
+        TelescopePromptTitle = { fg = "base", bg = "iris" },
+
+        TelescopePromptNormal = { fg = "text", bg = "muted" },
+        TelescopePromptBorder = { fg = "muted", bg = "muted" },
+      },
     })
 
     -- set colorscheme after options
     vim.cmd("colorscheme rose-pine")
-
-    vim.api.nvim_set_hl(0, "TelescopeBorder", { fg = "#c4a7e7" })
-    -- 	main = {
-    -- 		base = '#191724',
-    -- 		surface = '#1f1d2e',
-    -- 		overlay = '#26233a',
-    -- 		muted = '#6e6a86',
-    -- 		subtle = '#908caa',
-    -- 		text = '#e0def4',
-    -- 		love = '#eb6f92',
-    -- 		gold = '#f6c177',
-    -- 		rose = '#ebbcba',
-    -- 		pine = '#31748f',
-    -- 		foam = '#9ccfd8',
-    -- 		iris = '#c4a7e7',
-    -- 		highlight_low = '#21202e',
-    -- 		highlight_med = '#403d52',
-    -- 		highlight_high = '#524f67',
-    -- 		opacity = 0.1,
-    -- 		none = 'NONE',
-    -- 	},
   end,
 }
