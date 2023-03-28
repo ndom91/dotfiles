@@ -54,6 +54,7 @@ return {
         TelescopePreviewTitle = { fg = "base", bg = "iris" },
         TelescopePromptTitle = { fg = "base", bg = "iris" },
 
+        TelescopePromptPrefix = { fg = "iris" },
         TelescopePromptNormal = { fg = "text", bg = "muted" },
         TelescopePromptBorder = { fg = "muted", bg = "muted" },
       },

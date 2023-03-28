@@ -41,15 +41,14 @@ return {
     require("telescope").setup({
       defaults = {
         buffer_previewer_maker = new_maker,
-        prompt_prefix = "    ",
+        prompt_prefix = "  ",
         selection_caret = " ",
         entry_prefix = "  ",
-        -- winblend = 20,
-        -- border = { style = "rounded" },
-        -- borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
         set_env = { ["COLORTERM"] = "truecolor" },
         color_devicons = true,
-        path_dispay = { "truncate" },
+        path_dispay = { shorten = 2 },
+        results_title = "",
+        prompt_title = "Search",
         winblend = 0,
         border = {},
         mappings = {
@@ -59,6 +58,7 @@ return {
             ["<c-k>"] = actions.move_selection_previous,
             ["<s-up>"] = actions.cycle_history_prev,
             ["<s-down>"] = actions.cycle_history_next,
+            ["<C-c>"] = "delete_buffer",
             ["<C-w>"] = function()
               vim.api.nvim_input("<c-s-w>")
             end,
@@ -133,7 +133,9 @@ return {
         },
       },
       pickers = {
-        -- find_files = { find_command = { "fd", "--type", "f", "--strip-cwd-prefix" } },
+        live_grep = { prompt_title = "Grep", preview_title = "Results" },
+        find_files = { prompt_title = "Files", preview_title = "Results" },
+        old_files = { prompt_title = "Recents", preview_title = "Results" },
         -- apps = { find_command = { "fd", "--type", "f", "--strip-cwd-prefix" } },
         dotfiles = { find_command = { "fd", "--type", "f", ".", "/home/ndo/.dotfiles" } },
       },
