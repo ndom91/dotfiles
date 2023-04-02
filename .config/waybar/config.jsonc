@@ -16,6 +16,7 @@
     "spacing": 6
   },
   "modules-left": [
+    "cpu",
     "memory",
     "disk",
     "battery",
@@ -28,7 +29,6 @@
     "bluetooth",
     "custom/weather",
     "pulseaudio",
-    "backlight",
     "network",
     "clock",
     "tray"
