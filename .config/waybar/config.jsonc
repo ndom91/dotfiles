@@ -12,8 +12,8 @@
   "margin-top": 5,
   "margin-bottom": 0,
   "tray": {
-    "icon-size": 18,
-    "spacing": 10
+    "icon-size": 16,
+    "spacing": 6
   },
   "modules-left": [
     "memory",

@@ -3,7 +3,7 @@
     "interval": 2,
     "align": 0,
     "rotate": 0,
-    "format": "{icon} {percent}",
+    "format": "{icon} {percent}%",
     "format-icons": [
       "",
       "",
@@ -22,9 +22,9 @@
     "format": "{icon}",
     "on-click": "activate",
     "format-icons": {
-      "1": "",
-      "2": "",
-      "3": "",
+      "1": "1",
+      "2": "2",
+      "3": "3",
       "4": "",
       "5": "",
       "6": "",
@@ -65,14 +65,14 @@
     ],
     "format-time": "{H}h {M}min",
     "tooltip": true,
-    "on-click-right": "~/.config/hypr/scripts/glassmorphismToggle"
+    "on-click": "~/.config/waybar/scripts/glassmorphismToggle"
   },
   "clock": {
     "interval": 60,
     "align": 0,
     "rotate": 0,
     "format": "🕐 {:%H:%M}",
-    "format": "🕐 {:%I:%M %p}",
+    // "format": "🕐 {:%I:%M %p}",
     "format-alt": " {:%a %b %d}",
     "tooltip-format": "<big>{:%B %Y}</big>\n<tt><small>{calendar}</small></tt>",
     "on-click-right": "~/.config/hypr/scripts/changeWallpaper"
@@ -112,7 +112,7 @@
     "format-disabled": "睊 Disabled",
     "format-alt": " {bandwidthUpBits} |  {bandwidthDownBits}",
     "tooltip-format": " {ifname} via {gwaddr}",
-    "on-click-right": "kitty nmtui"
+    "on-click-right": "nm-connection-manager"
   },
   "custom/weather": {
     //shows the current weather and forecast
@@ -170,6 +170,7 @@
     "spacing": 6
   },
   "bluetooth": {
-    "on-click-right": "blueberry"
+    "on-click-right": "blueman-manager"
+    // "on-click-right": "blueberry"
   }
 }
