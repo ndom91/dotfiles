@@ -57,12 +57,25 @@
     "format-full": "{icon} Full",
     "format-alt": "{icon} {time}",
     "format-icons": [
-      "<span font='20' rise='-5pt'></span>",
-      "<span font='20' rise='-5pt'></span>",
-      "<span font='20' rise='-5pt'></span>",
-      "<span font='20' rise='-5pt'></span>",
-      "<span font='20' rise='-5pt'></span>"
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
     ],
+    // "format-icons": [
+    //   "<span font='20' rise='-5pt'></span>",
+    //   "<span font='20' rise='-5pt'></span>",
+    //   "<span font='20' rise='-5pt'></span>",
+    //   "<span font='20' rise='-5pt'></span>",
+    //   "<span font='20' rise='-5pt'></span>"
+    // ],
     "format-time": "{H}h {M}min",
     "tooltip": true,
     "on-click": "~/.config/waybar/scripts/glassmorphismToggle"
@@ -137,8 +150,8 @@
     "tooltip-format": "Change wallpaper"
   },
   "pulseaudio": {
-    "format": "{icon} {volume}",
-    "format-muted": "<span font='20' rise='-5pt'></span> Muted",
+    "format": "<span font='20' rise='-5pt'></span> {volume}",
+    "format-muted": "<span font='20' rise='-5pt'></span>",
     "format-bluetooth": "<span font='20' rise='-5pt'></span> {volume}% {format_source}",
     "format-bluetooth-muted": "<span font='20' rise='-5pt'></span> Muted",
     "format-icons": {
@@ -172,6 +185,12 @@
     "spacing": 6
   },
   "bluetooth": {
+    "format": "",
+    "format-disabled": "", // an empty format will hide the module
+    "format-connected": " {num_connections}",
+    "tooltip-format": "{device_alias}",
+    "tooltip-format-connected": " {device_enumerate}",
+    "tooltip-format-enumerate-connected": "{device_alias}",
     "on-click-right": "blueman-manager"
     // "on-click-right": "blueberry"
   }

@@ -1,6 +1,6 @@
 yay -S hyprland-bin waybar-hyprland \
 	swaybg swaylock-effects wofi wofi-emoji wlogout mako \
-	noto-fonts-emoji wl-clipboard-history-git \
+	noto-fonts-emoji wl-clipboard-history-git nwg-look-bin \
 	polkit-gnome python-requests starship \
 	swappy grim slurp pamixer brightnessctl inotify-tools \
 	bluez bluez-utils lxappearance xfce4-settings \
