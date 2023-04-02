@@ -1,6 +1,7 @@
 * {
-    font-family: 'Cartograph CF', 'Noto Sans', 'Roboto Condensed', sans-serif;
-    font-size: 14px;
+    font-family: 'Ubuntu Mono Nerd Font Complete';
+    font-size: 12px;
+    all: initial;
 }
 
 window#waybar {
@@ -27,15 +28,13 @@ window#waybar {
 #workspaces,
 #network,
 #window {
-    border-radius: 10px;
-    padding: 4px 10px;
+    border-radius: 6px;
+    padding: 0px 12px;
     margin: 0 2px;
     background-color: #1e1e2e;
     /*border: 2px solid #1e1e2e */
-}
-
-#workspaces {
-    padding: 0;
+    font-family: 'UbuntuMono Nerd Font Mono';
+    font-size: 12px;
 }
 
 #window {

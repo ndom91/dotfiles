@@ -1,7 +1,7 @@
 {
   "include": "~/.config/waybar/modules.jsonc",
   "layer": "top",
-  //"mode": "dock",
+  // "mode": "dock",
   "exclusive": true,
   "passthrough": false,
   "position": "top",
@@ -11,6 +11,7 @@
   "margin-right": 5,
   "margin-top": 5,
   "margin-bottom": 0,
+  "height": 10,
   "tray": {
     "icon-size": 16,
     "spacing": 6
