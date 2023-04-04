@@ -1,5 +1,5 @@
-Xcursor.size: 16
-Xcursor.theme: Qugir
+Xcursor.size: 32
+Xcursor.theme: capitaine-cursors
 
 Xft.autohint: 0
 Xft.lcdfilter: lcddefault
@@ -8,7 +8,7 @@ Xft.hinting: 1
 Xft.antialias: 1
 Xft.rgba: rgba
 
-Xft.dpi: 92
+Xft.dpi: 144
 
 ! rose-pine.yml
 *background: #191724

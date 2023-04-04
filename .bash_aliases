@@ -123,8 +123,8 @@ alias jctl='journalctl -p 3 -xb'
 alias gam="/home/ndo/bin/gamadv-xtd3/gam"
 
 ### SOCKET
-alias npm="npx socket-npm"
-alias npx="npx socket-npx"
+# alias npm="npx socket-npm"
+# alias npx="npx socket-npx"
 
 ### NEXT-AUTH ###
 alias na='cd /opt/next-auth/next-auth/'
