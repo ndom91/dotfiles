@@ -62,6 +62,7 @@ alias activeSysd='for i in $(cd /etc/systemd/system/multi-user.target.wants && l
 [[ "$(command -v haste)" ]] && alias haste='HASTE_SERVER=https://paste.ndo.dev haste'
 [[ "$(command -v paru)" ]] && alias yay='paru'
 [[ "$(command -v xclip)" ]] && alias xc='xclip -selection c'
+[[ "$(command -v wl-copy)" ]] && alias xc='wl-copy'
 [[ "$(command -v tailscale)" ]] && alias ts='tailscale'
 [[ "$(command -v rtm)" ]] && alias rtmrl='rtm ls priority:1 OR priority:2 OR priority:3 OR list:PERSONAL OR dueBefore:tomorrow OR tag:todo'
 [[ "$(command -v bat)" ]] && alias cat='bat --theme=Dracula '
@@ -122,8 +123,8 @@ alias jctl='journalctl -p 3 -xb'
 alias gam="/home/ndo/bin/gamadv-xtd3/gam"
 
 ### SOCKET
-alias npm="npx socket-npm"
-alias npx="npx socket-npx"
+# alias npm="npx socket-npm"
+# alias npx="npx socket-npx"
 
 ### NEXT-AUTH ###
 alias na='cd /opt/next-auth/next-auth/'

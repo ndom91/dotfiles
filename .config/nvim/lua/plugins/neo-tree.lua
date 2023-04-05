@@ -4,29 +4,26 @@ return {
   dependencies = {
     "nvim-lua/plenary.nvim",
     "nvim-tree/nvim-web-devicons",
-    "MunifTanjim/nui.nvim"
+    "MunifTanjim/nui.nvim",
   },
   keys = {
     -- vim.api.nvim_set_keymap('n', '\\', '<cmd>Neotree toggle<cr>', { silent = true })
-    { '\\', '<cmd>Neotree toggle<cr>' }
+    { "\\", "<cmd>Neotree toggle<cr>" },
   },
   config = function()
     -- Unless you are still migrating, remove the deprecated commands from v1.x
     vim.cmd([[ let g:neo_tree_remove_legacy_commands = 1 ]])
 
     -- If you want icons for diagnostic errors, you'll need to define them somewhere:
-    vim.fn.sign_define("DiagnosticSignError",
-      { text = " ", texthl = "DiagnosticSignError" })
-    vim.fn.sign_define("DiagnosticSignWarn",
-      { text = " ", texthl = "DiagnosticSignWarn" })
-    vim.fn.sign_define("DiagnosticSignInfo",
-      { text = " ", texthl = "DiagnosticSignInfo" })
-    vim.fn.sign_define("DiagnosticSignHint",
-      { text = "", texthl = "DiagnosticSignHint" })
+    vim.fn.sign_define("DiagnosticSignError", { text = " ", texthl = "DiagnosticSignError" })
+    vim.fn.sign_define("DiagnosticSignWarn", { text = " ", texthl = "DiagnosticSignWarn" })
+    vim.fn.sign_define("DiagnosticSignInfo", { text = " ", texthl = "DiagnosticSignInfo" })
+    vim.fn.sign_define("DiagnosticSignHint", { text = "", texthl = "DiagnosticSignHint" })
     -- NOTE: this is changed from v1.x, which used the old style of highlight groups
     -- in the form "LspDiagnosticsSignWarning"
 
-    require('neo-tree').setup({
+    require("neo-tree").setup({
+      auto_clean_after_session_restore = true,
       close_if_last_window = false, -- Close Neo-tree if it is the last window left in the tab
       popup_border_style = "rounded",
       enable_git_status = true,
@@ -40,6 +37,16 @@ return {
       --           return a.type > b.type
       --       end
       --   end , -- this sorts files and directories descendantly
+      source_selector = {
+        winbar = true,
+        content_layout = "center",
+        tab_labels = {
+          filesystem = " File",
+          buffers = " Bufs",
+          git_status = " Git",
+          diagnostics = " Diagnostic",
+        },
+      },
       default_component_configs = {
         container = { enable_character_fade = true },
         indent = {
@@ -54,19 +61,19 @@ return {
           with_expanders = nil, -- if nil and file nesting is enabled, will enable expanders
           expander_collapsed = "",
           expander_expanded = "",
-          expander_highlight = "NeoTreeExpander"
+          expander_highlight = "NeoTreeExpander",
         },
         icon = {
           folder_closed = "",
           folder_open = "",
           folder_empty = "ﰊ",
-          default = "*"
+          default = "*",
         },
         modified = { symbol = "[+]", highlight = "NeoTreeModified" },
         name = {
           trailing_slash = false,
           use_git_status_colors = true,
-          highlight = "NeoTreeFileName"
+          highlight = "NeoTreeFileName",
         },
         git_status = {
           symbols = {
@@ -80,13 +87,14 @@ return {
             ignored = "",
             unstaged = "",
             staged = "",
-            conflict = ""
-          }
-        }
+            conflict = "",
+          },
+        },
       },
       window = {
         position = "left",
         width = 35,
+        auto_expand_width = true,
         mapping_options = { noremap = true, nowait = true },
         mappings = {
           ["<space>"] = "toggle_node",
@@ -101,14 +109,50 @@ return {
           ["t"] = "open_tabnew",
           ["C"] = "close_node",
           ["z"] = "close_all_nodes",
-          -- ["a"] = "add",
+          ["["] = "prev_source",
+          ["]"] = "next_source",
           ["a"] = {
             "add",
             -- some commands may take optional config options, see `:h neo-tree-mappings` for details
             config = {
-              show_path = "relative" -- "none", "relative", "absolute"
-            }
+              show_path = "relative", -- "none", "relative", "absolute"
+            },
           },
+          ["y"] = function(state)
+            local node = state.tree:get_node()
+            local filepath = node:get_id()
+            local filename = node.name
+            local modify = vim.fn.fnamemodify
+
+            local results = {
+              e = { val = modify(filename, ":e"), msg = "Extension only" },
+              f = { val = filename, msg = "Filename" },
+              F = { val = modify(filename, ":r"), msg = "Filename w/o extension" },
+              h = { val = modify(filepath, ":~"), msg = "Path relative to Home" },
+              p = { val = modify(filepath, ":."), msg = "Path relative to CWD" },
+              P = { val = filepath, msg = "Absolute path" },
+            }
+
+            local messages = {
+              { "\nChoose to copy to clipboard:\n", "Normal" },
+            }
+            for i, result in pairs(results) do
+              if result.val and result.val ~= "" then
+                vim.list_extend(messages, {
+                  { ("%s."):format(i), "Identifier" },
+                  { (" %s: "):format(result.msg) },
+                  { result.val, "String" },
+                  { "\n" },
+                })
+              end
+            end
+            vim.api.nvim_echo(messages, false, {})
+            local result = results[vim.fn.getcharstr()]
+            if result and result.val and result.val ~= "" then
+              vim.notify("Copied: " .. result.val)
+              vim.fn.setreg("+", result.val)
+            end
+          end,
           ["Y"] = function(state)
             local node = state.tree:get_node()
             local content = node.path:gsub(state.path, ""):sub(2) -- relative
@@ -116,13 +160,13 @@ return {
             vim.fn.setreg("1", content)
             vim.fn.setreg("+", content)
           end,
-          ["y"] = function(state)
-            local node = state.tree:get_node()
-            local content = node.path -- absolute
-            vim.fn.setreg('"', content)
-            vim.fn.setreg("1", content)
-            vim.fn.setreg("+", content)
-          end,
+          -- ["y"] = function(state)
+          --   local node = state.tree:get_node()
+          --   local content = node.path -- absolute
+          --   vim.fn.setreg('"', content)
+          --   vim.fn.setreg("1", content)
+          --   vim.fn.setreg("+", content)
+          -- end,
           -- ["y"] = "copy_to_clipboard",
           ["A"] = "add_directory",
           ["d"] = "delete",
@@ -133,13 +177,13 @@ return {
             "copy",
             -- some commands may take optional config options, see `:h neo-tree-mappings` for details
             config = {
-              show_path = "absolute" -- "none", "relative", "absolute"
-            }
+              show_path = "absolute", -- "none", "relative", "absolute"
+            },
           },
           ["m"] = "move", -- takes text input for destination
           ["q"] = "close_window",
-          ["R"] = "refresh"
-        }
+          ["R"] = "refresh",
+        },
       },
       nesting_rules = {},
       filesystem = {
@@ -152,14 +196,14 @@ return {
             ".env",
             ".env.local",
             ".env.development",
-            ".env.production"
+            ".env.production",
           },
           never_show = { -- remains hidden even if visible is toggled to true
             ".DS_Store",
             "thumbs.db",
             "node_modules",
-            ".docusaurus"
-          }
+            ".docusaurus",
+          },
         },
         follow_current_file = true, -- This will find and focus the file in the active buffer every
         -- time the current file is changed while the tree is open.
@@ -169,7 +213,7 @@ return {
         -- "open_current",  -- netrw disabled, opening a directory opens within the
         -- window like netrw would, regardless of window.position
         -- "disabled",    -- netrw left alone, neo-tree does not handle opening dirs
-        use_libuv_file_watcher = false, -- This will use the OS level file watchers to detect changes
+        use_libuv_file_watcher = true, -- This will use the OS level file watchers to detect changes
         -- instead of relying on nvim autocmd events.
         window = {
           mappings = {
@@ -180,22 +224,22 @@ return {
             ["f"] = "filter_on_submit",
             ["<c-x>"] = "clear_filter",
             ["[g"] = "prev_git_modified",
-            ["]g"] = "next_git_modified"
-          }
-        }
+            ["]g"] = "next_git_modified",
+          },
+        },
       },
       buffers = {
         follow_current_file = true, -- This will find and focus the file in the active buffer every
         -- time the current file is changed while the tree is open.
         group_empty_dirs = true, -- when true, empty folders will be grouped together
-        show_unloaded = true,
+        show_unloaded = false,
         window = {
           mappings = {
-            ["bd"] = "buffer_delete",
+            ["x"] = "buffer_delete",
             ["<bs>"] = "navigate_up",
-            ["."] = "set_root"
-          }
-        }
+            ["."] = "set_root",
+          },
+        },
       },
       git_status = {
         window = {
@@ -207,10 +251,18 @@ return {
             ["gr"] = "git_revert_file",
             ["gc"] = "git_commit",
             ["gp"] = "git_push",
-            ["gg"] = "git_commit_and_push"
-          }
-        }
-      }
+            ["gg"] = "git_commit_and_push",
+          },
+        },
+      },
+      event_handlers = {
+        {
+          event = "neo_tree_buffer_enter",
+          handler = function(_)
+            vim.opt_local.signcolumn = "auto"
+          end,
+        },
+      },
     })
-  end
+  end,
 }
