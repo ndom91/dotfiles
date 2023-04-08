@@ -91,7 +91,7 @@
     "on-click-right": "~/.config/hypr/scripts/changeWallpaper"
   },
   "cpu": {
-    "interval": 2,
+    "interval": 1,
     "format": "<span font='20' rise='-5pt'>󰻠</span> {usage:>2}%"
   },
   "custom/menu": {
