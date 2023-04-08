@@ -1,2 +1,4 @@
-#!/bin/sh
-feh --no-fehbg --bg-scale '/usr/share/endeavouros/backgrounds/eos_wallpapers_community/Endy_vector_satelliet.png' '/home/ndo/.local/share/azote/backgrounds-feh/part0-Endy_vector_satelliet.png' 
+#!/usr/bin/env bash
+
+# feh --no-fehbg --bg-scale '/home/ndo/Downloads/archLinux.jpeg'
+feh --no-fehbg --bg-scale '/home/ndo/.config/hypr/arch01.jpg'

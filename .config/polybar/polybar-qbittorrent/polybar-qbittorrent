@@ -10,10 +10,10 @@ ICON = ""
 PATH=os.path.realpath(__file__)
 
 # Config
-username='ndom91'
-password='Miney91*'
-host='dl.ndo.dev'
-port='8080'
+username='roujax'
+password=''
+host=''
+port=''
 ####
 
 parser = argparse.ArgumentParser()
