@@ -23,6 +23,7 @@ tooltip {
 #disk,
 #memory,
 #tray,
+#wireplumber,
 #pulseaudio,
 #bluetooth,
 #custom-menu,
@@ -33,6 +34,7 @@ tooltip {
 #custom-cycle_wall,
 #workspaces,
 #network,
+#submap,
 #window {
     border-radius: 6px;
     padding: 0px 12px;
@@ -41,6 +43,11 @@ tooltip {
     /*border: 2px solid #1e1e2e */
     font-family: 'UbuntuMono Nerd Font Mono';
     font-size: 12px;
+}
+
+#submap {
+  background-color: #eb6f92;
+  color: #e0def4;
 }
 
 #window {
