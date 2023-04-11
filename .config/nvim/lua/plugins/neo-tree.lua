@@ -94,7 +94,7 @@ return {
       window = {
         position = "left",
         width = 35,
-        auto_expand_width = true,
+        auto_expand_width = false,
         mapping_options = { noremap = true, nowait = true },
         mappings = {
           ["<space>"] = "toggle_node",
