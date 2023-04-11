@@ -1,6 +1,6 @@
 <h1 align="center">dotfiles ❤ ~/.</h1>
 
-![ndom91_desktop](https://i.imgur.com/mvmpmCY.png)
+![ndom91_desktop](https://i.imgur.com/SDAakwU.jpg)
 
 ## 🎉 Setup
 
