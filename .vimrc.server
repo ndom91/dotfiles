@@ -1,0 +1,28 @@
+# Simple .vimrc for servers
+
+set guicursor=""
+set relativenumber
+set number
+set autoindent
+set tabstop=2
+set shiftwidth=2
+set expandtab
+syntax on
+filetype on
+
+set ignorecase
+set smartindent
+set wrap
+set noswapfile
+set nobackup
+set undodir="/home/ndo/.vim/undodir"
+set undofile
+
+set hlsearch
+set incsearch
+set notermguicolors
+
+set scrolloff=8
+
+nnoremap <silent> <CR> :<C-u>nohlsearch<CR><C-l> 
+
