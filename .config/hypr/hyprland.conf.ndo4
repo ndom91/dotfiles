@@ -201,12 +201,16 @@ bind = $mainMod, Return, exec, alacritty
 bind = $mainMod SHIFT, R, exec, hyprctl reload
 bind = $mainMod SHIFT, F, exec, nemo
 bind = $mainMod SHIFT, Q, exec, wlogout
-bind = CTRL SHIFT, Space, togglefloating,
+bind = $mainMod, Space, togglefloating,
 # bind = $mainMod Space, focuswindow class:float.*
 bind = $mainMod, F, fullscreen,
 bind = $mainMod, P, pseudo, # dwindle
 bind = $mainMod, O, togglesplit, # dwindle
 bind = $mainMod, S, exec, grim -g "$(slurp)" - | swappy -f - # take a screenshot
+
+bind = CTRL SHIFT, `, exec, makoctl restore
+bind = CTRL SHIFT, Space, exec, makoctl dismiss
+bind = CTRL, Space, exec, makoctl dismiss -a
 
 # Move focus with mainMod + arrow keys
 bind = $mainMod, H, movefocus, l
