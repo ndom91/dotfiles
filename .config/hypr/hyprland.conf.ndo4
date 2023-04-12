@@ -180,7 +180,7 @@ windowrulev2 = center, class:^(update)$, title:^(update)$
 # slidein nemo file manager
 windowrulev2 = animation slide, class:nemo
 windowrulev2 = float, class:nemo
-windowrulev2 = size 30% 30%, class:nemo
+windowrulev2 = size 30% 40%, class:nemo
 windowrulev2 = center, class:nemo
 
 windowrulev2 = animation slide, class:pavucontrol
