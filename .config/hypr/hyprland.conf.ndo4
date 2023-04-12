@@ -12,31 +12,30 @@ monitor=DP-2,1920x1080,0x0,1,transform,3
 # env WAYLAND_DEBUG,1
 # env WAYLAND_DISPLAY,wayland-1
 
-# Display Scaling
-# Cursor Size - https://github.com/hyprwm/Hyprland/issues/1311
-# env = XCURSOR_SIZE,48
+# Environment Variables
 # env = GDK_SCALE,1.7
 # env = WLR_DRM_DEVICES,/dev/dri/card0
 # env WLR_RENDERER,vulkan
 # env WLR_BACKEND,x11
 # env WLR_EGL_NO_MODIFIERS,1
+# env = QT_QPA_PLATFORM,"wayland;xcb"
+env = XCURSOR_SIZE,24
 env = MOZ_ENABLE_WAYLAND,1
 env = QT_QPA_PLATFORM,wayland
-env = QT_QPA_PLATFORM,"wayland;xcb"
 
+# Setup desktop-portal
 exec-once = dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
 exec-once = systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
-
 exec-once = ~/.config/hypr/xdg-portal-hyprland
 
 # System Apps
 # exec-once = xprop -root -f _XWAYLAND_GLOBAL_OUTPUT_SCALE 32c -set _XWAYLAND_GLOBAL_OUTPUT_SCALE 2
-exec-once = xsetroot -xcf /usr/share/icons/capitaine-cursors/cursors/left_ptr 48
+exec-once = xsetroot -xcf /usr/share/icons/capitaine-cursors/cursors/left_ptr 24
 exec-once = xrdb -merge ~/.Xresources
 exec-once = xsettingsd
-exec-once = hyprctl setcursor capitaine-cursor 32
-exec-once = gsettings set org.gnome.desktop.interface cursor-theme 'capitaine-cursor'
-exec-once = gsettings set org.gnome.desktop.interface cursor-size 32
+exec-once = hyprctl setcursor capitaine-cursors 24
+exec-once = gsettings set org.gnome.desktop.interface cursor-theme 'capitaine-cursors'
+exec-once = gsettings set org.gnome.desktop.interface cursor-size 24
 
 # User Apps
 exec-once = /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
@@ -48,11 +47,10 @@ exec-once = swaybg -m fill -i ~/.config/hypr/arch01.jpg
 # exec-once = pnmixer
 # exec-once = copyq
 
-
 # Disable wlan0 power-management
 # exec-once = iw dev wlan0 set power_save off
 # exec-once = iwconfig wlan0 power off
-#
+
 debug {
   overlay = false
 }
