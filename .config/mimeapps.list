@@ -1,0 +1,19 @@
+[Default Applications]
+image/png=imv.desktop
+image/jpeg=imv.desktop
+x-scheme-handler/runjs=runjs.desktop
+application/pdf=org.pwmt.zathura.desktop
+image/image=imv.desktop
+image/*=imv.desktop
+inode/directory=nemo.desktop
+x-scheme-handler/http=brave-browser.desktop
+x-scheme-handler/https=brave-browser.desktop
+x-scheme-handler/slack=slack.desktop
+image/gif=imv.desktop
+image/svg=imv.desktop
+image/svg+xml=imv.desktop
+
+[Added Associations]
+image/png=viewnior.desktop;
+image/jpeg=viewnior.desktop;
+application/pdf=org.pwmt.zathura.desktop;

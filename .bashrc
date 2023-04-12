@@ -19,6 +19,7 @@ elif [[ "$(command -v vim)" ]]; then
 else
 	export EDITOR=vi
 fi
+
 export PAGER="less -R"
 export READER="zathura"
 export BROWSER="brave"
@@ -27,12 +28,6 @@ export XDG_CONFIG_HOME="$HOME/.config"
 export BAT_THEME="Coldark-Dark"
 export RIPGREP_CONFIG_PATH="$HOME/.ripgreprc"
 export CARGO_NET_GIT_FETCH_WITH_CLI=true
-
-# GUI
-# if [ -n "$XDG_CURRENT_DESKTOP" ]; then
-#   export QT_QPA_PLATFORMTHEME='gtk2'
-#   export QT_STYLE_OVERRIDE='gtk2'
-# fi
 
 # If not in an interactive shell return
 [[ $- != *i* ]] && return
@@ -82,49 +77,19 @@ export PATH="$HOME/.local/bin:$PATH"
 # see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
-# set a fancy prompt (non-color, unless we know we "want" color)
-case "$TERM" in
-xterm-color | *-256color) color_prompt=yes ;;
-esac
-
-force_color_prompt=yes
-
-if [ -n "$force_color_prompt" ]; then
-	if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
-		# We have color support; assume it's compliant with Ecma-48
-		# (ISO/IEC-6429). (Lack of such support is extremely rare, and such
-		# a case would tend to support setf rather than setaf.)
-		color_prompt=yes
-	else
-		color_prompt=
-	fi
-fi
-
 # Aliases
 if [ -f ~/.bash_aliases ]; then
 	source "$HOME/.bash_aliases"
 fi
 
-# remap caps lock to esc
-if [ -f /usr/bin/setxkbmap ]; then
+# remap caps lock to esc in X11
+if [ -f /usr/bin/setxkbmap ] && [ ! "$WAYLAND_DISPLAY" ]; then
 	setxkbmap -option caps:escape
 fi
 
-# SSH i3 Rename Window Alias
-ssh() {
-	if [ "$(ps -p "$(ps -p $$ -o ppid=)" -o comm=)" = "tmux: server" ]; then
-		tmux rename-window "$(echo "$@" | rev | cut -d ' ' -f1 | rev | cut -d . -f 1)"
-		command ssh "$@"
-		tmux set-window-option automatic-rename "on" 1>/dev/null
-	else
-		command ssh "$@"
-	fi
-}
-
 #### APPLICATIONS ####
-
 # Serverless binary
-if [ "$(command -v sls)" ]; then
+if [ -d "$HOME/.serverless/bin" ]; then
 	export PATH="$HOME/.serverless/bin:$PATH"
 fi
 
@@ -147,8 +112,7 @@ if [ -d ~/.wasmer ]; then
 	fi
 fi
 
-# Starship Bash Prompt
-# https://starship.rs/
+# Starship Bash Prompt - https://starship.rs/
 if [ -f /bin/starship ] || [ -f /usr/local/bin/starship ]; then
 	eval "$(starship init bash)"
 else
@@ -159,9 +123,12 @@ fi
 #### LANGUAGES ####
 # node
 # - install: `curl -fsSL install-node.vercel.app | sh`
-export NPM_PACKAGES="${HOME}/.npm-global"
-export NODE_PATH="$NPM_PACKAGES/lib/node_modules:$NODE_PATH"
-export PATH="$HOME/.npm-global/bin:$PATH"
+#
+if [ -d "$HOME/.npm-global" ]; then
+	export NPM_PACKAGES="${HOME}/.npm-global"
+	export NODE_PATH="$NPM_PACKAGES/lib/node_modules:$NODE_PATH"
+	export PATH="$HOME/.npm-global/bin:$PATH"
+fi
 
 export NPM_CONFIG_EDITOR="$EDITOR"
 export NPM_CONFIG_INIT_AUTHOR_NAME='ndom91'
@@ -173,8 +140,10 @@ export NPM_CONFIG_PROGRESS='true'
 export NPM_CONFIG_SAVE='true'
 
 # PNPM
-export PATH="$HOME/.pnpm-global:$PATH"
-export PNPM_HOME="$HOME/.pnpm-global"
+if [ -d "$HOME/.pnpm-global" ]; then
+	export PATH="$HOME/.pnpm-global:$PATH"
+	export PNPM_HOME="$HOME/.pnpm-global"
+fi
 
 # BUN
 if [ -f "$HOME/.bun/bin/bun" ]; then
@@ -204,16 +173,11 @@ fi
 
 # perl
 if [ "$(command -v perl)" ]; then
-	PATH="$HOME/perl5/bin${PATH:+:${PATH}}"
-	export PATH
-	PERL5LIB="$HOME/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"
-	export PERL5LIB
-	PERL_LOCAL_LIB_ROOT="$HOME/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"
-	export PERL_LOCAL_LIB_ROOT
-	PERL_MB_OPT="--install_base "$HOME/perl5""
-	export PERL_MB_OPT
-	PERL_MM_OPT="INSTALL_BASE=$HOME/perl5"
-	export PERL_MM_OPT
+	export PATH="$HOME/perl5/bin${PATH:+:${PATH}}"
+	export PERL5LIB="$HOME/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"
+	export PERL_LOCAL_LIB_ROOT="$HOME/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"
+	export PERL_MB_OPT="--install_base "$HOME/perl5""
+	export PERL_MM_OPT="INSTALL_BASE=$HOME/perl5"
 fi
 
 # fnm
@@ -247,4 +211,6 @@ if [ "$(command -v llama)" ]; then
 fi
 
 # add Pulumi to the PATH
-export PATH=$PATH:$HOME/.pulumi/bin
+if [ -d "$HOME/.pulumi/bin" ]; then
+	export PATH=$PATH:$HOME/.pulumi/bin
+fi

@@ -22,6 +22,8 @@ monitor=DP-2,1920x1080,0x0,1,transform,3
 env = XCURSOR_SIZE,24
 env = MOZ_ENABLE_WAYLAND,1
 env = QT_QPA_PLATFORM,wayland
+env = VDPAU_DRIVER,radeonsi
+env = LIBVA_DRIVER_NAME,radeonsi
 
 # Setup desktop-portal
 exec-once = dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
@@ -29,7 +31,7 @@ exec-once = systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESK
 exec-once = ~/.config/hypr/xdg-portal-hyprland
 
 # System Apps
-# exec-once = xprop -root -f _XWAYLAND_GLOBAL_OUTPUT_SCALE 32c -set _XWAYLAND_GLOBAL_OUTPUT_SCALE 2
+exec-once = xprop -root -f _XWAYLAND_GLOBAL_OUTPUT_SCALE 32c -set _XWAYLAND_GLOBAL_OUTPUT_SCALE 2
 exec-once = xsetroot -xcf /usr/share/icons/capitaine-cursors/cursors/left_ptr 24
 exec-once = xrdb -merge ~/.Xresources
 exec-once = xsettingsd
@@ -178,6 +180,16 @@ windowrulev2 = float, class:pavucontrol
 windowrulev2 = size 30% 30%, class:pavucontrol
 windowrulev2 = center, class:pavucontrol
 
+# slidein blueman-manager
+windowrulev2 = animation slide, class:^(blueman-.*)$
+windowrulev2 = float, class:^(blueman-.*)$
+windowrulev2 = size 20% 40%, class:^(blueman-.*)$
+windowrulev2 = center, class:^(blueman-.*)$
+
+# slidein imv
+windowrulev2 = animation slide, class:imv
+windowrulev2 = float, class:imv
+
 # slidein network-manager-editor
 windowrulev2 = animation slide, class:nm-connection-editor
 windowrulev2 = float, class:nm-connection-editor
@@ -191,6 +203,15 @@ windowrule = center, ^(com.github.hluk.copyq)$
 
 # DevTools
 windowrulev2 = float, class:brave-browser, title:^(DevTools.*)$
+
+# Sharing indicator
+windowrulev2 = animation slide, title:^.*(Sharing Indicator).*$
+windowrulev2 = float, title:^.*(Sharing Indicator).*$
+windowrulev2 = move 50% 100%-100, title:^.*(Sharing Indicator).*$
+
+windowrulev2 = animation slide, title:^.*(sharing your screen).*$
+windowrulev2 = float, title:^.*(sharing your screen).*$
+windowrulev2 = move 50% 100%-100, title:^(.*sharing your screen.*)$
 
 # Example binds, see https://wiki.hyprland.org/Configuring/Binds/ for more
 bind = $mainMod, D, exec, wofi -S drun -I -m -i,
@@ -208,6 +229,8 @@ bind = $mainMod, F, fullscreen,
 bind = $mainMod, P, pseudo, # dwindle
 bind = $mainMod, O, togglesplit, # dwindle
 bind = $mainMod, S, exec, grim -g "$(slurp)" - | swappy -f - # take a screenshot
+bind = $mainMod SHIFT, S, exec, wf-recorder -g "$(slurp)" -f ~/recording_$(date +"%Y-%m-%d_%H:%M:%S.mp4") # record a video
+bind = CTRL SHIFT, S, exec, killall -s SIGINT wf-recorder
 
 bind = CTRL SHIFT, `, exec, makoctl restore
 bind = CTRL SHIFT, Space, exec, makoctl dismiss
