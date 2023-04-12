@@ -41,7 +41,6 @@ else
 	alias li='ls -laXh --group-directories-first --color=auto'
 fi
 
-# Built-in Applications
 alias greg='greg --highlight'
 alias oni2='/opt/Onivim2.AppDir/usr/bin/Oni2'
 alias dfh='df -h -x overlay -x tmpfs'
@@ -55,7 +54,6 @@ alias nightmode='echo 900 > /sys/class/backlight/intel_backlight/brightness > /d
 alias daymode='echo 3000 > /sys/class/backlight/intel_backlight/brightness > /dev/null & sct 4500 > /dev/null'
 alias activeSysd='for i in $(cd /etc/systemd/system/multi-user.target.wants && ls *.service); do script -q -c "systemctl status -n 0 --no-pager $i" |head -n 1; script -q -c "systemctl status -n 0 --no-pager $i" |grep --color=never "Active: "; done;'
 
-# Custom Applications
 [[ "$(command -v rg)" ]] && alias rg='rg -S --iglob !.bun --iglob !node_modules --iglob !*.bzr --iglob !*.git --iglob !*.hg --iglob !*.svn --iglob !*.idea --iglob !*.tox'
 [[ "$(command -v nvim)" ]] && alias vim='nvim'
 [[ "$(command -v vifm)" ]] && alias vifm='~/.config/vifm/scripts/vifmrun'
@@ -78,7 +76,7 @@ alias activeSysd='for i in $(cd /etc/systemd/system/multi-user.target.wants && l
 
 alias brave="brave --silent-debugger-extension-api"
 
-# Git
+#### GIT ####
 if [ "$(command -v git)" ]; then
 	alias cob='git checkout $(git branch -a | cut -c 3- | pick)'
 	alias gs='git status'
@@ -96,7 +94,7 @@ if [ "$(command -v git)" ]; then
 	alias gitroot='cd "$(git rev-parse --show-toplevel)"'
 fi
 
-# TYPO FIXES
+#### TYPOS ####
 alias suod='sudo'
 alias sduo='sudo'
 alias udso='sudo'
@@ -116,22 +114,18 @@ alias .....='cd ../../../../'
 alias .4='cd ../../../../../'
 alias .5='cd ../../../../../../'
 
-### PID1
 alias jctl='journalctl -p 3 -xb'
-
-### GAM
 alias gam="/home/ndo/bin/gamadv-xtd3/gam"
 
-### SOCKET
 # alias npm="npx socket-npm"
 # alias npx="npx socket-npx"
 
-### NEXT-AUTH ###
 alias na='cd /opt/next-auth/next-auth/'
 alias naa='cd /opt/next-auth/next-auth/packages/'
 alias nad='cd /opt/next-auth/next-auth/packages/docs'
 
-#### SSH Tunnels ####
+alias cast='mkchromecast -n "Kitchen speaker" --notifications'
+
 alias pvetunnel='ssh -L 8005:192.168.1.201:8006 nt-hulk'
 alias grafanatunnel='ssh -L 3000:10.0.1.60:3000 ndo-pve'
 alias win10tunnel='ssh -L 3389:192.168.11.169:3389 nt-hulk'
@@ -139,7 +133,6 @@ alias casapitunnel='ssh -L 8123:127.0.0.1:8123 tunnelpi'
 alias mirrorReboot="ssh mmpi 'pm2 restart 0'"
 alias clidle="ssh clidle.ddns.net -p 3000"
 
-# CHECKLY
 alias checkly-cli='/opt/checkly/checkly-cli/bin/run'
 alias dockermachine='eval $(docker-machine env checkly-pi)'
 alias cwa='cd /opt/checkly/checkly-webapp'
