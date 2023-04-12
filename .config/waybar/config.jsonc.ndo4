@@ -12,14 +12,11 @@
   "margin-top": 5,
   "margin-bottom": 0,
   "height": 35,
-  "tray": {
-    "icon-size": 16,
-    "spacing": 6
-  },
   "modules-left": [
     "cpu",
     "memory",
     "disk",
+    "custom/updater",
     "wlr/workspaces",
     "hyprland/submap"
   ],

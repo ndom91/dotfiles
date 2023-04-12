@@ -22,20 +22,21 @@
     "format": "{icon}",
     "on-click": "activate",
     "format-icons": {
-      "1": "",
-      "2": "",
-      "3": "",
-      "4": "",
-      "5": "",
-      "6": "",
-      "7": "",
-      "8": "",
-      "9": "",
-      "10": "",
+      "1": "1",
+      "2": "2",
+      "3": "3",
+      "4": "4",
+      "5": "5",
+      "6": "6",
+      "7": "7",
+      "8": "8",
+      "9": "9",
+      "10": "10",
       "urgent": "",
-      "active": "<span fgcolor='#ebbcba'></span>",
+      "active": "",
       "default": ""
     },
+   "persistent_workspaces": "{'1','2','3','4','5'}",
     "on-scroll-up": "hyprctl dispatch workspace e+1",
     "on-scroll-down": "hyprctl dispatch workspace e-1",
     "all-outputs": false
@@ -92,7 +93,7 @@
     "format-disconnected": "睊 Disconnected",
     "format-disabled": "睊 Disabled",
     "tooltip-format": " {ifname} via {gwaddr}",
-    "on-click-right": "nm-connection-manager"
+    "on-click-right": "nm-connection-editor"
   },
   "custom/weather": {
     //shows the current weather and forecast
@@ -103,11 +104,13 @@
     "return-type": "json"
   },
   "custom/updater": {
-    "format": " {}",
-    "exec": "checkupdates | wc -l",
-    "exec-if": "[[ $(checkupdates | wc -l) ]]",
-    "interval": 15,
-    "on-click": "kitty --class update -T update -o font_size=13 -e yay -Syu && notify-send 'The system has been updated' "
+    "format": "<span font='20' rise='-5pt'></span> {}",
+    "exec": "checkupdates-with-aur | uniq | wc -l",
+    "interval": 300,
+    "tooltip": false
+    // "exec-if": "[[ $(checkupdates | wc -l) ]]",
+    // "tooltip-format": "$(yay -Qu | wc -l)"
+    // "on-click": "kitty --class update -T update -o font_size=13 -e yay -Syu && notify-send 'The system has been updated' "
   },
   "custom/cycle_wall": {
     "format": "",
@@ -120,8 +123,8 @@
     "on-click": "~/.config/hypr/scripts/keyhint"
   },
   "tray": {
-    "icon-size": 18,
-    "spacing": 6
+    "icon-size": 16,
+    "spacing": 10
   },
   "bluetooth": {
     "format": "",

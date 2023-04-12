@@ -16,13 +16,13 @@ monitor=DP-2,1920x1080,0x0,1,transform,3
 # Cursor Size - https://github.com/hyprwm/Hyprland/issues/1311
 # env = XCURSOR_SIZE,48
 # env = GDK_SCALE,1.7
-env = MOZ_ENABLE_WAYLAND,1
-env = QT_QPA_PLATFORM,wayland
 # env = WLR_DRM_DEVICES,/dev/dri/card0
-env = QT_QPA_PLATFORM,"wayland;xcb"
 # env WLR_RENDERER,vulkan
 # env WLR_BACKEND,x11
 # env WLR_EGL_NO_MODIFIERS,1
+env = MOZ_ENABLE_WAYLAND,1
+env = QT_QPA_PLATFORM,wayland
+env = QT_QPA_PLATFORM,"wayland;xcb"
 
 exec-once = dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
 exec-once = systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
@@ -43,7 +43,7 @@ exec-once = /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec-once = ~/.config/waybar/start-waybar
 exec-once = mako --config "$HOME/.config/mako/config"
 exec-once = 1password --silent
-exec-once = nm-applet
+exec-once = nm-applet --indicator
 exec-once = swaybg -m fill -i ~/.config/hypr/arch01.jpg
 # exec-once = pnmixer
 # exec-once = copyq
@@ -142,30 +142,20 @@ gestures {
     workspace_swipe_create_new = false
 }
 
-# Example per-device config
-# See https://wiki.hyprland.org/Configuring/Keywords/#executing for more
-device:epic mouse V1 {
-    sensitivity = -0.5
-}
-
 device:MSFT0001:00 04F3:31EB Touchpad {
+  # See https://wiki.hyprland.org/Configuring/Keywords/#executing for more
   accel_profile = adaptive
   natural_scroll = true
   sensitivity = 0.1
 }
 
-# Example windowrule v1
-# windowrule = float, ^(kitty)$
-# Example windowrule v2
-# windowrulev2 = float,class:^(kitty)$,title:^(kitty)$
-# See https://wiki.hyprland.org/Configuring/Window-Rules/ for more
-#
-
 misc {
     disable_hyprland_logo = true
     animate_manual_resizes = true
 }
-windowrulev2 = noshadow, floating:0
+
+# See https://wiki.hyprland.org/Configuring/Window-Rules/ for more
+# windowrulev2 = noshadow, floating:0
 
 # idle inhibit while watching videos
 windowrulev2 = idleinhibit focus, class:^(brave-browser)$, title:^(.*YouTube.*)$
@@ -183,10 +173,17 @@ windowrulev2 = float, class:nemo
 windowrulev2 = size 30% 40%, class:nemo
 windowrulev2 = center, class:nemo
 
+# slidein pavucontrol
 windowrulev2 = animation slide, class:pavucontrol
 windowrulev2 = float, class:pavucontrol
 windowrulev2 = size 30% 30%, class:pavucontrol
 windowrulev2 = center, class:pavucontrol
+
+# slidein network-manager-editor
+windowrulev2 = animation slide, class:nm-connection-editor
+windowrulev2 = float, class:nm-connection-editor
+windowrulev2 = size 20% 30%, class:nm-connection-editor
+windowrulev2 = center, class:nm-connection-editor
 
 # CopyQ
 windowrule = float, ^(com.github.hluk.copyq)$

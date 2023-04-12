@@ -1,7 +1,6 @@
 * {
-    font-family: 'Ubuntu Mono Nerd Font Complete';
+    font-family: 'UbuntuMono Nerd Font Mono';
     font-size: 12px;
-    all: initial;
 }
 
 window#waybar {
@@ -39,7 +38,7 @@ tooltip {
     border-radius: 6px;
     padding: 0px 12px;
     margin: 0 2px;
-    background-color: #1e1e2e;
+    background-color: #191724;
     /*border: 2px solid #1e1e2e */
     font-family: 'UbuntuMono Nerd Font Mono';
     font-size: 12px;
@@ -60,6 +59,10 @@ tooltip {
 
 #backlight {
     color: #94e2d5;
+}
+
+#custom-updater {
+    color: #eb6f92;
 }
 
 #battery {
@@ -109,7 +112,12 @@ tooltip {
     -gtk-icon-effect: highlight;
 }
 
+#tray {
+  background-color: #191724;
+}
+
 #workspaces button {
+    all: initial;
     color: #494d64;
     padding: 4px 8px;
     transition: 0.25s linear;
@@ -129,12 +137,6 @@ tooltip {
 
 #workspaces button.active {
     color: #cad3f5;
-}
-
-#custom-power {
-    color: #1e1e2e;
-    background-color: unset;
-    background-image: linear-gradient(to right, #b7cff7, #d4dbf5);
 }
 
 #custom-weather {
