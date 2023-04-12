@@ -89,7 +89,7 @@ general {
 }
 
 decoration {
-    rounding = 4
+    rounding = 1
     multisample_edges = true
     blur = yes
     blur_size = 5
