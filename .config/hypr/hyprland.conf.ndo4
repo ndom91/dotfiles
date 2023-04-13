@@ -215,15 +215,15 @@ windowrulev2 = move 50% 100%-100, title:^(.*sharing your screen.*)$
 
 # Example binds, see https://wiki.hyprland.org/Configuring/Binds/ for more
 bind = $mainMod, D, exec, wofi -S drun -I -m -i,
-bind = $mainMod, period, exec, wofi-emoji
+bind = $mainMod, M, exec, wofi-emoji
 bind = $mainMod, B, exec, brave
-bind = $mainMod, Q, killactive, 
+bind = $mainMod, Q, killactive,
 # bind = $mainMod, M, exit, 
 bind = $mainMod, Return, exec, alacritty
 bind = $mainMod SHIFT, R, exec, hyprctl reload
 bind = $mainMod SHIFT, F, exec, nemo
 bind = $mainMod SHIFT, Q, exec, wlogout
-bind = $mainMod, Space, togglefloating,
+bind = $mainMod SHIFT, Space, togglefloating,
 # bind = $mainMod Space, focuswindow class:float.*
 bind = $mainMod, F, fullscreen,
 bind = $mainMod, P, pseudo, # dwindle
