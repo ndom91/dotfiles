@@ -74,7 +74,7 @@ alias activeSysd='for i in $(cd /etc/systemd/system/multi-user.target.wants && l
 # [[ "$(command -v fd)" ]] && alias find='fd'
 # [[ "$(command -v pnpm)" ]] && alias npm="pnpm"
 
-alias brave="brave --silent-debugger-extension-api"
+# alias brave="brave --silent-debugger-extension-api"
 
 #### GIT ####
 if [ "$(command -v git)" ]; then

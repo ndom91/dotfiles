@@ -12,6 +12,7 @@ x-scheme-handler/slack=slack.desktop
 image/gif=imv.desktop
 image/svg=imv.desktop
 image/svg+xml=imv.desktop
+image/webp=imv.desktop
 
 [Added Associations]
 image/png=viewnior.desktop;
