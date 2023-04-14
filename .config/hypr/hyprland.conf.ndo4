@@ -46,6 +46,7 @@ exec-once = mako --config "$HOME/.config/mako/config"
 exec-once = 1password --silent
 exec-once = nm-applet --indicator
 exec-once = swaybg -m fill -i ~/.config/hypr/arch01.jpg
+exec-once = swayidle -w
 exec-once = mkchromecast -t
 # exec-once = pnmixer
 # exec-once = copyq
