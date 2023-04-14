@@ -9,7 +9,7 @@ yay -S hyprland-hidpi-xprop-git waybar-hyprland \
 	xdg-desktop-portal-hyprland-git \
 	xsettingsd xorg-xsetroot imv flemozi-bin \
 	swayidle bibata-cursor-theme-bin \
-	wf-recorder swayosd-git
+	wf-recorder swayosd-git wlsunset
 
 # hidpi
 # hyprland-hidpi-xprop-git

@@ -60,6 +60,7 @@ exec-once = swayidle -w
 exec-once = mkchromecast -t
 exec-once = swayosd
 exec-once = wl-paste --watch cliphist store
+exec-once = wlsunset -l 52.50 -L 12.76 -t 4500 -T 6500
 
 debug {
   overlay = false
