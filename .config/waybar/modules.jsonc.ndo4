@@ -27,10 +27,8 @@
     "align": 0,
     "rotate": 0,
     "format": "🕐 {:%H:%M | %a %b %d}",
-    // "format": "🕐 {:%I:%M %p}",
     "format-alt": " {:%a %b %d}",
     "tooltip-format": "<big>{:%B %Y}</big>\n<tt><small>{calendar}</small></tt>",
-    // "on-click-right": "~/.config/hypr/scripts/changeWallpaper"
   },
   "cpu": {
     "interval": 1,
