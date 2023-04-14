@@ -8,7 +8,8 @@ yay -S hyprland-hidpi-xprop-git waybar-hyprland \
 	dracula-gtk-theme dracula-icons-git \
 	xdg-desktop-portal-hyprland-git \
 	xsettingsd xorg-xsetroot imv flemozi \
-	swayidle
+	swayidle bibata-cursor-theme-bin \
+	wf-recorder swayosd-git
 
 # hidpi
 # hyprland-hidpi-xprop-git

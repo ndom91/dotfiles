@@ -8,6 +8,11 @@ $mainMod = SUPER
 monitor=DP-1,3440x1440,1080x480,1
 monitor=DP-2,1920x1080,0x0,1,transform,3
 
+workspace=DP-2,1
+workspace=DP-1,3
+workspace=DP-1,4
+workspace=DP-1,5
+
 # Debug
 # env WAYLAND_DEBUG,1
 # env WAYLAND_DISPLAY,wayland-1
@@ -31,12 +36,17 @@ exec-once = systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESK
 exec-once = ~/.config/hypr/xdg-portal-hyprland
 
 # System Apps
-exec-once = xprop -root -f _XWAYLAND_GLOBAL_OUTPUT_SCALE 32c -set _XWAYLAND_GLOBAL_OUTPUT_SCALE 2
-exec-once = xsetroot -xcf /usr/share/icons/capitaine-cursors/cursors/left_ptr 24
+## xwayland scale
+env = GDK_SCALE,1.5
+exec = xprop -root -f _XWAYLAND_GLOBAL_OUTPUT_SCALE 32c -set _XWAYLAND_GLOBAL_OUTPUT_SCALE 2
 exec-once = xrdb -merge ~/.Xresources
 exec-once = xsettingsd
-exec-once = hyprctl setcursor capitaine-cursors 24
-exec-once = gsettings set org.gnome.desktop.interface cursor-theme 'capitaine-cursors'
+## Cursors
+## capitaine-cursors
+## Bibata-Modern-Classic
+exec-once = xsetroot -xcf /usr/share/icons/Bibata-Modern-Classic/cursors/left_ptr 24
+exec-once = hyprctl setcursor Bibata-Modern-Classic 24
+exec-once = gsettings set org.gnome.desktop.interface cursor-theme 'Bibata-Modern-Classic'
 exec-once = gsettings set org.gnome.desktop.interface cursor-size 24
 
 # User Apps
@@ -48,6 +58,7 @@ exec-once = nm-applet --indicator
 exec-once = swaybg -m fill -i ~/.config/hypr/arch01.jpg
 exec-once = swayidle -w
 exec-once = mkchromecast -t
+exec-once = swayosd
 # exec-once = pnmixer
 # exec-once = copyq
 
@@ -162,7 +173,7 @@ misc {
 # windowrulev2 = noshadow, floating:0
 
 windowrulev2 = noshadow, floating:1
-windowrulev2 = noborder, floating:1
+# windowrulev2 = noborder, floating:1
 windowrulev2 = noshadow, class:flemozi
 windowrulev2 = noborder, class:flemozi
 windowrulev2 = noblur, class:flemozi
@@ -205,6 +216,10 @@ windowrulev2 = float, class:nm-connection-editor
 windowrulev2 = size 20% 30%, class:nm-connection-editor
 windowrulev2 = center, class:nm-connection-editor
 
+# slidein wofi
+windowrulev2 = animation slide, class:wofi
+windowrulev2 = float, class:wofi
+
 # CopyQ
 windowrule = float, ^(com.github.hluk.copyq)$
 windowrule = size 700 500, ^(com.github.hluk.copyq)$
@@ -223,28 +238,28 @@ windowrulev2 = float, title:^.*(sharing your screen).*$
 windowrulev2 = move 50% 100%-100, title:^(.*sharing your screen.*)$
 
 # Example binds, see https://wiki.hyprland.org/Configuring/Binds/ for more
-bind = $mainMod, D, exec, wofi -S drun -I -m -i,
+bind = $mainMod, D, exec, pkill wofi || wofi -S drun -I -m -i,
 bind = $mainMod, M, exec, flemozi
-# bind = $mainMod, M, exec, wofi-emoji
 bind = $mainMod, B, exec, brave
 bind = $mainMod, Q, killactive,
-# bind = $mainMod, M, exit, 
 bind = $mainMod, Return, exec, alacritty
 bind = $mainMod SHIFT, R, exec, hyprctl reload
 bind = $mainMod SHIFT, F, exec, nemo
 bind = $mainMod SHIFT, Q, exec, wlogout
 bind = CTRL SHIFT, Space, togglefloating,
-# bind = $mainMod Space, focuswindow class:float.*
-bind = $mainMod, F, fullscreen,
+bind = CTRL, Space, cyclenext # hack to focus floating windows
+bind = $mainMod, F, fullscreen, 1
 bind = $mainMod, P, pseudo, # dwindle
 bind = $mainMod, O, togglesplit, # dwindle
 bind = $mainMod, S, exec, grim -g "$(slurp)" - | swappy -f - # take a screenshot
-bind = $mainMod SHIFT, S, exec, wf-recorder -g "$(slurp)" -f ~/recording_$(date +"%Y-%m-%d_%H:%M:%S.mp4") # record a video
-bind = CTRL SHIFT, S, exec, killall -s SIGINT wf-recorder
+bind = $mainMod SHIFT, S, exec, pkill --signal SIGINT wf-recorder || wf-recorder -g "$(slurp)" -f ~/Videos/wfrecording_$(date +"%Y-%m-%d_%H:%M:%S.mp4") # record a video
 
 bind = CTRL SHIFT, `, exec, makoctl restore
 bind = CTRL SHIFT, Space, exec, makoctl dismiss
 bind = CTRL, Space, exec, makoctl dismiss -a
+
+# 1Password Quick Search - NOT WORKING
+bind = CTRL SHIFT,.,pass,1Password
 
 # Move focus with mainMod + arrow keys
 bind = $mainMod, H, movefocus, l
@@ -270,16 +285,16 @@ bind = $mainMod, 9, workspace, 9
 bind = $mainMod, 0, workspace, 10
 
 # Move active window to a workspace with mainMod + SHIFT + [0-9]
-bind = $mainMod SHIFT, 1, movetoworkspace, 1
-bind = $mainMod SHIFT, 2, movetoworkspace, 2
-bind = $mainMod SHIFT, 3, movetoworkspace, 3
-bind = $mainMod SHIFT, 4, movetoworkspace, 4
-bind = $mainMod SHIFT, 5, movetoworkspace, 5
-bind = $mainMod SHIFT, 6, movetoworkspace, 6
-bind = $mainMod SHIFT, 7, movetoworkspace, 7
-bind = $mainMod SHIFT, 8, movetoworkspace, 8
-bind = $mainMod SHIFT, 9, movetoworkspace, 9
-bind = $mainMod SHIFT, 0, movetoworkspace, 10
+bind = $mainMod SHIFT, 1, movetoworkspacesilent, 1
+bind = $mainMod SHIFT, 2, movetoworkspacesilent, 2
+bind = $mainMod SHIFT, 3, movetoworkspacesilent, 3
+bind = $mainMod SHIFT, 4, movetoworkspacesilent, 4
+bind = $mainMod SHIFT, 5, movetoworkspacesilent, 5
+bind = $mainMod SHIFT, 6, movetoworkspacesilent, 6
+bind = $mainMod SHIFT, 7, movetoworkspacesilent, 7
+bind = $mainMod SHIFT, 8, movetoworkspacesilent, 8
+bind = $mainMod SHIFT, 9, movetoworkspacesilent, 9
+bind = $mainMod SHIFT, 0, movetoworkspacesilent, 10
 
 # Resize
 bind = $mainMod, R, submap, resize
@@ -308,6 +323,13 @@ bind=,XF86AudioRaiseVolume,exec,wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 5%+
 bind=,XF86AudioLowerVolume,exec,wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
 bind=,XF86AudioMute,exec,wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
 bind=,XF86AudioMicMute,exec,wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
+
+# SwayOSD
+bind =,XF86AudioRaiseVolume,exec,swayosd --output-volume raise
+bind =,XF86AudioLowerVolume,exec,swayosd --output-volume lower
+bind =,XF86AudioMute,exec,swayosd --output-volume mute-toggle
+bind =,XF86AudioMicMute,exec,swayosd --input-volume mute-toggle
+
 bind = , xf86audioplay, exec, playerctl play-pause
 bind = , xf86audionext, exec, playerctl next
 bind = , xf86audioprev, exec, playerctl previous
