@@ -12,14 +12,20 @@ env = GDK_SCALE,1.7
 env = MOZ_ENABLE_WAYLAND,1
 env = QT_QPA_PLATFORM,wayland
 
+# System Apps
+## xwayland scale
 exec-once = xprop -root -f _XWAYLAND_GLOBAL_OUTPUT_SCALE 32c -set _XWAYLAND_GLOBAL_OUTPUT_SCALE 2
-exec-once = xsetroot -xcf /usr/share/icons/capitaine-cursors/cursors/left_ptr 48
 exec-once = xrdb -merge ~/.Xresources
 exec-once = xsettingsd
-exec-once = hyprctl setcursor capitaine-cursors 32
-exec-once = gsettings set org.gnome.desktop.interface cursor-theme 'capitaine-cursors'
-exec-once = gsettings set org.gnome.desktop.interface cursor-size 32
+## Cursors
+## capitaine-cursors
+## Bibata-Modern-Classic
+exec = xsetroot -xcf /usr/share/icons/Bibata-Modern-Classic/cursors/left_ptr 24
+exec = hyprctl setcursor Bibata-Modern-Classic 24
+exec = gsettings set org.gnome.desktop.interface cursor-theme 'Bibata-Modern-Classic'
+exec = gsettings set org.gnome.desktop.interface cursor-size 24
 
+# User Apps
 exec-once = ~/.config/hypr/xdg-portal-hyprland
 exec-once = dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
 exec-once = systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
