@@ -59,6 +59,7 @@ exec-once = swaybg -m fill -i ~/.config/hypr/arch01.jpg
 exec-once = swayidle -w
 exec-once = mkchromecast -t
 exec-once = swayosd
+exec-once = wl-paste --watch cliphist store
 # exec-once = pnmixer
 # exec-once = copyq
 
@@ -220,11 +221,6 @@ windowrulev2 = center, class:nm-connection-editor
 windowrulev2 = animation slide, class:wofi
 windowrulev2 = float, class:wofi
 
-# CopyQ
-windowrule = float, ^(com.github.hluk.copyq)$
-windowrule = size 700 500, ^(com.github.hluk.copyq)$
-windowrule = center, ^(com.github.hluk.copyq)$
-
 # DevTools
 windowrulev2 = float, class:brave-browser, title:^(DevTools.*)$
 
@@ -253,6 +249,7 @@ bind = $mainMod, P, pseudo, # dwindle
 bind = $mainMod, O, togglesplit, # dwindle
 bind = $mainMod, S, exec, grim -g "$(slurp)" - | swappy -f - # take a screenshot
 bind = $mainMod SHIFT, S, exec, pkill --signal SIGINT wf-recorder || wf-recorder -g "$(slurp)" -f ~/Videos/wfrecording_$(date +"%Y-%m-%d_%H:%M:%S.mp4") # record a video
+bind = $mainMod, C, exec, cliphist list | wofi --dmenu | cliphist decode | wl-copy
 
 bind = CTRL SHIFT, `, exec, makoctl restore
 bind = CTRL SHIFT, Space, exec, makoctl dismiss
