@@ -1,18 +1,22 @@
--- aliases
 local opt = vim.opt
 
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 vim.g.vimsyn_embed = "lPrjt"
-vim.g.swapfile = false
-vim.api.nvim_set_var('markdown_fenced_languages', {
+
+vim.opt.swapfile = false
+vim.opt.backup = false
+vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
+vim.opt.undofile = true
+
+vim.api.nvim_set_var("markdown_fenced_languages", {
   "html",
   "javascript",
   "vim",
   "css",
   "javascriptreact",
   "typescript",
-  "yaml"
+  "yaml",
 })
 
 opt.completeopt = "menu,menuone,noselect"
@@ -26,7 +30,7 @@ local set_cursorline = function(event, value, pattern)
     pattern = pattern,
     callback = function()
       vim.opt_local.cursorline = value
-    end
+    end,
   })
 end
 
@@ -37,7 +41,7 @@ set_cursorline("FileType", false, "TelescopePrompt")
 opt.breakindent = true
 opt.linebreak = true
 
-opt.signcolumn = 'yes'
+opt.signcolumn = "yes"
 opt.belloff = "all"
 opt.expandtab = true
 opt.equalalways = false
@@ -64,10 +68,15 @@ opt.splitbelow = true
 opt.splitright = true
 opt.tabstop = 2
 opt.termguicolors = true
-opt.wildignore =
-".next,node_modules,.git,DS_Store,venv*,__pycache__,*pycache*,*.pyc,tmp,temp"
+
+opt.wildignorecase = true
+opt.wildignore:append("**/node_modules/*")
+opt.wildignore:append("**/.git/*")
+opt.wildignore:append("**/.next/*")
+opt.wildignore:append("**/venv/*")
 opt.wildmenu = true
 opt.wildmode = "longest:full"
+
 opt.pumblend = 17
 opt.wildoptions = "pum"
 opt.wrap = true
