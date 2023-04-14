@@ -60,12 +60,6 @@ exec-once = swayidle -w
 exec-once = mkchromecast -t
 exec-once = swayosd
 exec-once = wl-paste --watch cliphist store
-# exec-once = pnmixer
-# exec-once = copyq
-
-# Disable wlan0 power-management
-# exec-once = iw dev wlan0 set power_save off
-# exec-once = iwconfig wlan0 power off
 
 debug {
   overlay = false
