@@ -1,4 +1,4 @@
 timeout 300 'hyprctl dispatch dpms off' resume 'hyprctl dispatch dpms on'
-# timeout 305 'swaylock -f -c 000000'
-# before-sleep 'swaylock -f -c 000000'
+timeout 305 "$XDG_CONFIG_HOME/hypr/scripts/lock.sh"
+before-sleep "$XDG_CONFIG_HOME/hypr/scripts/lock.sh"
 

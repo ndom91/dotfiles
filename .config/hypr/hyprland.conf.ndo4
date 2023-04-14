@@ -256,6 +256,7 @@ bind = $mainMod, O, togglesplit, # dwindle
 bind = $mainMod, S, exec, grim -g "$(slurp)" - | swappy -f - # take a screenshot
 bind = $mainMod SHIFT, S, exec, pkill --signal SIGINT wf-recorder || wf-recorder -g "$(slurp)" -f ~/Videos/wfrecording_$(date +"%Y-%m-%d_%H:%M:%S.mp4") # record a video
 bind = $mainMod, C, exec, cliphist list | wofi -b -p Cliphist -n -i -M fuzzy --dmenu --pre-display-cmd "echo '%s' | cut -f 2" | cliphist decode | wl-copy
+bind = $mainMod SHIFT, L, exec, "$XDG_CONFIG_HOME/hypr/scripts/lock.sh"
 
 bind = CTRL SHIFT, `, exec, makoctl restore
 bind = CTRL SHIFT, Space, exec, makoctl dismiss
