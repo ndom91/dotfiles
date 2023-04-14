@@ -21,7 +21,8 @@
     "memory",
     "disk",
     "battery",
-    "wlr/workspaces"
+    "wlr/workspaces",
+    "hyprland/submap"
   ],
   "modules-center": [
     "hyprland/window"
@@ -29,10 +30,9 @@
   "modules-right": [
     "bluetooth",
     "custom/weather",
-    "pulseaudio",
+    "wireplumber",
     "network",
     "clock",
     "tray"
-    // "custom/power"
   ]
 }

@@ -1,23 +1,4 @@
 {
-  // "backlight": {
-  //   "interval": 2,
-  //   "align": 0,
-  //   "rotate": 0,
-  //   "format": "{icon} {percent}%",
-  //   "format-icons": [
-  //     "",
-  //     "",
-  //     "",
-  //     ""
-  //   ],
-  //   "on-click": "",
-  //   "on-click-middle": "",
-  //   "on-click-right": "",
-  //   "on-update": "",
-  //   "on-scroll-up": "brightnessctl set 1%+",
-  //   "on-scroll-down": "brightnessctl set 1%-",
-  //   "smooth-scrolling-threshold": 1
-  // },
   "wlr/workspaces": {
     "format": "{icon}",
     "on-click": "activate",
@@ -46,10 +27,8 @@
     "align": 0,
     "rotate": 0,
     "format": "🕐 {:%H:%M | %a %b %d}",
-    // "format": "🕐 {:%I:%M %p}",
     "format-alt": " {:%a %b %d}",
     "tooltip-format": "<big>{:%B %Y}</big>\n<tt><small>{calendar}</small></tt>",
-    // "on-click-right": "~/.config/hypr/scripts/changeWallpaper"
   },
   "cpu": {
     "interval": 1,
@@ -60,11 +39,6 @@
     "tooltip": false,
     "on-click": "$HOME/.config/hypr/scripts/menu"
   },
-  // "custom/power": {
-  //   "format": " 👻 ",
-  //   "tooltip": false,
-  //   "on-click": "archlinux-logout"
-  // },
   "disk": {
     "interval": 120,
     "format": "<span font='15' rise='-4pt'>󰋊</span> {free}"
