@@ -7,7 +7,7 @@ yay -S hyprland-hidpi-xprop-git waybar-hyprland \
 	bluez bluez-utils lxappearance xfce4-settings \
 	dracula-gtk-theme dracula-icons-git \
 	xdg-desktop-portal-hyprland-git \
-	xsettingsd xorg-xsetroot imv
+	xsettingsd xorg-xsetroot imv flemozi
 
 # hidpi
 # hyprland-hidpi-xprop-git
