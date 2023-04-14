@@ -99,11 +99,6 @@
     "tooltip": false,
     "on-click": "$HOME/.config/hypr/scripts/menu"
   },
-  "custom/power": {
-    "format": " 👻 ",
-    "tooltip": false,
-    "on-click": "archlinux-logout"
-  },
   "disk": {
     "interval": 120,
     "format": "<span font='20' rise='-5pt'>󰋊</span> {free}"
@@ -148,6 +143,11 @@
     "format": "",
     "on-click": "~/.config/hypr/scripts/changeWallpaper",
     "tooltip-format": "Change wallpaper"
+  },
+  "wireplumber": {
+    "format": "<span font='20' rise='-5pt'></span> {volume}",
+    "format-muted": "<span font='20' rise='-5pt'></span>",
+    "on-click": "pavucontrol"
   },
   "pulseaudio": {
     "format": "<span font='20' rise='-5pt'></span> {volume}",
