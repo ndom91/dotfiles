@@ -120,14 +120,20 @@ decoration {
 animations {
     enabled = yes
 
-    # Some default animations, see https://wiki.hyprland.org/Configuring/Animations/ for more
-    bezier = myBezier, 0.05, 0.9, 0.1, 1.05
 
-    animation = windows, 1, 3, myBezier
-    animation = windowsOut, 1, 3, default, popin 80%
+    # Some default animations, see https://wiki.hyprland.org/Configuring/Animations/ for more
+    bezier = overshot, 0.05, 0.9, 0.1, 1.05
+    bezier = smoothOut, 0.36, 0, 0.66, -0.56
+    bezier = smoothIn, 0.25, 1, 0.5, 1
+
+    animation = windows, 1, 3, overshot
+    # animation = windowsOut, 1, 3, default, popin 80%
+    animation = windowsOut, 1, 4, smoothOut, slide
     animation = border, 1, 10, default
     animation = borderangle, 1, 8, default
-    animation = fade, 1, 7, default
+    # animation = fade, 1, 7, default
+    animation = fade, 1, 10, smoothIn
+    animation = fadeDim, 1, 10, smoothIn
     animation = workspaces, 1, 6, default
 }
 
@@ -166,6 +172,24 @@ misc {
 
 # See https://wiki.hyprland.org/Configuring/Window-Rules/ for more
 # windowrulev2 = noshadow, floating:0
+windowrule = float, file_progress
+windowrule = float, confirm
+windowrule = float, dialog
+windowrule = float, download
+windowrule = float, notification
+windowrule = float, error
+windowrule = float, splash
+windowrule = float, confirmreset
+windowrule = float, title:Open File
+windowrule = float, title:branchdialog
+windowrule = float, Lxappearance
+windowrule = float,viewnior
+windowrule = float,feh
+windowrule = float, pavucontrol-qt
+windowrule = float, pavucontrol
+windowrule = float, file-roller
+windowrulev2 = float, title:wlogout
+windowrulev2 = fullscreen, title:wlogout
 
 windowrulev2 = noshadow, floating:1
 # windowrulev2 = noborder, floating:1
@@ -241,7 +265,7 @@ bind = $mainMod, Q, killactive,
 bind = $mainMod, Return, exec, alacritty
 bind = $mainMod SHIFT, R, exec, hyprctl reload
 bind = $mainMod SHIFT, F, exec, nemo
-bind = $mainMod SHIFT, Q, exec, wlogout
+bind = $mainMod SHIFT, Q, exec, wlogout --protocol layer-shell
 bind = CTRL SHIFT, Space, togglefloating,
 bind = CTRL, Space, cyclenext # hack to focus floating windows
 bind = $mainMod, F, fullscreen, 1
@@ -250,7 +274,7 @@ bind = $mainMod, O, togglesplit, # dwindle
 bind = $mainMod, S, exec, grim -g "$(slurp)" - | swappy -f - # take a screenshot
 bind = $mainMod SHIFT, S, exec, pkill --signal SIGINT wf-recorder || wf-recorder -g "$(slurp)" -f ~/Videos/wfrecording_$(date +"%Y-%m-%d_%H:%M:%S.mp4") # record a video
 bind = $mainMod, C, exec, cliphist list | wofi -b -p Cliphist -n -i -M fuzzy --dmenu --pre-display-cmd "echo '%s' | cut -f 2" | cliphist decode | wl-copy
-bind = $mainMod SHIFT, L, exec, swaylock
+bind = CTRL SHIFT, L, exec, swaylock
 
 bind = CTRL SHIFT, `, exec, makoctl restore
 bind = CTRL SHIFT, Space, exec, makoctl dismiss
