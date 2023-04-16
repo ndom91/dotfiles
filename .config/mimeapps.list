@@ -18,3 +18,4 @@ image/webp=imv.desktop
 image/png=viewnior.desktop;
 image/jpeg=viewnior.desktop;
 application/pdf=org.pwmt.zathura.desktop;
+text/markdown=geany.desktop;
