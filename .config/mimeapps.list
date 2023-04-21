@@ -19,3 +19,5 @@ image/png=viewnior.desktop;
 image/jpeg=viewnior.desktop;
 application/pdf=org.pwmt.zathura.desktop;
 text/markdown=geany.desktop;
+text/x-log=geany.desktop;
+text/plain=geany.desktop;

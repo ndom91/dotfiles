@@ -30,6 +30,7 @@ tooltip {
 #custom-weather,
 #custom-updater,
 #custom-keybindings,
+#temperature,
 #custom-cycle_wall,
 #workspaces,
 #network,
@@ -51,6 +52,10 @@ tooltip {
 
 #window {
     color: #cad3f5;
+}
+
+#temperature {
+    color: #eb6f92;
 }
 
 #bluetooth {
