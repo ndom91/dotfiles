@@ -344,6 +344,17 @@ return {
         -- Diagnostics
         null_ls.builtins.diagnostics.eslint_d,
         null_ls.builtins.diagnostics.shellcheck,
+        null_ls.builtins.diagnostics.pyright,
+        -- Python
+        null_ls.builtins.diagnostics.pylint.with({
+          diagnostics_postprocess = function(diagnostic)
+            diagnostic.code = diagnostic.message_id
+          end,
+        }),
+        null_ls.builtins.formatting.black.with({
+          extra_args = { "--line-length=120" },
+        }),
+        null_ls.builtins.formatting.isort,
       },
     })
   end,
