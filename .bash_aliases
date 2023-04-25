@@ -78,7 +78,7 @@ alias activeSysd='for i in $(cd /etc/systemd/system/multi-user.target.wants && l
 
 #### GIT ####
 if [ "$(command -v git)" ]; then
-	alias cob='git checkout $(git branch -a | cut -c 3- | pick)'
+	alias cob='git checkout $(git branch -a | cut -c 3- | sed "s/remotes\/origin\///g" | gum filter --reverse)'
 	alias gs='git status'
 	alias gss='git status --short'
 	alias gd='git diff'
