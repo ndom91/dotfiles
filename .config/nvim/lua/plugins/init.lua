@@ -90,16 +90,7 @@ return {
       "rafamadriz/friendly-snippets",
       "L3MON4D3/LuaSnip",
     },
-  },
-  {
-    "jay-babu/mason-null-ls.nvim",
-    event = { "BufReadPre", "BufNewFile" },
-    dependencies = {
-      "williamboman/mason.nvim",
-      "jose-elias-alvarez/null-ls.nvim",
-    },
-  },
-  -- cmp based copilot
+  }, -- cmp based copilot
   {
     "zbirenbaum/copilot.lua",
     -- event = { "VimEnter" },
@@ -279,44 +270,7 @@ return {
         -- refer to the configuration section below
       })
     end,
-  },
-  {
-    "segeljakt/vim-silicon",
-    cmd = "Silicon",
-    config = function()
-      -- local workhours = {
-      --   Monday = { 8, 16 },
-      --   Tuesday = { 9, 17 },
-      --   Wednesday = { 9, 17 },
-      --   Thursday = { 9, 17 },
-      --   Friday = { 9, 15 },
-      -- }
-      --
-      -- local function working()
-      --   local day = strftime('%u')
-      --   if has_key(workhours, day)
-      --     local hour = strftime('%H')
-      --     local [start_hour, stop_hour] = workhours[day]
-      --     if start_hour <= hour && hour <= stop_hour
-      --       return "~/Screenshots/personal"
-      --     endif
-      --   endif
-      --   return "~/Screenshots/work"
-      -- end
-
-      -- vim.g.silicon["output"] = working()
-      vim.g.silicon = {
-        output = "~/Pictures/Screenshots/silicon-{time:%Y-%m-%d-%H%M%S}.png",
-        theme = "TwoDark",
-        ["to-clipboard"] = true,
-        ["shadow-blur-radius"] = 8,
-        ["shadow-offset-x"] = 4,
-        ["shadow-offset-y"] = 4,
-      }
-      -- vim.g.silicon["output"] = "~/Pictures/Screenshots/silicon-{time:%Y-%m-%d-%H%M%S}.png"
-    end,
-  },
-  -- tpope plugins
+  }, -- tpope plugins
   { "tpope/vim-surround" }, -- Change surrounding arks
   { "tpope/vim-repeat" }, -- extends . repeat
 }

@@ -305,51 +305,57 @@ return {
 
     lsp.setup()
 
-    require("mason").setup()
-    require("mason-null-ls").setup({
-      automatic_setup = true,
-    })
-
     -- null-ls setup
-    -- local null_ls = require("null-ls")
-    -- local nls_utils = require("null-ls.utils")
-    -- local null_opts = lsp.build_options("null-ls", {})
+    local null_ls = require("null-ls")
+    local nls_utils = require("null-ls.utils")
+    local null_opts = lsp.build_options("null-ls", {})
 
-    -- null_ls.setup({
-    --   -- debug = true,
-    --   -- debounce = 150,
-    --   -- save_after_format = true,
-    --   diagnostics_format = "#{m} [#{c}]",
-    --   root_dir = nls_utils.root_pattern(".null-ls-root", "Makefile", ".git", "package.json"),
-    --   on_attach = function(client, bufnr)
-    --     if client.supports_method("textDocument/formatting") then
-    --       vim.api.nvim_clear_autocmds({ group = formatting_augroup, buffer = bufnr })
-    --       vim.api.nvim_create_autocmd("BufWritePre", {
-    --         group = formatting_augroup,
-    --         buffer = bufnr,
-    --         callback = function()
-    --           vim.lsp.buf.format({ bufnr = bufnr })
-    --         end,
-    --       })
-    --     end
-    --     null_opts.on_attach(client, bufnr)
-    --   end,
-    --   sources = {
-    --     -- null-ls builtins - https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md
-    --     -- Code Actions
-    --     null_ls.builtins.code_actions.eslint_d,
-    --     null_ls.builtins.code_actions.shellcheck,
-    --     -- Formatting
-    --     null_ls.builtins.formatting.eslint_d,
-    --     null_ls.builtins.formatting.stylua.with({
-    --       extra_args = { "--indent-type=Spaces", "--indent-width=2" },
-    --     }),
-    --     -- null_ls.builtins.formatting.lua_format.with({extra_args = {'--tab-width=2', '--column-limit=100'}}),
-    --     null_ls.builtins.formatting.shfmt,
-    --     -- Diagnostics
-    --     null_ls.builtins.diagnostics.eslint_d,
-    --     null_ls.builtins.diagnostics.shellcheck,
-    --   },
-    -- })
+    null_ls.setup({
+      -- debug = true,
+      -- debounce = 150,
+      -- save_after_format = true,
+      diagnostics_format = "#{m} [#{c}]",
+      root_dir = nls_utils.root_pattern(".null-ls-root", "Makefile", ".git", "package.json"),
+      on_attach = function(client, bufnr)
+        if client.supports_method("textDocument/formatting") then
+          vim.api.nvim_clear_autocmds({ group = formatting_augroup, buffer = bufnr })
+          vim.api.nvim_create_autocmd("BufWritePre", {
+            group = formatting_augroup,
+            buffer = bufnr,
+            callback = function()
+              vim.lsp.buf.format({ bufnr = bufnr })
+            end,
+          })
+        end
+        null_opts.on_attach(client, bufnr)
+      end,
+      sources = {
+        -- null-ls builtins - https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md
+        -- Code Actions
+        null_ls.builtins.code_actions.eslint_d,
+        null_ls.builtins.code_actions.shellcheck,
+        -- Formatting
+        null_ls.builtins.formatting.eslint_d,
+        null_ls.builtins.formatting.stylua.with({
+          extra_args = { "--indent-type=Spaces", "--indent-width=2" },
+        }),
+        -- null_ls.builtins.formatting.lua_format.with({extra_args = {'--tab-width=2', '--column-limit=100'}}),
+        null_ls.builtins.formatting.shfmt,
+        -- Diagnostics
+        null_ls.builtins.diagnostics.eslint_d,
+        null_ls.builtins.diagnostics.shellcheck,
+        null_ls.builtins.diagnostics.pyright,
+        -- Python
+        null_ls.builtins.diagnostics.pylint.with({
+          diagnostics_postprocess = function(diagnostic)
+            diagnostic.code = diagnostic.message_id
+          end,
+        }),
+        null_ls.builtins.formatting.black.with({
+          extra_args = { "--line-length=120" },
+        }),
+        null_ls.builtins.formatting.isort,
+      },
+    })
   end,
 }
