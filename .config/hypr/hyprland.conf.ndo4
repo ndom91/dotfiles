@@ -157,7 +157,6 @@ gestures {
 }
 
 device:MSFT0001:00 04F3:31EB Touchpad {
-  # See https://wiki.hyprland.org/Configuring/Keywords/#executing for more
   accel_profile = adaptive
   natural_scroll = true
   sensitivity = 0.1
@@ -340,24 +339,24 @@ bind = ALT, tab, workspace, m+1
 bind = ALT SHIFT, tab, workspace, m-1
 
 # Special Keys
-bind=,XF86MonBrightnessUp,exec,brightnessctl set 5%+
-bind=,XF86MonBrightnessDown,exec,brightnessctl set 5%-
-bind=,XF86AudioRaiseVolume,exec,wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 5%+
-bind=,XF86AudioLowerVolume,exec,wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
-bind=,XF86AudioMute,exec,wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
-bind=,XF86AudioMicMute,exec,wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
-bind=,xf86audioplay, exec, playerctl play-pause
-bind=,xf86audionext, exec, playerctl next
-bind=,xf86audioprev, exec, playerctl previous
-bind=,xf86audiostop, exec, playerctl stop
+bind = ,XF86MonBrightnessUp,exec,brightnessctl set 5%+
+bind = ,XF86MonBrightnessDown,exec,brightnessctl set 5%-
+bind = ,XF86AudioRaiseVolume,exec,wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 5%+
+bind = ,XF86AudioLowerVolume,exec,wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
+bind = ,XF86AudioMute,exec,wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+bind = ,XF86AudioMicMute,exec,wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
+bind = ,xf86audioplay, exec, playerctl play-pause
+bind = ,xf86audionext, exec, playerctl next
+bind = ,xf86audioprev, exec, playerctl previous
+bind = ,xf86audiostop, exec, playerctl stop
 
 # SwayOSD
-bind =,XF86AudioRaiseVolume,exec,swayosd --output-volume raise
-bind =,XF86AudioLowerVolume,exec,swayosd --output-volume lower
-bind =,XF86AudioMute,exec,swayosd --output-volume mute-toggle
-bind =,XF86AudioMicMute,exec,swayosd --input-volume mute-toggle
+bind = ,XF86AudioRaiseVolume,exec,swayosd --output-volume raise
+bind = ,XF86AudioLowerVolume,exec,swayosd --output-volume lower
+bind = ,XF86AudioMute,exec,swayosd --output-volume mute-toggle
+bind = ,XF86AudioMicMute,exec,swayosd --input-volume mute-toggle
 
-bind = , xf86audioplay, exec, playerctl play-pause
-bind = , xf86audionext, exec, playerctl next
-bind = , xf86audioprev, exec, playerctl previous
-bind = , xf86audiostop, exec, playerctl stop
+bind = ,xf86audioplay, exec, playerctl play-pause
+bind = ,xf86audionext, exec, playerctl next
+bind = ,xf86audioprev, exec, playerctl previous
+bind = ,xf86audiostop, exec, playerctl stop

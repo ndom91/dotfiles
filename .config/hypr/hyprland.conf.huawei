@@ -138,12 +138,6 @@ gestures {
   workspace_swipe_create_new = false
 }
 
-# Example per-device config
-# See https://wiki.hyprland.org/Configuring/Keywords/#executing for more
-device:epic mouse V1 {
-  sensitivity = -0.5
-}
-
 device:MSFT0001:00 04F3:31EB Touchpad {
   accel_profile = adaptive
   natural_scroll = true
@@ -154,7 +148,7 @@ misc {
   disable_hyprland_logo = true
   animate_manual_resizes = true
   mouse_move_enables_dpms = true
-  key_press_enables_dpms = true
+  key_press_enables_dpms = false
 }
 
 # See https://wiki.hyprland.org/Configuring/Window-Rules/ for more
@@ -246,13 +240,17 @@ windowrulev2 = move 50% 100%-100, title:^(.*sharing your screen.*)$
 
 # Lid Trigger Events
 # Get with: hyprctl devices
-# trigger when the switch is toggled
-# bindl=,switch:[switch name],exec,swaylock
+# trigger when the switch is joggled
+bindl=,switch:on:Lid Switch,exec,swaylock
+bindl=,switch:on:Lid Switch,exec,systemctl suspend
+# bindl=,switch:Lid Switch,exec,swayidle
+#
 # trigger when the switch is turning on
-# bindl=,switch:on:[switch name],exec,hyprctl keyword monitor "eDP-1, 2560x1600, 0x0, 1"
-# bindl=,switch:on:[switch name],exec,hyprctl keyword monitor "eDP-1, highres, auto, 1.7"
+# bindl=,switch:on:Lid Switch,exec,hyprctl keyword monitor "eDP-1, highres, auto, 1.7"
+#
 # trigger when the switch is turning off
-# bindl=,switch:off:[switch name],exec,hyprctl keyword monitor "eDP-1, disable"
+# bindl=,switch:off:Lid Switch,exec,hyprctl keyword monitor "eDP-1, disable"
+# bindl=,switch:off:Lid Switch,exec,systemctl suspend
 
 # Example binds, see https://wiki.hyprland.org/Configuring/Binds/ for more
 # bind = $mainMod, D, exec, pkill wofi || wofi -b -n -S drun -I -m -i,
@@ -336,26 +334,25 @@ bindm = $mainMod, mouse:273, resizewindow
 bind = ALT, tab, workspace, m+1
 bind = ALT SHIFT, tab, workspace, m-1
 
-# Special Keysa
-# 
-bind=,XF86MonBrightnessUp,exec,brightnessctl set 5%+
-bind=,XF86MonBrightnessDown,exec,brightnessctl set 5%-
-bind=,XF86AudioRaiseVolume,exec,wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 5%+
-bind=,XF86AudioLowerVolume,exec,wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
-bind=,XF86AudioMute,exec,wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
-bind=,XF86AudioMicMute,exec,wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
-bind=,xf86audioplay, exec, playerctl play-pause
-bind=,xf86audionext, exec, playerctl next
-bind=,xf86audioprev, exec, playerctl previous
-bind=,xf86audiostop, exec, playerctl stop
+# Special Keys
+bind = ,XF86MonBrightnessUp,exec,brightnessctl set 5%+
+bind = ,XF86MonBrightnessDown,exec,brightnessctl set 5%-
+bind = ,XF86AudioRaiseVolume,exec,wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 5%+
+bind = ,XF86AudioLowerVolume,exec,wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
+bind = ,XF86AudioMute,exec,wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+bind = ,XF86AudioMicMute,exec,wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
+bind = ,xf86audioplay, exec, playerctl play-pause
+bind = ,xf86audionext, exec, playerctl next
+bind = ,xf86audioprev, exec, playerctl previous
+bind = ,xf86audiostop, exec, playerctl stop
 
 # SwayOSD
-bind =,XF86AudioRaiseVolume,exec,swayosd --output-volume raise
-bind =,XF86AudioLowerVolume,exec,swayosd --output-volume lower
-bind =,XF86AudioMute,exec,swayosd --output-volume mute-toggle
-bind =,XF86AudioMicMute,exec,swayosd --input-volume mute-toggle
+bind = ,XF86AudioRaiseVolume,exec,swayosd --output-volume raise
+bind = ,XF86AudioLowerVolume,exec,swayosd --output-volume lower
+bind = ,XF86AudioMute,exec,swayosd --output-volume mute-toggle
+bind = ,XF86AudioMicMute,exec,swayosd --input-volume mute-toggle
 
-bind = , xf86audioplay, exec, playerctl play-pause
-bind = , xf86audionext, exec, playerctl next
-bind = , xf86audioprev, exec, playerctl previous
-bind = , xf86audiostop, exec, playerctl stop
+bind = ,xf86audioplay, exec, playerctl play-pause
+bind = ,xf86audionext, exec, playerctl next
+bind = ,xf86audioprev, exec, playerctl previous
+bind = ,xf86audiostop, exec, playerctl stop
