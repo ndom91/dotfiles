@@ -239,21 +239,9 @@ windowrulev2 = float, title:^.*(sharing your screen).*$
 windowrulev2 = move 50% 100%-100, title:^(.*sharing your screen.*)$
 
 # Lid Trigger Events
-# Get with: hyprctl devices
-# trigger when the switch is joggled
-bindl=,switch:on:Lid Switch,exec,swaylock
-bindl=,switch:on:Lid Switch,exec,systemctl suspend
-# bindl=,switch:Lid Switch,exec,swayidle
-#
-# trigger when the switch is turning on
-# bindl=,switch:on:Lid Switch,exec,hyprctl keyword monitor "eDP-1, highres, auto, 1.7"
-#
-# trigger when the switch is turning off
-# bindl=,switch:off:Lid Switch,exec,hyprctl keyword monitor "eDP-1, disable"
-# bindl=,switch:off:Lid Switch,exec,systemctl suspend
+bindl=,switch:on:Lid Switch,exec,swaylock & systemctl suspend
 
 # Example binds, see https://wiki.hyprland.org/Configuring/Binds/ for more
-# bind = $mainMod, D, exec, pkill wofi || wofi -b -n -S drun -I -m -i,
 bind = $mainMod, D, exec, pkill wofi || wofi -bImin
 bind = $mainMod, M, exec, flemozi
 bind = $mainMod, B, exec, brave
