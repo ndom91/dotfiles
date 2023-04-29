@@ -3,6 +3,9 @@
   email = yo@ndo.dev
   signingkey = ~/.ssh/id_ndo4.pub
 
+[commit]
+  gpgsign = true
+
 [init]
   defaultBranch = main
 
@@ -91,6 +94,9 @@
 
 [gpg]
   format = ssh
+
+[gpg "ssh"]
+  program = "/opt/1Password/op-ssh-sign"
 
 [push]
   default = current
