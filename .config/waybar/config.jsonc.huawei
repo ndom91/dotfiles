@@ -12,10 +12,6 @@
   "margin-top": 5,
   "margin-bottom": 0,
   "height": 10,
-  "tray": {
-    "icon-size": 16,
-    "spacing": 6
-  },
   "modules-left": [
     "cpu",
     "memory",

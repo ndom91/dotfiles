@@ -73,6 +73,14 @@ export PATH="/usr/local/bin:$PATH"
 export PATH="/var/lib/snapd/snap/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
 
+# Bash Preload
+# if [ -f "$HOME/.dotfiles/colorscripts/crunchbang-mini.sh" ]; then
+# 	"$HOME/.dotfiles/colorscripts/crunchbang-mini.sh"
+# fi
+if [ -f "$HOME/.dotfiles/colorscripts/blocks.sh" ]; then
+	"$HOME/.dotfiles/colorscripts/blocks.sh"
+fi
+
 # make `less` more friendly for non-text input files,
 # see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
@@ -188,11 +196,6 @@ fi
 # AWS
 export AWS_DEFAULT_REGION=eu-central-1
 export AWS_REGION=eu-central-1
-
-# colorscript
-if [ -f "$HOME/.dotfiles/colorscripts/crunchbang-mini.sh" ]; then
-	"$HOME/.dotfiles/colorscripts/crunchbang-mini.sh"
-fi
 
 # atuin - shell history
 if [ "$(command -v atuin)" ]; then

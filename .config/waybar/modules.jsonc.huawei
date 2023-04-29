@@ -18,6 +18,11 @@
     "on-scroll-down": "brightnessctl set 1%-",
     "smooth-scrolling-threshold": 1
   },
+  "hyprland/submap": {
+    "format": "{}",
+    "max-length": 8,
+    "tooltip": false
+  },
   "wlr/workspaces": {
     "format": "{icon}",
     "on-click": "activate",
@@ -92,7 +97,8 @@
   },
   "temperature": {
     "interval": 120,
-    "format": "<span font='19' rise='-5pt'>󰏈</span> {}°C"
+    "thermal-zone": 0,
+    "format": "<span font='19' rise='-5pt'>󰏈</span> {temperatureC}°C"
   },
   "disk": {
     "interval": 120,

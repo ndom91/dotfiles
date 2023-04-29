@@ -40,12 +40,6 @@ return {
       source_selector = {
         winbar = true,
         content_layout = "center",
-        tab_labels = {
-          filesystem = " File",
-          buffers = " Bufs",
-          git_status = " Git",
-          diagnostics = " Diagnostic",
-        },
       },
       default_component_configs = {
         container = { enable_character_fade = true },
