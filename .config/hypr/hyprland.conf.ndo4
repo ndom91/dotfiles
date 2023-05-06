@@ -200,6 +200,9 @@ windowrulev2 = noblur, class:flemozi
 windowrulev2 = idleinhibit focus, class:^(brave-browser)$, title:^(.*YouTube.*)$
 windowrulev2 = idleinhibit fullscreen, class:^(brave-browser)$
 
+# Trufflehog Chrome extension
+windowrulev2 = float, title:Trufflehog
+
 # float/slidein nemo file manager
 windowrulev2 = animation slide, class:nemo
 windowrulev2 = float, class:nemo
