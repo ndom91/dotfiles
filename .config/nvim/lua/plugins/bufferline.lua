@@ -12,7 +12,9 @@ return {
     { "<S-Tab>", ":bprev<CR>" },
   },
   config = function()
+    -- local highlights = require("rose-pine.plugins.bufferline")
     require("bufferline").setup({
+      -- highlights = highlights,
       options = {
         indicator = { icon = "▎" },
         buffer_close_icon = "",

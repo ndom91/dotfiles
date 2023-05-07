@@ -166,9 +166,9 @@ return {
       })
     end,
   },
-  {
-    "RRethy/nvim-base16",
-  },
+  -- {
+  --   "RRethy/nvim-base16",
+  -- },
   -- other themes
   -- "folke/tokyonight.nvim",
   -- "rmehri01/onenord.nvim",
@@ -191,6 +191,7 @@ return {
           lsp_trouble = true,
         },
       })
+      vim.cmd.colorscheme("catppuccin-mocha")
     end,
   },
   {
