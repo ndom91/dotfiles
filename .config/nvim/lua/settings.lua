@@ -67,7 +67,7 @@ opt.softtabstop = 2
 opt.splitbelow = true
 opt.splitright = true
 opt.tabstop = 2
-opt.termguicolors = true
+-- opt.termguicolors = true
 
 opt.wildignorecase = true
 opt.wildignore:append("**/node_modules/*")

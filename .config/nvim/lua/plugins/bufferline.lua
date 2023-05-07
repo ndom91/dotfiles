@@ -5,14 +5,14 @@ return {
   keys = {
     {
       "<c-x>",
-      ':bd<cr>',
-      desc = "Bufferline Close"
+      ":bd<cr>",
+      desc = "Bufferline Close",
     },
-    { "<Tab>",   ":bnext<CR>" },
-    { "<S-Tab>", ":bprev<CR>" }
+    { "<Tab>", ":bnext<CR>" },
+    { "<S-Tab>", ":bprev<CR>" },
   },
   config = function()
-    require('bufferline').setup {
+    require("bufferline").setup({
       options = {
         indicator = { icon = "▎" },
         buffer_close_icon = "",
@@ -59,7 +59,7 @@ return {
               result[4] = { text = "  " .. info, guifg = "#c4a7e7" }
             end
             return result
-          end
+          end,
         },
         offsets = {
           {
@@ -67,25 +67,25 @@ return {
             text = function()
               return vim.fn.getcwd()
             end,
-            text_align = "center"
+            text_align = "center",
           },
           {
             filetype = "NvimTree",
             text = function()
               return vim.fn.getcwd()
             end,
-            text_align = "center"
-          }
+            text_align = "center",
+          },
         },
         color_icons = true,
         show_buffer_icons = true,
         show_buffer_close_icons = false,
         show_close_icon = false,
         show_tab_indicators = true,
-        separator_style = "slant",
+        separator_style = "thick", -- "slant" | "slope" | "thick" | "thin" | { 'any', 'any' },
         enforce_regular_tabs = true,
-        always_show_bufferline = true
-      }
-    }
-  end
+        always_show_bufferline = true,
+      },
+    })
+  end,
 }

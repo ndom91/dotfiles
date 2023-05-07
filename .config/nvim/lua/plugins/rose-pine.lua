@@ -1,6 +1,7 @@
 return {
   "rose-pine/neovim", -- current theme
   name = "rose-pine",
+  enabled = true,
   lazy = false, -- load first
   priority = 1000, -- before anything else
   config = function()
@@ -9,8 +10,8 @@ return {
       dark_variant = "main",
       bold_vert_split = true,
       dim_nc_background = false,
-      disable_background = false,
-      disable_float_background = false,
+      disable_background = true,
+      disable_float_background = true,
       disable_italics = false,
       ---@usage string hex value or named color from rosepinetheme.com/palette
       groups = {
@@ -61,6 +62,7 @@ return {
     })
 
     -- set colorscheme after options
+    vim.opt.termguicolors = false
     vim.cmd("colorscheme rose-pine")
   end,
 }

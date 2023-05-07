@@ -34,7 +34,8 @@ return {
   { "tami5/lspsaga.nvim", enabled = false, config = true },
 
   -- icons on completion
-  "onsails/lspkind-nvim", -- lsp function signature help on wildmenu
+  "onsails/lspkind-nvim",
+  -- lsp function signature help on wildmenu
   {
     "ray-x/lsp_signature.nvim",
     config = function()
@@ -46,7 +47,8 @@ return {
       }
       require("lsp_signature").setup(cfg)
     end,
-  }, -- floating status text in bottom right
+  },
+  -- floating status text in bottom right
   {
     "j-hui/fidget.nvim",
     config = function()
@@ -57,8 +59,10 @@ return {
     "folke/trouble.nvim",
     dependencies = { "nvim-tree/nvim-web-devicons" },
     config = true,
-  }, -- ui elements
-  "MunifTanjim/nui.nvim", -- tailwind token colorizer
+  },
+  -- ui elements
+  "MunifTanjim/nui.nvim",
+  -- tailwind token colorizer
   {
     "mrshmllow/document-color.nvim",
     enabled = false,
@@ -67,14 +71,16 @@ return {
       docColors.setup({ mode = "background" })
       docColors.buf_attach()
     end,
-  }, -- terminal image viewer
+  },
+  -- terminal image viewer
   {
     "edluffy/hologram.nvim",
     enabled = false,
     config = function()
       require("hologram").setup({ auto_display = true })
     end,
-  }, -- autocompletion
+  },
+  -- autocompletion
   {
     "hrsh7th/nvim-cmp",
     config = true,
@@ -90,7 +96,8 @@ return {
       "rafamadriz/friendly-snippets",
       "L3MON4D3/LuaSnip",
     },
-  }, -- cmp based copilot
+  },
+  -- cmp based copilot
   {
     "zbirenbaum/copilot.lua",
     -- event = { "VimEnter" },
@@ -119,7 +126,8 @@ return {
         })
       end, 100)
     end,
-  }, -- first-party github copilot plugin
+  },
+  -- first-party github copilot plugin
   { "github/copilot.vim", event = "InsertEnter", enabled = false },
   {
     "lukas-reineke/indent-blankline.nvim",
@@ -167,38 +175,40 @@ return {
   -- "wadackel/vim-dogrun",
   -- "challenger-deep-theme/vim",
   -- "EdenEast/nightfox.nvim",
-  -- {
-  --     "catppuccin/nvim",
-  --     name = "catppuccin",
-  --     config = function()
-  --       require("catppuccin").setup(
-  --         {
-  --           transparent_background = true,
-  --           term_colors = true,
-  --           integration = {
-  --             nvimtree = {
-  --               enabled = true,
-  --               transparent_panel = true
-  --             },
-  --             lsp_trouble = true
-  --           }
-  --         }
-  --       )
-  --     end
-  --   },
   {
-    "norcalli/nvim-colorizer.lua", -- colorize hex codes / color names
+    "catppuccin/nvim",
+    name = "catppuccin",
+    enabled = false,
+    config = function()
+      require("catppuccin").setup({
+        transparent_background = true,
+        term_colors = true,
+        integration = {
+          nvimtree = {
+            enabled = true,
+            transparent_panel = true,
+          },
+          lsp_trouble = true,
+        },
+      })
+    end,
+  },
+  {
+    "norcalli/nvim-colorizer.lua",
+    -- colorize hex codes / color names
     config = function()
       require("colorizer").setup({
         "*",
-        css = { rgb_fn = true }, -- disabled in favor of document-color
+        css = { rgb_fn = true },
+        -- disabled in favor of document-color
         html = { names = false },
         "!dart",
       })
     end,
   },
   {
-    "glepnir/dashboard-nvim", -- initial launch dashboard
+    "glepnir/dashboard-nvim",
+    -- initial launch dashboard
     event = "VimEnter",
     config = function()
       require("dashboard").setup({
@@ -237,7 +247,8 @@ return {
       })
     end,
     dependencies = { "nvim-tree/nvim-web-devicons" },
-  }, -- notifications
+  },
+  -- notifications
   {
     "rcarriga/nvim-notify",
     name = "notify",
@@ -247,6 +258,7 @@ return {
       notify.setup({
         render = "minimal",
         stages = "fade_in_slide_out",
+        background_colour = "#191724",
         icons = {
           ERROR = "",
           WARN = "",
