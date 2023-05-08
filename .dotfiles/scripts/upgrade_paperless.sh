@@ -2,12 +2,12 @@
 
 #########################################
 #
-#   Netbox Update Script
+#   Paperless Update Script
 #   Author: ndomino
-#   Update: 28.04.2022
+#   Update: 06.05.2023
 #
-#   Usage: sudo ./upgrade_netbox.sh [version_number]
-#    i.e.: sudo ./upgrade_netbox.sh 3.1.0
+#   Usage: sudo ./upgrade_paperless.sh [version_number]
+#    i.e.: sudo ./upgrade_paperless.sh 3.1.0
 #
 #########################################
 
@@ -115,87 +115,99 @@ function stop_spinner {
 # Must be root
 [ "$UID" -eq 0 ] || { echo "This script must be run as root."; exit 1;}
 
-# Must pass valid Netbox version as first argument
+# Must pass valid Paperless-ngx version as first argument
 if [ ! "$1" ] || [[ ! $1 =~ ^[0-9]+.[0-9]+(.[0-9]+)?$ ]]; then
-  echo "You must pass a valid version of the Netbox i.e. 'sudo ./upgrade_netbox.sh 2.8.9'"
+  echo "You must pass a valid version of the Paperless-ngx i.e. 'sudo ./upgrade_paperless.sh 1.14.4'"
   exit 1
 fi
 
 # Variables
 VERSION="$1"
-NEW_NETBOX="netbox-$VERSION"
-DATE=$(date +%d%m%Y)
-NETBOX_USER=netbox
-NETBOX_GROUP=netbox
 PATH_PREFIX=/opt
+NEW_PAPERLESS="paperless-v$VERSION"
+NEW_PAPERLESS_PATH="$PATH_PREFIX/$NEW_PAPERLESS"
+OLD_PAPERLESS_PATH="$PATH_PREFIX/paperless"
+DATE=$(date +%d%m%Y)
+PAPERLESS_USER=paperless
+PAPERLESS_GROUP=paperless
 
 #### Begin installation
 
 start_spinner "Unpacking and Downloading $VERSION " 
 
 # Download requested version
-sudo wget -q "https://github.com/netbox-community/netbox/archive/v$VERSION.tar.gz" "$PATH_PREFIX/v$VERSION.tar.gz" > /dev/null
-sudo tar -xf "v$VERSION.tar.gz" > /dev/null
+# sudo wget -q "https://github.com/netbox-community/netbox/archive/v$VERSION.tar.gz" "$PATH_PREFIX/v$VERSION.tar.gz" > /dev/null
+sudo wget -q "https://github.com/paperless-ngx/paperless-ngx/releases/download/v1.14.4/paperless-ngx-v$VERSION.tar.xz" > /dev/null
+
+sudo tar -xf "paperless-ngx-v$VERSION.tar.xz" > /dev/null
+mv "$PATH_PREFIX/paperless-ngx" "$PATH_PREFIX/$NEW_PAPERLESS"
 
 stop_spinner $?
 
-start_spinner "Stopping 'netbox' and 'netbox-rq'" 
+start_spinner "Stopping all paperless services" 
 
-# Stop existing netbox service
-sudo systemctl stop netbox netbox-rq
+# Stop existing paperless service
+sudo systemctl stop \
+ paperless-consumer \
+ paperless-scheduler \
+ paperless-task-queue \
+ paperless-webserver
 
 stop_spinner $?
 
 start_spinner "Setting up new directory" 
 
 # Setup new directories
-sudo chown -R "$NETBOX_USER":"$NETBOX_GROUP" "$PATH_PREFIX/$NEW_NETBOX"
+sudo chown -R "$PAPERLESS_USER":"$PAPERLESS_GROUP" "$NEW_PAPERLESS_PATH"
+cp "$OLD_PAPERLESS_PATH/paperless.conf" "$NEW_PAPERLESS_PATH/"
+cp -r "$OLD_PAPERLESS_PATH/media" "$NEW_PAPERLESS_PATH/"
+cp -r "$OLD_PAPERLESS_PATH/data" "$NEW_PAPERLESS_PATH/"
+cp -r "$OLD_PAPERLESS_PATH/consume" "$NEW_PAPERLESS_PATH/"
 
-cp "$PATH_PREFIX"/netbox/netbox/netbox/configuration.py /opt/"$NEW_NETBOX"/netbox/netbox/
-if [ -f "$PATH_PREFIX"/netbox/netbox/netbox/ldap_config.py ]; then
-  cp "$PATH_PREFIX"/netbox/netbox/netbox/ldap_config.py /opt/"$NEW_NETBOX"/netbox/netbox/
+# Currently unused
+if [ -f "$OLD_PAPERLESS_PATH/gunicorn.py" ]; then
+  cp "$OLD_PAPERLESS_PATH/gunicorn.py" "$NEW_PAPERLESS_PATH/"
 fi
-if [ -f "$PATH_PREFIX"/netbox/gunicorn.py ]; then
-  cp "$PATH_PREFIX"/netbox/gunicorn.py /opt/"$NEW_NETBOX"/
+if [ -f "$OLD_PAPERLESS_PATH/local_requirements.txt" ]; then
+  cp "$OLD_PAPERLESS_PATH/local_requirements.txt" "$NEW_PAPERLESS_PATH/"
 fi
-if [ -f "$PATH_PREFIX"/netbox/local_requirements.txt ]; then
-  cp "$PATH_PREFIX"/netbox/local_requirements.txt /opt/"$NEW_NETBOX"/
-fi
-cp -r "$PATH_PREFIX"/netbox/netbox/media/* /opt/"$NEW_NETBOX"/netbox/media/
-cp -r "$PATH_PREFIX"/netbox/netbox/scripts/* /opt/"$NEW_NETBOX"/netbox/scripts/
-cp -r "$PATH_PREFIX"/netbox/netbox/reports/* /opt/"$NEW_NETBOX"/netbox/reports/
 
 # Delete old symlink
-sudo rm "$PATH_PREFIX"/netbox
+sudo rm "$OLD_PAPERLESS_PATH"
 
 # Create new symlink
-sudo ln -s "$PATH_PREFIX"/"$NEW_NETBOX" /opt/netbox
+sudo ln -s "$NEW_PAPERLESS_PATH" "$OLD_PAPERLESS_PATH"
 
 stop_spinner $?
 
-start_spinner "Running Netbox upgrade script " 
+start_spinner "Upgrading Paperless-ngx packages" 
 
-# Execute netbox upgrade.sh script - save output to log file
-"$PATH_PREFIX"/"$NEW_NETBOX"/upgrade.sh >> /opt/"$NEW_NETBOX"/upgrade_"$DATE".log 2>&1
-
-mkdir -p "$PATH_PREFIX"/"$NEW_NETBOX"/logs
+cd "$NEW_PAPERLESS_PATH"
+sudo -Hu paperless python3 -m venv venv
+source venv/bin/activate
+sudo -Hu paperless pip install --no-warn-script-location -r requirements.txt > /dev/null
+cd "$NEW_PAPERLESS_PATH/src"
+sudo -Hu paperless python3 manage.py migrate
 
 stop_spinner $?
 
 # If install successful, clean-up
 if [ $? -eq 0 ]; then
-  start_spinner "Cleaning up and restarting Netbox " 
+  start_spinner "Cleaning up and restarting Paperless " 
 
-  sudo rm "$PATH_PREFIX/v$VERSION".tar.gz
-  sudo chown -R "$NETBOX_USER":"$NETBOX_GROUP" "$PATH_PREFIX/$NEW_NETBOX"
+  sudo rm "/opt/paperless-ngx-v$VERSION.tar.xz"
+  sudo chown -R "$PAPERLESS_USER":"$PAPERLESS_GROUP" "$NEW_PAPERLESS_PATH"
 
-  sudo systemctl start netbox netbox-rq
+  sudo systemctl start \
+   paperless-consumer \
+   paperless-scheduler \
+   paperless-task-queue \
+   paperless-webserver
 
   stop_spinner $?
 
   complete "Upgrade to $VERSION successfully completed"
 else
   error "Error in Upgrade Script, please check output above for errors!"
-  error "Netbox upgrade script output was also logged to $NEW_NETBOX/upgrade_$DATE.log"
 fi
 
