@@ -1,16 +1,17 @@
 return {
   "rose-pine/neovim", -- current theme
   name = "rose-pine",
-  lazy = false, -- load first
-  priority = 1000, -- before anything else
+  enabled = true,
+  -- lazy = false, -- load first
+  -- priority = 1000, -- before anything else
   config = function()
     require("rose-pine").setup({
       ---@usage 'main'|'moon'
       dark_variant = "main",
       bold_vert_split = true,
       dim_nc_background = false,
-      disable_background = false,
-      disable_float_background = false,
+      disable_background = true,
+      disable_float_background = true,
       disable_italics = false,
       ---@usage string hex value or named color from rosepinetheme.com/palette
       groups = {
@@ -43,10 +44,11 @@ return {
         -- headings = 'subtle'
       },
       highlight_groups = {
-        TelescopeBorder = { fg = "surface", bg = "surface" },
+        -- Cutom highlight groups for custom Telescope look
+        TelescopeBorder = { fg = "base", bg = "base" },
         TelescopeSelectionCaret = { fg = "iris", bg = "overlay" },
         TelescopeMatching = { fg = "gold" },
-        TelescopeNormal = { bg = "surface" },
+        TelescopeNormal = { bg = "base" },
         TelescopeSelection = { fg = "text", bg = "overlay" },
         TelescopeMultiSelection = { fg = "text", bg = "overlay" },
 
