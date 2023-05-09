@@ -2,18 +2,16 @@
 
 #########################################
 #
-#   NewTelco GmbH Netbox Update Script
+#   Netbox Update Script
 #   Author: ndomino
-#   Update: 10.12.2021
+#   Update: 28.04.2022
 #
 #   Usage: sudo ./upgrade_netbox.sh [version_number]
 #    i.e.: sudo ./upgrade_netbox.sh 3.1.0
 #
 #########################################
 
-[ "$UID" -eq 0 ] || { echo "This script must be run as root."; exit 1;}
-
-##### SETUP #####
+#### Helper Functions
 BOLD="$(tput bold 2>/dev/null || echo '')"
 GREY="$(tput setaf 0 2>/dev/null || echo '')"
 UNDERLINE="$(tput smul 2>/dev/null || echo '')"
@@ -61,7 +59,7 @@ function _spinner() {
             # calculate the column where spinner and status msg will be displayed
             let column=$(tput cols)-${#2}-8
             # display message and position the cursor in $column column
-            echo -ne "${2}"
+            echo -ne "${BOLD}${BLUE}>${NO_COLOR} ${2}"
             printf "%${column}s"
 
             # start spinner
@@ -113,69 +111,89 @@ function stop_spinner {
     unset _sp_pid
 }
 
-##### VARIABLES #####
+#### Initial Checks
+# Must be root
+[ "$UID" -eq 0 ] || { echo "This script must be run as root."; exit 1;}
 
-if [ ! "$1" ]; then
-  echo "You must pass the new version of the Netbox i.e. 'sudo ./upgrade_netbox.sh 2.8.9'"
+# Must pass valid Netbox version as first argument
+if [ ! "$1" ] || [[ ! $1 =~ ^[0-9]+.[0-9]+(.[0-9]+)?$ ]]; then
+  echo "You must pass a valid version of the Netbox i.e. 'sudo ./upgrade_netbox.sh 2.8.9'"
   exit 1
 fi
 
-NEW_NETBOX="netbox-$1"
+# Variables
+VERSION="$1"
+NEW_NETBOX="netbox-$VERSION"
 DATE=$(date +%d%m%Y)
+NETBOX_USER=netbox
+NETBOX_GROUP=netbox
+PATH_PREFIX=/opt
 
-start_spinner "${BOLD}${BLUE}>${NO_COLOR} Unpacking and Downloading $1 " 
+#### Begin installation
 
-sudo wget -q "https://github.com/netbox-community/netbox/archive/v$1.tar.gz" "/opt/v$1.tar.gz" > /dev/null
-sudo tar -xf "v$1.tar.gz" > /dev/null
+start_spinner "Unpacking and Downloading $VERSION " 
+
+# Download requested version
+sudo wget -q "https://github.com/netbox-community/netbox/archive/v$VERSION.tar.gz" "$PATH_PREFIX/v$VERSION.tar.gz" > /dev/null
+sudo tar -xf "v$VERSION.tar.gz" > /dev/null
 
 stop_spinner $?
 
-start_spinner "${BOLD}${BLUE}>${NO_COLOR} Stopping 'netbox' and 'netbox-rq'" 
+start_spinner "Stopping 'netbox' and 'netbox-rq'" 
 
-# sudo systemctl stop netbox netbox-rq netbox-pdu
+# Stop existing netbox service
 sudo systemctl stop netbox netbox-rq
 
 stop_spinner $?
 
-start_spinner "${BOLD}${BLUE}>${NO_COLOR} Setting up new directory" 
+start_spinner "Setting up new directory" 
 
-sudo chown -R netbox: /opt/"$NEW_NETBOX"
+# Setup new directories
+sudo chown -R "$NETBOX_USER":"$NETBOX_GROUP" "$PATH_PREFIX/$NEW_NETBOX"
 
-cp /opt/netbox/netbox/netbox/configuration.py /opt/"$NEW_NETBOX"/netbox/netbox/
-cp /opt/netbox/netbox/netbox/ldap_config.py /opt/"$NEW_NETBOX"/netbox/netbox/
-cp /opt/netbox/gunicorn.py /opt/"$NEW_NETBOX"/
-cp /opt/netbox/local_requirements.txt /opt/"$NEW_NETBOX"/
-cp -r /opt/netbox/netbox/media/* /opt/"$NEW_NETBOX"/netbox/media/
+cp "$PATH_PREFIX"/netbox/netbox/netbox/configuration.py /opt/"$NEW_NETBOX"/netbox/netbox/
+if [ -f "$PATH_PREFIX"/netbox/netbox/netbox/ldap_config.py ]; then
+  cp "$PATH_PREFIX"/netbox/netbox/netbox/ldap_config.py /opt/"$NEW_NETBOX"/netbox/netbox/
+fi
+if [ -f "$PATH_PREFIX"/netbox/gunicorn.py ]; then
+  cp "$PATH_PREFIX"/netbox/gunicorn.py /opt/"$NEW_NETBOX"/
+fi
+if [ -f "$PATH_PREFIX"/netbox/local_requirements.txt ]; then
+  cp "$PATH_PREFIX"/netbox/local_requirements.txt /opt/"$NEW_NETBOX"/
+fi
+cp -r "$PATH_PREFIX"/netbox/netbox/media/* /opt/"$NEW_NETBOX"/netbox/media/
+cp -r "$PATH_PREFIX"/netbox/netbox/scripts/* /opt/"$NEW_NETBOX"/netbox/scripts/
+cp -r "$PATH_PREFIX"/netbox/netbox/reports/* /opt/"$NEW_NETBOX"/netbox/reports/
 
-cp -r /opt/netbox/netbox/scripts/* /opt/"$NEW_NETBOX"/netbox/scripts/
-cp -r /opt/netbox/netbox/reports/* /opt/"$NEW_NETBOX"/netbox/reports/
+# Delete old symlink
+sudo rm "$PATH_PREFIX"/netbox
 
-sudo rm /opt/netbox
-
-sudo ln -s /opt/"$NEW_NETBOX" /opt/netbox
+# Create new symlink
+sudo ln -s "$PATH_PREFIX"/"$NEW_NETBOX" /opt/netbox
 
 stop_spinner $?
 
-start_spinner "${BOLD}${BLUE}>${NO_COLOR} Running Netbox upgrade script " 
+start_spinner "Running Netbox upgrade script " 
 
-"/opt/$NEW_NETBOX/upgrade.sh" >> "/opt/$NEW_NETBOX/upgrade_$DATE.log" 2>&1
+# Execute netbox upgrade.sh script - save output to log file
+"$PATH_PREFIX"/"$NEW_NETBOX"/upgrade.sh >> /opt/"$NEW_NETBOX"/upgrade_"$DATE".log 2>&1
 
-mkdir -p "/opt/$NEW_NETBOX/logs"
+mkdir -p "$PATH_PREFIX"/"$NEW_NETBOX"/logs
 
 stop_spinner $?
 
+# If install successful, clean-up
 if [ $? -eq 0 ]; then
-  start_spinner "${BOLD}${BLUE}>${NO_COLOR} Cleaning up and restarting Netbox " 
+  start_spinner "Cleaning up and restarting Netbox " 
 
-  sudo rm /opt/v"$1".tar.gz
-  sudo chown -R netbox: /opt/"$NEW_NETBOX"
-  # sudo sed 's/SAMEORIGIN/ALLOW FROM https:\/\/wiki.newtelco.de\//' /opt/"$NEW_NETBOX"/netbox/netbox/settings.py 
-  sudo patch -s -p1 /opt/"$NEW_NETBOX"/netbox/netbox/settings.py < /opt/wiki_settings.patch
+  sudo rm "$PATH_PREFIX/v$VERSION".tar.gz
+  sudo chown -R "$NETBOX_USER":"$NETBOX_GROUP" "$PATH_PREFIX/$NEW_NETBOX"
+
   sudo systemctl start netbox netbox-rq
 
   stop_spinner $?
 
-  complete "Upgrade to $1 successfully completed"
+  complete "Upgrade to $VERSION successfully completed"
 else
   error "Error in Upgrade Script, please check output above for errors!"
   error "Netbox upgrade script output was also logged to $NEW_NETBOX/upgrade_$DATE.log"
