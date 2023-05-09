@@ -1,10 +1,10 @@
 -- See:https://github.com/JoosepAlviste/dotfiles/blob/master/config/nvim/lua/j/plugins/lsp/null_ls.lua
 
-local function allow_format(servers)
-  return function(client)
-    return vim.tbl_contains(servers, client.name)
-  end
-end
+-- local function allow_format(servers)
+--   return function(client)
+--     return vim.tbl_contains(servers, client.name)
+--   end
+-- end
 
 local function goto_next_error()
   vim.diagnostic.goto_next({ severity = "Error" })
@@ -80,9 +80,8 @@ return {
       end,
     },
     { "williamboman/mason-lspconfig.nvim" },
-    { "lvimuser/lsp-inlayhints.nvim" },
     { "b0o/schemastore.nvim" },
-    { "jose-elias-alvarez/null-ls.nvim" }, -- Autocompletion
+    { "jose-elias-alvarez/null-ls.nvim" },
     { "hrsh7th/nvim-cmp" },
     { "hrsh7th/cmp-buffer" },
     { "hrsh7th/cmp-path" },
@@ -106,19 +105,19 @@ return {
       local builtin = require("telescope.builtin")
 
       -- Autoformatting
-      vim.api.nvim_clear_autocmds({ group = formatting_augroup, buffer = bufnr })
-      vim.api.nvim_create_autocmd("BufWritePre", {
-        group = formatting_augroup,
-        buffer = bufnr,
-        callback = function()
-          vim.lsp.buf.format({
-            bufnr = bufnr,
-            -- filter = function(buf_client)
-            --   return buf_client.name == "null-ls"
-            -- end,
-          })
-        end,
-      })
+      -- vim.api.nvim_clear_autocmds({ group = formatting_augroup, buffer = bufnr })
+      -- vim.api.nvim_create_autocmd("BufWritePre", {
+      --   group = formatting_augroup,
+      --   buffer = bufnr,
+      --   callback = function()
+      --     vim.lsp.buf.format({
+      --       bufnr = bufnr,
+      --       -- filter = function(buf_client)
+      --       --   return buf_client.name == "null-ls"
+      --       -- end,
+      --     })
+      --   end,
+      -- })
 
       -- Highlight symbol references on hover
       if client.server_capabilities.documentHighlightProvider then
@@ -143,8 +142,8 @@ return {
         vim.lsp.buf.format({
           bufnr = bufnr,
           async = false,
-          -- group = formatting_augroup,
           timeout_ms = 10000,
+          -- group = formatting_augroup,
           -- filter = allow_format({ "null-ls" }),
         })
       end)
@@ -163,8 +162,8 @@ return {
       bind("n", "]d", vim.diagnostic.goto_next, { desc = "Next Diagnostic", buffer = true })
       bind("n", "<leader>dd", builtin.diagnostics, { desc = "List Diagnostics", buffer = true })
 
-      bind("n", "[e", goto_next_error, { desc = "Next Error", buffer = true })
-      bind("n", "]e", goto_prev_error, { desc = "Prev Error", buffer = true })
+      bind("n", "]e", goto_next_error, { desc = "Next Error", buffer = true })
+      bind("n", "[e", goto_prev_error, { desc = "Prev Error", buffer = true })
 
       bind("n", "K", vim.lsp.buf.hover, { desc = "Hover Documentation", buffer = true })
       bind("n", "<C-k>", vim.lsp.buf.signature_help, { desc = "Signature Documentation", buffer = true })
@@ -213,12 +212,12 @@ return {
       end,
     })
 
-    lsp.format_on_save({
-      servers = {
-        ["lua_ls"] = { "lua" },
-        ["null-ls"] = { "typescript", "javascript", "javascriptreact", "typescriptreact", "css", "html" },
-      },
-    })
+    -- lsp.format_on_save({
+    --   servers = {
+    --     ["lua_ls"] = { "lua" },
+    --     ["null-ls"] = { "typescript", "javascript", "javascriptreact", "typescriptreact", "css", "html" },
+    --   },
+    -- })
 
     lsp.setup()
 
@@ -233,30 +232,6 @@ return {
         -- pass options to lspconfig's setup method
         on_attach = {
           disable_formatting = true,
-          settings = {
-            javascript = {
-              inlayHints = {
-                includeInlayEnumMemberValueHints = true,
-                includeInlayFunctionLikeReturnTypeHints = true,
-                includeInlayFunctionParameterTypeHints = true,
-                includeInlayParameterNameHints = "all", -- 'none' | 'literals' | 'all';
-                includeInlayParameterNameHintsWhenArgumentMatchesName = true,
-                includeInlayPropertyDeclarationTypeHints = true,
-                includeInlayVariableTypeHints = true,
-              },
-            },
-            typescript = {
-              inlayHints = {
-                includeInlayEnumMemberValueHints = true,
-                includeInlayFunctionLikeReturnTypeHints = true,
-                includeInlayFunctionParameterTypeHints = true,
-                includeInlayParameterNameHints = "all", -- 'none' | 'literals' | 'all';
-                includeInlayParameterNameHintsWhenArgumentMatchesName = true,
-                includeInlayPropertyDeclarationTypeHints = true,
-                includeInlayVariableTypeHints = true,
-              },
-            },
-          },
         },
       },
     })
@@ -274,11 +249,9 @@ return {
     local null_opts = lsp.build_options("null-ls", {})
 
     null_ls.setup({
-      -- debug = true,
+      debug = true,
       -- debounce = 150,
       -- save_after_format = true,
-      diagnostics_format = "#{m} [#{c}]",
-      root_dir = nls_utils.root_pattern(".null-ls-root", "Makefile", ".git", "package.json"),
       on_attach = function(client, bufnr)
         if client.supports_method("textDocument/formatting") then
           vim.api.nvim_clear_autocmds({ group = formatting_augroup, buffer = bufnr })
@@ -286,12 +259,14 @@ return {
             group = formatting_augroup,
             buffer = bufnr,
             callback = function()
-              vim.lsp.buf.format({ bufnr = bufnr })
+              vim.lsp.buf.format()
             end,
           })
         end
         null_opts.on_attach(client, bufnr)
       end,
+      diagnostics_format = "#{m} [#{c}]",
+      root_dir = nls_utils.root_pattern(".null-ls-root", "Makefile", ".git", "package.json"),
       sources = {
         -- typescript.nvim
         require("typescript.extensions.null-ls.code-actions"),
@@ -308,7 +283,7 @@ return {
         -- null_ls.builtins.formatting.lua_format.with({extra_args = {'--tab-width=2', '--column-limit=100'}}),
         null_ls.builtins.formatting.shfmt,
         -- Diagnostics
-        null_ls.builtins.diagnostics.eslint_d,
+        -- null_ls.builtins.diagnostics.eslint_d,
         null_ls.builtins.diagnostics.shellcheck,
         -- null_ls.builtins.diagnostics.pyright,
         -- Python
@@ -332,6 +307,11 @@ return {
       completion = {
         completeopt = "menu,menuone,noinsert",
       },
+      snippet = {
+        expand = function(args)
+          require("luasnip").lsp_expand(args.body)
+        end,
+      },
       mapping = {
         ["<CR>"] = cmp.mapping.confirm({ select = true }),
         ["<Tab>"] = cmp_action.luasnip_supertab(),
@@ -347,17 +327,37 @@ return {
         { name = "path" },
         { name = "nvim_lua" },
       },
-      formatting = {
-        fields = { "abbr", "kind", "menu" },
-        format = require("lspkind").cmp_format({
-          mode = "symbol", -- show only symbol annotations
-          maxwidth = 50, -- prevent the popup from showing more than provided characters
-          ellipsis_char = "...", -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead
-        }),
-      },
+      -- formatting = {
+      --   fields = { "abbr", "kind", "menu" },
+      --   format = require("lspkind").cmp_format({
+      --     preset = "codicons",
+      --     mode = "symbol_text", -- show text + symbol annotations
+      --     maxwidth = 50, -- prevent the popup from showing more than provided characters
+      --     ellipsis_char = "...", -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead
+      --   }),
+      -- },
+      -- window = {
+      --   completion = cmp.config.window.bordered(),
+      --   documentation = cmp.config.window.bordered(),
+      -- },
       window = {
-        completion = cmp.config.window.bordered(),
-        documentation = cmp.config.window.bordered(),
+        completion = {
+          winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,Search:None",
+          col_offset = -3,
+          side_padding = 0,
+        },
+      },
+      formatting = {
+        fields = { "kind", "abbr", "menu" },
+        format = function(entry, vim_item)
+          local kind =
+            require("lspkind").cmp_format({ mode = "symbol_text", maxwidth = 50, preset = "codicons" })(entry, vim_item)
+          local strings = vim.split(kind.kind, "%s", { trimempty = true })
+          kind.kind = " " .. (strings[1] or "") .. " "
+          kind.menu = "    (" .. (strings[2] or "") .. ")"
+
+          return kind
+        end,
       },
     })
 
