@@ -13,6 +13,7 @@
   "margin-bottom": 0,
   "height": 35,
   "modules-left": [
+    "clock",
     "cpu",
     "memory",
     "disk",
@@ -27,7 +28,6 @@
     "bluetooth",
     "custom/weather",
     "network",
-    "clock",
     // "wireplumber",
     "pulseaudio",
     "tray"
