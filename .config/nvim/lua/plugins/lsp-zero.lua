@@ -212,19 +212,19 @@ return {
       end,
     })
 
-    -- lsp.format_on_save({
-    --   servers = {
-    --     ["lua_ls"] = { "lua" },
-    --     ["null-ls"] = { "typescript", "javascript", "javascriptreact", "typescriptreact", "css", "html" },
-    --   },
-    -- })
+    lsp.format_on_save({
+      servers = {
+        ["lua_ls"] = { "lua" },
+        ["null-ls"] = { "typescript", "javascript", "javascriptreact", "typescriptreact", "css", "html" },
+      },
+    })
 
     lsp.setup()
 
     -- typescript.nvim setup
     require("typescript").setup({
       disable_commands = false, -- prevent the plugin from creating Vim commands
-      debug = false, -- enable debug logging for commands
+      debug = true, -- enable debug logging for commands
       go_to_source_definition = {
         fallback = true, -- fall back to standard LSP definition on failure
       },
@@ -233,14 +233,11 @@ return {
         on_attach = {
           disable_formatting = true,
         },
+        on_init = function(client)
+          -- Disable 'tsserver' syntaxhighlighting fuckups
+          client.server_capabilities.semanticTokensProvider = nil
+        end,
       },
-    })
-
-    -- Disable 'tsserver' syntaxhighlighting fuckups
-    require("lspconfig").tsserver.setup({
-      on_init = function(client)
-        client.server_capabilities.semanticTokensProvider = nil
-      end,
     })
 
     -- null-ls setup
@@ -327,19 +324,6 @@ return {
         { name = "path" },
         { name = "nvim_lua" },
       },
-      -- formatting = {
-      --   fields = { "abbr", "kind", "menu" },
-      --   format = require("lspkind").cmp_format({
-      --     preset = "codicons",
-      --     mode = "symbol_text", -- show text + symbol annotations
-      --     maxwidth = 50, -- prevent the popup from showing more than provided characters
-      --     ellipsis_char = "...", -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead
-      --   }),
-      -- },
-      -- window = {
-      --   completion = cmp.config.window.bordered(),
-      --   documentation = cmp.config.window.bordered(),
-      -- },
       window = {
         completion = {
           winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,Search:None",
