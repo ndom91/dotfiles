@@ -317,10 +317,27 @@ return {
         ["<CR>"] = cmp.mapping.confirm({ select = true }),
         ["<Tab>"] = cmp_action.luasnip_supertab(),
         ["<S-Tab>"] = cmp_action.luasnip_shift_supertab(),
+        ["<C-g>"] = cmp.mapping(function(fallback)
+          vim.api.nvim_feedkeys(
+            vim.fn["copilot#Accept"](vim.api.nvim_replace_termcodes("<Tab>", true, true, true)),
+            "n",
+            true
+          )
+        end),
+      },
+      experimental = {
+        ghost_text = false, -- feature conflicts with copilot.nvim's preview
       },
       sources = {
         { name = "copilot" },
-        { name = "nvim_lsp", max_item_count = 20 },
+        -- { name = "nvim_lsp", max_item_count = 20 },
+        {
+          name = "nvim_lsp",
+          entry_filter = function(entry, ctx)
+            -- Don't return file paths from nvim_lsp, use 'path' source instead
+            return require("cmp.types").lsp.CompletionItemKind[entry:get_kind()] ~= "File"
+          end,
+        },
         { name = "nvim_lsp_signature_help" },
         { name = "luasnip", keyword_length = 2 },
         { name = "treesitter" },
@@ -343,6 +360,24 @@ return {
           local strings = vim.split(kind.kind, "%s", { trimempty = true })
           kind.kind = " " .. (strings[1] or "") .. " "
           kind.menu = "    (" .. (strings[2] or "") .. ")"
+
+          -- -- copilot
+          -- if entry.source.name == "copilot" then
+          --   kind.kind = "[] Copilot"
+          --   kind.kind_hl_group = "CmpItemKindCopilot"
+          --   return kind
+          -- end
+          --
+          -- -- Source
+          -- kind.menu = ({
+          --   nvim_lsp = "[LSP]",
+          --   luasnip = "[Snip]",
+          --   buffer = "[Buffer]",
+          --   nvim_lua = "[Lua]",
+          --   treesitter = "[Treesitter]",
+          --   path = "[Path]",
+          --   nvim_lsp_signature_help = "[Signature]",
+          -- })[entry.source.name]
 
           return kind
         end,

@@ -13,6 +13,7 @@
   "margin-bottom": 0,
   "height": 10,
   "modules-left": [
+    "clock",
     "cpu",
     "memory",
     "disk",
@@ -29,7 +30,6 @@
     "custom/weather",
     "wireplumber",
     "network",
-    "clock",
     "tray"
   ]
 }
