@@ -1,10 +1,10 @@
 -- See:https://github.com/JoosepAlviste/dotfiles/blob/master/config/nvim/lua/j/plugins/lsp/null_ls.lua
 
--- local function allow_format(servers)
---   return function(client)
---     return vim.tbl_contains(servers, client.name)
---   end
--- end
+local function allow_format(servers)
+  return function(client)
+    return vim.tbl_contains(servers, client.name)
+  end
+end
 
 local function goto_next_error()
   vim.diagnostic.goto_next({ severity = "Error" })
@@ -87,11 +87,11 @@ return {
     { "hrsh7th/cmp-path" },
     { "saadparwaiz1/cmp_luasnip" },
     { "hrsh7th/cmp-nvim-lsp" },
-    { "hrsh7th/cmp-nvim-lua" }, -- Snippets
+    { "hrsh7th/cmp-nvim-lua" },         -- Snippets
     { "L3MON4D3/LuaSnip" },
     { "rafamadriz/friendly-snippets" }, -- Languages
     { "jose-elias-alvarez/typescript.nvim" },
-    { "folke/neodev.nvim" }, -- lua support for nvim config + development
+    { "folke/neodev.nvim" },            -- lua support for nvim config + development
   },
   config = function()
     local lsp = require("lsp-zero").preset({})
@@ -143,6 +143,9 @@ return {
           bufnr = bufnr,
           async = false,
           timeout_ms = 10000,
+          filter = function(buf_client)
+            return buf_client.name == "null-ls"
+          end,
           -- group = formatting_augroup,
           -- filter = allow_format({ "null-ls" }),
         })
@@ -228,9 +231,9 @@ return {
     -- typescript.nvim setup
     require("typescript").setup({
       disable_commands = false, -- prevent the plugin from creating Vim commands
-      debug = true, -- enable debug logging for commands
+      debug = true,             -- enable debug logging for commands
       go_to_source_definition = {
-        fallback = true, -- fall back to standard LSP definition on failure
+        fallback = true,        -- fall back to standard LSP definition on failure
       },
       server = {
         -- pass options to lspconfig's setup method
@@ -260,7 +263,11 @@ return {
             group = formatting_augroup,
             buffer = bufnr,
             callback = function()
-              vim.lsp.buf.format()
+              vim.lsp.buf.format({
+                filter = function(buf_client)
+                  return buf_client.name == "null-ls"
+                end,
+              })
             end,
           })
         end
@@ -339,9 +346,9 @@ return {
           end,
         },
         { name = "nvim_lsp_signature_help" },
-        { name = "luasnip", keyword_length = 2 },
+        { name = "luasnip",                keyword_length = 2 },
         { name = "treesitter" },
-        { name = "buffer", max_item_count = 5, keyword_length = 3 },
+        { name = "buffer",                 max_item_count = 5, keyword_length = 3 },
         { name = "path" },
         { name = "nvim_lua" },
       },
@@ -356,7 +363,7 @@ return {
         fields = { "kind", "abbr", "menu" },
         format = function(entry, vim_item)
           local kind =
-            require("lspkind").cmp_format({ mode = "symbol_text", maxwidth = 50, preset = "codicons" })(entry, vim_item)
+              require("lspkind").cmp_format({ mode = "symbol_text", maxwidth = 50, preset = "codicons" })(entry, vim_item)
           local strings = vim.split(kind.kind, "%s", { trimempty = true })
           kind.kind = " " .. (strings[1] or "") .. " "
           kind.menu = "    (" .. (strings[2] or "") .. ")"
