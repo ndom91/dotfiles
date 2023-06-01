@@ -250,6 +250,18 @@ windowrulev2 = dimaround, title:Search...
 # DevTools
 windowrulev2 = float, class:brave-browser, title:^(DevTools.*)$
 
+# Winetricks
+windowrulev2 = float, title:^(Winetricks.*)$
+
+# Lutris
+windowrulev2 = float, class:lutris
+
+# YAD (Fusion360)
+windowrulev2 = float, class:yad
+
+# Beekeeper-Studio
+windowrulev2 = float, class:beekeeper-studio
+
 # Sharing indicator
 windowrulev2 = animation slide, title:^.*(Sharing Indicator).*$
 windowrulev2 = float, title:^.*(Sharing Indicator).*$
