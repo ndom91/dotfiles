@@ -3,13 +3,13 @@
 
 	"positionX": "right",
 	"positionY": "top",
-	"control-center-margin-top": 20,
-	"control-center-margin-bottom": 0,
-	"control-center-margin-right": 20,
+	"control-center-margin-top": 10,
+	"control-center-margin-bottom": 10,
+	"control-center-margin-right": 10,
 	"control-center-margin-left": 0,
-	"control-center-width": 500,
+	"control-center-width": 350,
 	"control-center-height": 600,
-	"fit-to-screen": false,
+	"fit-to-screen": true,
 
 	"layer": "top",
 	"cssPriority": "user",
@@ -18,7 +18,7 @@
 	"notification-body-image-width": 200,
 	"timeout": 10,
 	"timeout-low": 5,
-	"timeout-critical": 0,
+	"timeout-critical": 30,
 	"notification-window-width": 500,
 	"keyboard-shortcuts": true,
 	"image-visibility": "when-available",
@@ -30,7 +30,6 @@
 	"widgets": [
 		"title",
 		"dnd",
-		"mpris",
 		"notifications"
 	],
 	"widget-config": {

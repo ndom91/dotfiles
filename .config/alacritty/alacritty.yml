@@ -26,7 +26,7 @@ font:
     style: Italic
   normal:
     # family: DejaVu SansMono Nerd Font
-    #family: BlexMono Nerd Font
+    # family: BlexMono Nerd Font
     # family: UbuntuMono Nerd Font Mono
     family: FiraCode Nerd Font
     style: Regular
