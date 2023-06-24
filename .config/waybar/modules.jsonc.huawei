@@ -62,17 +62,17 @@
     "format-full": "{icon} Full",
     "format-alt": "{icon} {time}",
     "format-icons": [
-      "<span font='14' rise='-2pt'></span>",
-      "<span font='14' rise='-2pt'></span>",
-      "<span font='14' rise='-2pt'></span>",
-      "<span font='14' rise='-2pt'></span>",
-      "<span font='14' rise='-2pt'></span>",
-      "<span font='14' rise='-2pt'></span>",
-      "<span font='14' rise='-2pt'></span>",
-      "<span font='14' rise='-2pt'></span>",
-      "<span font='14' rise='-2pt'></span>",
-      "<span font='14' rise='-2pt'></span>",
-      "<span font='14' rise='-2pt'></span>"
+      "<span font='12' rise='-2pt'></span>",
+      "<span font='12' rise='-2pt'></span>",
+      "<span font='12' rise='-2pt'></span>",
+      "<span font='12' rise='-2pt'></span>",
+      "<span font='12' rise='-2pt'></span>",
+      "<span font='12' rise='-2pt'></span>",
+      "<span font='12' rise='-2pt'></span>",
+      "<span font='12' rise='-2pt'></span>",
+      "<span font='12' rise='-2pt'></span>",
+      "<span font='12' rise='-2pt'></span>",
+      "<span font='12' rise='-2pt'></span>"
     ],
     "format-time": "{H}h {M}min",
     "tooltip": true,
@@ -88,7 +88,7 @@
   },
   "cpu": {
     "interval": 1,
-    "format": "<span font='22' rise='-7pt'>󰻠</span> {usage:>2}%"
+    "format": "<span font='14' rise='-4pt'>󰻠</span> {usage:>2}%"
   },
   "custom/menu": {
     "format": "⮝",
@@ -98,11 +98,11 @@
   "temperature": {
     "interval": 120,
     "thermal-zone": 0,
-    "format": "<span font='19' rise='-5pt'>󰏈</span> {temperatureC}°C"
+    "format": "<span font='12' rise='-2pt'>󰏈</span> {temperatureC}°C"
   },
   "disk": {
     "interval": 120,
-    "format": "<span font='22' rise='-7pt'>󰋊</span> {free}"
+    "format": "<span font='12' rise='-3pt'>󰋊</span> {free}"
   },
   "memory": {
     "interval": 10,
