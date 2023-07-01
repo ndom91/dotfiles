@@ -52,7 +52,8 @@ exec-once = gsettings set org.gnome.desktop.interface cursor-size 24
 # User Apps
 exec-once = /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec-once = ~/.config/waybar/start-waybar
-exec-once = mako --config "$HOME/.config/mako/config"
+# exec-once = mako --config "$HOME/.config/mako/config"
+exec-once = swaync
 exec-once = 1password --silent
 exec-once = nm-applet --indicator
 exec-once = swaybg -m fill -i ~/.config/hypr/wallpapers/arch01.jpg
@@ -291,9 +292,14 @@ bind = $mainMod SHIFT, S, exec, pkill --signal SIGINT wf-recorder || wf-recorder
 bind = $mainMod, C, exec, cliphist list | wofi -b -p Cliphist -n -i -M fuzzy --dmenu | cliphist decode | wl-copy
 bind = CTRL SHIFT, L, exec, swaylock
 
-bind = CTRL, `, exec, makoctl restore
-bind = CTRL SHIFT, Space, exec, makoctl dismiss -a
-bind = CTRL, Space, exec, makoctl dismiss
+# notifications mako
+# bind = CTRL, `, exec, makoctl restore
+# bind = CTRL SHIFT, Space, exec, makoctl dismiss -a
+# bind = CTRL, Space, exec, makoctl dismiss
+
+# notifications swaync
+bind = CTRL, Space, exec, swaync-client -t -sw
+bind = CTRL SHIFT, Space, exec, swaync-client -C -sw
 
 # 1Password Quick Search - NOT WORKING
 bind = CTRL SHIFT,.,pass,1Password
