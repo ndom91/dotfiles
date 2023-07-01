@@ -32,7 +32,7 @@
   },
   "cpu": {
     "interval": 1,
-    "format": "<span font='15' rise='-4pt'>󰻠</span> {usage:>2}%"
+    "format": "<span font='15' rise='-1pt'>󰻠</span> {usage:>2}%"
   },
   "custom/menu": {
     "format": "⮝",
@@ -41,11 +41,11 @@
   },
   "disk": {
     "interval": 120,
-    "format": "<span font='15' rise='-4pt'>󰋊</span> {free}"
+    "format": "<span font='15' rise='-1pt'>󰋊</span> {free}"
   },
   "memory": {
     "interval": 10,
-    "format": "<span font='18' rise='-4pt'></span> {percentage}%"
+    "format": "<span font='13' rise='-1pt'></span> {percentage}%"
     // "format": " {used:0.1f}G"
   },
   "hyprland/window": {
@@ -59,10 +59,10 @@
   },
   "network": {
     "interval": 5,
-    "format-wifi": "<span font='20' rise='-5pt'></span> {ipaddr}",
     // "format-wifi": "<span font='20' rise='-5pt'></span> {ipaddr} [{essid}]",
+    "format-wifi": "<span font='15' rise='-2pt'></span> {ipaddr}",
     "format-ethernet": " {bandwidthUpBits} |  {bandwidthDownBits}",
-    "format-alt": "<span font='20' rise='-5pt'></span> {ipaddr}/{cidr}",
+    "format-alt": "<span font='15' rise='-2pt'></span> {ipaddr}/{cidr}",
     "format-linked": " {ifname} (No IP)",
     "format-disconnected": "睊 Disconnected",
     "format-disabled": "睊 Disabled",
@@ -78,9 +78,9 @@
     "return-type": "json"
   },
   "custom/updater": {
-    "format": "<span font='20' rise='-5pt'></span> {}",
+    "format": "<span font='15' rise='-2pt'></span> {}",
     "exec": "checkupdates-with-aur | uniq | wc -l",
-    "interval": 300,
+    "interval": 14400,
     "tooltip": false
     // "exec-if": "[[ $(checkupdates | wc -l) ]]",
     // "tooltip-format": "$(yay -Qu | wc -l)"
@@ -111,15 +111,15 @@
     // "on-click-right": "blueberry"
   },
   "wireplumber": {
-    "format": "<span font='20' rise='-5pt'></span> {volume}",
-    "format-muted": "<span font='20' rise='-5pt'></span>",
+    "format": "<span font='15' rise='-2pt'></span> {volume}",
+    "format-muted": "<span font='15' rise='-2pt'></span>",
     "on-click": "pavucontrol"
   },
   "pulseaudio": {
-    "format": "<span font='20' rise='-5pt'></span> {volume}",
-    "format-muted": "<span font='20' rise='-5pt'></span>",
-    "format-bluetooth": "<span font='20' rise='-5pt'></span> {volume}% {format_source}",
-    "format-bluetooth-muted": "<span font='20' rise='-5pt'></span> Muted",
+    "format": "<span font='15' rise='-2pt'></span>  {volume}",
+    "format-muted": "<span font='15' rise='-2pt'></span>",
+    "format-bluetooth": "<span font='15' rise='-2pt'></span> {volume}% {format_source}",
+    "format-bluetooth-muted": "<span font='15' rise='-2pt'></span> Muted",
     "format-icons": {
       "headphone": "",
       "hands-free": "",

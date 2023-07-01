@@ -1,5 +1,6 @@
 * {
-    font-family: 'UbuntuMono Nerd Font Mono';
+  /* font-family: 'UbuntuMono Nerd Font Mono'; */
+    font-family: 'FiraCode Nerd Font';
     font-size: 12px;
 }
 
@@ -41,7 +42,7 @@ tooltip {
     margin: 0 2px;
     background-color: #191724;
     /*border: 2px solid #1e1e2e */
-    font-family: 'UbuntuMono Nerd Font Mono';
+    font-family: 'FiraCode Nerd Font';
     font-size: 12px;
 }
 
