@@ -11,7 +11,7 @@
   "margin-right": 5,
   "margin-top": 5,
   "margin-bottom": 0,
-  "height": 10,
+  "height": 35,
   "modules-left": [
     "clock",
     "cpu",
