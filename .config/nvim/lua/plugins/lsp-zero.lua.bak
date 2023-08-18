@@ -75,9 +75,9 @@ return {
     { "neovim/nvim-lspconfig" },
     {
       "williamboman/mason.nvim",
-      build = function()
-        pcall(vim.cmd, "MasonUpdate")
-      end,
+      -- build = function()
+      --   pcall(vim.cmd, "MasonUpdate")
+      -- end,
     },
     { "williamboman/mason-lspconfig.nvim" },
     { "b0o/schemastore.nvim" },
@@ -143,9 +143,9 @@ return {
           bufnr = bufnr,
           async = false,
           timeout_ms = 10000,
-          filter = function(buf_client)
-            return buf_client.name == "null-ls"
-          end,
+          -- filter = function(buf_client)
+          --   return buf_client.name == "null-ls"
+          -- end,
           -- group = formatting_augroup,
           -- filter = allow_format({ "null-ls" }),
         })
@@ -156,7 +156,7 @@ return {
       bind("n", "gd", vim.lsp.buf.definition, { desc = "[G]oto [D]efinition", buffer = true })
       bind("n", "gD", vim.lsp.buf.type_definition, { desc = "[G]oto Type [D]efinition", buffer = true })
       bind("n", "gr", builtin.lsp_references, { desc = "[G]oto [R]eferences", buffer = true })
-      bind("n", "gI", vim.lsp.buf.implementation, { desc = "[G]oto [I]mplementation", buffer = true })
+      -- bind("n", "gI", vim.lsp.buf.implementation, { desc = "[G]oto [I]mplementation", buffer = true })
       bind("n", "<leader>ds", builtin.lsp_document_symbols, { desc = "[D]ocument [S]ymbols", buffer = true })
       bind("n", "<leader>ws", builtin.lsp_dynamic_workspace_symbols, { desc = "[W]orkspace [S]ymbols", buffer = true })
 
@@ -222,7 +222,7 @@ return {
       },
       servers = {
         ["lua_ls"] = { "lua" },
-        ["null-ls"] = { "typescript", "javascript", "javascriptreact", "typescriptreact", "css", "html" },
+        ["null-ls"] = { "typescript", "javascript", "vue", "javascriptreact", "typescriptreact", "css", "html" },
       },
     })
 
@@ -264,8 +264,18 @@ return {
             buffer = bufnr,
             callback = function()
               vim.lsp.buf.format({
+                bufnr = bufnr,
+                async = false,
                 filter = function(buf_client)
-                  return buf_client.name == "null-ls"
+                  local current_bufnr = vim.fn.bufnr("%")
+                  local current_buffer_path = vim.api.nvim_buf_get_name(current_bufnr)
+                  if string.find(current_buffer_path, "/opt/checkly") then
+                    print('CHECKLY PATH')
+                    return buf_client.name == "null-ls"
+                  else
+                    print('LSP FORMAT')
+                    return true
+                  end
                 end,
               })
             end,
@@ -324,19 +334,19 @@ return {
         ["<CR>"] = cmp.mapping.confirm({ select = true }),
         ["<Tab>"] = cmp_action.luasnip_supertab(),
         ["<S-Tab>"] = cmp_action.luasnip_shift_supertab(),
-        ["<C-g>"] = cmp.mapping(function(fallback)
-          vim.api.nvim_feedkeys(
-            vim.fn["copilot#Accept"](vim.api.nvim_replace_termcodes("<Tab>", true, true, true)),
-            "n",
-            true
-          )
-        end),
+        -- ["<C-g>"] = cmp.mapping(function(fallback)
+        --   vim.api.nvim_feedkeys(
+        --     vim.fn["copilot#Accept"](vim.api.nvim_replace_termcodes("<Tab>", true, true, true)),
+        --     "n",
+        --     true
+        --   )
+        -- end),
       },
       experimental = {
         ghost_text = false, -- feature conflicts with copilot.nvim's preview
       },
       sources = {
-        { name = "copilot" },
+        -- { name = "copilot" },
         -- { name = "nvim_lsp", max_item_count = 20 },
         {
           name = "nvim_lsp",

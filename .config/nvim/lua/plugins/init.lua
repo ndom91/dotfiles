@@ -31,7 +31,7 @@ return {
   },
   { "lvimuser/lsp-inlayhints.nvim", config = true },
 
-  { "tami5/lspsaga.nvim", enabled = false, config = true },
+  { "tami5/lspsaga.nvim",           enabled = false, config = true },
 
   -- icons on completion
   "onsails/lspkind-nvim",
@@ -81,6 +81,9 @@ return {
       require("hologram").setup({ auto_display = true })
     end,
   },
+
+  "jose-elias-alvarez/null-ls.nvim",
+
   -- autocompletion
   {
     "hrsh7th/nvim-cmp",
@@ -102,6 +105,7 @@ return {
   {
     "zbirenbaum/copilot.lua",
     -- event = { "VimEnter" },
+    enabled = false,
     event = { "BufRead" },
     dependencies = { "zbirenbaum/copilot-cmp" },
     config = function()
@@ -129,7 +133,11 @@ return {
     end,
   },
   -- first-party github copilot plugin
-  { "github/copilot.vim", event = "InsertEnter", enabled = false },
+  {
+    "github/copilot.vim",
+    event = "InsertEnter",
+    enabled = false
+  },
   {
     "lukas-reineke/indent-blankline.nvim",
     config = function()
@@ -284,7 +292,7 @@ return {
         -- refer to the configuration section below
       })
     end,
-  }, -- tpope plugins
+  },                        -- tpope plugins
   { "tpope/vim-surround" }, -- Change surrounding arks
-  { "tpope/vim-repeat" }, -- extends . repeat
+  { "tpope/vim-repeat" },   -- extends . repeat
 }
