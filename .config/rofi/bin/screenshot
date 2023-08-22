@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-rofi_command="wofi -theme $HOME/.config/rofi/config/screenshot.rasi"
+rofi_command="rofi -theme $HOME/.config/rofi/config/screenshot.rasi"
 
 time=$(date +%Y-%m-%d-%I-%M-%S)
 geometry=$(xrandr | head -n1 | cut -d',' -f2 | tr -d '[:blank:],current')
