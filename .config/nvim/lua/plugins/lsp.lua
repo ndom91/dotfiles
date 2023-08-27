@@ -31,6 +31,8 @@ vim.keymap.set(
   { silent = true, noremap = true }
 )
 
+vim.g.neoformat_try_node_exe = 1
+
 vim.keymap.set(
   "n",
   "<Leader>e",
@@ -50,21 +52,47 @@ vim.keymap.set("n", "]d", vim.diagnostic.goto_next)
 vim.keymap.set("n", "]e", goto_next_error)
 vim.keymap.set("n", "[e", goto_prev_error)
 
-vim.api.nvim_create_autocmd("LspAttach", {
-  group = vim.api.nvim_create_augroup("UserLspConfig", {}),
-  callback = function(ev)
-    vim.bo[ev.buf].omnifunc = "v:lua.vim.lsp.omnifunc"
+-- vim.api.nvim_create_autocmd("LspAttach", {
+--   group = vim.api.nvim_create_augroup("UserLspConfig", {}),
+--   callback = function(ev)
+--     vim.bo[ev.buf].omnifunc = "v:lua.vim.lsp.omnifunc"
+--
+--     local opts = { buffer = ev.buf }
+--     vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
+--     vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
+--     vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
+--     vim.keymap.set("n", "<space>rn", vim.lsp.buf.rename, opts)
+--     vim.keymap.set({ "n", "v" }, "<space>ca", vim.lsp.buf.code_action, opts)
+--     vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
+--     -- vim.keymap.set("n", "<leader>lf", format_buffer, opts)
+--   end,
+-- })
 
-    local opts = { buffer = ev.buf }
-    vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
-    vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
-    vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
-    vim.keymap.set("n", "<space>rn", vim.lsp.buf.rename, opts)
-    vim.keymap.set({ "n", "v" }, "<space>ca", vim.lsp.buf.code_action, opts)
-    vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
-    -- vim.keymap.set("n", "<leader>lf", format_buffer, opts)
-  end,
-})
+local on_attach = function(client, bufnr)
+  vim.bo[bufnr].omnifunc = "v:lua.vim.lsp.omnifunc"
+
+  local opts = { buffer = bufnr }
+  vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
+  vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
+  vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
+  vim.keymap.set("n", "<space>rn", vim.lsp.buf.rename, opts)
+  vim.keymap.set({ "n", "v" }, "<space>ca", vim.lsp.buf.code_action, opts)
+  vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
+  -- Enable formatting on save sync
+  if client.supports_method("textDocument/formatting") then
+    local augroup =
+      vim.api.nvim_create_augroup("LspFormatting", { clear = true })
+    vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
+    vim.api.nvim_create_autocmd("BufWritePre", {
+      group = augroup,
+      buffer = bufnr,
+        callback = function()
+        vim.lua(":Neoformat<CR>")
+        -- vim.lsp.buf.format({ async = false })
+      end,
+    })
+  end
+end
 
 local languages = {
   -- "clangd",
@@ -103,6 +131,7 @@ return {
       for _, language in pairs(languages) do
         require("lspconfig")[language].setup({
           capabilities = capabilities,
+          on_attach = on_attach,
         })
       end
 
@@ -121,6 +150,23 @@ return {
   },
   {
     "sbdchd/neoformat",
+  },
+  {
+    "laytan/tailwind-sorter.nvim",
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter",
+      "nvim-lua/plenary.nvim",
+    },
+    build = "cd formatter && npm i && npm run build",
+    config = function()
+      require('tailwind-sorter').setup({
+        on_save_enabled = true
+      })
+    end,
+  },
+  {
+    "folke/neodev.nvim",
+    config = true,
   },
   {
     "williamboman/mason.nvim",

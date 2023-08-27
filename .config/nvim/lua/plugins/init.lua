@@ -174,25 +174,25 @@ return {
 	-- "wadackel/vim-dogrun",
 	-- "challenger-deep-theme/vim",
 	-- "EdenEast/nightfox.nvim",
-	{
-		"catppuccin/nvim",
-		name = "catppuccin",
-		enabled = false,
-		config = function()
-			require("catppuccin").setup({
-				transparent_background = true,
-				term_colors = true,
-				integration = {
-					nvimtree = {
-						enabled = true,
-						transparent_panel = true,
-					},
-					lsp_trouble = true,
-				},
-			})
-			vim.cmd.colorscheme("catppuccin-mocha")
-		end,
-	},
+	-- {
+	-- 	"catppuccin/nvim",
+	-- 	name = "catppuccin",
+	-- 	enabled = false,
+	-- 	config = function()
+	-- 		require("catppuccin").setup({
+	-- 			transparent_background = true,
+	-- 			term_colors = true,
+	-- 			integration = {
+	-- 				nvimtree = {
+	-- 					enabled = true,
+	-- 					transparent_panel = true,
+	-- 				},
+	-- 				lsp_trouble = true,
+	-- 			},
+	-- 		})
+	-- 		vim.cmd.colorscheme("catppuccin-mocha")
+	-- 	end,
+	-- },
 	{
 		"norcalli/nvim-colorizer.lua",
 		-- colorize hex codes / color names

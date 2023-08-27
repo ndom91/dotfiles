@@ -72,7 +72,7 @@ return {
     require("lualine").setup({
       options = {
         -- theme = "auto",
-        theme = "rose-pine",
+        theme = "catppuccin",
         -- always_divide_middle = true,
         icons_enabled = true,
         globalstatus = true,
