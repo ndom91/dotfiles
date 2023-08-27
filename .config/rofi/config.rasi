@@ -1,6 +1,6 @@
 configuration {
-  kb-row-up:                      "Up,k,Shift+Tab,Shift+ISO_Left_Tab";
-  kb-row-down:                    "Down,j";
+  kb-row-up:                      "Up,Control+k,Shift+Tab,Shift+ISO_Left_Tab";
+  kb-row-down:                    "Down,Control+j";
   kb-accept-entry:                "Control+m,Return,KP_Enter,l";
   terminal:                       "mate-terminal";
   kb-remove-to-eol:               "Control+Shift+e";
