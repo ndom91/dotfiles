@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 cliphist list | \
   rofi \
+  -p '' \
+  -window-title 'Cliphist' \
+  -i \
+  -format %s \
 	-dmenu \
 	-scroll-method 0 \
   -no-fixed-num-lines \
