@@ -6,23 +6,23 @@ local function goto_prev_error()
   vim.diagnostic.goto_prev({ severity = "Error" })
 end
 
-local function format_buffer()
-  vim.lsp.buf.format({
-    async = false,
-    filter = function(client)
-      return client.name ~= "null-ls"
-      -- local current_bufnr = vim.fn.bufnr("%")
-      -- local current_buffer_path = vim.api.nvim_buf_get_name(current_bufnr)
-      -- if string.find(current_buffer_path, "/opt/checkly") then
-      -- 	print("CHECKLY PATH")
-      --        return client.name ~= "tsserver" and client.name ~= "pyright" and client.name ~= "eslint"
-      -- else
-      -- 	print("LSP FORMAT")
-      -- 	return client.name ~= "tsserver" and client.name ~= "pyright" and client.name ~= "eslint"
-      -- end
-    end,
-  })
-end
+-- local function format_buffer()
+--   vim.lsp.buf.format({
+--     async = false,
+--     filter = function(client)
+--       return client.name ~= "null-ls"
+--       -- local current_bufnr = vim.fn.bufnr("%")
+--       -- local current_buffer_path = vim.api.nvim_buf_get_name(current_bufnr)
+--       -- if string.find(current_buffer_path, "/opt/checkly") then
+--       -- 	print("CHECKLY PATH")
+--       --        return client.name ~= "tsserver" and client.name ~= "pyright" and client.name ~= "eslint"
+--       -- else
+--       -- 	print("LSP FORMAT")
+--       -- 	return client.name ~= "tsserver" and client.name ~= "pyright" and client.name ~= "eslint"
+--       -- end
+--     end,
+--   })
+-- end
 
 vim.keymap.set(
   "n",
@@ -86,8 +86,8 @@ local on_attach = function(client, bufnr)
     vim.api.nvim_create_autocmd("BufWritePre", {
       group = augroup,
       buffer = bufnr,
-        callback = function()
-        vim.lua(":Neoformat<CR>")
+      callback = function()
+        vim.cmd(":Neoformat<CR>")
         -- vim.lsp.buf.format({ async = false })
       end,
     })
@@ -95,14 +95,12 @@ local on_attach = function(client, bufnr)
 end
 
 local languages = {
-  -- "clangd",
   "html",
   "cssls",
   "tsserver",
   "eslint",
   "pyright",
   "gopls",
-  -- "texlab",
 }
 
 return {
@@ -159,8 +157,8 @@ return {
     },
     build = "cd formatter && npm i && npm run build",
     config = function()
-      require('tailwind-sorter').setup({
-        on_save_enabled = true
+      require("tailwind-sorter").setup({
+        on_save_enabled = true,
       })
     end,
   },

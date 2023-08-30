@@ -11,3 +11,4 @@ cliphist list | \
 	-theme "$HOME"/.config/rofi/config/launcher.rasi | \
   cliphist decode | \
   wl-copy
+
