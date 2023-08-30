@@ -262,7 +262,8 @@ bind = $mainMod, P, pseudo, # dwindle
 bind = $mainMod, O, togglesplit, # dwindle
 bind = $mainMod, S, exec, "$HOME/.config/rofi/bin/screenshot"
 bind = $mainMod SHIFT, S, exec, pkill --signal SIGINT wf-recorder || wf-recorder -g "$(slurp)" -f ~/Videos/wfrecording_$(date +"%Y-%m-%d_%H:%M:%S.mp4") # record a video
-bind = $mainMod, C, exec, cliphist list | wofi -b -p Cliphist -n -i -M fuzzy --dmenu --pre-display-cmd "echo '%s' | cut -f 2" | cliphist decode | wl-copy
+bind = $mainMod, C, exec, "$HOME/.config/rofi/bin/cliphist"
+# bind = $mainMod, C, exec, cliphist list | wofi -b -p Cliphist -n -i -M fuzzy --dmenu --pre-display-cmd "echo '%s' | cut -f 2" | cliphist decode | wl-copy
 bind = CTRL SHIFT, L, exec, swaylock
 
 # notifications - mako
