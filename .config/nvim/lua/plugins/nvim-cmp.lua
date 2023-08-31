@@ -117,10 +117,6 @@ return {
           kind.kind = " " .. (strings[1] or "") .. " "
           kind.menu = "    [" .. (strings[2] or "") .. "]"
 
-          -- Customization for Pmenu
-          vim.api.nvim_set_hl(0, "PmenuSel", { bg = "#282C34", fg = "NONE" })
-          vim.api.nvim_set_hl(0, "Pmenu", { fg = "#C5CDD9", bg = "#22252A" })
-
           -- -- copilot
           -- if entry.source.name == "copilot" then
           --   kind.kind = "[] Copilot"
