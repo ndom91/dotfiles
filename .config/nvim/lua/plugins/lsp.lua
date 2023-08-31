@@ -6,28 +6,21 @@ local function goto_prev_error()
   vim.diagnostic.goto_prev({ severity = "Error" })
 end
 
--- local function format_buffer()
---   vim.lsp.buf.format({
---     async = false,
---     filter = function(client)
---       return client.name ~= "null-ls"
---       -- local current_bufnr = vim.fn.bufnr("%")
---       -- local current_buffer_path = vim.api.nvim_buf_get_name(current_bufnr)
---       -- if string.find(current_buffer_path, "/opt/checkly") then
---       -- 	print("CHECKLY PATH")
---       --        return client.name ~= "tsserver" and client.name ~= "pyright" and client.name ~= "eslint"
---       -- else
---       -- 	print("LSP FORMAT")
---       -- 	return client.name ~= "tsserver" and client.name ~= "pyright" and client.name ~= "eslint"
---       -- end
---     end,
---   })
--- end
+local function format_buffer()
+  local current_bufnr = vim.fn.bufnr("%")
+  local current_buffer_path = vim.api.nvim_buf_get_name(current_bufnr)
+  if string.find(current_buffer_path, "/opt/checkly") then
+    vim.g.neoformat_try_node_exe = 1
+    vim.cmd(":Neoformat eslint_d")
+  else
+    vim.cmd(":Neoformat")
+  end
+end
 
 vim.keymap.set(
   "n",
   "<Leader>lf",
-  ":Neoformat<CR>",
+  format_buffer,
   { silent = true, noremap = true }
 )
 
@@ -151,7 +144,7 @@ return {
   },
   {
     "laytan/tailwind-sorter.nvim",
-    enabled = "false",
+    enabled = false,
     dependencies = {
       "nvim-treesitter/nvim-treesitter",
       "nvim-lua/plenary.nvim",
