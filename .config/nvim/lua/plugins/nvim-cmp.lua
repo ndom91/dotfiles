@@ -30,9 +30,6 @@ return {
 
     cmp.setup({
       preselect = "item",
-      -- completion = {
-      -- completeopt = "menu,menuone,noinsert",
-      -- },
       snippet = {
         expand = function(args)
           luasnip.lsp_expand(args.body)
@@ -67,17 +64,7 @@ return {
             fallback()
           end
         end, { "i", "s" }),
-        -- ["<C-g>"] = cmp.mapping(function(fallback)
-        --   vim.api.nvim_feedkeys(
-        --     vim.fn["copilot#Accept"](vim.api.nvim_replace_termcodes("<Tab>", true, true, true)),
-        --     "n",
-        --     true
-        --   )
-        -- end),
       },
-      -- experimental = {
-      -- ghost_text = false, -- feature conflicts with copilot.nvim's preview
-      -- },
       sources = {
         -- { name = "copilot" },
         -- { name = "nvim_lsp", max_item_count = 20 },
@@ -90,8 +77,8 @@ return {
               ~= "File"
           end,
         },
-        -- { name = "nvim_lsp_signature_help" },
         { name = "luasnip", keyword_length = 2 },
+        -- { name = "nvim_lsp_signature_help" },
         -- { name = "treesitter" },
         -- { name = "buffer", max_item_count = 5, keyword_length = 3 },
         -- { name = "path" },
@@ -110,49 +97,31 @@ return {
           local kind = lspkind.cmp_format({
             mode = "symbol_text",
             maxwidth = 50,
-            preset = "codicons",
+            -- preset = "codicons",
           })(entry, vim_item)
 
           local strings = vim.split(kind.kind, "%s", { trimempty = true })
           kind.kind = " " .. (strings[1] or "") .. " "
-          kind.menu = "    [" .. (strings[2] or "") .. "]"
-
-          -- -- copilot
-          -- if entry.source.name == "copilot" then
-          --   kind.kind = "[] Copilot"
-          --   kind.kind_hl_group = "CmpItemKindCopilot"
-          --   return kind
-          -- end
-
-          -- -- Source
-          -- kind.menu = ({
-          --   nvim_lsp = "[LSP]",
-          --   luasnip = "[Snip]",
-          --   buffer = "[Buffer]",
-          --   nvim_lua = "[Lua]",
-          --   treesitter = "[Treesitter]",
-          --   path = "[Path]",
-          --   nvim_lsp_signature_help = "[Signature]",
-          -- })[entry.source.name]
+          kind.menu = "    " .. (strings[2] or "")
 
           return kind
         end,
       },
     })
 
-    -- cmp.setup.cmdline({ "/", "?" }, {
-    --   mapping = cmp.mapping.preset.cmdline(),
-    --   sources = {
-    --     { name = "buffer" },
-    --   },
-    -- })
+    cmp.setup.cmdline({ "/", "?" }, {
+      mapping = cmp.mapping.preset.cmdline(),
+      sources = {
+        { name = "buffer" },
+      },
+    })
 
-    -- cmp.setup.cmdline(":", {
-    --   mapping = cmp.mapping.preset.cmdline(),
-    --   sources = cmp.config.sources(
-    --     { { name = "path" } },
-    --     { { name = "cmdline" } }
-    --   ),
-    -- })
+    cmp.setup.cmdline(":", {
+      mapping = cmp.mapping.preset.cmdline(),
+      sources = cmp.config.sources(
+        { { name = "path" } },
+        { { name = "cmdline" } }
+      ),
+    })
   end,
 }

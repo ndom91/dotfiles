@@ -6,10 +6,14 @@ local function goto_prev_error()
   vim.diagnostic.goto_prev({ severity = "Error" })
 end
 
+vim.g.neoformat_enabled_vue = { "eslint_d", "prettier" }
+vim.cmd("let g:neoformat_enabled_vue = ['eslint_d']")
+
 local function format_buffer()
   local current_bufnr = vim.fn.bufnr("%")
   local current_buffer_path = vim.api.nvim_buf_get_name(current_bufnr)
   if string.find(current_buffer_path, "/opt/checkly") then
+    vim.cmd("let g:neoformat_enabled_vue = ['eslint_d']")
     vim.g.neoformat_try_node_exe = 1
     vim.cmd(":Neoformat eslint_d")
   else
@@ -24,14 +28,6 @@ vim.keymap.set(
   { silent = true, noremap = true }
 )
 
-vim.g.neoformat_try_node_exe = 1
-
-vim.keymap.set(
-  "n",
-  "<Leader>e",
-  vim.diagnostic.open_float,
-  { noremap = true, silent = true }
-)
 vim.keymap.set(
   "n",
   "<Leader>a",
@@ -44,47 +40,38 @@ vim.keymap.set("n", "[d", vim.diagnostic.goto_prev)
 vim.keymap.set("n", "]d", vim.diagnostic.goto_next)
 vim.keymap.set("n", "]e", goto_next_error)
 vim.keymap.set("n", "[e", goto_prev_error)
-
--- vim.api.nvim_create_autocmd("LspAttach", {
---   group = vim.api.nvim_create_augroup("UserLspConfig", {}),
---   callback = function(ev)
---     vim.bo[ev.buf].omnifunc = "v:lua.vim.lsp.omnifunc"
---
---     local opts = { buffer = ev.buf }
---     vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
---     vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
---     vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
---     vim.keymap.set("n", "<space>rn", vim.lsp.buf.rename, opts)
---     vim.keymap.set({ "n", "v" }, "<space>ca", vim.lsp.buf.code_action, opts)
---     vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
---     -- vim.keymap.set("n", "<leader>lf", format_buffer, opts)
---   end,
--- })
+vim.keymap.set("n", "<space>re", vim.lsp.buf.rename)
+vim.keymap.set("n", "gi", vim.lsp.buf.implementation)
 
 local on_attach = function(client, bufnr)
-  vim.bo[bufnr].omnifunc = "v:lua.vim.lsp.omnifunc"
-
+  local builtin = require("telescope.builtin")
   local opts = { buffer = bufnr }
+
+  vim.bo[bufnr].omnifunc = "v:lua.vim.lsp.omnifunc"
+  vim.keymap.set("n", "<Leader>e", builtin.diagnostics, opts)
+  vim.keymap.set("n", "gr", builtin.lsp_references, opts)
+
   vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
   vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
-  vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
-  vim.keymap.set("n", "<space>rn", vim.lsp.buf.rename, opts)
+  vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help)
   vim.keymap.set({ "n", "v" }, "<space>ca", vim.lsp.buf.code_action, opts)
   vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
+
   -- Enable formatting on save sync
-  if client.supports_method("textDocument/formatting") then
-    local augroup =
-      vim.api.nvim_create_augroup("LspFormatting", { clear = true })
-    vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
-    vim.api.nvim_create_autocmd("BufWritePre", {
-      group = augroup,
-      buffer = bufnr,
-      callback = function()
-        vim.cmd(":Neoformat<CR>")
-        -- vim.lsp.buf.format({ async = false })
-      end,
-    })
-  end
+  -- if client.supports_method("textDocument/formatting") then
+  -- local augroup =
+  --   vim.api.nvim_create_augroup("LspFormatting", { clear = true })
+  -- vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
+  -- end
+  vim.api.nvim_create_autocmd("BufWritePre", {
+    -- group = augroup,
+    buffer = bufnr,
+    callback = format_buffer(),
+    -- format_buffer
+    -- vim.cmd(":Neoformat<CR>")
+    -- vim.lsp.buf.format({ async = false })
+    -- end,
+  })
 end
 
 local languages = {
@@ -98,14 +85,23 @@ local languages = {
 
 return {
   {
+    "folke/neodev.nvim",
+  },
+  {
     "neovim/nvim-lspconfig",
     dependencies = { "hrsh7th/cmp-nvim-lsp" },
     config = function()
+      require("neodev").setup({ })
       local capabilities = require("cmp_nvim_lsp").default_capabilities()
-      require("lspconfig").lua_ls.setup({
+      local lspconfig = require("lspconfig")
+
+      lspconfig.lua_ls.setup({
         capabilities = capabilities,
         settings = {
           Lua = {
+            completion = {
+              callSnippet = "Replace",
+            },
             diagnostics = {
               globals = { "vim", "describe", "it" },
             },
@@ -120,18 +116,11 @@ return {
       -- })
 
       for _, language in pairs(languages) do
-        require("lspconfig")[language].setup({
+        lspconfig[language].setup({
           capabilities = capabilities,
           on_attach = on_attach,
         })
       end
-
-      vim.keymap.set(
-        "n",
-        "<Leader>fa",
-        ":EslintFixAll<CR>",
-        { noremap = true, silent = true }
-      )
 
       vim.lsp.handlers["textDocument/publishDiagnostics"] =
         vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
@@ -155,10 +144,6 @@ return {
         on_save_enabled = true,
       })
     end,
-  },
-  {
-    "folke/neodev.nvim",
-    config = true,
   },
   {
     "williamboman/mason.nvim",

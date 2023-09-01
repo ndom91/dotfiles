@@ -3,7 +3,7 @@ return {
   config = function()
     local previewers = require("telescope.previewers")
     local actions = require("telescope.actions")
-    local Job = require("plenary.job")
+    -- local Job = require("plenary.job")
 
     local new_maker = function(filepath, bufnr, opts)
       opts = opts or {}
@@ -21,21 +21,21 @@ return {
         end
       end)
       -- Don't preview binaries
-      Job:new({
-        command = "file",
-        args = { "--mime-type", "-b", filepath },
-        on_exit = function(j)
-          local mime_type = vim.split(j:result()[1], "/")[1]
-          if (mime_type == "text") or (j:result()[1] == "application/json") then
-            previewers.buffer_previewer_maker(filepath, bufnr, opts)
-          else
-            -- maybe we want to write something to the buffer here
-            vim.schedule(function()
-              vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, { "BINARY" })
-            end)
-          end
-        end,
-      }):sync()
+      -- Job:new({
+      --   command = "file",
+      --   args = { "--mime-type", "-b", filepath },
+      --   on_exit = function(j)
+      --     local mime_type = vim.split(j:result()[1], "/")[1]
+      --     if (mime_type == "text") or (j:result()[1] == "application/json") then
+      --       previewers.buffer_previewer_maker(filepath, bufnr, opts)
+      --     else
+      --       -- maybe we want to write something to the buffer here
+      --       vim.schedule(function()
+      --         vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, { "BINARY" })
+      --       end)
+      --     end
+      --   end,
+      -- }):sync()
     end
 
     require("telescope").setup({
