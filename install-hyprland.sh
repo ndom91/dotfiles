@@ -1,5 +1,5 @@
 yay -S hyprland-hidpi-xprop-git waybar-hyprland \
-	swaybg swaylock-effects wofi wlogout swaync \
+	swaybg swaylock-effects rofi-lbonn-wayland-git wlogout swaync \
 	noto-fonts-emoji cliphist nwg-look-bin \
 	polkit-gnome python-requests starship \
 	swappy grim slurp pamixer brightnessctl inotify-tools \

@@ -35,15 +35,18 @@ return {
 
   -- icons on completion
   "onsails/lspkind-nvim",
+
   -- lsp function signature help on wildmenu
   {
     "ray-x/lsp_signature.nvim",
     config = function()
       local cfg = {
-        hint_enable = false,
+        -- hint_enable = false,
+        -- transparency = 30,
+        floating_window = false,
         bind = true,
-        transparency = 30,
-        handler_opts = { border = "rounded" },
+        -- shadow_blend = 36,
+        -- handler_opts = { border = "rounded" },
       }
       require("lsp_signature").setup(cfg)
     end,
@@ -52,17 +55,30 @@ return {
   {
     "j-hui/fidget.nvim",
     tag = "legacy",
+    event = "LspAttach",
     config = function()
-      require("fidget").setup({ text = { spinner = "dots" } })
+      require("fidget").setup({
+        text = {
+          spinner = "dots",
+        },
+        window = {
+          blend = 0,
+        },
+      })
     end,
   },
   {
     "folke/trouble.nvim",
+    enabled = "false",
     dependencies = { "nvim-tree/nvim-web-devicons" },
     config = true,
   },
   -- ui elements
-  "MunifTanjim/nui.nvim",
+  {
+    "MunifTanjim/nui.nvim",
+    enabled = "false",
+  },
+
   -- tailwind token colorizer
   {
     "mrshmllow/document-color.nvim",
@@ -81,27 +97,21 @@ return {
       require("hologram").setup({ auto_display = true })
     end,
   },
+
+  -- "williamboman/mason.nvim",
+  -- "williamboman/mason-lspconfig.nvim",
+  -- "b0o/schemastore.nvim",
+  -- "jose-elias-alvarez/null-ls.nvim",
+  -- "hrsh7th/cmp-nvim-lua", -- Snippets
+  "jose-elias-alvarez/typescript.nvim",
+  -- "folke/neodev.nvim", -- lua support for nvim config + development
+
   -- autocompletion
-  {
-    "hrsh7th/nvim-cmp",
-    config = true,
-    wants = { "LuaSnip" },
-    dependencies = {
-      "hrsh7th/cmp-nvim-lsp-signature-help",
-      "hrsh7th/cmp-nvim-lsp",
-      "hrsh7th/cmp-buffer",
-      "hrsh7th/cmp-path",
-      "hrsh7th/cmp-nvim-lua",
-      "hrsh7th/cmp-cmdline",
-      "saadparwaiz1/cmp_luasnip",
-      "rafamadriz/friendly-snippets",
-      "L3MON4D3/LuaSnip",
-    },
-  },
   -- cmp based copilot
   {
     "zbirenbaum/copilot.lua",
     -- event = { "VimEnter" },
+    enabled = false,
     event = { "BufRead" },
     dependencies = { "zbirenbaum/copilot-cmp" },
     config = function()
@@ -129,7 +139,11 @@ return {
     end,
   },
   -- first-party github copilot plugin
-  { "github/copilot.vim", event = "InsertEnter", enabled = false },
+  {
+    "github/copilot.vim",
+    event = "InsertEnter",
+    enabled = false,
+  },
   {
     "lukas-reineke/indent-blankline.nvim",
     config = function()
@@ -169,6 +183,7 @@ return {
   },
   {
     "RRethy/nvim-base16",
+    enabled = "false",
   },
   -- other themes
   -- "folke/tokyonight.nvim",
@@ -176,25 +191,25 @@ return {
   -- "wadackel/vim-dogrun",
   -- "challenger-deep-theme/vim",
   -- "EdenEast/nightfox.nvim",
-  {
-    "catppuccin/nvim",
-    name = "catppuccin",
-    enabled = false,
-    config = function()
-      require("catppuccin").setup({
-        transparent_background = true,
-        term_colors = true,
-        integration = {
-          nvimtree = {
-            enabled = true,
-            transparent_panel = true,
-          },
-          lsp_trouble = true,
-        },
-      })
-      vim.cmd.colorscheme("catppuccin-mocha")
-    end,
-  },
+  -- {
+  -- 	"catppuccin/nvim",
+  -- 	name = "catppuccin",
+  -- 	enabled = false,
+  -- 	config = function()
+  -- 		require("catppuccin").setup({
+  -- 			transparent_background = true,
+  -- 			term_colors = true,
+  -- 			integration = {
+  -- 				nvimtree = {
+  -- 					enabled = true,
+  -- 					transparent_panel = true,
+  -- 				},
+  -- 				lsp_trouble = true,
+  -- 			},
+  -- 		})
+  -- 		vim.cmd.colorscheme("catppuccin-mocha")
+  -- 	end,
+  -- },
   {
     "norcalli/nvim-colorizer.lua",
     -- colorize hex codes / color names
@@ -253,12 +268,12 @@ return {
   -- notifications
   {
     "rcarriga/nvim-notify",
-    name = "notify",
+    -- name = "notify",
     lazy = false,
     config = function()
       local notify = require("notify")
       notify.setup({
-        render = "minimal",
+        -- render = "minimal",
         stages = "fade_in_slide_out",
         background_colour = "#191724",
         icons = {

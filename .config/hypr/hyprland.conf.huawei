@@ -75,8 +75,10 @@ general {
   gaps_in = 10
   gaps_out = 20
   border_size = 6
-  col.active_border = rgba(c4a7e7ee) rgba(ebbcbaee) 45deg
-  col.inactive_border = rgba(524f67aa)
+  # col.active_border = rgba(c4a7e7ee) rgba(ebbcbaee) 45deg
+  # col.inactive_border = rgba(524f67aa)
+  col.active_border = rgb(11111b)
+  col.inactive_border = rgba(11111baa)
 
   layout = dwindle
   resize_on_border = true
@@ -244,7 +246,8 @@ windowrulev2 = move 50% 100%-100, title:^(.*sharing your screen.*)$
 bindl=,switch:on:Lid Switch,exec,swaylock & systemctl suspend
 
 # Example binds, see https://wiki.hyprland.org/Configuring/Binds/ for more
-bind = $mainMod, D, exec, pkill wofi || wofi -bImin
+# bind = $mainMod, D, exec, pkill wofi || wofi -bImin
+bind = $mainMod, D, exec, "$HOME/.config/rofi/bin/launcher"
 bind = $mainMod, M, exec, flemozi
 bind = $mainMod, B, exec, brave
 bind = $mainMod, Q, killactive,
@@ -257,9 +260,10 @@ bind = $mainMod, Space, cyclenext # hack to focus floating windows
 bind = $mainMod, F, fullscreen, 1
 bind = $mainMod, P, pseudo, # dwindle
 bind = $mainMod, O, togglesplit, # dwindle
-bind = $mainMod, S, exec, grim -g "$(slurp)" - | swappy -f - # take a screenshot
+bind = $mainMod, S, exec, "$HOME/.config/rofi/bin/screenshot"
 bind = $mainMod SHIFT, S, exec, pkill --signal SIGINT wf-recorder || wf-recorder -g "$(slurp)" -f ~/Videos/wfrecording_$(date +"%Y-%m-%d_%H:%M:%S.mp4") # record a video
-bind = $mainMod, C, exec, cliphist list | wofi -b -p Cliphist -n -i -M fuzzy --dmenu --pre-display-cmd "echo '%s' | cut -f 2" | cliphist decode | wl-copy
+bind = $mainMod, C, exec, "$HOME/.config/rofi/bin/cliphist"
+# bind = $mainMod, C, exec, cliphist list | wofi -b -p Cliphist -n -i -M fuzzy --dmenu --pre-display-cmd "echo '%s' | cut -f 2" | cliphist decode | wl-copy
 bind = CTRL SHIFT, L, exec, swaylock
 
 # notifications - mako

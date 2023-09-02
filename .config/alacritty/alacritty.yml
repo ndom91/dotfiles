@@ -1,5 +1,5 @@
 import:
-  - /home/ndo/.config/alacritty/rose-pine.yml
+  - /home/ndo/.config/alacritty/catppuccin-mocha.yml
 env:
   TERM: alacritty
 font:
