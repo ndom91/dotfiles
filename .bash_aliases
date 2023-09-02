@@ -71,6 +71,7 @@ alias activeSysd='for i in $(cd /etc/systemd/system/multi-user.target.wants && l
 [[ "$(command -v diskonaut)" ]] && alias diskgraph="diskonaut"
 [[ "$(command -v dua)" ]] && alias disklist="dua i"
 [[ "$(command -v nerdctl)" ]] && alias nerdctl="nerdctl --address /var/run/docker/containerd/containerd.sock"
+[[ "$(command -v obsidian)" ]] && alias obsidian="OBSIDIAN_USE_WAYLAND=1 obsidian -enable-features=UseOzonePlatform -ozone-platform=wayland"
 # [[ "$(command -v fd)" ]] && alias find='fd'
 # [[ "$(command -v pnpm)" ]] && alias npm="pnpm"
 
