@@ -88,7 +88,7 @@
   },
   "cpu": {
     "interval": 1,
-    "format": "<span font='14' rise='-4pt'>󰻠</span> {usage:>2}%"
+    "format": "<span font='14' rise='-2pt'>󰻠</span>  {usage:>2}%"
   },
   "custom/menu": {
     "format": "⮝",
@@ -98,15 +98,15 @@
   "temperature": {
     "interval": 120,
     "thermal-zone": 0,
-    "format": "<span font='12' rise='-2pt'>󰏈</span> {temperatureC}°C"
+    "format": "<span font='12' rise='-2pt'>󰏈</span>  {temperatureC}°C"
   },
   "disk": {
     "interval": 120,
-    "format": "<span font='12' rise='-3pt'>󰋊</span> {free}"
+    "format": "<span font='13' rise='-1pt'>󰋊</span> {free}"
   },
   "memory": {
     "interval": 10,
-    "format": "<span font='18' rise='-4pt'></span> {percentage}%"
+    "format": "<span font='12' rise='-1pt'></span>  {percentage}%"
   },
   "hyprland/window": {
     "format": "{}",
@@ -114,7 +114,7 @@
   },
   "network": {
     "interval": 5,
-    "format-wifi": "<span font='20' rise='-5pt'></span> {ipaddr}",
+    "format-wifi": "<span font='12' rise='-1pt'></span>  {ipaddr}",
     // "format-wifi": "<span font='20' rise='-5pt'></span> {ipaddr} [{essid}]",
     "format-ethernet": " {ipaddr}/{cidr}",
     "format-linked": " {ifname} (No IP)",
@@ -145,7 +145,7 @@
     "tooltip-format": "Change wallpaper"
   },
   "wireplumber": {
-    "format": "<span font='20' rise='-5pt'></span> {volume}",
+    "format": "<span font='11' rise='-1pt'></span>  {volume}",
     "format-muted": "<span font='20' rise='-5pt'></span>",
     "on-click": "pavucontrol"
   },
