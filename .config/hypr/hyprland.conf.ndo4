@@ -348,8 +348,8 @@ bind = $mainMod SHIFT, 0, movetoworkspacesilent, 10
 # Resize
 bind = $mainMod, R, submap, resize
 submap = resize
-binde = , H, resizeactive, 40 0
-binde = , L, resizeactive, -40 0
+binde = , H, resizeactive, -40 0
+binde = , L, resizeactive, 40 0
 binde = , K, resizeactive, 0 -40
 binde = , J, resizeactive, 0 40
 bind = , escape, submap, reset
