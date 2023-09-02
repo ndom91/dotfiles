@@ -58,8 +58,7 @@
     "tooltip": false
   },
   "network": {
-    "interval": 5,
-    // "format-wifi": "<span font='20' rise='-5pt'></span> {ipaddr} [{essid}]",
+    "interval": 1,
     "format-wifi": "<span font='15' rise='-2pt'></span> {ipaddr}",
     "format-ethernet": " {bandwidthUpBits} |  {bandwidthDownBits}",
     "format-alt": "<span font='15' rise='-2pt'></span> {ipaddr}/{cidr}",
@@ -70,7 +69,6 @@
     "on-click-right": "nm-connection-editor"
   },
   "custom/weather": {
-    //shows the current weather and forecast
     "tooltip": true,
     "format": "{}",
     "interval": 30,
@@ -82,9 +80,6 @@
     "exec": "checkupdates-with-aur | uniq | wc -l",
     "interval": 14400,
     "tooltip": false
-    // "exec-if": "[[ $(checkupdates | wc -l) ]]",
-    // "tooltip-format": "$(yay -Qu | wc -l)"
-    // "on-click": "kitty --class update -T update -o font_size=13 -e yay -Syu && notify-send 'The system has been updated' "
   },
   "custom/cycle_wall": {
     "format": "",
@@ -107,8 +102,7 @@
     "tooltip-format": "{device_alias}",
     "tooltip-format-connected": " {device_enumerate}",
     "tooltip-format-enumerate-connected": "{device_alias}",
-    "on-click-right": "blueman-manager"
-    // "on-click-right": "blueberry"
+    "on-click-right": "blueberry"
   },
   "wireplumber": {
     "format": "<span font='15' rise='-2pt'></span> {volume}",
