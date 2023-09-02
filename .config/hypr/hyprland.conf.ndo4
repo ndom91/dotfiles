@@ -52,7 +52,6 @@ exec-once = gsettings set org.gnome.desktop.interface cursor-size 24
 # User Apps
 exec-once = /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec-once = ~/.config/waybar/start-waybar
-# exec-once = mako --config "$HOME/.config/mako/config"
 exec-once = swaync
 exec-once = 1password --silent
 exec-once = nm-applet --indicator
@@ -92,8 +91,8 @@ general {
   gaps_in = 10
   gaps_out = 20
   border_size = 6
-  col.active_border = rgba(c4a7e7ee) rgba(ebbcbaee) 45deg
-  col.inactive_border = rgba(524f67aa)
+  col.active_border = rgb(11111b) rgb(181825) 45deg
+  col.inactive_border = rgba(f5e0dc20)
 
   layout = dwindle
   resize_on_border = true
@@ -110,9 +109,10 @@ decoration {
   blur_ignore_opacity = true
 
   drop_shadow = false
-  shadow_range = 4
+  shadow_range = 10
   shadow_render_power = 3
-  col.shadow = rgba(1a1a1aee)
+  col.shadow = rgb(cba6f7)
+  # col.shadow = rgba(1a1a1aee)
 
   active_opacity = 0.95
   inactive_opacity = 0.80
@@ -273,8 +273,7 @@ windowrulev2 = float, title:^.*(sharing your screen).*$
 windowrulev2 = move 50% 100%-100, title:^(.*sharing your screen.*)$
 
 # Example binds, see https://wiki.hyprland.org/Configuring/Binds/ for more
-# bind = $mainMod, D, exec, pkill wofi || wofi -b -S drun -I -m -i
-bind = $mainMod, D, exec, pkill wofi || wofi -bImin
+bind = $mainMod, D, exec, "$HOME/.config/rofi/bin/launcher"
 bind = $mainMod, M, exec, flemozi
 bind = $mainMod, B, exec, brave
 bind = $mainMod, Q, killactive,
@@ -287,9 +286,9 @@ bind = $mainMod, Space, cyclenext # hack to focus floating windows
 bind = $mainMod, F, fullscreen, 1 # fullscreen type 1
 bind = $mainMod, P, pseudo, # dwindle layout
 bind = $mainMod, O, togglesplit, # dwindle layout
-bind = $mainMod, S, exec, grim -g "$(slurp)" - | swappy -f - # screenshot
-bind = $mainMod SHIFT, S, exec, pkill --signal SIGINT wf-recorder || wf-recorder -g "$(slurp)" -f ~/Videos/wfrecording_$(date +"%Y-%m-%d_%H:%M:%S.mp4") # start/stop video recording
-bind = $mainMod, C, exec, cliphist list | wofi -b -p Cliphist -n -i -M fuzzy --dmenu | cliphist decode | wl-copy
+bind = $mainMod, S, exec, "$HOME/.config/rofi/bin/screenshot"
+bind = $mainMod SHIFT, S, exec, pkill --signal SIGINT wf-recorder && notify-send "Stopped Recording" || wf-recorder -g "$(slurp)" -f ~/Videos/wfrecording_$(date +"%Y-%m-%d_%H:%M:%S.mp4") & notify-send "Started Recording" # start/stop video recording
+bind = $mainMod, C, exec, "$HOME/.config/rofi/bin/cliphist"
 bind = CTRL SHIFT, L, exec, swaylock
 
 # notifications mako

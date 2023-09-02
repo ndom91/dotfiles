@@ -4,10 +4,8 @@ cliphist list | \
   -p '' \
   -window-title 'Cliphist' \
   -i \
-  -format %s \
 	-dmenu \
 	-scroll-method 0 \
-  -no-fixed-num-lines \
 	-theme "$HOME"/.config/rofi/config/launcher.rasi | \
   cliphist decode | \
   wl-copy
