@@ -61,6 +61,7 @@ exec-once = mkchromecast -t
 exec-once = swayosd
 exec-once = wl-paste --watch cliphist store
 exec-once = wlsunset -l 52.50 -L 12.76 -t 4500 -T 6500
+exec-once = blueberry
 
 debug {
   overlay = false
@@ -215,6 +216,12 @@ windowrulev2 = animation slide, class:pavucontrol
 windowrulev2 = float, class:pavucontrol
 windowrulev2 = size 30% 30%, class:pavucontrol
 windowrulev2 = center, class:pavucontrol
+
+# float/slidein blueberry
+windowrulev2 = animation slide, class:^(.*blueberry.*)$
+windowrulev2 = float, class:^(.*blueberry.*)$
+windowrulev2 = size 20% 40%, class:^(.*blueberry.*)$
+windowrulev2 = center, class:^(.*blueberry.*)$
 
 # float/slidein blueman-manager
 windowrulev2 = animation slide, class:^(blueman-.*)$
