@@ -279,6 +279,12 @@ windowrulev2 = animation slide, title:^.*(sharing your screen).*$
 windowrulev2 = float, title:^.*(sharing your screen).*$
 windowrulev2 = move 50% 100%-100, title:^(.*sharing your screen.*)$
 
+# xwaylandvideobridge - https://wiki.hyprland.org/Useful-Utilities/Screen-Sharing/#xwayland
+windowrulev2 = opacity 0.0 override 0.0 override,class:^(xwaylandvideobridge)$
+windowrulev2 = noanim,class:^(xwaylandvideobridge)$
+windowrulev2 = nofocus,class:^(xwaylandvideobridge)$
+windowrulev2 = noinitialfocus,class:^(xwaylandvideobridge)$
+
 # Example binds, see https://wiki.hyprland.org/Configuring/Binds/ for more
 bind = $mainMod, D, exec, "$HOME/.config/rofi/bin/launcher"
 bind = $mainMod, M, exec, flemozi
@@ -308,7 +314,7 @@ bind = CTRL, Space, exec, swaync-client -t -sw
 bind = CTRL SHIFT, Space, exec, swaync-client -C -sw
 
 # 1Password Quick Search - NOT WORKING
-bind = CTRL SHIFT,.,pass,1Password
+bindn = CTRL SHIFT, Period, exec, 1password --quick-access
 
 # Move focus with mainMod + arrow keys
 bind = $mainMod, H, movefocus, l
