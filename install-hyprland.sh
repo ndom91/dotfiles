@@ -9,6 +9,7 @@ yay -S hyprland-hidpi-xprop-git waybar-hyprland \
 	xsettingsd xorg-xsetroot imv flemozi-bin \
 	swayidle bibata-cursor-theme-bin \
 	wf-recorder swayosd-git wlsunset \
+  python-neovim-git python-libtmux \
 	catppuccin-gtk-theme-mocha blueberry-wayland \
 
 # hidpi
