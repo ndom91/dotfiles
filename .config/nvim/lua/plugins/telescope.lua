@@ -1,8 +1,8 @@
 return {
-  "nvim-telescope/telescope.nvim",
+  'nvim-telescope/telescope.nvim',
   config = function()
-    local previewers = require("telescope.previewers")
-    local actions = require("telescope.actions")
+    local previewers = require 'telescope.previewers'
+    local actions = require 'telescope.actions'
     -- local Job = require("plenary.job")
 
     local new_maker = function(filepath, bufnr, opts)
@@ -38,53 +38,58 @@ return {
       -- }):sync()
     end
 
-    require("telescope").setup({
+    require('telescope').setup {
       defaults = {
         buffer_previewer_maker = new_maker,
-        prompt_prefix = "  ",
-        selection_caret = " ",
-        entry_prefix = "  ",
-        set_env = { ["COLORTERM"] = "truecolor" },
+        prompt_prefix = '  ',
+        selection_caret = ' ',
+        entry_prefix = '  ',
+        set_env = { ['COLORTERM'] = 'truecolor' },
         color_devicons = true,
-        path_dispay = { shorten = 2 },
-        results_title = "",
-        prompt_title = "Search",
+        -- path_dispay = { shorten = 2 },
+        path_display = function(_, path)
+          local filename = path:gsub(vim.pesc(vim.loop.cwd()) .. '/', ''):gsub(vim.pesc(vim.fn.expand '$HOME'), '~')
+          local tail = require('telescope.utils').path_tail(filename)
+          return string.format('%s — %s', tail, filename)
+        end,
+        results_title = '',
+        prompt_title = 'Search',
         winblend = 0,
         border = {},
         mappings = {
           i = {
-            ["<esc>"] = actions.close,
-            ["<c-j>"] = actions.move_selection_next,
-            ["<c-k>"] = actions.move_selection_previous,
-            ["<s-up>"] = actions.cycle_history_prev,
-            ["<s-down>"] = actions.cycle_history_next,
-            ["<C-c>"] = "delete_buffer",
-            ["<C-w>"] = function()
-              vim.api.nvim_input("<c-s-w>")
+            ['<esc>'] = actions.close,
+            ['<c-j>'] = actions.move_selection_next,
+            ['<c-k>'] = actions.move_selection_previous,
+            ['<s-up>'] = actions.cycle_history_prev,
+            ['<s-down>'] = actions.cycle_history_next,
+            ['<C-c>'] = 'delete_buffer',
+            ['<C-w>'] = function()
+              vim.api.nvim_input '<c-s-w>'
             end,
           },
           n = {
-            ["q"] = actions.close,
-            ["<C-c>"] = "delete_buffer",
+            ['q'] = actions.close,
+            ['<C-c>'] = 'delete_buffer',
           },
         },
         vimgrep_arguments = {
-          "rg",
-          "--color=never",
-          "--hidden",
-          "--no-heading",
-          "--with-filename",
-          "--line-number",
-          "--column",
-          "--smart-case",
-          "--trim",
+          'rg',
+          '--color=never',
+          '--hidden',
+          '--no-heading',
+          '--with-filename',
+          '--line-number',
+          '--column',
+          '--smart-case',
+          '--trim',
           -- "--multiline",
           -- "--multiline-dotall"
         },
-        layout_strategy = "horizontal",
+        layout_strategy = 'horizontal',
         layout_config = {
           horizontal = {
-            prompt_position = "bottom",
+            prompt_position = 'bottom',
             preview_width = 0.55,
             results_width = 0.8,
           },
@@ -96,50 +101,54 @@ return {
           preview_cutoff = 120,
         },
         file_ignore_patterns = {
-          "%.jpg",
-          "%.jpeg",
-          "%.png",
-          "%.otf",
-          "%.ttf",
-          "%.lock",
-          "pnpm-lock.yaml",
-          "package-lock.json",
-          "node_modules",
-          ".next",
-          "static",
-          "coverage",
-          "lcov-report",
-          "dist",
-          "pack/github",
-          ".nuxt",
-          ".docusaurus",
-          "build",
+          '%.jpg',
+          '%.jpeg',
+          '%.png',
+          '%.otf',
+          '%.ttf',
+          '%.lock',
+          'pnpm-lock.yaml',
+          'package-lock.json',
+          'node_modules',
+          '.next',
+          'static',
+          'coverage',
+          'lcov-report',
+          'dist',
+          'pack/github',
+          '.nuxt',
+          '.docusaurus',
+          'build',
         },
         preview = {
           mime_hook = function(filepath, bufnr, opts)
             local is_image = function(filepath)
-              local image_extensions = { "png", "jpg" } -- Supported image formats
-              local split_path = vim.split(filepath:lower(), ".", { plain = true })
+              local image_extensions = { 'png', 'jpg' } -- Supported image formats
+              local split_path = vim.split(filepath:lower(), '.', { plain = true })
               local extension = split_path[#split_path]
               return vim.tbl_contains(image_extensions, extension)
             end
             if is_image(filepath) then
-              local image = require("hologram.image"):new(filepath, {})
-              require("telescope.previewers.utils").set_preview_message(bufnr, opts.winid, image)
+              local image = require('hologram.image'):new(filepath, {})
+              require('telescope.previewers.utils').set_preview_message(bufnr, opts.winid, image)
             else
-              require("telescope.previewers.utils").set_preview_message(bufnr, opts.winid, "Binary cannot be previewed")
+              require('telescope.previewers.utils').set_preview_message(bufnr, opts.winid, 'Binary cannot be previewed')
             end
           end,
         },
       },
       pickers = {
-        live_grep = { prompt_title = "Grep", preview_title = "Results" },
-        find_files = { prompt_title = "Files", preview_title = "Results" },
-        old_files = { prompt_title = "Recents", preview_title = "Results" },
+        live_grep = { prompt_title = 'Grep', preview_title = 'Results', path_display = { 'shorten' } },
+        find_files = { prompt_title = 'Files', preview_title = 'Results' },
+        old_files = { prompt_title = 'Recents', preview_title = 'Results', sort_lastused = true, cwd_only = true },
         -- apps = { find_command = { "fd", "--type", "f", "--strip-cwd-prefix" } },
-        dotfiles = { find_command = { "fd", "--type", "f", ".", "/home/ndo/.dotfiles" } },
+        dotfiles = { find_command = { 'fd', '--type', 'f', '.', '/home/ndo/.dotfiles' } },
       },
-      extensions = { "ui-select" },
-    })
+      extensions = {
+        ['ui-select'] = {
+          require('telescope.themes').get_cursor {},
+        },
+      },
+    }
   end,
 }
