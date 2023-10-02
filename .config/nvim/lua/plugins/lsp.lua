@@ -1,19 +1,16 @@
-local function goto_next_error()
-  vim.diagnostic.goto_next { severity = 'Error' }
-end
+local function goto_next_error() vim.diagnostic.goto_next { severity = 'Error' } end
 
-local function goto_prev_error()
-  vim.diagnostic.goto_prev { severity = 'Error' }
-end
+local function goto_prev_error() vim.diagnostic.goto_prev { severity = 'Error' } end
 
 vim.g.neoformat_enabled_lua = { 'stylua' }
 vim.g.neoformat_enabled_vue = { 'eslint_d' }
+vim.g.neoformat_try_node_exe = 1
+-- vim.g.neoformat_verbose = 1
 
 local function format_buffer()
   local current_bufnr = vim.fn.bufnr '%'
   local current_buffer_path = vim.api.nvim_buf_get_name(current_bufnr)
   if string.find(current_buffer_path, '/opt/checkly') then
-    vim.cmd "let g:neoformat_enabled_vue = ['eslint_d']"
     vim.g.neoformat_try_node_exe = 1
     vim.cmd ':Neoformat eslint_d'
   else
@@ -86,6 +83,7 @@ local languages = {
   'eslint',
   'pyright',
   'gopls',
+  'tailwindcss',
 }
 
 return {
@@ -137,7 +135,7 @@ return {
   },
   {
     'laytan/tailwind-sorter.nvim',
-    enabled = false,
+    enabled = true,
     dependencies = {
       'nvim-treesitter/nvim-treesitter',
       'nvim-lua/plenary.nvim',
