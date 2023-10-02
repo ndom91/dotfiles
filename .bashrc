@@ -85,6 +85,11 @@ fi
 # see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
+# Private Stuffs
+if [ -f ~/.bashrc_priv ]; then
+	source "$HOME/.bashrc_priv"
+fi
+
 # Aliases
 if [ -f ~/.bash_aliases ]; then
 	source "$HOME/.bash_aliases"
@@ -217,3 +222,7 @@ fi
 if [ -d "$HOME/.pulumi/bin" ]; then
 	export PATH=$PATH:$HOME/.pulumi/bin
 fi
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH=$BUN_INSTALL/bin:$PATH

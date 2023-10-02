@@ -74,7 +74,7 @@ local on_attach = function(client, bufnr)
     vim.api.nvim_create_autocmd('BufWritePre', {
       group = formatting_augroup,
       buffer = bufnr,
-      callback = format_buffer
+      callback = format_buffer,
     })
   end
 end
@@ -151,14 +151,19 @@ return {
   },
   {
     'williamboman/mason.nvim',
-    opts = {},
+    opts = {
+      automatic_installation = true,
+      ensure_installed = {
+        'js-debug-adapter',
+      },
+    },
   },
   {
     'williamboman/mason-lspconfig.nvim',
     opts = {
+      automatic_installation = true,
       ensure_installed = {
         'lua_ls',
-        'clangd',
         'html',
         'cssls',
         'tsserver',

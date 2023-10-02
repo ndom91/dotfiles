@@ -8,32 +8,36 @@ font:
     # family: DejaVu SansMono Nerd Font
     # family: Menlo for Powerline
     # family: UbuntuMono Nerd Font Mono
-    family: FiraCode Nerd Font
+    # family: FiraCode Nerd Font
+    family: CommitMonoV138
     style: Bold
   bold_italic:
     # family: DejaVu SansMono Nerd Font
     # family: SauceCodePro Nerd Font Mono
     # family: Menlo for Powerline
     # family: UbuntuMono Nerd Font Mono
-    family: FiraCode Nerd Font
+    # family: FiraCode Nerd Font
+    family: CommitMonoV138
     style: Bold Italic
   italic:
     # family: DejaVu SansMono Nerd Font
     # family: SauceCodePro Nerd Font Mono
     # family: Menlo for Powerline
     # family: UbuntuMono Nerd Font Mono
-    family: FiraCode Nerd Font
+    # family: FiraCode Nerd Font
+    family: CommitMonoV138
     style: Italic
   normal:
     # family: DejaVu SansMono Nerd Font
     # family: BlexMono Nerd Font
     # family: UbuntuMono Nerd Font Mono
-    family: FiraCode Nerd Font
+    # family: FiraCode Nerd Font
+    family: CommitMonoV138
     style: Regular
   offset:
     x: 0
     y: 0
-  size: 8.0
+  size: 9.0
 hints:
   enabled:
    - regex: "(ipfs:|ipns:|magnet:|mailto:|gemini:|gopher:|https:|http:|news:|file:|git:|ssh:|ftp:)\
@@ -73,9 +77,9 @@ key_bindings:
   - action: ClearLogNotice
     key: L
     mods: Control
-  - chars: "\f"
-    key: L
-    mods: Control
+  # - chars: "\f"
+    # key: L
+    # mods: Control
   - action: ScrollPageUp
     key: PageUp
     mode: ~Alt
