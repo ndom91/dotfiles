@@ -1,14 +1,14 @@
 return {
-  "nvim-tree/nvim-web-devicons",
-  "nvim-lua/plenary.nvim",
-  "nvim-lua/popup.nvim",
+  'nvim-tree/nvim-web-devicons',
+  'nvim-lua/plenary.nvim',
+  'nvim-lua/popup.nvim',
   {
-    "nvim-telescope/telescope-ui-select.nvim",
+    'nvim-telescope/telescope-ui-select.nvim',
     config = function()
-      require("telescope").setup({
+      require('telescope').setup {
         extensions = {
-          ["ui-select"] = {
-            require("telescope.themes").get_cursor({}),
+          ['ui-select'] = {
+            require('telescope.themes').get_cursor {},
 
             -- pseudo code / specification for writing custom displays, like the one
             -- for "codeactions"
@@ -25,20 +25,20 @@ return {
             -- }
           },
         },
-      })
-      require("telescope").load_extension("ui-select")
+      }
+      require('telescope').load_extension 'ui-select'
     end,
   },
-  { "lvimuser/lsp-inlayhints.nvim", config = true },
+  { 'lvimuser/lsp-inlayhints.nvim', config = true },
 
-  { "tami5/lspsaga.nvim", enabled = false, config = true },
+  { 'tami5/lspsaga.nvim', enabled = false, config = true },
 
   -- icons on completion
-  "onsails/lspkind-nvim",
+  'onsails/lspkind-nvim',
 
   -- lsp function signature help on wildmenu
   {
-    "ray-x/lsp_signature.nvim",
+    'ray-x/lsp_signature.nvim',
     config = function()
       local cfg = {
         -- hint_enable = false,
@@ -48,53 +48,53 @@ return {
         -- shadow_blend = 36,
         -- handler_opts = { border = "rounded" },
       }
-      require("lsp_signature").setup(cfg)
+      require('lsp_signature').setup(cfg)
     end,
   },
   -- floating status text in bottom right
   {
-    "j-hui/fidget.nvim",
-    tag = "legacy",
-    event = "LspAttach",
+    'j-hui/fidget.nvim',
+    tag = 'legacy',
+    event = 'LspAttach',
     config = function()
-      require("fidget").setup({
+      require('fidget').setup {
         text = {
-          spinner = "dots",
+          spinner = 'dots',
         },
         window = {
           blend = 0,
         },
-      })
+      }
     end,
   },
   {
-    "folke/trouble.nvim",
-    enabled = "false",
-    dependencies = { "nvim-tree/nvim-web-devicons" },
+    'folke/trouble.nvim',
+    enabled = 'false',
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
     config = true,
   },
   -- ui elements
   {
-    "MunifTanjim/nui.nvim",
-    enabled = "false",
+    'MunifTanjim/nui.nvim',
+    enabled = 'false',
   },
 
   -- tailwind token colorizer
   {
-    "mrshmllow/document-color.nvim",
+    'mrshmllow/document-color.nvim',
     enabled = false,
     config = function()
-      local docColors = require("document-color")
-      docColors.setup({ mode = "background" })
+      local docColors = require 'document-color'
+      docColors.setup { mode = 'background' }
       docColors.buf_attach()
     end,
   },
   -- terminal image viewer
   {
-    "edluffy/hologram.nvim",
+    'edluffy/hologram.nvim',
     enabled = false,
     config = function()
-      require("hologram").setup({ auto_display = true })
+      require('hologram').setup { auto_display = true }
     end,
   },
 
@@ -103,87 +103,104 @@ return {
   -- "b0o/schemastore.nvim",
   -- "jose-elias-alvarez/null-ls.nvim",
   -- "hrsh7th/cmp-nvim-lua", -- Snippets
-  "jose-elias-alvarez/typescript.nvim",
+  'jose-elias-alvarez/typescript.nvim',
   -- "folke/neodev.nvim", -- lua support for nvim config + development
 
   -- autocompletion
   -- cmp based copilot
   {
-    "zbirenbaum/copilot.lua",
+    'zbirenbaum/copilot.lua',
     -- event = { "VimEnter" },
     enabled = false,
-    event = { "BufRead" },
-    dependencies = { "zbirenbaum/copilot-cmp" },
+    event = { 'BufRead' },
+    dependencies = { 'zbirenbaum/copilot-cmp' },
     config = function()
       vim.defer_fn(function()
-        require("copilot").setup({
+        require('copilot').setup {
           cmp = {
             enabled = true,
-            method = "getCompletionsCycling",
+            method = 'getCompletionsCycling',
             ft_disable = {
-              "markdown",
-              "neo-tree",
-              "terminal",
-              "dashboard",
-              "telescope.nvim",
-              "terraform",
-              "lsp-installer",
-              "packer",
-              "neo-tree-popup",
-              "quickfix",
-              "notify",
+              'markdown',
+              'neo-tree',
+              'terminal',
+              'dashboard',
+              'telescope.nvim',
+              'terraform',
+              'lsp-installer',
+              'packer',
+              'neo-tree-popup',
+              'quickfix',
+              'notify',
             },
           },
-        })
+        }
       end, 100)
     end,
   },
   -- first-party github copilot plugin
   {
-    "github/copilot.vim",
-    event = "InsertEnter",
+    'github/copilot.vim',
+    event = 'InsertEnter',
     enabled = false,
   },
   {
-    "lukas-reineke/indent-blankline.nvim",
+    'lukas-reineke/indent-blankline.nvim',
+    main = 'ibl',
     config = function()
-      vim.cmd([[highlight IndentBlanklineIndent1 guifg=#E0DEF4 gui=nocombine]])
-      vim.cmd([[highlight IndentBlanklineIndent2 guifg=#908CAA gui=nocombine]])
-      vim.cmd([[highlight IndentBlanklineIndent3 guifg=#524F67 gui=nocombine]])
-      vim.cmd([[highlight IndentBlanklineIndent4 guifg=#403d42 gui=nocombine]])
-      vim.cmd([[highlight IndentBlanklineIndent5 guifg=#25233A gui=nocombine]])
-      vim.cmd([[highlight IndentBlanklineIndent6 guifg=#21202E gui=nocombine]])
+      vim.cmd [[highlight IndentBlanklineIndent6 guifg=#E0DEF4 gui=nocombine]]
+      vim.cmd [[highlight IndentBlanklineIndent5 guifg=#908CAA gui=nocombine]]
+      vim.cmd [[highlight IndentBlanklineIndent4 guifg=#524F67 gui=nocombine]]
+      vim.cmd [[highlight IndentBlanklineIndent3 guifg=#403d42 gui=nocombine]]
+      vim.cmd [[highlight IndentBlanklineIndent2 guifg=#25233A gui=nocombine]]
+      vim.cmd [[highlight IndentBlanklineIndent1 guifg=#21202E gui=nocombine]]
 
-      vim.opt.list = true
-      vim.opt.listchars:append("space:⋅")
+      -- Hide first line
+      local hooks = require 'ibl.hooks'
+      hooks.register(hooks.type.WHITESPACE, hooks.builtin.hide_first_space_indent_level)
 
-      require("indent_blankline").setup({
-        filetype_exclude = {
-          "alpha",
-          "neo-tree",
-          "lsp-installer",
-          "lazy",
-          "packer",
-          "dashboard",
+      require('ibl').setup {
+        exclude = {
+          filetypes = {
+            'alpha',
+            'neo-tree',
+            'lsp-installer',
+            'lazy',
+            'packer',
+            'dashboard',
+          },
         },
-        space_char_blankline = " ",
-        show_current_context = true,
-        show_current_context_start = false,
-        use_treesitter = true,
-        char_highlight_list = {
-          "IndentBlanklineIndent1",
-          "IndentBlanklineIndent2",
-          "IndentBlanklineIndent3",
-          "IndentBlanklineIndent4",
-          "IndentBlanklineIndent5",
-          "IndentBlanklineIndent6",
+        scope = {
+          enabled = true,
+          char = '▏',
+          show_start = false,
+          show_end = false,
+          highlight = {
+            'IndentBlanklineIndent1',
+            'IndentBlanklineIndent2',
+            'IndentBlanklineIndent3',
+            'IndentBlanklineIndent4',
+            'IndentBlanklineIndent5',
+            'IndentBlanklineIndent6',
+          },
         },
-      })
+        indent = {
+          char = '▏',
+          highlight = {
+            'IndentBlanklineIndent1',
+            'IndentBlanklineIndent2',
+            'IndentBlanklineIndent3',
+            'IndentBlanklineIndent4',
+            'IndentBlanklineIndent5',
+            'IndentBlanklineIndent6',
+          },
+        },
+      }
     end,
   },
   {
-    "RRethy/nvim-base16",
-    enabled = "false",
+    'RRethy/nvim-base16',
+    enabled = 'false',
   },
   -- other themes
   -- "folke/tokyonight.nvim",
@@ -211,95 +228,95 @@ return {
   -- 	end,
   -- },
   {
-    "norcalli/nvim-colorizer.lua",
+    'norcalli/nvim-colorizer.lua',
     -- colorize hex codes / color names
     config = function()
-      require("colorizer").setup({
-        "*",
+      require('colorizer').setup {
+        '*',
         css = { rgb_fn = true },
         -- disabled in favor of document-color
         html = { names = false },
-        "!dart",
-      })
+        '!dart',
+      }
     end,
   },
   {
-    "glepnir/dashboard-nvim",
+    'glepnir/dashboard-nvim',
     -- initial launch dashboard
-    event = "VimEnter",
+    event = 'VimEnter',
     config = function()
-      require("dashboard").setup({
-        theme = "hyper",
+      require('dashboard').setup {
+        theme = 'hyper',
         config = {
           week_header = { enable = true },
           shortcut = {
             {
-              desc = " Update",
-              group = "@property",
-              action = "Lazy update",
-              key = "u",
+              desc = ' Update',
+              group = '@property',
+              action = 'Lazy update',
+              key = 'u',
             },
             {
-              icon = " ",
-              icon_hl = "@variable",
-              desc = "Files",
-              group = "Label",
-              action = "Telescope find_files",
-              key = "f",
+              icon = ' ',
+              icon_hl = '@variable',
+              desc = 'Files',
+              group = 'Label',
+              action = 'Telescope find_files',
+              key = 'f',
             },
             {
-              desc = " Apps",
-              group = "DiagnosticHint",
-              action = "Telescope app",
-              key = "a",
+              desc = ' Apps',
+              group = 'DiagnosticHint',
+              action = 'Telescope app',
+              key = 'a',
             },
             {
-              desc = " dotfiles",
-              group = "Number",
-              action = "Telescope dotfiles",
-              key = "d",
+              desc = ' dotfiles',
+              group = 'Number',
+              action = 'Telescope dotfiles',
+              key = 'd',
             },
           },
         },
-      })
+      }
     end,
-    dependencies = { "nvim-tree/nvim-web-devicons" },
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
   },
   -- notifications
   {
-    "rcarriga/nvim-notify",
+    'rcarriga/nvim-notify',
     -- name = "notify",
     lazy = false,
     config = function()
-      local notify = require("notify")
-      notify.setup({
+      local notify = require 'notify'
+      notify.setup {
         -- render = "minimal",
-        stages = "fade_in_slide_out",
-        background_colour = "#191724",
+        stages = 'fade_in_slide_out',
+        background_colour = '#191724',
         icons = {
-          ERROR = "",
-          WARN = "",
-          INFO = "",
-          DEBUG = "",
-          TRACE = "✎",
+          ERROR = '',
+          WARN = '',
+          INFO = '',
+          DEBUG = '',
+          TRACE = '✎',
         },
-      })
+      }
       vim.notify = notify
     end,
   },
   {
-    "folke/which-key.nvim",
+    'folke/which-key.nvim',
     enabled = false,
     config = function()
       vim.o.timeout = true
       vim.o.timeoutlen = 300
-      require("which-key").setup({
+      require('which-key').setup {
         -- your configuration comes here
         -- or leave it empty to use the default settings
         -- refer to the configuration section below
-      })
+      }
     end,
   }, -- tpope plugins
-  { "tpope/vim-surround" }, -- Change surrounding arks
-  { "tpope/vim-repeat" }, -- extends . repeat
+  { 'tpope/vim-surround' }, -- Change surrounding arks
+  { 'tpope/vim-repeat' }, -- extends . repeat
 }
