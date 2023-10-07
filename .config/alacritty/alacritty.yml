@@ -9,15 +9,17 @@ font:
     # family: Menlo for Powerline
     # family: UbuntuMono Nerd Font Mono
     # family: FiraCode Nerd Font
-    family: CommitMonoV138
-    style: Bold
+    # family: CommitMonoV138
+    family: Operator Mono
+    style: Regular Bold
   bold_italic:
     # family: DejaVu SansMono Nerd Font
     # family: SauceCodePro Nerd Font Mono
     # family: Menlo for Powerline
     # family: UbuntuMono Nerd Font Mono
     # family: FiraCode Nerd Font
-    family: CommitMonoV138
+    # family: CommitMonoV138
+    family: Operator Mono
     style: Bold Italic
   italic:
     # family: DejaVu SansMono Nerd Font
@@ -25,15 +27,17 @@ font:
     # family: Menlo for Powerline
     # family: UbuntuMono Nerd Font Mono
     # family: FiraCode Nerd Font
-    family: CommitMonoV138
-    style: Italic
+    # family: CommitMonoV138
+    family: Operator Mono
+    style: Light Italic
   normal:
     # family: DejaVu SansMono Nerd Font
     # family: BlexMono Nerd Font
     # family: UbuntuMono Nerd Font Mono
     # family: FiraCode Nerd Font
-    family: CommitMonoV138
-    style: Regular
+    # family: CommitMonoV138
+    family: Operator Mono
+    style: Light
   offset:
     x: 0
     y: 0
