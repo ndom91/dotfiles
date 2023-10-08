@@ -37,6 +37,8 @@ config.keys = {
     mods = 'CTRL|SHIFT',
     action = wezterm.action.ReloadConfiguration,
   },
+  { key = ' ', mods = 'CTRL|SHIFT', action = wezterm.action.QuickSelect },
+
 }
 
 return config

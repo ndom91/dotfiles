@@ -45,6 +45,9 @@ return {
       },
       indent = { enable = true },
       rainbow = { enable = true, extended_mode = true, max_file_lines = nil },
+      context = {
+        separator = '⎽',
+      },
       context_commentstring = { enable = true, enable_autocmd = false },
       sync_install = false,
       ensure_installed = "all",
