@@ -20,6 +20,12 @@ return {
     },
     custom_highlights = function(colors)
       return {
+        Underline = { undercurl = true },
+        DiagnosticUnderlineHint = { undercurl = true },
+        DiagnosticUnderlineError = { undercurl = true },
+        DiagnosticUnderlineWarn = { undercurl = true },
+        DiagnosticUnderlineInfo = { undercurl = true },
+
         VertSplit = { fg = colors.surface0 },
         TelescopeBorder = { fg = colors.mantle, bg = colors.mantle },
         TelescopeSelectionCaret = { fg = colors.lavender, bg = colors.mantle },
