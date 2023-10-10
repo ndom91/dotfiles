@@ -30,10 +30,11 @@ alias dot='/usr/bin/git --git-dir=$HOME/public-dotfiles/ --work-tree=$HOME'
 alias lazydot='/bin/lazygit --git-dir=$HOME/public-dotfiles/ --work-tree=$HOME'
 
 #### APPLICATIONS ####
-if [ -f /usr/bin/exa ]; then
-	alias ll='exa --icons -l -a --group-directories-first --time-style long-iso --classify --group'
-	alias ls='exa --icons --group-directories-first --classify'
-	alias tree='exa --long --tree --time-style long-iso --icons --group'
+if [ -f /usr/bin/eza ]; then
+	alias ll='eza --icons -o -l -a --group-directories-first --time-style long-iso --classify --group'
+	alias llg='eza --icons --git-repos --git -l -a --group-directories-first --time-style long-iso --classify --group'
+	alias ls='eza --icons --group-directories-first --classify'
+	alias tree='eza --long --tree --time-style long-iso --icons --group'
 else
 	alias ll='ls -hal'
 	alias lls='ls -hSral'
