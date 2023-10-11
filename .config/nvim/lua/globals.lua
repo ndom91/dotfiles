@@ -1,7 +1,5 @@
 -- quickly print a lua table to :messages
-_G.dump = function(...)
-  print(vim.inspect(...))
-end
+_G.dump = function(...) print(vim.inspect(...)) end
 
 -- wrapper for nvim_set_keymap with sensible defaults
 local keymapper = function(mode, lhs, rhs, override_opts, bufnr)
@@ -31,30 +29,40 @@ local keymapper = function(mode, lhs, rhs, override_opts, bufnr)
 end
 
 -- set a key mapping for normal mode
-_G.nnoremap = function(lhs, rhs, opts, bufnr)
-  keymapper('n', lhs, rhs, opts, bufnr)
-end
+_G.nnoremap = function(lhs, rhs, opts, bufnr) keymapper('n', lhs, rhs, opts, bufnr) end
 -- set a key mapping for insert mode
-_G.inoremap = function(lhs, rhs, opts, bufnr)
-  keymapper('i', lhs, rhs, opts, bufnr)
-end
+_G.inoremap = function(lhs, rhs, opts, bufnr) keymapper('i', lhs, rhs, opts, bufnr) end
 -- set a key mapping for visual mode
-_G.vnoremap = function(lhs, rhs, opts, bufnr)
-  keymapper('v', lhs, rhs, opts, bufnr)
-end
+_G.vnoremap = function(lhs, rhs, opts, bufnr) keymapper('v', lhs, rhs, opts, bufnr) end
 -- set a key mapping for command-line mode
-_G.cnoremap = function(lhs, rhs, opts, bufnr)
-  keymapper('c', lhs, rhs, opts, bufnr)
-end
+_G.cnoremap = function(lhs, rhs, opts, bufnr) keymapper('c', lhs, rhs, opts, bufnr) end
 -- set a key mapping for terminal mode
-_G.tnoremap = function(lhs, rhs, opts, bufnr)
-  keymapper('t', lhs, rhs, opts, bufnr)
-end
+_G.tnoremap = function(lhs, rhs, opts, bufnr) keymapper('t', lhs, rhs, opts, bufnr) end
 -- set a key mapping for operator-pending mode
-_G.onoremap = function(lhs, rhs, opts, bufnr)
-  keymapper('o', lhs, rhs, opts, bufnr)
-end
+_G.onoremap = function(lhs, rhs, opts, bufnr) keymapper('o', lhs, rhs, opts, bufnr) end
 -- set a key mapping for insert and command-line mode
-_G.icnoremap = function(lhs, rhs, opts, bufnr)
-  keymapper('!', lhs, rhs, opts, bufnr)
-end
+_G.icnoremap = function(lhs, rhs, opts, bufnr) keymapper('!', lhs, rhs, opts, bufnr) end
+
+-- Experimental highlight-group debugging helper fns
+vim.api.nvim_create_user_command('ShowRootHighlightUnderCursor', function()
+  local function findRoot(id, tree)
+    local transId = vim.fn.synIDtrans(id)
+    local name = vim.fn.synIDattr(id, 'name')
+    table.insert(tree, name)
+
+    if id == transId then
+      vim.notify(table.concat(tree, ' -> '))
+    else
+      findRoot(transId, tree)
+    end
+  end
+
+  local id = vim.fn.synID(vim.fn.line '.', vim.fn.col '.', 0)
+  findRoot(id, {})
+end, {})
+
+vim.api.nvim_create_user_command('SynStack', function()
+  -- vim.notify(vim.fn.map(vim.fn.synstack(vim.fn.line('.'), vim.fn.col('.')), vim.fn.synIDattr(val, "name")))
+  local a = vim.fn.synIDattr(vim.fn.synID(vim.fn.line '.', vim.fn.col '.', 0), 'name')
+  vim.notify(a)
+end, {})

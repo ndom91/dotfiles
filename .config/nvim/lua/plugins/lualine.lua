@@ -76,8 +76,10 @@ return {
         -- always_divide_middle = true,
         icons_enabled = true,
         globalstatus = true,
-        component_separators = { left = "", right = "" },
-        section_separators = { left = "", right = "" },
+        -- component_separators = { left = "", right = "" },
+        component_separators = { left = "╱", right = "╱" },
+        -- section_separators = { left = "", right = "" },
+        section_separators = { left = "", right = "" },
         disabled_filetypes = {
           winbar = { "neo-tree", "packer", "help", "toggleterm" },
         },
