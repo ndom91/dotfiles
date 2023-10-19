@@ -22,7 +22,7 @@ fi
 
 export PAGER="less -R"
 export READER="zathura"
-export BROWSER="brave"
+export BROWSER="thorium-browser"
 export VIDEO="vlc"
 export XDG_CONFIG_HOME="$HOME/.config"
 export BAT_THEME="Coldark-Dark"
