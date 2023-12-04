@@ -19,7 +19,7 @@
     "disk",
     "temperature",
     "battery",
-    "wlr/workspaces",
+    "hyprland/workspaces",
     "hyprland/submap"
   ],
   "modules-center": [

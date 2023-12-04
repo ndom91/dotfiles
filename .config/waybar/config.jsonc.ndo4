@@ -18,7 +18,7 @@
     "memory",
     "disk",
     "custom/updater",
-    "wlr/workspaces",
+    "hyprland/workspaces",
     "hyprland/submap"
   ],
   "modules-center": [
