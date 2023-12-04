@@ -90,7 +90,7 @@ decoration {
   blur_passes = 2
   blur_xray = true
   blur_new_optimizations = true
-  blur_ignore_opacity = true
+  # blur_ignore_opacity = true
 
   drop_shadow = false
   shadow_range = 4

@@ -43,9 +43,11 @@ shotnow() {
 }
 
 shot5() {
+	coords=$(slurp)
 	countdown '3'
-	sleep 1 && cd "${dir}" && grim -c | tee "$file" | xclip -selection clipboard -t image/png
-	notify_view
+	# sleep 1 && cd "${dir}" && grim -c | tee "$file" | xclip -selection clipboard -t image/png
+	grim -c -g "$coords" - | swappy -f -
+	# notify_view
 }
 
 shot10() {

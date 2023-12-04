@@ -17,6 +17,7 @@ x-scheme-handler/mailto=thorium-browser.desktop
 text/html=thorium-browser.desktop
 x-scheme-handler/about=thorium-browser.desktop
 x-scheme-handler/unknown=thorium-browser.desktop
+x-scheme-handler/webcal=thorium-browser.desktop
 
 [Added Associations]
 image/png=viewnior.desktop;

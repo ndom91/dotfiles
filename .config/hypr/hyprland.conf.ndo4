@@ -107,7 +107,7 @@ decoration {
   blur_passes = 2
   blur_xray = true
   blur_new_optimizations = true
-  blur_ignore_opacity = true
+  # blur_ignore_opacity = true
 
   drop_shadow = false
   shadow_range = 10
@@ -257,6 +257,7 @@ windowrulev2 = dimaround, title:Search...
 
 # DevTools
 windowrulev2 = float, class:brave-browser, title:^(DevTools.*)$
+windowrulev2 = float, title:^(DevTools.*)$
 
 # Winetricks
 windowrulev2 = float, title:^(Winetricks.*)$

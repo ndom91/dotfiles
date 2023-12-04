@@ -120,22 +120,23 @@ return {
           '.docusaurus',
           'build',
         },
-        preview = {
-          mime_hook = function(filepath, bufnr, opts)
-            local is_image = function(filepath)
-              local image_extensions = { 'png', 'jpg' } -- Supported image formats
-              local split_path = vim.split(filepath:lower(), '.', { plain = true })
-              local extension = split_path[#split_path]
-              return vim.tbl_contains(image_extensions, extension)
-            end
-            if is_image(filepath) then
-              local image = require('hologram.image'):new(filepath, {})
-              require('telescope.previewers.utils').set_preview_message(bufnr, opts.winid, image)
-            else
-              require('telescope.previewers.utils').set_preview_message(bufnr, opts.winid, 'Binary cannot be previewed')
-            end
-          end,
-        },
+        -- Attempt to preview images, broke previewing TS files, for example.
+        -- preview = {
+        --   mime_hook = function(filepath, bufnr, opts)
+        --     local is_image = function(filepath)
+        --       local image_extensions = { 'png', 'jpg' } -- Supported image formats
+        --       local split_path = vim.split(filepath:lower(), '.', { plain = true })
+        --       local extension = split_path[#split_path]
+        --       return vim.tbl_contains(image_extensions, extension)
+        --     end
+        --     if is_image(filepath) then
+        --       local image = require('hologram.image'):new(filepath, {})
+        --       require('telescope.previewers.utils').set_preview_message(bufnr, opts.winid, image)
+        --     -- else
+        --     --   require('telescope.previewers.utils').set_preview_message(bufnr, opts.winid, 'Binary cannot be previewed')
+        --     end
+        --   end,
+        -- },
       },
       pickers = {
         live_grep = { prompt_title = 'Grep', preview_title = 'Results', path_display = { 'shorten' } },
