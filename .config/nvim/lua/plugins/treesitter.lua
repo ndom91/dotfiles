@@ -4,11 +4,10 @@ return {
   dependencies = {
     "windwp/nvim-ts-autotag",
     "nvim-treesitter/nvim-treesitter-context",
-    -- { "JoosepAlviste/nvim-ts-context-commentstring" },
+    "JoosepAlviste/nvim-ts-context-commentstring",
     "nvim-treesitter/playground",
   },
   config = function()
-    vim.g.skip_ts_context_commentstring_module = true
     require("nvim-treesitter.configs").setup({
       highlight = { enable = true },
       playground = {

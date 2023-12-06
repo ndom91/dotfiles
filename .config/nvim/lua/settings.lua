@@ -9,6 +9,8 @@ vim.opt.backup = false
 vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
 vim.opt.undofile = true
 
+vim.g.skip_ts_context_commentstring_module = true
+
 vim.api.nvim_set_var("markdown_fenced_languages", {
   "html",
   "javascript",
