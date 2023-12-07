@@ -103,7 +103,7 @@ return {
   -- "b0o/schemastore.nvim",
   -- "jose-elias-alvarez/null-ls.nvim",
   -- "hrsh7th/cmp-nvim-lua", -- Snippets
-  'jose-elias-alvarez/typescript.nvim',
+  -- 'jose-elias-alvarez/typescript.nvim',
   -- "folke/neodev.nvim", -- lua support for nvim config + development
 
   -- autocompletion

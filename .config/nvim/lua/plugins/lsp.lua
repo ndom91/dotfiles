@@ -5,7 +5,7 @@ local function goto_prev_error() vim.diagnostic.goto_prev { severity = 'Error' }
 vim.g.neoformat_enabled_lua = { 'stylua' }
 vim.g.neoformat_enabled_vue = { 'eslint_d' }
 vim.g.neoformat_try_node_exe = 1
--- vim.g.neoformat_verbose = 1
+vim.g.neoformat_verbose = 1
 
 local function format_buffer()
   local current_bufnr = vim.fn.bufnr '%'
@@ -20,9 +20,17 @@ end
 
 local formatting_augroup = vim.api.nvim_create_augroup('LspFormatting', {})
 
-vim.keymap.set('n', '<Leader>lf', format_buffer, { silent = true, noremap = true })
+vim.lsp.set_log_level("debug")
 
-vim.keymap.set('n', '<Leader>a', vim.lsp.buf.code_action, { noremap = true, silent = true })
+-- vim.keymap.set('n', '<Leader>lf', format_buffer, { silent = true, noremap = true })
+vim.keymap.set('n', '<Leader>lf', function()
+  vim.lsp.buf.format {
+    async = true,
+    filter = function(client) return client.name ~= "volar" end
+  }
+end, { silent = true, noremap = true })
+
+-- vim.keymap.set('n', '<Leader>a', vim.lsp.buf.code_action, { noremap = true, silent = true })
 
 vim.keymap.set('n', '<space>d', vim.diagnostic.open_float)
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
@@ -40,6 +48,7 @@ local on_attach = function(client, bufnr)
   vim.keymap.set('n', '<Leader>e', builtin.diagnostics, opts)
   vim.keymap.set('n', 'gr', builtin.lsp_references, opts)
 
+  vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
   vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
   vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
   vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help)
@@ -71,7 +80,12 @@ local on_attach = function(client, bufnr)
     vim.api.nvim_create_autocmd('BufWritePre', {
       group = formatting_augroup,
       buffer = bufnr,
-      callback = format_buffer,
+      callback = function()
+        vim.lsp.buf.format {
+          async = true,
+          filter = function(client) return client.name ~= "volar" end
+        }
+      end
     })
   end
 end
@@ -84,11 +98,31 @@ local languages = {
   'pyright',
   'gopls',
   'tailwindcss',
+  'volar',
+  'bashls',
+  'dockerls',
+  'lua_ls'
 }
 
 return {
   {
     'folke/neodev.nvim',
+  },
+  {
+    'williamboman/mason.nvim',
+    opts = {
+      automatic_installation = true,
+      ensure_installed = {
+        'js-debug-adapter',
+      },
+    },
+  },
+  {
+    'williamboman/mason-lspconfig.nvim',
+    opts = {
+      automatic_installation = true,
+      ensure_installed = languages,
+    },
   },
   {
     'neovim/nvim-lspconfig',
@@ -132,6 +166,12 @@ return {
   },
   {
     'sbdchd/neoformat',
+    enabled = false
+  },
+  {
+    "pmizio/typescript-tools.nvim",
+    dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
+    opts = {},
   },
   {
     'laytan/tailwind-sorter.nvim',
@@ -146,30 +186,5 @@ return {
         on_save_enabled = true,
       }
     end,
-  },
-  {
-    'williamboman/mason.nvim',
-    opts = {
-      automatic_installation = true,
-      ensure_installed = {
-        'js-debug-adapter',
-      },
-    },
-  },
-  {
-    'williamboman/mason-lspconfig.nvim',
-    opts = {
-      automatic_installation = true,
-      ensure_installed = {
-        'lua_ls',
-        'html',
-        'cssls',
-        'tsserver',
-        'eslint',
-        'tailwindcss',
-        'pyright',
-        'gopls',
-      },
-    },
   },
 }
