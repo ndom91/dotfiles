@@ -1,37 +1,14 @@
 local function goto_next_error() vim.diagnostic.goto_next { severity = 'Error' } end
-
 local function goto_prev_error() vim.diagnostic.goto_prev { severity = 'Error' } end
 
-vim.g.neoformat_enabled_lua = { 'stylua' }
-vim.g.neoformat_enabled_vue = { 'eslint_d' }
-vim.g.neoformat_try_node_exe = 1
-vim.g.neoformat_verbose = 1
-
-local function format_buffer()
-  local current_bufnr = vim.fn.bufnr '%'
-  local current_buffer_path = vim.api.nvim_buf_get_name(current_bufnr)
-  if string.find(current_buffer_path, '/opt/checkly') then
-    vim.g.neoformat_try_node_exe = 1
-    vim.cmd ':Neoformat eslint_d'
-  else
-    vim.cmd ':Neoformat'
-  end
-end
-
-local formatting_augroup = vim.api.nvim_create_augroup('LspFormatting', {})
-
--- vim.lsp.set_log_level("debug")
-
--- vim.keymap.set('n', '<Leader>lf', format_buffer, { silent = true, noremap = true })
 vim.keymap.set('n', '<Leader>lf', function()
   vim.lsp.buf.format {
-    async = true,
+    async = false,
     filter = function(client) return client.name ~= "volar" end
   }
 end, { silent = true, noremap = true })
 
 -- vim.keymap.set('n', '<Leader>a', vim.lsp.buf.code_action, { noremap = true, silent = true })
-
 vim.keymap.set('n', '<space>d', vim.diagnostic.open_float)
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
@@ -76,13 +53,11 @@ local on_attach = function(client, bufnr)
 
   -- Autoformatting
   if client.supports_method 'textDocument/formatting' then
-    vim.api.nvim_clear_autocmds { group = formatting_augroup, buffer = bufnr }
     vim.api.nvim_create_autocmd('BufWritePre', {
-      group = formatting_augroup,
       buffer = bufnr,
       callback = function()
         vim.lsp.buf.format {
-          async = true,
+          async = false,
           filter = function(client) return client.name ~= "volar" end
         }
       end
@@ -93,7 +68,7 @@ end
 local languages = {
   'html',
   'cssls',
-  'tsserver',
+  -- 'tsserver', -- handled by typescript-tools
   'eslint',
   'pyright',
   'gopls',
@@ -146,12 +121,6 @@ return {
         },
       }
 
-      -- require("lspconfig").tailwindcss.setup({
-      --   on_attach = function()
-      --     require("tailwindcss-colors").buf_attach(0)
-      --   end,
-      -- })
-
       for _, language in pairs(languages) do
         lspconfig[language].setup {
           capabilities = capabilities,
@@ -184,6 +153,7 @@ return {
     config = function()
       require('tailwind-sorter').setup {
         on_save_enabled = true,
+        on_save_pattern = { '*.vue', '*.html', '*.js', '*.jsx', '*.tsx', '*.astro' },
       }
     end,
   },
