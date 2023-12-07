@@ -67,6 +67,26 @@ debug {
   overlay = false
 }
 
+# Plugin hy3 - https://github.com/outfoxxed/hy3
+plugin = /usr/lib/libhy3.so
+
+plugin {
+    hy3 {
+        tabs {
+            height = 5
+	          padding = 8
+	          render_text = false
+            col.active = rgb(8a8dcc)
+        }
+
+        autotile {
+            enable = true
+            trigger_width = 800
+            trigger_height = 500
+        }
+    }
+}
+
 # For all categories, see https://wiki.hyprland.org/Configuring/Variables/
 input {
   kb_layout = us
@@ -95,7 +115,8 @@ general {
   col.active_border = rgb(11111b) rgb(181825) 45deg
   col.inactive_border = rgba(f5e0dc20)
 
-  layout = dwindle
+  # layout = dwindle
+  layout = hy3
   resize_on_border = true
 }
 
@@ -208,7 +229,7 @@ windowrulev2 = float, title:Trufflehog
 # float/slidein nemo file manager
 windowrulev2 = animation slide, class:nemo
 windowrulev2 = float, class:nemo
-windowrulev2 = size 30% 40%, class:nemo
+# windowrulev2 = size 30% 40%, class:nemo
 windowrulev2 = center, class:nemo
 
 # float/slidein pavucontrol
@@ -220,7 +241,7 @@ windowrulev2 = center, class:pavucontrol
 # float/slidein blueberry
 windowrulev2 = animation slide, class:^(.*blueberry.*)$
 windowrulev2 = float, class:^(.*blueberry.*)$
-windowrulev2 = size 20% 40%, class:^(.*blueberry.*)$
+# windowrulev2 = size 20% 40%, class:^(.*blueberry.*)$
 windowrulev2 = center, class:^(.*blueberry.*)$
 
 # float/slidein blueman-manager
@@ -242,7 +263,7 @@ windowrulev2 = float, class:imv
 # float/slidein network-manager-editor
 windowrulev2 = animation slide, class:nm-connection-editor
 windowrulev2 = float, class:nm-connection-editor
-windowrulev2 = size 20% 30%, class:nm-connection-editor
+# windowrulev2 = size 20% 30%, class:nm-connection-editor
 windowrulev2 = center, class:nm-connection-editor
 
 # float/slidein wofi
@@ -254,6 +275,17 @@ windowrulev2 = noborder, class:wofi
 windowrulev2 = noblur, class:wofi
 windowrulev2 = move 1430 50, class:wofi
 windowrulev2 = dimaround, title:Search...
+
+windowrulev2 = float, class:^(opensnitch_ui)$
+windowrulev2 = dimaround, class:^(opensnitch_ui)$
+windowrulev2 = float, class:^(org.kde.polkit-kde-authentication-agent-1)$
+windowrulev2 = dimaround, class:^(org.kde.polkit-kde-authentication-agent-1)$
+windowrulev2 = float, class:^(gcr-prompter)$
+windowrulev2 = dimaround, class:^(gcr-prompter)$
+windowrulev2 = float, class:^(org.freedesktop.impl.portal.desktop.kde)$
+windowrulev2 = size 1000 700, class:^(org.freedesktop.impl.portal.desktop.kde)$
+windowrulev2 = center, class:^(org.freedesktop.impl.portal.desktop.kde)$
+windowrulev2 = dimaround, class:^(org.freedesktop.impl.portal.desktop.kde)$
 
 # DevTools
 windowrulev2 = float, class:brave-browser, title:^(DevTools.*)$
@@ -289,8 +321,8 @@ windowrulev2 = noinitialfocus,class:^(xwaylandvideobridge)$
 # Example binds, see https://wiki.hyprland.org/Configuring/Binds/ for more
 bind = $mainMod, D, exec, "$HOME/.config/rofi/bin/launcher"
 bind = $mainMod, M, exec, flemozi
-bind = $mainMod, B, exec, brave
-bind = $mainMod, Q, killactive,
+bind = $mainMod, T, hy3:makegroup, tab
+bind = $mainMod, Q, hy3:killactive,
 # bind = $mainMod, Return, exec, alacritty
 bind = $mainMod, Return, exec, wezterm
 bind = $mainMod SHIFT, R, exec, hyprctl reload
@@ -319,15 +351,15 @@ bind = CTRL SHIFT, Space, exec, swaync-client -C -sw
 bindn = CTRL SHIFT, Period, exec, 1password --quick-access
 
 # Move focus with mainMod + arrow keys
-bind = $mainMod, H, movefocus, l
-bind = $mainMod, L, movefocus, r
-bind = $mainMod, K, movefocus, u
-bind = $mainMod, J, movefocus, d
+bind = $mainMod, H, hy3:movefocus, l
+bind = $mainMod, L, hy3:movefocus, r
+bind = $mainMod, K, hy3:movefocus, u
+bind = $mainMod, J, hy3:movefocus, d
 
-bind = $mainMod SHIFT, H, movewindow, l
-bind = $mainMod SHIFT, L, movewindow, r
-bind = $mainMod SHIFT, K, movewindow, u
-bind = $mainMod SHIFT, J, movewindow, d
+bind = $mainMod SHIFT, H, hy3:movewindow, l
+bind = $mainMod SHIFT, L, hy3:movewindow, r
+bind = $mainMod SHIFT, K, hy3:movewindow, u
+bind = $mainMod SHIFT, J, hy3:movewindow, d
 
 # Switch workspaces with mainMod + [0-9]
 bind = $mainMod, 1, workspace, 1
