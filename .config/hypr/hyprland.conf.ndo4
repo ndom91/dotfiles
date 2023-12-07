@@ -68,6 +68,7 @@ debug {
 }
 
 # Plugin hy3 - https://github.com/outfoxxed/hy3
+# https://git.outfoxxed.me/outfoxxed/nixnew/src/branch/master/modules/hyprland/hyprland.conf
 plugin = /usr/lib/libhy3.so
 
 plugin {
