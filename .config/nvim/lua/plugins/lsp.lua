@@ -20,7 +20,7 @@ end
 
 local formatting_augroup = vim.api.nvim_create_augroup('LspFormatting', {})
 
-vim.lsp.set_log_level("debug")
+-- vim.lsp.set_log_level("debug")
 
 -- vim.keymap.set('n', '<Leader>lf', format_buffer, { silent = true, noremap = true })
 vim.keymap.set('n', '<Leader>lf', function()
