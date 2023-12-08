@@ -352,8 +352,10 @@ bind = CTRL SHIFT, Space, exec, swaync-client -C -sw
 bindn = CTRL SHIFT, Period, exec, 1password --quick-access
 
 # Move focus with mainMod + arrow keys
-bind = $mainMod, H, hy3:movefocus, l
-bind = $mainMod, L, hy3:movefocus, r
+# bind = $mainMod, H, hy3:movefocus, l
+# bind = $mainMod, L, hy3:movefocus, r
+bind = $mainMod, H, exec, /home/ndo/.config/hypr/movefocus.sh left
+bind = $mainMod, L, exec, /home/ndo/.config/hypr/movefocus.sh right
 bind = $mainMod, K, hy3:movefocus, u
 bind = $mainMod, J, hy3:movefocus, d
 
