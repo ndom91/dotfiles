@@ -3,35 +3,15 @@ return {
   'nvim-lua/plenary.nvim',
   'nvim-lua/popup.nvim',
   {
-    'nvim-telescope/telescope-ui-select.nvim',
-    config = function()
-      require('telescope').setup {
-        extensions = {
-          ['ui-select'] = {
-            require('telescope.themes').get_cursor {},
-
-            -- pseudo code / specification for writing custom displays, like the one
-            -- for "codeactions"
-            -- specific_opts = {
-            --   [kind] = {
-            --     make_indexed = function(items) -> indexed_items, width,
-            --     make_displayer = function(widths) -> displayer
-            --     make_display = function(displayer) -> function(e)
-            --     make_ordinal = function(e) -> string
-            --   },
-            --   -- for example to disable the custom builtin "codeactions" display
-            --      do the following
-            --   codeactions = false,
-            -- }
-          },
-        },
-      }
-      require('telescope').load_extension 'ui-select'
-    end,
+    'lvimuser/lsp-inlayhints.nvim',
+    config = true
   },
-  { 'lvimuser/lsp-inlayhints.nvim', config = true },
 
-  { 'tami5/lspsaga.nvim', enabled = false, config = true },
+  {
+    'tami5/lspsaga.nvim',
+    enabled = false,
+    config = true
+  },
 
   -- icons on completion
   'onsails/lspkind-nvim',
@@ -235,7 +215,7 @@ return {
         '*',
         css = { rgb_fn = true },
         -- disabled in favor of document-color
-        html = { names = false },
+        html = { names = true },
         '!dart',
       }
     end,
@@ -316,7 +296,7 @@ return {
         -- refer to the configuration section below
       }
     end,
-  }, -- tpope plugins
+  },                        -- tpope plugins
   { 'tpope/vim-surround' }, -- Change surrounding arks
-  { 'tpope/vim-repeat' }, -- extends . repeat
+  { 'tpope/vim-repeat' },   -- extends . repeat
 }
