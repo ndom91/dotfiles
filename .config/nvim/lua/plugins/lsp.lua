@@ -4,7 +4,7 @@ local function goto_prev_error() vim.diagnostic.goto_prev { severity = 'Error' }
 vim.keymap.set('n', '<Leader>lf', function()
   vim.lsp.buf.format {
     async = false,
-    filter = function(client) return client.name ~= "volar" end
+    filter = function(client) return client.name ~= "volar" or client.name ~= "svelteserver" end
   }
 end, { silent = true, noremap = true })
 
@@ -58,7 +58,7 @@ local on_attach = function(client, bufnr)
       callback = function()
         vim.lsp.buf.format {
           async = false,
-          filter = function(client) return client.name ~= "volar" end
+          filter = function(client) return client.name ~= "volar" or client.name ~= "svelteserver" end
         }
       end
     })
@@ -76,7 +76,8 @@ local languages = {
   'volar',
   'bashls',
   'dockerls',
-  'lua_ls'
+  'lua_ls',
+  'svelte'
 }
 
 return {
@@ -140,7 +141,17 @@ return {
   {
     "pmizio/typescript-tools.nvim",
     dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
-    opts = {},
+    opts = {
+      settings = {
+        tsserver_file_preferences = {
+          importModuleSpecifierPreference = "non-relative",
+          jsx_close_tag = {
+            enable = true,
+            filetypes = { "javascriptreact", "typescriptreact" },
+          }
+        }
+      }
+    },
   },
   {
     'laytan/tailwind-sorter.nvim',
@@ -153,7 +164,7 @@ return {
     config = function()
       require('tailwind-sorter').setup {
         on_save_enabled = true,
-        on_save_pattern = { '*.vue', '*.html', '*.js', '*.jsx', '*.tsx', '*.astro' },
+        on_save_pattern = { '*.vue', '*.html', '*.js', '*.jsx', '*.ts', '*.tsx', '*.astro', '*.svelte' },
       }
     end,
   },
