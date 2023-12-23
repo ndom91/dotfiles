@@ -65,7 +65,7 @@ shotwin() {
 
 shotarea() {
 	# cd ${dir} && grim -c -g "$coords" - | tee "$file" | xclip -selection clipboard -t image/png
-	coords=$(slurp)
+	coords=$(slurp -d)
 	# grim -c -g "$coords" - | xclip -selection clipboard -t image/png
 	# grim -c -g "$coords" - | wl-copy
 	# grim -c -g "$coords" - | swappy -f -

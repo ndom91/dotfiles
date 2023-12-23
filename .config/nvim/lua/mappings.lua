@@ -48,25 +48,11 @@ tnoremap("<esc>", [[<c-\><c-n>]])
 
 -- disable keys
 nnoremap("<c-z>", "<Nop>") -- disable ctrl-z suspend
-nnoremap("Q", "<Nop>") -- disable ex mode
+nnoremap("Q", "<Nop>")     -- disable ex mode
 
 --------------------
 -- PLUGIN ACTIONS --
 --------------------
-
--- Telescope
-nnoremap("<leader>.", "<cmd>Telescope find_files<CR>")
-nnoremap("<leader>,", "<cmd>Telescope buffers show_all_buffers=true<CR>")
-nnoremap("<leader>/", "<cmd>Telescope live_grep<CR>")
-nnoremap("<leader>:", "<cmd>Telescope command_history<CR>")
-nnoremap("<leader>r", "<cmd>Telescope oldfiles<CR>", { desc = "Old Files" })
-nnoremap("<leader>h", "<cmd>Telescope help_tags<CR>")
-nnoremap("<leader>s", "<cmd>Telescope lsp_dynamic_workspace_symbols<CR>", { desc = "LSP Symbols" })
-nnoremap("<leader>gc", "<cmd>Telescope git_commits<CR>")
-nnoremap("<leader>gb", "<cmd>Telescope git_bcommits<CR>")
-nnoremap("<leader>gr", "<cmd>Telescope git_branches<CR>")
-nnoremap("<leader>d", "<cmd>Telescope diagnostics<CR>")
-nnoremap("<leader>e", "<cmd>Telescope diagnostics { severity: 0 }<CR>")
 
 -- trouble
 nnoremap("<leader>tr", "<cmd>TroubleToggle<cr>")

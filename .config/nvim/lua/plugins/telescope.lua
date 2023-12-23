@@ -1,57 +1,64 @@
 return {
   'nvim-telescope/telescope.nvim',
+  dependencies = {
+    { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
+    'nvim-telescope/telescope-ui-select.nvim',
+  },
+  keys = {
+    { "<leader>.",  "<cmd>Telescope find_files<CR>" },
+    { "<leader>,",  "<cmd>Telescope buffers show_all_buffers=true<CR>" },
+    { "<leader>/",  "<cmd>Telescope live_grep<CR>" },
+    { "<leader>:",  "<cmd>Telescope command_history<CR>" },
+    { "<leader>r",  "<cmd>Telescope oldfiles<CR>",                      { desc = "Old Files" } },
+    { "<leader>h",  "<cmd>Telescope help_tags<CR>" },
+    { "<leader>s",  "<cmd>Telescope lsp_dynamic_workspace_symbols<CR>", { desc = "LSP Symbols" } },
+    { "<leader>gc", "<cmd>Telescope git_commits<CR>" },
+    { "<leader>gb", "<cmd>Telescope git_bcommits<CR>" },
+    { "<leader>gr", "<cmd>Telescope git_branches<CR>" },
+    { "<leader>d",  "<cmd>Telescope diagnostics<CR>" },
+    { "<leader>e",  "<cmd>Telescope diagnostics { severity: 0 }<CR>" },
+  },
   config = function()
-    local previewers = require 'telescope.previewers'
     local actions = require 'telescope.actions'
-    -- local Job = require("plenary.job")
 
-    local new_maker = function(filepath, bufnr, opts)
-      opts = opts or {}
-
-      filepath = vim.fn.expand(filepath)
-      -- Don't preview files over 10mb - https://github.com/nvim-telescope/telescope.nvim/wiki/Configuration-Recipes#file-and-text-search-in-hidden-files-and-directories
-      vim.loop.fs_stat(filepath, function(_, stat)
-        if not stat then
-          return
-        end
-        if stat.size > 100000 then
-          return
-        else
-          previewers.buffer_previewer_maker(filepath, bufnr, opts)
-        end
-      end)
-      -- Don't preview binaries
-      -- Job:new({
-      --   command = "file",
-      --   args = { "--mime-type", "-b", filepath },
-      --   on_exit = function(j)
-      --     local mime_type = vim.split(j:result()[1], "/")[1]
-      --     if (mime_type == "text") or (j:result()[1] == "application/json") then
-      --       previewers.buffer_previewer_maker(filepath, bufnr, opts)
-      --     else
-      --       -- maybe we want to write something to the buffer here
-      --       vim.schedule(function()
-      --         vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, { "BINARY" })
-      --       end)
-      --     end
-      --   end,
-      -- }):sync()
-    end
+    local file_ignore_patterns = {
+      '%.jpg',
+      '%.jpeg',
+      '%.png',
+      '%.otf',
+      '%.ttf',
+      '%.lock',
+      'pnpm-lock.yaml',
+      'package-lock.json',
+      '^node_modules/',
+      '^\\.next/',
+      '^static/',
+      '^coverage/',
+      '^lcov-report/',
+      '^dist/',
+      '^pack/github/',
+      '^\\.nuxt/',
+      '^\\.docusaurus/',
+      '^build/',
+      '[.]svelte-kit/',
+    }
 
     require('telescope').setup {
       defaults = {
-        buffer_previewer_maker = new_maker,
+        preview = {
+          filesize_limit = 10, -- MB
+        },
         prompt_prefix = '  ',
         selection_caret = ' ',
         entry_prefix = '  ',
         set_env = { ['COLORTERM'] = 'truecolor' },
         color_devicons = true,
         -- path_dispay = { shorten = 2 },
-        path_display = function(_, path)
-          local filename = path:gsub(vim.pesc(vim.loop.cwd()) .. '/', ''):gsub(vim.pesc(vim.fn.expand '$HOME'), '~')
-          local tail = require('telescope.utils').path_tail(filename)
-          return string.format('%s — %s', tail, filename)
-        end,
+        -- path_display = function(_, path)
+        --   local filename = path:gsub(vim.pesc(vim.loop.cwd()) .. '/', ''):gsub(vim.pesc(vim.fn.expand '$HOME'), '~')
+        --   local tail = require('telescope.utils').path_tail(filename)
+        --   return string.format('%s — %s', tail, filename)
+        -- end,
         results_title = '',
         prompt_title = 'Search',
         winblend = 0,
@@ -63,20 +70,22 @@ return {
             ['<c-k>'] = actions.move_selection_previous,
             ['<s-up>'] = actions.cycle_history_prev,
             ['<s-down>'] = actions.cycle_history_next,
-            ['<C-c>'] = 'delete_buffer',
+            ['<C-c>'] = actions.delete_buffer + actions.move_to_top,
+            ['<C-d>'] = actions.delete_buffer + actions.move_to_top,
             ['<C-w>'] = function()
               vim.api.nvim_input '<c-s-w>'
             end,
           },
           n = {
             ['q'] = actions.close,
-            ['<C-c>'] = 'delete_buffer',
+            ['<C-c>'] = actions.delete_buffer + actions.move_to_top,
           },
         },
         vimgrep_arguments = {
           'rg',
           '--color=never',
-          '--hidden',
+          -- '--hidden',
+          -- '--ignore',
           '--no-heading',
           '--with-filename',
           '--line-number',
@@ -100,56 +109,43 @@ return {
           height = 0.80,
           preview_cutoff = 120,
         },
-        file_ignore_patterns = {
-          '%.jpg',
-          '%.jpeg',
-          '%.png',
-          '%.otf',
-          '%.ttf',
-          '%.lock',
-          'pnpm-lock.yaml',
-          'package-lock.json',
-          'node_modules',
-          '.next',
-          'static',
-          'coverage',
-          'lcov-report',
-          'dist',
-          'pack/github',
-          '.nuxt',
-          '.docusaurus',
-          'build',
-        },
-        -- Attempt to preview images, broke previewing TS files, for example.
-        -- preview = {
-        --   mime_hook = function(filepath, bufnr, opts)
-        --     local is_image = function(filepath)
-        --       local image_extensions = { 'png', 'jpg' } -- Supported image formats
-        --       local split_path = vim.split(filepath:lower(), '.', { plain = true })
-        --       local extension = split_path[#split_path]
-        --       return vim.tbl_contains(image_extensions, extension)
-        --     end
-        --     if is_image(filepath) then
-        --       local image = require('hologram.image'):new(filepath, {})
-        --       require('telescope.previewers.utils').set_preview_message(bufnr, opts.winid, image)
-        --     -- else
-        --     --   require('telescope.previewers.utils').set_preview_message(bufnr, opts.winid, 'Binary cannot be previewed')
-        --     end
-        --   end,
-        -- },
+        -- dynamic_preview_title = true,
       },
       pickers = {
-        live_grep = { prompt_title = 'Grep', preview_title = 'Results', path_display = { 'shorten' } },
-        find_files = { prompt_title = 'Files', preview_title = 'Results' },
-        old_files = { prompt_title = 'Recents', preview_title = 'Results', sort_lastused = true, cwd_only = true },
+        live_grep = {
+          prompt_title = 'Grep',
+          preview_title = 'Results',
+          path_display = { 'smart' },
+          dynamic_preview_title = true,
+          file_ignore_patterns,
+        },
+        find_files = {
+          prompt_title = 'Files',
+          preview_title = 'Results',
+          file_ignore_patterns,
+        },
+        old_files = {
+          prompt_title = 'Recents',
+          preview_title = 'Results',
+          sort_lastused = true,
+          cwd_only = true
+        },
         -- apps = { find_command = { "fd", "--type", "f", "--strip-cwd-prefix" } },
         dotfiles = { find_command = { 'fd', '--type', 'f', '.', '/home/ndo/.dotfiles' } },
       },
       extensions = {
         ['ui-select'] = {
-          require('telescope.themes').get_cursor {},
+          require('telescope.themes').get_dropdown {},
         },
+        fzf = {
+          fuzzy = true,                   -- false will only do exact matching
+          override_generic_sorter = true, -- override the generic sorter
+          override_file_sorter = true,    -- override the file sorter
+          case_mode = "smart_case",       -- or "ignore_case" or "respect_case"
+        }
       },
     }
+    require('telescope').load_extension('ui-select')
+    require('telescope').load_extension('fzf')
   end,
 }
