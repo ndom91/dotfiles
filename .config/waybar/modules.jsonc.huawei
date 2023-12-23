@@ -146,7 +146,7 @@
   },
   "wireplumber": {
     "format": "<span font='11' rise='-1pt'></span>  {volume}",
-    "format-muted": "<span font='20' rise='-5pt'></span>",
+    "format-muted": "<span font='14' rise='-1pt'> </span>",
     "on-click": "pavucontrol"
   },
   "pulseaudio": {

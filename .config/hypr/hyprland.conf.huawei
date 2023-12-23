@@ -38,6 +38,7 @@ exec-once = powerkit
 exec-once = swaync
 exec-once = 1password --silent
 exec-once = nm-applet --indicator
+exec-once = emojione-picker
 # exec-once = swaybg -m fill -i ~/.config/hypr/wallpapers/arch01.jpg
 exec-once = swaybg -m fill -i ~/.config/hypr/wallpapers/wallpaper-california.png
 exec-once = swayosd
@@ -245,7 +246,7 @@ bindl=,switch:on:Lid Switch,exec,swaylock & systemctl suspend
 
 # Example binds, see https://wiki.hyprland.org/Configuring/Binds/ for more
 bind = $mainMod, D, exec, "$HOME/.config/rofi/bin/launcher"
-bind = $mainMod, M, exec, flemozi
+# bind = $mainMod, M, exec, flemozi
 bind = $mainMod, B, exec, brave
 bind = $mainMod, Q, killactive,
 # bind = $mainMod, Return, exec, alacritty

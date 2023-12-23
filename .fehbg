@@ -1,4 +1,0 @@
-#!/usr/bin/env bash
-
-# feh --no-fehbg --bg-scale '/home/ndo/Downloads/archLinux.jpeg'
-feh --no-fehbg --bg-scale '/home/ndo/.config/hypr/arch01.jpg'

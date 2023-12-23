@@ -16,7 +16,7 @@ config.color_scheme = 'Catppuccin Mocha (Gogh)'
 config.window_background_opacity = 0.9
 
 config.font = wezterm.font_with_fallback {
-  { family = 'Operator Mono', weight = 'Light', harfbuzz_features = { 'liga=1' } },
+  { family = 'Operator Mono Light', harfbuzz_features = { 'liga=1' } },
   'Fira Code',
   'Ubuntu Mono',
 }
@@ -42,4 +42,3 @@ config.keys = {
 }
 
 return config
-
