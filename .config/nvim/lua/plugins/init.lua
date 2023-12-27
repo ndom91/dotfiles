@@ -9,7 +9,7 @@ return {
 
   {
     'tami5/lspsaga.nvim',
-    enabled = false,
+    enabled = true,
     config = true
   },
 
@@ -19,50 +19,64 @@ return {
   -- lsp function signature help on wildmenu
   {
     'ray-x/lsp_signature.nvim',
-    config = function()
-      local cfg = {
-        -- hint_enable = false,
-        -- transparency = 30,
-        floating_window = false,
-        bind = true,
-        -- shadow_blend = 36,
-        -- handler_opts = { border = "rounded" },
-      }
-      require('lsp_signature').setup(cfg)
-    end,
+    opts = {
+      -- hint_enable = false,
+      -- transparency = 30,
+      floating_window = false,
+      bind = true,
+      -- shadow_blend = 36,
+      -- handler_opts = { border = "rounded" },
+    }
   },
   -- floating status text in bottom right
   {
     'j-hui/fidget.nvim',
-    tag = 'legacy',
+    -- tag = 'legacy',
     event = 'LspAttach',
-    config = function()
-      require('fidget').setup {
-        text = {
-          spinner = 'dots',
+    opts = {
+      integration = {
+        ["nvim-tree"] = {
+          enable = true, -- Integrate with nvim-tree/nvim-tree.lua (if installed)
         },
+      },
+      progress = {
+        display = {
+          progress_icon = {
+            pattern = "dots",
+            period = 1
+          }
+        },
+      },
+      notification = {
         window = {
-          blend = 0,
+          winblend = 0,
         },
-      }
-    end,
+      },
+    }
   },
   {
     'folke/trouble.nvim',
-    enabled = 'false',
+    enabled = true,
     dependencies = { 'nvim-tree/nvim-web-devicons' },
+
+    keys = {
+      { '<leader>tr', "<cmd>TroubleToggle<cr>", { desc = " Toggle Trouble" } },
+    },
     config = true,
   },
   -- ui elements
   {
     'MunifTanjim/nui.nvim',
-    enabled = 'false',
+    enabled = true,
   },
 
   -- tailwind token colorizer
   {
     'mrshmllow/document-color.nvim',
     enabled = false,
+    keys = {
+      { "<leader>lC", "require('document-color').buf_toggle()" },
+    },
     config = function()
       local docColors = require 'document-color'
       docColors.setup { mode = 'background' }
@@ -91,32 +105,32 @@ return {
   {
     'zbirenbaum/copilot.lua',
     -- event = { "VimEnter" },
-    enabled = false,
-    event = { 'BufRead' },
-    dependencies = { 'zbirenbaum/copilot-cmp' },
-    config = function()
-      vim.defer_fn(function()
-        require('copilot').setup {
-          cmp = {
-            enabled = true,
-            method = 'getCompletionsCycling',
-            ft_disable = {
-              'markdown',
-              'neo-tree',
-              'terminal',
-              'dashboard',
-              'telescope.nvim',
-              'terraform',
-              'lsp-installer',
-              'packer',
-              'neo-tree-popup',
-              'quickfix',
-              'notify',
-            },
-          },
-        }
-      end, 100)
-    end,
+    enabled = true,
+    event = "VeryLazy",
+    cmd = "Copilot",
+    build = ":Copilot auth",
+    opts = {
+      suggestion = { enabled = false },
+      panel = { enabled = false },
+      filetypes = {
+        markdown = true,
+        help = true,
+        javascript = true,
+        typescript = true,
+        typescriptreact = true,
+        javascriptreact = true,
+        lua = true,
+        bash = true,
+        sh = function()
+          if string.match(vim.fs.basename(vim.api.nvim_buf_get_name(0)), '^%.env.*') then
+            -- disable for .env files
+            return false
+          end
+          return true
+        end,
+        ["."] = false,
+      },
+    }
   },
   -- first-party github copilot plugin
   {
@@ -126,7 +140,48 @@ return {
   },
   {
     'lukas-reineke/indent-blankline.nvim',
+    enabled = true,
     main = 'ibl',
+    opts = {
+      exclude = {
+        filetypes = {
+          'alpha',
+          'neo-tree',
+          'lsp-installer',
+          'lazy',
+          'packer',
+          'dashboard',
+        },
+      },
+      whitespace = {
+        remove_blankline_trail = true,
+      },
+      scope = {
+        enabled = true,
+        char = '▏',
+        show_start = false,
+        show_end = false,
+        highlight = {
+          'IndentBlanklineIndent1',
+          'IndentBlanklineIndent2',
+          'IndentBlanklineIndent3',
+          'IndentBlanklineIndent4',
+          'IndentBlanklineIndent5',
+          'IndentBlanklineIndent6',
+        },
+      },
+      indent = {
+        char = '▏',
+        highlight = {
+          'IndentBlanklineIndent1',
+          'IndentBlanklineIndent2',
+          'IndentBlanklineIndent3',
+          'IndentBlanklineIndent4',
+          'IndentBlanklineIndent5',
+          'IndentBlanklineIndent6',
+        },
+      },
+    },
     config = function()
       vim.cmd [[highlight IndentBlanklineIndent6 guifg=#E0DEF4 gui=nocombine]]
       vim.cmd [[highlight IndentBlanklineIndent5 guifg=#908CAA gui=nocombine]]
@@ -138,44 +193,6 @@ return {
       -- Hide first line
       local hooks = require 'ibl.hooks'
       hooks.register(hooks.type.WHITESPACE, hooks.builtin.hide_first_space_indent_level)
-
-      require('ibl').setup {
-        exclude = {
-          filetypes = {
-            'alpha',
-            'neo-tree',
-            'lsp-installer',
-            'lazy',
-            'packer',
-            'dashboard',
-          },
-        },
-        scope = {
-          enabled = true,
-          char = '▏',
-          show_start = false,
-          show_end = false,
-          highlight = {
-            'IndentBlanklineIndent1',
-            'IndentBlanklineIndent2',
-            'IndentBlanklineIndent3',
-            'IndentBlanklineIndent4',
-            'IndentBlanklineIndent5',
-            'IndentBlanklineIndent6',
-          },
-        },
-        indent = {
-          char = '▏',
-          highlight = {
-            'IndentBlanklineIndent1',
-            'IndentBlanklineIndent2',
-            'IndentBlanklineIndent3',
-            'IndentBlanklineIndent4',
-            'IndentBlanklineIndent5',
-            'IndentBlanklineIndent6',
-          },
-        },
-      }
     end,
   },
   {
@@ -222,45 +239,39 @@ return {
   },
   {
     'glepnir/dashboard-nvim',
-    -- initial launch dashboard
     event = 'VimEnter',
-    config = function()
-      require('dashboard').setup {
-        theme = 'hyper',
-        config = {
-          week_header = { enable = true },
-          shortcut = {
-            {
-              desc = ' Update',
-              group = '@property',
-              action = 'Lazy update',
-              key = 'u',
-            },
-            {
-              icon = ' ',
-              icon_hl = '@variable',
-              desc = 'Files',
-              group = 'Label',
-              action = 'Telescope find_files',
-              key = 'f',
-            },
-            {
-              desc = ' Apps',
-              group = 'DiagnosticHint',
-              action = 'Telescope app',
-              key = 'a',
-            },
-            {
-              desc = ' dotfiles',
-              group = 'Number',
-              action = 'Telescope dotfiles',
-              key = 'd',
-            },
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
+    opts = {
+      theme = 'hyper',
+      config = {
+        week_header = { enable = true },
+        packages = { enable = true }, -- show how many plugins neovim loaded
+        project = { enable = false, limit = 8, icon = 'your icon', label = '', action = 'Telescope find_files cwd=' },
+        mru = { limit = 10, label = 'Most Recent', cwd_only = false },
+        shortcut = {
+          {
+            desc = ' Update',
+            group = '@property',
+            action = "Lazy update",
+            key = 'u',
+          },
+          {
+            icon = ' ',
+            icon_hl = '@variable',
+            desc = 'Files',
+            group = 'Label',
+            action = "Telescope find_files cwd=",
+            key = 'f',
+          },
+          {
+            desc = ' dotfiles',
+            group = 'Number',
+            action = 'Telescope dotfiles',
+            key = 'd',
           },
         },
-      }
-    end,
-    dependencies = { 'nvim-tree/nvim-web-devicons' },
+      },
+    }
   },
   -- notifications
   {
@@ -270,16 +281,15 @@ return {
     config = function()
       local notify = require 'notify'
       notify.setup {
-        -- render = "minimal",
-        stages = 'fade_in_slide_out',
+        render = "wrapped-compact",
         background_colour = '#191724',
-        icons = {
-          ERROR = '',
-          WARN = '',
-          INFO = '',
-          DEBUG = '',
-          TRACE = '✎',
-        },
+        -- icons = {
+        --   ERROR = '',
+        --   WARN = '',
+        --   INFO = '',
+        --   DEBUG = '',
+        --   TRACE = '✎',
+        -- },
       }
       vim.notify = notify
     end,
@@ -296,7 +306,76 @@ return {
         -- refer to the configuration section below
       }
     end,
-  },                        -- tpope plugins
-  { 'tpope/vim-surround' }, -- Change surrounding arks
-  { 'tpope/vim-repeat' },   -- extends . repeat
+  },
+  {
+    "folke/flash.nvim",
+    event = "VeryLazy",
+    ---@type Flash.Config
+    opts = {},
+    -- stylua: ignore
+    keys = {
+      { "s",     mode = { "n", "x", "o" }, function() require("flash").jump() end,              desc = "Flash" },
+      { "S",     mode = { "n", "x", "o" }, function() require("flash").treesitter() end,        desc = "Flash Treesitter" },
+      { "r",     mode = "o",               function() require("flash").remote() end,            desc = "Remote Flash" },
+      { "R",     mode = { "o", "x" },      function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
+      { "<c-s>", mode = { "c" },           function() require("flash").toggle() end,            desc = "Toggle Flash Search" },
+    },
+  },
+  {
+    "kylechui/nvim-surround",
+    version = "*", -- Use for stability; omit to use `main` branch for the latest features
+    event = "VeryLazy",
+    opts = {}
+  },
+  {
+    "folke/noice.nvim",
+    event = "VeryLazy",
+    opts = {
+      lsp = {
+        progress = {
+          enabled = false
+        },
+        signature = {
+          enabled = false
+        },
+        -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
+        override = {
+          ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+          ["vim.lsp.util.stylize_markdown"] = true,
+          ["cmp.entry.get_documentation"] = false,
+        },
+      },
+      cmdline = {
+        enabled = true,         -- enables the Noice cmdline UI
+        view = "cmdline_popup", -- view for rendering the cmdline. Change to `cmdline` to get a classic cmdline at the bottom
+        title = "",
+      },
+      presets = {
+        bottom_search = true,          -- use a classic bottom cmdline for search
+        command_palette = true,        -- position the cmdline and popupmenu together
+        long_message_to_split = false, -- long messages will be sent to a split
+        inc_rename = false,            -- enables an input dialog for inc-rename.nvim
+        lsp_doc_border = false,        -- add a border to hover docs and signature help
+      },
+      commands = {
+        history = {
+          view = "popup",
+        }
+      }
+    },
+    dependencies = {
+      -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
+      "MunifTanjim/nui.nvim",
+      -- OPTIONAL:
+      --   `nvim-notify` is only needed, if you want to use the notification view.
+      --   If not available, we use `mini` as the fallback
+      "rcarriga/nvim-notify",
+    }
+  },
+  -- tpope plugins
+  {
+    'tpope/vim-surround',
+    enabled = false
+  },                      -- Change surrounding arks
+  { 'tpope/vim-repeat' }, -- extends . repeat
 }

@@ -6,7 +6,7 @@ vim.keymap.set('n', '<Leader>lf', function()
     async = false,
     filter = function(client) return client.name ~= "volar" or client.name ~= "svelteserver" end
   }
-end, { silent = true, noremap = true })
+end, { silent = true, noremap = true, desc = "Format" })
 
 -- vim.keymap.set('n', '<Leader>a', vim.lsp.buf.code_action, { noremap = true, silent = true })
 vim.keymap.set('n', '<space>d', vim.diagnostic.open_float)
@@ -58,7 +58,7 @@ local on_attach = function(client, bufnr)
       callback = function()
         vim.lsp.buf.format {
           async = false,
-          filter = function(client) return client.name ~= "volar" or client.name ~= "svelteserver" end
+          filter = function(cl) return cl.name ~= "volar" or cl.name ~= "svelteserver" end
         }
       end
     })
@@ -68,7 +68,7 @@ end
 local languages = {
   'html',
   'cssls',
-  -- 'tsserver', -- handled by typescript-tools
+  'tsserver', -- handled by typescript-tools
   'eslint',
   'pyright',
   'gopls',
@@ -83,15 +83,27 @@ local languages = {
 return {
   {
     'folke/neodev.nvim',
+    opts = {}
   },
   {
     'williamboman/mason.nvim',
-    opts = {
-      automatic_installation = true,
-      ensure_installed = {
+    opts = function(_, opts)
+      vim.list_extend(opts.ensure_installed, {
         'js-debug-adapter',
-      },
-    },
+        'lua-language-server',
+        'typescript-language-server',
+        'bash-language-server',
+        'css-lsp',
+        'eslint-lsp',
+        'eslintd',
+        'html-lsp',
+        'svelte-language-server',
+        'tailwindcss-language-server',
+        'vue-language-server',
+        'shellcheck',
+        'shfmt',
+      })
+    end,
   },
   {
     'williamboman/mason-lspconfig.nvim',
@@ -107,20 +119,6 @@ return {
       require('neodev').setup {}
       local capabilities = require('cmp_nvim_lsp').default_capabilities()
       local lspconfig = require 'lspconfig'
-
-      lspconfig.lua_ls.setup {
-        capabilities = capabilities,
-        settings = {
-          Lua = {
-            completion = {
-              callSnippet = 'Replace',
-            },
-            diagnostics = {
-              globals = { 'vim', 'describe', 'it' },
-            },
-          },
-        },
-      }
 
       for _, language in pairs(languages) do
         lspconfig[language].setup {
@@ -139,7 +137,12 @@ return {
     enabled = false
   },
   {
+    'stevearc/conform.nvim',
+    enabled = false
+  },
+  {
     "pmizio/typescript-tools.nvim",
+    enabled = false,
     dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
     opts = {
       settings = {

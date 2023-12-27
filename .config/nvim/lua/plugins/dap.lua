@@ -13,11 +13,11 @@ return {
       },
     },
     keys = {
-      { '<leader>dr', function() require('dap').continue() end },
-      { '<leader>db', function() require('dap').toggle_breakpoint() end },
-      { '<leader>dv', function() require('dap').step_over() end },
-      { '<leader>di', function() require('dap').step_into() end },
-      { '<leader>do', function() require('dap').step_out() end },
+      { '<leader>dr', function() require('dap').continue() end,          { desc = "dap continue" } },
+      { '<leader>db', function() require('dap').toggle_breakpoint() end, { desc = "dap toggle breakpoint" } },
+      { '<leader>dv', function() require('dap').step_over() end,         { desc = "dap step over" } },
+      { '<leader>di', function() require('dap').step_into() end,         { desc = "dap step into" } },
+      { '<leader>do', function() require('dap').step_out() end,          { desc = "dap step out" } },
     },
     config = function()
       require('dap-vscode-js').setup {
@@ -66,18 +66,18 @@ return {
           },
           -- only if language is javascript, offer this debug action
           language == 'javascript'
-              and {
-                -- use nvim-dap-vscode-js's pwa-node debug adapter
-                type = 'pwa-node',
-                -- launch a new process to attach the debugger to
-                request = 'launch',
-                -- name of the debug action you have to select for this config
-                name = 'Launch file in new node process',
-                -- launch current file
-                program = '${file}',
-                cwd = '${workspaceFolder}',
-              }
-            or nil,
+          and {
+            -- use nvim-dap-vscode-js's pwa-node debug adapter
+            type = 'pwa-node',
+            -- launch a new process to attach the debugger to
+            request = 'launch',
+            -- name of the debug action you have to select for this config
+            name = 'Launch file in new node process',
+            -- launch current file
+            program = '${file}',
+            cwd = '${workspaceFolder}',
+          }
+          or nil,
         }
       end
 
@@ -94,17 +94,17 @@ return {
         -- show_stop_reason = false,
       }
 
-      -- KEYMAPS - NOT WORKING, USE KEYS OPTION
       vim.fn.sign_define('DapBreakpoint', { text = '🟥', texthl = '', linehl = '', numhl = '' })
       vim.fn.sign_define('DapBreakpointRejected', { text = '🟦', texthl = '', linehl = '', numhl = '' })
       vim.fn.sign_define('DapStopped', { text = '⭐️', texthl = '', linehl = '', numhl = '' })
 
-      vim.keymap.set('n', '<leader>db', function() dap.toggle_breakpoint() end)
-      vim.keymap.set('n', '<leader>dH', ":lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>")
-      vim.keymap.set({ 'n', 't' }, '<A-k>', function() dap.step_out() end)
-      vim.keymap.set({ 'n', 't' }, '<A-l>', function() dap.step_into() end)
-      vim.keymap.set({ 'n', 't' }, '<A-j>', function() dap.step_over() end)
-      vim.keymap.set({ 'n', 't' }, 'dr', function() dap.continue() end)
+      -- Mostly set in keys table
+      -- vim.keymap.set('n', '<leader>db', function() dap.toggle_breakpoint() end)
+      -- vim.keymap.set('n', '<leader>dH', ":lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>")
+      -- vim.keymap.set({ 'n', 't' }, '<A-k>', function() dap.step_out() end)
+      -- vim.keymap.set({ 'n', 't' }, '<A-l>', function() dap.step_into() end)
+      -- vim.keymap.set({ 'n', 't' }, '<A-j>', function() dap.step_over() end)
+      -- vim.keymap.set({ 'n', 't' }, 'dr', function() dap.continue() end)
       vim.keymap.set('n', '<leader>dn', function() dap.run_to_cursor() end)
       vim.keymap.set('n', '<leader>dc', function() dap.terminate() end)
       vim.keymap.set('n', '<leader>dR', function() dap.clear_breakpoints() end)

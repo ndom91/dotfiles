@@ -11,6 +11,21 @@ return {
     'rafamadriz/friendly-snippets',
     'L3MON4D3/LuaSnip',
     'onsails/lspkind-nvim',
+    {
+      "zbirenbaum/copilot-cmp",
+      verylazy = true,
+      dependencies = "copilot.lua",
+      opts = {},
+      config = function(_, opts)
+        local copilot_cmp = require("copilot_cmp")
+        copilot_cmp.setup(opts)
+        -- require("utils.functions").on_attach(function(client)
+        --   if client.name == "copilot" then
+        --     copilot_cmp._on_insert_enter({})
+        --   end
+        -- end)
+      end,
+    },
   },
   config = function()
     local cmp = require 'cmp'
@@ -61,7 +76,7 @@ return {
         end, { 'i', 's' }),
       },
       sources = {
-        -- { name = "copilot" },
+        { name = "copilot" },
         -- { name = "nvim_lsp", max_item_count = 20 },
         {
           name = 'nvim_lsp',
@@ -94,8 +109,9 @@ return {
           local kind = lspkind.cmp_format {
             mode = 'symbol_text',
             maxwidth = 50,
+            symbol_map = { Copilot = "" }
             -- preset = "codicons",
-          }(entry, vim_item)
+          } (entry, vim_item)
 
           local strings = vim.split(kind.kind, '%s', { trimempty = true })
           kind.kind = ' ' .. (strings[1] or '') .. ' '
