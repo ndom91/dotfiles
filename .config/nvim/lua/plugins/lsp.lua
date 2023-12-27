@@ -4,11 +4,19 @@ local function goto_prev_error() vim.diagnostic.goto_prev { severity = 'Error' }
 vim.keymap.set('n', '<Leader>lf', function()
   vim.lsp.buf.format {
     async = false,
-    filter = function(client) return client.name ~= "volar" or client.name ~= "svelteserver" end
+    filter = function(client)
+      local current_bufnr = vim.fn.bufnr '%'
+      local current_buffer_path = vim.api.nvim_buf_get_name(current_bufnr)
+      -- For Checkly directories force 'eslint' as formatter
+      if string.find(current_buffer_path, '/opt/checkly') then
+        return client.name == "eslint"
+      else
+        return true
+      end
+    end
   }
 end, { silent = true, noremap = true, desc = "Format" })
 
--- vim.keymap.set('n', '<Leader>a', vim.lsp.buf.code_action, { noremap = true, silent = true })
 vim.keymap.set('n', '<space>d', vim.diagnostic.open_float)
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
@@ -51,6 +59,11 @@ local on_attach = function(client, bufnr)
     })
   end
 
+  -- local current_buffer_path = vim.api.nvim_buf_get_name(current_bufnr)
+  -- if string.find(current_buffer_path, '/opt/checkly') and client.name == "eslint" then
+  --   client.server_capabilities.documentFormattingProvider = true
+  -- end
+
   -- Autoformatting
   if client.supports_method 'textDocument/formatting' then
     vim.api.nvim_create_autocmd('BufWritePre', {
@@ -58,27 +71,40 @@ local on_attach = function(client, bufnr)
       callback = function()
         vim.lsp.buf.format {
           async = false,
-          filter = function(cl) return cl.name ~= "volar" or cl.name ~= "svelteserver" end
+          filter = function(client)
+            local current_bufnr = vim.fn.bufnr '%'
+            local current_buffer_path = vim.api.nvim_buf_get_name(current_bufnr)
+            -- For Checkly directories force 'eslint' as formatter
+            if string.find(current_buffer_path, '/opt/checkly') then
+              return client.name == "eslint"
+            else
+              return true
+            end
+          end
+          -- filter = function(client)
+          --   return client.name ~= "tsserver" and client.name ~= "volar" and
+          --       client.name ~= "svelteserver"
+          -- end
         }
       end
     })
   end
 end
 
-local languages = {
-  'html',
-  'cssls',
-  'tsserver', -- handled by typescript-tools
-  'eslint',
-  'pyright',
-  'gopls',
-  'tailwindcss',
-  'volar',
-  'bashls',
-  'dockerls',
-  'lua_ls',
-  'svelte'
-}
+-- local languages = {
+--   'html',
+--   'cssls',
+--   'tsserver',
+--   'eslint',
+--   'pyright',
+--   'gopls',
+--   'tailwindcss',
+--   'volar',
+--   'bashls',
+--   'dockerls',
+--   'lua_ls',
+--   'svelte'
+-- }
 
 return {
   {
@@ -87,8 +113,8 @@ return {
   },
   {
     'williamboman/mason.nvim',
-    opts = function(_, opts)
-      vim.list_extend(opts.ensure_installed, {
+    opts = {
+      ensure_installed = {
         'js-debug-adapter',
         'lua-language-server',
         'typescript-language-server',
@@ -102,34 +128,180 @@ return {
         'vue-language-server',
         'shellcheck',
         'shfmt',
-      })
-    end,
+      }
+    }
   },
-  {
-    'williamboman/mason-lspconfig.nvim',
-    opts = {
-      automatic_installation = true,
-      ensure_installed = languages,
-    },
-  },
+  -- {
+  --   'williamboman/mason-lspconfig.nvim',
+  --   opts = {
+  --     automatic_installation = true,
+  --     ensure_installed = languages,
+  --   },
+  -- },
   {
     'neovim/nvim-lspconfig',
-    dependencies = { 'hrsh7th/cmp-nvim-lsp' },
+    dependencies = {
+      "b0o/schemastore.nvim",
+    },
     config = function()
       require('neodev').setup {}
-      local capabilities = require('cmp_nvim_lsp').default_capabilities()
+      local capabilities = vim.tbl_deep_extend(
+        'force',
+        vim.lsp.protocol.make_client_capabilities(),
+        require('cmp_nvim_lsp').default_capabilities(),
+        {
+          workspace = {
+            -- PERF didChangeWatchedFiles is too slow.
+            -- TODO Remove this when https://github.com/neovim/neovim/issues/23291#issuecomment-1686709265 is fixed.
+            didChangeWatchedFiles = { dynamicRegistration = false },
+          },
+        }
+      )
+
       local lspconfig = require 'lspconfig'
 
-      for _, language in pairs(languages) do
+      for _, language in pairs({
+        'html',
+        'cssls',
+        -- 'tsserver',
+        -- 'eslint',
+        'pyright',
+        'gopls',
+        'tailwindcss',
+        -- 'volar',
+        'bashls',
+        'dockerls',
+        'lua_ls',
+        'svelte'
+      }) do
         lspconfig[language].setup {
           capabilities = capabilities,
           on_attach = on_attach,
         }
       end
 
-      vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
-        virtual_text = false,
-      })
+      lspconfig.eslint.setup {
+        capabilities = capabilities,
+        on_attach = on_attach,
+        format = true,
+        settings = {
+          format = true,
+        },
+        root_dir = function(...)
+          return require("lspconfig.util").root_pattern(".git")(...)
+        end,
+      }
+
+      lspconfig.volar.setup {
+        capabilities = capabilities,
+        on_attach = on_attach,
+        init_options = {
+          configFiles = {
+            vetur = {
+              useWorkspaceDependencies = true,
+              validation = {
+                template = true,
+                style = true,
+                script = true,
+                templateProps = true,
+              },
+              completion = {
+                autoImport = true,
+                tagCasing = "kebab",
+                scaffoldSnippetSources = {
+                  workspace = true,
+                  user = true,
+                },
+              },
+            },
+          },
+        },
+      }
+
+      lspconfig.jsonls.setup {
+        capabilities = capabilities,
+        on_attach = on_attach,
+        settings = {
+          json = {
+            schemas = require("schemastore").json.schemas(),
+          }
+        }
+      }
+
+      lspconfig.tsserver.setup {
+        capabilities = capabilities,
+        on_attach = function(client, bufnr)
+          on_attach(client, bufnr)
+        end,
+        cmd = { "typescript-language-server", "--stdio" },
+        filetypes = {
+          "javascript",
+          "javascriptreact",
+          "javascript.jsx",
+          "typescript",
+          "typescriptreact",
+          "typescript.tsx",
+        },
+        init_options = {
+          hostInfo = "neovim",
+        },
+        -- root_dir = require("lspconfig.util").root_pattern("package.json", "package-lock.json", "tsconfig.json", "jsconfig.json", ".git"),
+        single_file_support = true,
+        settings = {
+          typescript = {
+            inlayHints = {
+              includeInlayParameterNameHints = "literal",
+              includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+              includeInlayFunctionParameterTypeHints = true,
+              includeInlayVariableTypeHints = false,
+              includeInlayPropertyDeclarationTypeHints = true,
+              includeInlayFunctionLikeReturnTypeHints = true,
+              includeInlayEnumMemberValueHints = true,
+            },
+          },
+          javascript = {
+            inlayHints = {
+              includeInlayParameterNameHints = "all",
+              includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+              includeInlayFunctionParameterTypeHints = true,
+              includeInlayVariableTypeHints = true,
+              includeInlayPropertyDeclarationTypeHints = true,
+              includeInlayFunctionLikeReturnTypeHints = true,
+              includeInlayEnumMemberValueHints = true,
+            },
+          },
+        },
+      }
+
+
+      -- vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
+      --   border = "single",
+      -- })
+      -- vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
+      --   border = "single",
+      --   focusable = false,
+      --   relative = "cursor",
+      -- })
+
+
+      -- vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
+      --   virtual_text = false,
+      -- })
+    end,
+  },
+  {
+    'laytan/tailwind-sorter.nvim',
+    enabled = true,
+    dependencies = {
+      'nvim-treesitter/nvim-treesitter',
+      'nvim-lua/plenary.nvim',
+    },
+    build = 'cd formatter && npm i && npm run build',
+    config = function()
+      require('tailwind-sorter').setup {
+        on_save_enabled = true,
+        on_save_pattern = { '*.vue', '*.html', '*.js', '*.jsx', '*.ts', '*.tsx', '*.astro', '*.svelte' },
+      }
     end,
   },
   {
@@ -155,20 +327,5 @@ return {
         }
       }
     },
-  },
-  {
-    'laytan/tailwind-sorter.nvim',
-    enabled = true,
-    dependencies = {
-      'nvim-treesitter/nvim-treesitter',
-      'nvim-lua/plenary.nvim',
-    },
-    build = 'cd formatter && npm i && npm run build',
-    config = function()
-      require('tailwind-sorter').setup {
-        on_save_enabled = true,
-        on_save_pattern = { '*.vue', '*.html', '*.js', '*.jsx', '*.ts', '*.tsx', '*.astro', '*.svelte' },
-      }
-    end,
   },
 }

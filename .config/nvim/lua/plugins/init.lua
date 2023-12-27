@@ -9,7 +9,7 @@ return {
 
   {
     'tami5/lspsaga.nvim',
-    enabled = true,
+    enabled = false,
     config = true
   },
 
@@ -28,15 +28,13 @@ return {
       -- handler_opts = { border = "rounded" },
     }
   },
-  -- floating status text in bottom right
   {
     'j-hui/fidget.nvim',
-    -- tag = 'legacy',
     event = 'LspAttach',
     opts = {
       integration = {
         ["nvim-tree"] = {
-          enable = true, -- Integrate with nvim-tree/nvim-tree.lua (if installed)
+          enable = true,
         },
       },
       progress = {
@@ -199,43 +197,18 @@ return {
     'RRethy/nvim-base16',
     enabled = 'false',
   },
-  -- other themes
-  -- "folke/tokyonight.nvim",
-  -- "rmehri01/onenord.nvim",
-  -- "wadackel/vim-dogrun",
-  -- "challenger-deep-theme/vim",
-  -- "EdenEast/nightfox.nvim",
-  -- {
-  -- 	"catppuccin/nvim",
-  -- 	name = "catppuccin",
-  -- 	enabled = false,
-  -- 	config = function()
-  -- 		require("catppuccin").setup({
-  -- 			transparent_background = true,
-  -- 			term_colors = true,
-  -- 			integration = {
-  -- 				nvimtree = {
-  -- 					enabled = true,
-  -- 					transparent_panel = true,
-  -- 				},
-  -- 				lsp_trouble = true,
-  -- 			},
-  -- 		})
-  -- 		vim.cmd.colorscheme("catppuccin-mocha")
-  -- 	end,
-  -- },
   {
-    'norcalli/nvim-colorizer.lua',
-    -- colorize hex codes / color names
-    config = function()
-      require('colorizer').setup {
-        '*',
-        css = { rgb_fn = true },
-        -- disabled in favor of document-color
-        html = { names = true },
-        '!dart',
+    'NvChad/nvim-colorizer.lua',
+    opts = {
+      filetypes = { "*" },
+      user_default_options = {
+        names = false,
+        RRGGBBAA = true,
+        css = true,
+        tailwind = true,
+        mode = "background",
       }
-    end,
+    }
   },
   {
     'glepnir/dashboard-nvim',
@@ -273,10 +246,8 @@ return {
       },
     }
   },
-  -- notifications
   {
     'rcarriga/nvim-notify',
-    -- name = "notify",
     lazy = false,
     config = function()
       local notify = require 'notify'
@@ -310,9 +281,8 @@ return {
   {
     "folke/flash.nvim",
     event = "VeryLazy",
-    ---@type Flash.Config
+    enabled = false,
     opts = {},
-    -- stylua: ignore
     keys = {
       { "s",     mode = { "n", "x", "o" }, function() require("flash").jump() end,              desc = "Flash" },
       { "S",     mode = { "n", "x", "o" }, function() require("flash").treesitter() end,        desc = "Flash Treesitter" },
@@ -345,6 +315,9 @@ return {
           ["cmp.entry.get_documentation"] = false,
         },
       },
+      messages = {
+        enabled = false, -- enables the Noice messages UI
+      },
       cmdline = {
         enabled = true,         -- enables the Noice cmdline UI
         view = "cmdline_popup", -- view for rendering the cmdline. Change to `cmdline` to get a classic cmdline at the bottom
@@ -364,18 +337,13 @@ return {
       }
     },
     dependencies = {
-      -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
       "MunifTanjim/nui.nvim",
-      -- OPTIONAL:
-      --   `nvim-notify` is only needed, if you want to use the notification view.
-      --   If not available, we use `mini` as the fallback
       "rcarriga/nvim-notify",
     }
   },
-  -- tpope plugins
   {
     'tpope/vim-surround',
     enabled = false
-  },                      -- Change surrounding arks
-  { 'tpope/vim-repeat' }, -- extends . repeat
+  },
+  { 'tpope/vim-repeat' },
 }

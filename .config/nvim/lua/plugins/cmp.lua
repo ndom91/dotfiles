@@ -12,6 +12,15 @@ return {
     'L3MON4D3/LuaSnip',
     'onsails/lspkind-nvim',
     {
+      "roobert/tailwindcss-colorizer-cmp.nvim",
+      enabled = false,
+      config = function()
+        require("tailwindcss-colorizer-cmp").setup({
+          color_square_width = 2,
+        })
+      end
+    },
+    {
       "zbirenbaum/copilot-cmp",
       verylazy = true,
       dependencies = "copilot.lua",
@@ -104,12 +113,19 @@ return {
         },
       },
       formatting = {
+        expandable_indicator = true,
         fields = { 'kind', 'abbr', 'menu' },
         format = function(entry, vim_item)
           local kind = lspkind.cmp_format {
             mode = 'symbol_text',
             maxwidth = 50,
-            symbol_map = { Copilot = "" }
+            symbol_map = { Copilot = "" },
+            -- abbr = function(e, vi)
+            --   return require("tailwindcss-colorizer-cmp").formatter(
+            --     e,
+            --     vi
+            --   )
+            -- end,
             -- preset = "codicons",
           } (entry, vim_item)
 
