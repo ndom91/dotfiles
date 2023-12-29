@@ -1,6 +1,8 @@
 return {
   'm4xshen/catppuccinight.nvim',
-  enabled = 'true',
+  enabled = true,
+  priority = 1000,
+  lazy = false,
   name = 'catppuccin',
   opts = {
     flavour = 'mocha',

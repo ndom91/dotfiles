@@ -56,7 +56,6 @@ return {
     'folke/trouble.nvim',
     enabled = true,
     dependencies = { 'nvim-tree/nvim-web-devicons' },
-
     keys = {
       { '<leader>tr', "<cmd>TroubleToggle<cr>", { desc = " Toggle Trouble" } },
     },
@@ -67,7 +66,6 @@ return {
     'MunifTanjim/nui.nvim',
     enabled = true,
   },
-
   -- tailwind token colorizer
   {
     'mrshmllow/document-color.nvim',
@@ -89,20 +87,9 @@ return {
       require('hologram').setup { auto_display = true }
     end,
   },
-
-  -- "williamboman/mason.nvim",
-  -- "williamboman/mason-lspconfig.nvim",
-  -- "b0o/schemastore.nvim",
-  -- "jose-elias-alvarez/null-ls.nvim",
-  -- "hrsh7th/cmp-nvim-lua", -- Snippets
-  -- 'jose-elias-alvarez/typescript.nvim',
-  -- "folke/neodev.nvim", -- lua support for nvim config + development
-
-  -- autocompletion
   -- cmp based copilot
   {
     'zbirenbaum/copilot.lua',
-    -- event = { "VimEnter" },
     enabled = true,
     event = "VeryLazy",
     cmd = "Copilot",
@@ -195,7 +182,7 @@ return {
   },
   {
     'RRethy/nvim-base16',
-    enabled = 'false',
+    enabled = false,
   },
   {
     'NvChad/nvim-colorizer.lua',
@@ -296,50 +283,6 @@ return {
     version = "*", -- Use for stability; omit to use `main` branch for the latest features
     event = "VeryLazy",
     opts = {}
-  },
-  {
-    "folke/noice.nvim",
-    event = "VeryLazy",
-    opts = {
-      lsp = {
-        progress = {
-          enabled = false
-        },
-        signature = {
-          enabled = false
-        },
-        -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
-        override = {
-          ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
-          ["vim.lsp.util.stylize_markdown"] = true,
-          ["cmp.entry.get_documentation"] = false,
-        },
-      },
-      messages = {
-        enabled = false, -- enables the Noice messages UI
-      },
-      cmdline = {
-        enabled = true,         -- enables the Noice cmdline UI
-        view = "cmdline_popup", -- view for rendering the cmdline. Change to `cmdline` to get a classic cmdline at the bottom
-        title = "",
-      },
-      presets = {
-        bottom_search = true,          -- use a classic bottom cmdline for search
-        command_palette = true,        -- position the cmdline and popupmenu together
-        long_message_to_split = false, -- long messages will be sent to a split
-        inc_rename = false,            -- enables an input dialog for inc-rename.nvim
-        lsp_doc_border = false,        -- add a border to hover docs and signature help
-      },
-      commands = {
-        history = {
-          view = "popup",
-        }
-      }
-    },
-    dependencies = {
-      "MunifTanjim/nui.nvim",
-      "rcarriga/nvim-notify",
-    }
   },
   {
     'tpope/vim-surround',

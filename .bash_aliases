@@ -78,6 +78,9 @@ alias activeSysd='for i in $(cd /etc/systemd/system/multi-user.target.wants && l
 
 # alias brave="brave --silent-debugger-extension-api"
 
+# Wayland Electron Apps
+# alias 1password='1password --enable-features=WaylandWindowDecorations --ozone-platform-hint=auto --socket=wayland'
+
 #### GIT ####
 if [ "$(command -v git)" ]; then
 	alias cob='git checkout $(git branch -a | cut -c 3- | sed "s/remotes\/origin\///g" | gum filter --reverse)'

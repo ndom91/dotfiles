@@ -2,57 +2,58 @@
 -- BUILTIN ACTIONS --
 ---------------------
 -- move lines up/down
-nnoremap("<A-j>", ":m .+1<CR>==")
-nnoremap("<A-k>", ":m .-2<CR>==")
-inoremap("<A-j>", "j<Esc>:m .+1<CR>==gi")
-inoremap("<A-k>", "j<Esc>:m .-2<CR>==gi")
-vnoremap("<A-j>", ":m '>+1<CR>gv=gv")
-vnoremap("<A-k>", ":m '<-2<CR>gv=gv")
+-- vim.keymap.set('n', '<leader>dn', function() dap.run_to_cursor() end)
+vim.keymap.set("n", "<A-j>", ":m .+1<CR>==", { silent = true })
+vim.keymap.set("n", "<A-k>", ":m .-2<CR>==", { silent = true })
+vim.keymap.set("i", "<A-j>", "j<Esc>:m .+1<CR>==gi", { silent = true })
+vim.keymap.set("i", "<A-k>", "j<Esc>:m .-2<CR>==gi", { silent = true })
+vim.keymap.set("v", "<A-j>", ":m '>+1<CR>gv=gv", { silent = true })
+vim.keymap.set("v", "<A-k>", ":m '<-2<CR>gv=gv", { silent = true })
 
 -- keep line centered on search/join
-nnoremap("n", "nzz")
-nnoremap("N", "Nzz")
-nnoremap("J", "mzJ`z")
+vim.keymap.set("n", "n", "nzz", { silent = true })
+vim.keymap.set("n", "N", "Nzz", { silent = true })
+vim.keymap.set("n", "J", "mzJ`z", { silent = true })
 
 -- window movement
-nnoremap("<C-h>", "<C-w>h")
-nnoremap("<C-j>", "<C-w>j")
-nnoremap("<C-k>", "<C-w>k")
-nnoremap("<C-l>", "<C-w>l")
+vim.keymap.set("n", "<C-h>", "<C-w>h", { silent = true })
+vim.keymap.set("n", "<C-j>", "<C-w>j", { silent = true })
+vim.keymap.set("n", "<C-k>", "<C-w>k", { silent = true })
+vim.keymap.set("n", "<C-l>", "<C-w>l", { silent = true })
 
 -- resizing splits
-nnoremap("<C-Up>", ":resize +2<cr>")
-nnoremap("<C-Down>", ":resize -2<cr>")
-nnoremap("<C-Left>", ":vertical resize +2<cr>")
-nnoremap("<C-Right>", ":vertical resize -2<cr>")
+vim.keymap.set("n", "<C-Up>", ":resize +2<cr>", { silent = true })
+vim.keymap.set("n", "<C-Down>", ":resize -2<cr>", { silent = true })
+vim.keymap.set("n", "<C-Left>", ":vertical resize +2<cr>", { silent = true })
+vim.keymap.set("n", "<C-Right>", ":vertical resize -2<cr>", { silent = true })
 
 -- remap Y to yank to end of line
-nnoremap("Y", "y$")
-vnoremap("Y", "y$")
+vim.keymap.set("n", "Y", "y$", { silent = true })
+vim.keymap.set("v", "Y", "y$", { silent = true })
 
 -- break undo chain
-inoremap(".", ".<c-g>u")
-inoremap(",", ",<c-g>u")
-inoremap("!", "!<c-g>u")
-inoremap("?", "?<c-g>u")
+vim.keymap.set("i", ".", ".<c-g>u", { silent = true })
+vim.keymap.set("i", ",", ",<c-g>u", { silent = true })
+vim.keymap.set("i", "!", "!<c-g>u", { silent = true })
+vim.keymap.set("i", "?", "?<c-g>u", { silent = true })
 
 -- delete text without yanking
-nnoremap("<leader>d", '"_d')
-vnoremap("<leader>d", '"_d')
+vim.keymap.set("n", "<leader>d", '"_d', { silent = true })
+vim.keymap.set("v", "<leader>d", '"_d', { silent = true })
 
 -- turn off search highlighting
-nnoremap("<enter>", ":nohlsearch<cr>")
+vim.keymap.set("n", "<enter>", ":nohlsearch<cr>", { silent = true })
 
 -- neovim terminal can exit to normal mode with <esc> now
-tnoremap("<esc>", [[<c-\><c-n>]])
+vim.keymap.set("t", "<esc>", [[<c-\><c-n>]], { silent = true })
 
 -- disable keys
-nnoremap("<c-z>", "<Nop>") -- disable ctrl-z suspend
-nnoremap("Q", "<Nop>")     -- disable ex mode
+vim.keymap.set("n", "<c-z>", "<Nop>", { silent = true }) -- disable ctrl-z suspend
+vim.keymap.set("n", "Q", "<Nop>", { silent = true })     -- disable ex mode
 
 --------------------
 -- PLUGIN ACTIONS --
 --------------------
 
 -- document-colorizer
-nnoremap("<leader>lC", "<cmd>lua require('document-color').buf_toggle()<CR>")
+vim.keymap.set("n", "<leader>lC", "<cmd>lua require('document-color').buf_toggle()<CR>", { silent = true })

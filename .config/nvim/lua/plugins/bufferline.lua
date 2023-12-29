@@ -1,15 +1,16 @@
 return {
   "akinsho/bufferline.nvim",
-  version = "v3.*",
+  version = "v4.*",
   lazy = false,
   keys = {
     {
       "<c-x>",
-      ":bd<cr>",
+      "<cmd>bd<CR>",
       desc = "Bufferline Close",
+      silent = true
     },
-    { "<Tab>", ":bnext<CR>" },
-    { "<S-Tab>", ":bprev<CR>" },
+    { "<Tab>",   ":bnext<CR>", silent = true },
+    { "<S-Tab>", ":bprev<CR>", silent = true },
   },
   config = function()
     -- local highlights = require("rose-pine.plugins.bufferline")
@@ -66,13 +67,6 @@ return {
         offsets = {
           {
             filetype = "neo-tree",
-            text = function()
-              return vim.fn.getcwd()
-            end,
-            text_align = "center",
-          },
-          {
-            filetype = "NvimTree",
             text = function()
               return vim.fn.getcwd()
             end,

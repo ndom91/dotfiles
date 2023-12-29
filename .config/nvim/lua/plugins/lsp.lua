@@ -22,8 +22,6 @@ vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
 vim.keymap.set('n', ']e', goto_next_error)
 vim.keymap.set('n', '[e', goto_prev_error)
-vim.keymap.set('n', '<space>re', vim.lsp.buf.rename)
-vim.keymap.set('n', 'gi', vim.lsp.buf.implementation)
 
 local on_attach = function(client, bufnr)
   local builtin = require 'telescope.builtin'
@@ -39,6 +37,8 @@ local on_attach = function(client, bufnr)
   vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help)
   vim.keymap.set({ 'n', 'v' }, '<space>ca', vim.lsp.buf.code_action, opts)
   vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
+  vim.keymap.set('n', '<space>re', vim.lsp.buf.rename)
+  vim.keymap.set('n', 'gi', vim.lsp.buf.implementation)
 
   -- Highlight symbol references on hover
   if client.server_capabilities.documentHighlightProvider then
@@ -59,11 +59,6 @@ local on_attach = function(client, bufnr)
     })
   end
 
-  -- local current_buffer_path = vim.api.nvim_buf_get_name(current_bufnr)
-  -- if string.find(current_buffer_path, '/opt/checkly') and client.name == "eslint" then
-  --   client.server_capabilities.documentFormattingProvider = true
-  -- end
-
   -- Autoformatting
   if client.supports_method 'textDocument/formatting' then
     vim.api.nvim_create_autocmd('BufWritePre', {
@@ -81,30 +76,11 @@ local on_attach = function(client, bufnr)
               return true
             end
           end
-          -- filter = function(client)
-          --   return client.name ~= "tsserver" and client.name ~= "volar" and
-          --       client.name ~= "svelteserver"
-          -- end
         }
       end
     })
   end
 end
-
--- local languages = {
---   'html',
---   'cssls',
---   'tsserver',
---   'eslint',
---   'pyright',
---   'gopls',
---   'tailwindcss',
---   'volar',
---   'bashls',
---   'dockerls',
---   'lua_ls',
---   'svelte'
--- }
 
 return {
   {
