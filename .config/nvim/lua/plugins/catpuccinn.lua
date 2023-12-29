@@ -8,16 +8,20 @@ return {
     term_colors = true,
     integration = {
       cmp = true,
+      fidget = true,
       gitsigns = true,
-      treesitter = true,
-      notify = true,
-      mini = false,
       indent_blankline = {
         enabled = true,
         -- colored_indent_levels = false,
       },
-      neotree = true,
       lsp_trouble = true,
+      mason = true,
+      mini = false,
+      neotree = true,
+      notify = true,
+      noice = true,
+      treesitter = true,
+      treesitter_context = true,
     },
     custom_highlights = function(colors)
       return {

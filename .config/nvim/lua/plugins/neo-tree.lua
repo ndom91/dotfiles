@@ -1,19 +1,15 @@
 return {
   'nvim-neo-tree/neo-tree.nvim',
-  branch = 'v2.x',
+  branch = 'v3.x',
   dependencies = {
     'nvim-lua/plenary.nvim',
     'nvim-tree/nvim-web-devicons',
     'MunifTanjim/nui.nvim',
   },
   keys = {
-    -- vim.api.nvim_set_keymap('n', '\\', '<cmd>Neotree toggle<cr>', { silent = true })
     { '\\', '<cmd>Neotree toggle<cr>' },
   },
   config = function()
-    -- Unless you are still migrating, remove the deprecated commands from v1.x
-    vim.cmd [[ let g:neo_tree_remove_legacy_commands = 1 ]]
-
     -- If you want icons for diagnostic errors, you'll need to define them somewhere:
     vim.fn.sign_define('DiagnosticSignError', { text = ' ', texthl = 'DiagnosticSignError' })
     vim.fn.sign_define('DiagnosticSignWarn', { text = ' ', texthl = 'DiagnosticSignWarn' })
@@ -23,13 +19,12 @@ return {
     -- in the form "LspDiagnosticsSignWarning"
 
     require('neo-tree').setup {
-      auto_clean_after_session_restore = true,
-      close_if_last_window = false, -- Close Neo-tree if it is the last window left in the tab
+      close_if_last_window = true, -- Close Neo-tree if it is the last window left in the tab
       popup_border_style = 'rounded',
       enable_git_status = true,
       enable_diagnostics = true,
       sort_case_insensitive = false, -- used when sorting files and directories in the tree
-      sort_function = nil, -- use a custom function for sorting files and directories in the tree
+      sort_function = nil,           -- use a custom function for sorting files and directories in the tree
       -- sort_function = function (a,b)
       --       if a.type == b.type then
       --           return a.path > b.path
@@ -84,6 +79,10 @@ return {
             conflict = '',
           },
         },
+        file_size = {
+          enabled = true,
+          required_width = 64, -- min width of window required to show this column
+        },
       },
       window = {
         position = 'left',
@@ -133,9 +132,9 @@ return {
             for i, result in pairs(results) do
               if result.val and result.val ~= '' then
                 vim.list_extend(messages, {
-                  { ('%s.'):format(i), 'Identifier' },
+                  { ('%s.'):format(i),           'Identifier' },
                   { (' %s: '):format(result.msg) },
-                  { result.val, 'String' },
+                  { result.val,                  'String' },
                   { '\n' },
                 })
               end
@@ -204,7 +203,9 @@ return {
             '.docusaurus',
           },
         },
-        follow_current_file = true, -- This will find and focus the file in the active buffer every
+        follow_current_file = {
+          enabled = true, -- This will find and focus the file in the active buffer every
+        },
         -- time the current file is changed while the tree is open.
         group_empty_dirs = true,
         hijack_netrw_behavior = 'open_default', -- netrw disabled, opening a directory opens neo-tree
@@ -228,7 +229,9 @@ return {
         },
       },
       buffers = {
-        follow_current_file = true, -- This will find and focus the file in the active buffer every
+        follow_current_file = {
+          enabled = true, -- This will find and focus the file in the active buffer every
+        },
         -- time the current file is changed while the tree is open.
         group_empty_dirs = true, -- when true, empty folders will be grouped together
         show_unloaded = false,
@@ -254,12 +257,12 @@ return {
           },
         },
       },
-      event_handlers = {
-        {
-          event = 'neo_tree_buffer_enter',
-          handler = function(_) vim.opt_local.signcolumn = 'auto' end,
-        },
-      },
+      -- event_handlers = {
+      --   {
+      --     event = 'neo_tree_buffer_enter',
+      --     handler = function(_) vim.opt_local.signcolumn = 'auto' end,
+      --   },
+      -- },
     }
   end,
 }

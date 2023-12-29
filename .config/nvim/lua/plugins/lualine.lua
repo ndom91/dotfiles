@@ -1,65 +1,5 @@
--- local null_ls = require("null-ls")
--- local nls_sources = require("null-ls.sources")
--- local nls_utils = require("null-ls.utils")
-
 local function separator()
   return "%="
-end
-
--- function HasFormatter(filetype)
---   local available = nls_sources.get_available(filetype, null_ls.methods.FORMATTING)
---   return #available > 0
--- end
-
--- function ListLinter(filetype)
---   local registered_providers = nls_utils.list_registered_providers_names(filetype)
---   return registered_providers[null_ls.methods.DIAGNOSTICS] or {}
--- end
-
--- function ListHover(filetype)
---   local registered_providers = nls_utils.list_registered_providers_names(filetype)
---   return registered_providers[null_ls.methods.HOVER] or {}
--- end
-
--- function ListFormatter(filetype)
---   local supported_formatters = nls_sources.get_supported(filetype, "formatting")
---   table.sort(supported_formatters)
---   return supported_formatters
--- end
-
-local function lsp_client(msg)
-  msg = msg or ""
-  local buf_clients = vim.lsp.get_active_clients()
-  if next(buf_clients) == nil then
-    if type(msg) == "boolean" or #msg == 0 then
-      return ""
-    end
-    return msg
-  end
-
-  local buf_ft = vim.bo.filetype
-  local buf_client_names = {}
-
-  -- add client
-  -- for _, client in pairs(buf_clients) do
-  --   if client.name ~= "null-ls" then
-  --     table.insert(buf_client_names, client.name)
-  --   end
-  -- end
-
-  -- add formatter
-  -- local supported_formatters = ListFormatter(buf_ft)
-  -- vim.list_extend(buf_client_names, supported_formatters)
-
-  -- add linter
-  -- local supported_linters = ListLinter(buf_ft)
-  -- vim.list_extend(buf_client_names, supported_linters)
-
-  -- add hover
-  -- local supported_hovers = ListHover(buf_ft)
-  -- vim.list_extend(buf_client_names, supported_hovers)
-
-  return "[" .. table.concat(buf_client_names, ", ") .. "]"
 end
 
 return {
@@ -67,6 +7,7 @@ return {
   enabled = true,
   dependencies = {
     "nvim-tree/nvim-web-devicons",
+    'AndreM222/copilot-lualine'
   },
   config = function()
     require("lualine").setup({
@@ -117,8 +58,8 @@ return {
             "diagnostics",
             sources = { "nvim_diagnostic" },
             sections = { "error", "warn", "info", "hint" },
-            -- symbols = { error = " ", warn = " ", info = " ", hint = " " },
-            symbols = { error = "E", warn = "W", info = "I", hint = "H" },
+            symbols = { error = " ", warn = " ", info = " ", hint = " " },
+            -- symbols = { error = "E", warn = "W", info = "I", hint = "H" },
             colored = true,           -- Displays diagnostics status in color if set to true.
             update_in_insert = false, -- Update diagnostics in insert mode.
             always_visible = false,   -- Show diagnostics even if there are none.
@@ -126,9 +67,20 @@ return {
         },
         lualine_c = {
           { separator },
-          -- { lsp_client, icon = " ", color = { gui = "bold" } },
         },
-        lualine_x = { "encoding", "fileformat", "filetype" },
+        lualine_x = {
+          {
+            "copilot",
+            show_colors = true,
+            separator = " ╱",
+            symbols = {
+              spinners = require("copilot-lualine.spinners").dots,
+            }
+          },
+          "encoding",
+          "fileformat",
+          "filetype"
+        },
         lualine_y = { "progress" },
         lualine_z = { "location" },
       },
