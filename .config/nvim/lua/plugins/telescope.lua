@@ -70,8 +70,8 @@ return {
             ['<c-k>'] = actions.move_selection_previous,
             ['<s-up>'] = actions.cycle_history_prev,
             ['<s-down>'] = actions.cycle_history_next,
-            ['<C-c>'] = actions.delete_buffer + actions.move_to_top,
-            ['<C-d>'] = actions.delete_buffer + actions.move_to_top,
+            ['<C-c>'] = actions.delete_buffer,
+            ['<C-d>'] = actions.delete_buffer,
             ['<C-w>'] = function()
               vim.api.nvim_input '<c-s-w>'
             end,
