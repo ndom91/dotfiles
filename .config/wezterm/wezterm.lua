@@ -33,12 +33,15 @@ config.window_padding = {
 
 config.keys = {
   {
-    key = 'r',
+    key = 'R',
     mods = 'CTRL|SHIFT',
     action = wezterm.action.ReloadConfiguration,
   },
-  { key = ' ', mods = 'CTRL|SHIFT', action = wezterm.action.QuickSelect },
-
+  {
+    key = 'Space',
+    mods = 'SHIFT|CTRL',
+    action = wezterm.action.QuickSelect
+  },
 }
 
 return config
