@@ -44,9 +44,9 @@ return {
     }
 
     -- See 'utils/term.lua' for lazygit floating term
-    vim.api.nvim_set_keymap("n", "<leader>lg",
-      -- "<cmd>lua require('utils.term')._lazygit_toggle()<CR>",
-      "<cmd>lua lazygit:toggle()<CR>",
-      { noremap = true, silent = true })
+    -- vim.api.nvim_set_keymap("n", "<leader>lg",
+    --   -- "<cmd>lua require('utils.term')._lazygit_toggle()<CR>",
+    --   "<cmd>lua lazygit:toggle()<CR>",
+    --   { noremap = true, silent = true })
   end
 }

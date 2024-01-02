@@ -35,6 +35,12 @@ return {
       source_selector = {
         winbar = true,
         content_layout = 'center',
+        separator = "",
+        sources = {
+          { source = "filesystem" },
+          { source = "buffers" },
+          -- { source = "git_status" },
+        },
       },
       default_component_configs = {
         container = { enable_character_fade = true },
@@ -80,8 +86,23 @@ return {
           },
         },
         file_size = {
-          enabled = true,
+          enabled = false,
           required_width = 64, -- min width of window required to show this column
+        },
+        type = {
+          enabled = false,
+          required_width = 110, -- min width of window required to show this column
+        },
+        last_modified = {
+          enabled = false,
+          required_width = 88, -- min width of window required to show this column
+        },
+        created = {
+          enabled = false,
+          required_width = 120, -- min width of window required to show this column
+        },
+        symlink_target = {
+          enabled = false,
         },
       },
       window = {
@@ -257,12 +278,6 @@ return {
           },
         },
       },
-      -- event_handlers = {
-      --   {
-      --     event = 'neo_tree_buffer_enter',
-      --     handler = function(_) vim.opt_local.signcolumn = 'auto' end,
-      --   },
-      -- },
     }
   end,
 }

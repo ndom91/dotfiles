@@ -12,21 +12,25 @@ return {
   config = function()
     require("lualine").setup({
       options = {
-        -- theme = "auto",
         theme = "catppuccin",
-        -- always_divide_middle = true,
-        icons_enabled = true,
         globalstatus = true,
+        -- Old
         -- component_separators = { left = "", right = "" },
-        component_separators = { left = "╱", right = "╱" },
         -- section_separators = { left = "", right = "" },
-        section_separators = { left = "", right = "" },
+        -- Current
+        -- component_separators = { left = "╱", right = "╱" },
+        -- section_separators = { left = "", right = "" },
+        --
+        component_separators = '',
+        section_separators = '',
         disabled_filetypes = {
           winbar = { "neo-tree", "packer", "help", "toggleterm" },
         },
       },
       sections = {
-        lualine_a = { "mode" },
+        lualine_a = {
+          "mode"
+        },
         lualine_b = {
           {
             "filename",
@@ -47,8 +51,12 @@ return {
               newfile = "[New]",     -- Text to show for newly created file before first write
             },
           },
-          -- "branch",
+        },
+        lualine_c = {
+          -- { separator },
           { "b:gitsigns_head", icon = "" },
+        },
+        lualine_x = {
           {
             "diff",
             colored = true,                                           -- Displays a colored diff status if set to true
@@ -64,28 +72,34 @@ return {
             update_in_insert = false, -- Update diagnostics in insert mode.
             always_visible = false,   -- Show diagnostics even if there are none.
           },
-        },
-        lualine_c = {
-          { separator },
-        },
-        lualine_x = {
           {
             "copilot",
             show_colors = true,
-            separator = " ╱",
+            padding = 2,
             symbols = {
               spinners = require("copilot-lualine.spinners").dots,
             }
           },
-          "encoding",
-          "fileformat",
-          "filetype"
+          -- "encoding",
+          -- "fileformat",
         },
-        lualine_y = { "progress" },
-        lualine_z = { "location" },
+        lualine_y = {
+          -- "location"
+          "progress"
+        },
+        lualine_z = {
+          {
+            "filetype",
+            colored = true,
+            icon_only = false,
+            icons_enabled = false,
+            icon = { align = "right" }
+          }
+        },
       },
       inactive_sections = {
-        lualine_a = {},
+        lualine_a = {
+        },
         lualine_b = {},
         lualine_c = {
           {
@@ -94,13 +108,20 @@ return {
             path = 1,           -- 0 = just filename, 1 = relative path, 2 = absolute path
           },
         },
-        lualine_x = { "location" },
+        lualine_x = {},
         lualine_y = {},
         lualine_z = {},
       },
       tabline = {},
-      extensions = {},
-      -- extensions = { "nvim-tree" },
+      extensions = {
+        "neo-tree",
+        "mason",
+        "man",
+        "nvim-dap-ui",
+        "toggleterm",
+        "trouble",
+        "lazy"
+      },
     })
   end,
 }

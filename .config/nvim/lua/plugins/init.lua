@@ -285,6 +285,16 @@ return {
     opts = {}
   },
   {
+    "kdheepak/lazygit.nvim",
+    keys = {
+      { "<leader>lg", "<cmd>LazyGit<CR>", { noremap = true, silent = true } },
+    },
+    -- optional for floating window border decoration
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+    },
+  },
+  {
     'tpope/vim-surround',
     enabled = false
   },
