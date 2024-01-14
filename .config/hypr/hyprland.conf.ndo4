@@ -53,7 +53,7 @@ exec-once = gsettings set org.gnome.desktop.interface cursor-size 24
 exec-once = /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec-once = ~/.config/waybar/start-waybar
 exec-once = swaync
-exec-once = 1password --silent
+exec-once = 1password --enable-features=WaylandWindowDecorations --ozone-platform-hint=auto  --socket=wayland --silent
 exec-once = nm-applet --indicator
 exec-once = swaybg -m fill -i ~/.config/hypr/wallpapers/arch01.jpg
 exec-once = swayidle -w
