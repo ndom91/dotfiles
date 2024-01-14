@@ -46,7 +46,7 @@ shot5() {
 	coords=$(slurp)
 	countdown '3'
 	# sleep 1 && cd "${dir}" && grim -c | tee "$file" | xclip -selection clipboard -t image/png
-	grim -c -g "$coords" - | satty --copy-command wl-copy --early-exit --filename -
+	grim -c -g "$coords" - | satty --copy-command wl-copy --early-exit --output-filename "$dir/$file" --filename -
 }
 
 shot10() {
@@ -69,7 +69,7 @@ shotarea() {
 	# grim -c -g "$coords" - | xclip -selection clipboard -t image/png
 	# grim -c -g "$coords" - | wl-copy
 	# grim -c -g "$coords" - | swappy -f -
-	grim -c -g "$coords" - | satty --copy-command wl-copy --early-exit --filename -
+	grim -c -g "$coords" - | satty --copy-command wl-copy --early-exit --output-filename "$dir/$file" --filename -
 	# notify_view
 }
 
