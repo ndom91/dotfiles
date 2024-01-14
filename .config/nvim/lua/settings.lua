@@ -6,7 +6,7 @@ vim.g.vimsyn_embed = "lPrjt"
 
 vim.opt.swapfile = false
 vim.opt.backup = false
-vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
+vim.opt.undodir = os.getenv "HOME" .. "/.vim/undodir"
 vim.opt.undofile = true
 
 vim.g.skip_ts_context_commentstring_module = true
@@ -30,9 +30,7 @@ local set_cursorline = function(event, value, pattern)
   vim.api.nvim_create_autocmd(event, {
     group = group,
     pattern = pattern,
-    callback = function()
-      vim.opt_local.cursorline = value
-    end,
+    callback = function() vim.opt_local.cursorline = value end,
   })
 end
 
@@ -47,8 +45,8 @@ opt.signcolumn = "yes"
 opt.belloff = "all"
 opt.expandtab = true
 opt.equalalways = false
-opt.formatoptions:append("jn")
-opt.formatoptions:remove("2a")
+opt.formatoptions:append "jn"
+opt.formatoptions:remove "2a"
 opt.hidden = true
 opt.ignorecase = true
 opt.inccommand = "split"
@@ -61,8 +59,8 @@ opt.path = ".,**"
 opt.relativenumber = true
 opt.scrolloff = 8
 opt.shiftwidth = 2
-opt.shortmess:append("atsc")
-opt.shortmess:remove("S")
+opt.shortmess:append "atsc"
+opt.shortmess:remove "S"
 opt.smartcase = true
 opt.smartindent = true
 opt.softtabstop = 2
@@ -72,10 +70,10 @@ opt.tabstop = 2
 opt.termguicolors = true
 
 opt.wildignorecase = true
-opt.wildignore:append("**/node_modules/*")
-opt.wildignore:append("**/.git/*")
-opt.wildignore:append("**/.next/*")
-opt.wildignore:append("**/venv/*")
+opt.wildignore:append "**/node_modules/*"
+opt.wildignore:append "**/.git/*"
+opt.wildignore:append "**/.next/*"
+opt.wildignore:append "**/venv/*"
 opt.wildmenu = true
 opt.wildmode = "longest:full"
 

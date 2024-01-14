@@ -14,9 +14,9 @@ return {
       "<c-x>",
       "<cmd>bd<CR>",
       desc = "Bufferline Close",
-      silent = true
+      silent = true,
     },
-    { "<Tab>",   ":bnext<CR>", silent = true },
+    { "<Tab>", ":bnext<CR>", silent = true },
     { "<S-Tab>", ":bprev<CR>", silent = true },
   },
   opts = {
@@ -43,9 +43,7 @@ return {
       offsets = {
         {
           filetype = "neo-tree",
-          text = function()
-            return vim.fn.getcwd()
-          end,
+          text = function() return vim.fn.getcwd() end,
           text_align = "center",
         },
       },
@@ -58,5 +56,5 @@ return {
       enforce_regular_tabs = false,
       always_show_bufferline = true,
     },
-  }
+  },
 }

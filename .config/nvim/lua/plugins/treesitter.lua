@@ -8,12 +8,12 @@ return {
     "nvim-treesitter/playground",
   },
   config = function()
-    require("nvim-treesitter.configs").setup({
+    require("nvim-treesitter.configs").setup {
       highlight = { enable = true },
       playground = {
         enable = false,
         disable = {},
-        updatetime = 25,         -- Debounced time for highlighting nodes in the playground from source code
+        updatetime = 25, -- Debounced time for highlighting nodes in the playground from source code
         persist_queries = false, -- Whether the query persists across vim sessions
       },
       autopairs = {
@@ -46,11 +46,11 @@ return {
       indent = { enable = true },
       rainbow = { enable = true, extended_mode = true, max_file_lines = nil },
       context = {
-        separator = '⎽',
+        separator = "⎽",
       },
       -- context_commentstring = { enable = true, enable_autocmd = false },
       sync_install = false,
       ensure_installed = "all",
-    })
+    }
   end,
 }

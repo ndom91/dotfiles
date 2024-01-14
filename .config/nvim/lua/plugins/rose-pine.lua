@@ -5,7 +5,7 @@ return {
   -- lazy = false, -- load first
   -- priority = 1000, -- before anything else
   config = function()
-    require("rose-pine").setup({
+    require("rose-pine").setup {
       ---@usage 'main'|'moon'
       dark_variant = "main",
       bold_vert_split = true,
@@ -102,9 +102,9 @@ return {
         -- CmpItemKindColor = { fg = "#D8EEEB", bg = "#58B5A8" },
         -- CmpItemKindTypeParameter = { fg = "#D8EEEB", bg = "#58B5A8" },
       },
-    })
+    }
 
     -- set colorscheme after options
-    vim.cmd("colorscheme rose-pine")
+    vim.cmd "colorscheme rose-pine"
   end,
 }

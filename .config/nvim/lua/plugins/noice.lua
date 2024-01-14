@@ -4,10 +4,10 @@ return {
   opts = {
     lsp = {
       progress = {
-        enabled = false
+        enabled = false,
       },
       signature = {
-        enabled = false
+        enabled = false,
       },
       -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
       override = {
@@ -87,5 +87,5 @@ return {
   dependencies = {
     "MunifTanjim/nui.nvim",
     "rcarriga/nvim-notify",
-  }
+  },
 }

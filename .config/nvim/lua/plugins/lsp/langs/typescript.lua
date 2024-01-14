@@ -1,13 +1,13 @@
 -- https://github.com/theia-ide/typescript-language-server
-local is_npm_package_installed = require('utils').is_npm_package_installed
+local is_npm_package_installed = require("utils").is_npm_package_installed
 
-local have_vue = is_npm_package_installed 'vue'
+local have_vue = is_npm_package_installed "vue"
 
 if not have_vue then
   -- require('typescript-tools').setup {}
 
-  require('lspconfig').tsserver.setup {
-    capabilities = require('plugins.lsp.capabilities'),
+  require("lspconfig").tsserver.setup {
+    capabilities = require "plugins.lsp.capabilities",
     -- on_attach = function(client, bufnr)
     --   client.server_capabilities.documentFormattingProvider = false
     --   on_attach(client, bufnr)

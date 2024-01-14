@@ -1,11 +1,11 @@
 return {
-  'm4xshen/catppuccinight.nvim',
+  "m4xshen/catppuccinight.nvim",
   enabled = true,
   priority = 1000,
   lazy = false,
-  name = 'catppuccin',
+  name = "catppuccin",
   opts = {
-    flavour = 'mocha',
+    flavour = "mocha",
     transparent_background = true,
     term_colors = true,
     integration = {
@@ -55,12 +55,12 @@ return {
         TelescopePromptNormal = { fg = colors.text, bg = colors.surface1 },
         TelescopePromptBorder = { fg = colors.surface1, bg = colors.surface1 },
 
-        PmenuSel = { bg = '#282C34', fg = 'NONE' },
-        Pmenu = { fg = '#C5CDD9', bg = colors.mantle },
+        PmenuSel = { bg = "#282C34", fg = "NONE" },
+        Pmenu = { fg = "#C5CDD9", bg = colors.mantle },
         NormalFloat = { fg = colors.text, bg = colors.mantle },
         FloatBorder = { fg = colors.text, bg = colors.mantle },
-        FloatShadow = { fg = colors.text, bg = 'NONE' },
-        FloatShadowThrough = { fg = colors.text, bg = 'NONE' },
+        FloatShadow = { fg = colors.text, bg = "NONE" },
+        FloatShadowThrough = { fg = colors.text, bg = "NONE" },
 
         -- VSCode-like auto-complete menu styling
         CmpItemKindSnippet = { fg = colors.base, bg = colors.mauve },
@@ -90,12 +90,12 @@ return {
         CmpItemKindTypeParameter = { fg = colors.base, bg = colors.blue },
         CmpItemKindCopilot = { fg = colors.base, bg = colors.teal },
 
-        CmpItemMenu = { fg = colors.mauve, bg = 'NONE', italic = true },
-        CmpItemMenuDefault = { fg = colors.mauve, bg = 'NONE', italic = true },
+        CmpItemMenu = { fg = colors.mauve, bg = "NONE", italic = true },
+        CmpItemMenuDefault = { fg = colors.mauve, bg = "NONE", italic = true },
         -- CmpItemMenu = { fg = '#C792EA', bg = 'NONE', italic = true },
         -- CmpItemMenuDefault = { fg = '#C792EA', bg = 'NONE', italic = true },
       }
     end,
   },
-  init = function() vim.cmd.colorscheme 'catppuccin' end,
+  init = function() vim.cmd.colorscheme "catppuccin" end,
 }

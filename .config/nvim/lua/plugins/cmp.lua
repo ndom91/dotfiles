@@ -1,24 +1,24 @@
 return {
-  'hrsh7th/nvim-cmp',
+  "hrsh7th/nvim-cmp",
   dependencies = {
-    'hrsh7th/cmp-nvim-lsp-signature-help',
-    'hrsh7th/cmp-nvim-lsp',
-    'hrsh7th/cmp-buffer',
-    'hrsh7th/cmp-path',
-    'hrsh7th/cmp-nvim-lua',
-    'hrsh7th/cmp-cmdline',
-    'saadparwaiz1/cmp_luasnip',
-    'rafamadriz/friendly-snippets',
-    'L3MON4D3/LuaSnip',
-    'onsails/lspkind-nvim',
+    "hrsh7th/cmp-nvim-lsp-signature-help",
+    "hrsh7th/cmp-nvim-lsp",
+    "hrsh7th/cmp-buffer",
+    "hrsh7th/cmp-path",
+    "hrsh7th/cmp-nvim-lua",
+    "hrsh7th/cmp-cmdline",
+    "saadparwaiz1/cmp_luasnip",
+    "rafamadriz/friendly-snippets",
+    "L3MON4D3/LuaSnip",
+    "onsails/lspkind-nvim",
     {
       "roobert/tailwindcss-colorizer-cmp.nvim",
       enabled = false,
       config = function()
-        require("tailwindcss-colorizer-cmp").setup({
+        require("tailwindcss-colorizer-cmp").setup {
           color_square_width = 2,
-        })
-      end
+        }
+      end,
     },
     {
       "zbirenbaum/copilot-cmp",
@@ -26,7 +26,7 @@ return {
       dependencies = "copilot.lua",
       opts = {},
       config = function(_, opts)
-        local copilot_cmp = require("copilot_cmp")
+        local copilot_cmp = require "copilot_cmp"
         copilot_cmp.setup(opts)
         -- require("utils.functions").on_attach(function(client)
         --   if client.name == "copilot" then
@@ -37,30 +37,28 @@ return {
     },
   },
   config = function()
-    local cmp = require 'cmp'
-    local luasnip = require 'luasnip'
-    local lspkind = require 'lspkind'
+    local cmp = require "cmp"
+    local luasnip = require "luasnip"
+    local lspkind = require "lspkind"
 
     local has_words_before = function()
       unpack = unpack or table.unpack
       local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-      return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match '%s' == nil
+      return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match "%s" == nil
     end
 
     cmp.setup {
-      preselect = 'item',
+      preselect = "item",
       snippet = {
-        expand = function(args)
-          luasnip.lsp_expand(args.body)
-        end,
+        expand = function(args) luasnip.lsp_expand(args.body) end,
       },
       mapping = {
-        ['<C-n>'] = cmp.mapping.select_next_item(),
-        ['<C-p>'] = cmp.mapping.select_prev_item(),
-        ['<C-d>'] = cmp.mapping.scroll_docs(-4),
-        ['<C-u>'] = cmp.mapping.scroll_docs(4),
-        ['<CR>'] = cmp.mapping.confirm { select = true },
-        ['<Tab>'] = cmp.mapping(function(fallback)
+        ["<C-n>"] = cmp.mapping.select_next_item(),
+        ["<C-p>"] = cmp.mapping.select_prev_item(),
+        ["<C-d>"] = cmp.mapping.scroll_docs(-4),
+        ["<C-u>"] = cmp.mapping.scroll_docs(4),
+        ["<CR>"] = cmp.mapping.confirm { select = true },
+        ["<Tab>"] = cmp.mapping(function(fallback)
           if cmp.visible() then
             -- You could replace select_next_item() with confirm({ select = true }) to get VS Code autocompletion behavior
             cmp.select_next_item()
@@ -73,8 +71,8 @@ return {
           else
             fallback()
           end
-        end, { 'i', 's' }),
-        ['<S-Tab>'] = cmp.mapping(function(fallback)
+        end, { "i", "s" }),
+        ["<S-Tab>"] = cmp.mapping(function(fallback)
           if cmp.visible() then
             cmp.select_prev_item()
           elseif luasnip.jumpable(-1) then
@@ -82,20 +80,20 @@ return {
           else
             fallback()
           end
-        end, { 'i', 's' }),
+        end, { "i", "s" }),
       },
       sources = {
         { name = "copilot" },
         -- { name = "nvim_lsp", max_item_count = 20 },
         {
-          name = 'nvim_lsp',
+          name = "nvim_lsp",
           max_item_count = 20,
           entry_filter = function(entry, ctx)
             -- Don't return file paths from nvim_lsp, use 'path' source instead
-            return require('cmp.types').lsp.CompletionItemKind[entry:get_kind()] ~= 'File'
+            return require("cmp.types").lsp.CompletionItemKind[entry:get_kind()] ~= "File"
           end,
         },
-        { name = 'luasnip', keyword_length = 2 },
+        { name = "luasnip", keyword_length = 2 },
         -- { name = "nvim_lsp_signature_help" },
         -- { name = "treesitter" },
         -- { name = "buffer", max_item_count = 5, keyword_length = 3 },
@@ -104,20 +102,20 @@ return {
       },
       window = {
         documentation = cmp.config.window.bordered {
-          winhighlight = 'Normal:NormalFloat,FloatBorder:FloatBorder,CursorLine:Visual,Search:None',
+          winhighlight = "Normal:NormalFloat,FloatBorder:FloatBorder,CursorLine:Visual,Search:None",
         },
         completion = {
-          winhighlight = 'Normal:Pmenu,FloatBorder:Pmenu,Search:None',
+          winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,Search:None",
           col_offset = -3,
           side_padding = 0,
         },
       },
       formatting = {
         expandable_indicator = true,
-        fields = { 'kind', 'abbr', 'menu' },
+        fields = { "kind", "abbr", "menu" },
         format = function(entry, vim_item)
           local kind = lspkind.cmp_format {
-            mode = 'symbol_text',
+            mode = "symbol_text",
             maxwidth = 50,
             symbol_map = { Copilot = "" },
             -- abbr = function(e, vi)
@@ -127,27 +125,27 @@ return {
             --   )
             -- end,
             -- preset = "codicons",
-          } (entry, vim_item)
+          }(entry, vim_item)
 
-          local strings = vim.split(kind.kind, '%s', { trimempty = true })
-          kind.kind = ' ' .. (strings[1] or '') .. ' '
-          kind.menu = '    ' .. (strings[2] or '')
+          local strings = vim.split(kind.kind, "%s", { trimempty = true })
+          kind.kind = " " .. (strings[1] or "") .. " "
+          kind.menu = "    " .. (strings[2] or "")
 
           return kind
         end,
       },
     }
 
-    cmp.setup.cmdline({ '/', '?' }, {
+    cmp.setup.cmdline({ "/", "?" }, {
       mapping = cmp.mapping.preset.cmdline(),
       sources = {
-        { name = 'buffer' },
+        { name = "buffer" },
       },
     })
 
-    cmp.setup.cmdline(':', {
+    cmp.setup.cmdline(":", {
       mapping = cmp.mapping.preset.cmdline(),
-      sources = cmp.config.sources({ { name = 'path' } }, { { name = 'cmdline' } }),
+      sources = cmp.config.sources({ { name = "path" } }, { { name = "cmdline" } }),
     })
   end,
 }

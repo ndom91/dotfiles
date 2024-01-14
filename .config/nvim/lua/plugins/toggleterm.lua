@@ -3,7 +3,7 @@ return {
   config = function()
     local Terminal = require("toggleterm.terminal").Terminal
 
-    _G.lazygit = Terminal:new({
+    _G.lazygit = Terminal:new {
       cmd = "lazygit",
       hidden = true,
       direction = "float",
@@ -14,10 +14,10 @@ return {
         width = 160,
         height = 60,
         winblend = 0,
-        highlights = { border = "Special", background = "Normal" }
-      }
-    })
-    require('toggleterm').setup {
+        highlights = { border = "Special", background = "Normal" },
+      },
+    }
+    require("toggleterm").setup {
       size = function(term)
         if term.direction == "horizontal" then
           return 20
@@ -39,8 +39,8 @@ return {
         width = 20,
         height = 20,
         winblend = 3,
-        highlights = { border = "Special", background = "Normal" }
-      }
+        highlights = { border = "Special", background = "Normal" },
+      },
     }
 
     -- See 'utils/term.lua' for lazygit floating term
@@ -48,5 +48,5 @@ return {
     --   -- "<cmd>lua require('utils.term')._lazygit_toggle()<CR>",
     --   "<cmd>lua lazygit:toggle()<CR>",
     --   { noremap = true, silent = true })
-  end
+  end,
 }

@@ -5,7 +5,7 @@ return {
   event = "BufEnter",
   enabled = false,
   opts = function()
-    local status = require("utils.status")
+    local status = require "utils.status"
     return {
       opts = {
         disable_winbar_cb = function(args)
@@ -19,7 +19,7 @@ return {
         hl = { fg = "fg", bg = "bg" },
         status.component.mode(),
         status.component.git_branch(),
-        status.component.file_info({ filetype = {}, filename = false, file_modified = false }),
+        status.component.file_info { filetype = {}, filename = false, file_modified = false },
         status.component.git_diff(),
         status.component.diagnostics(),
         status.component.fill(),
@@ -28,7 +28,7 @@ return {
         status.component.lsp(),
         status.component.treesitter(),
         status.component.nav(),
-        status.component.mode({ surround = { separator = "right" } }),
+        status.component.mode { surround = { separator = "right" } },
       },
       -- winbar = { -- winbar
       --   init = function(self)
