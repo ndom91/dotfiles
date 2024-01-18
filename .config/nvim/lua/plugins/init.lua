@@ -3,29 +3,33 @@ return {
   "nvim-lua/plenary.nvim",
   "nvim-lua/popup.nvim",
   {
-    "lvimuser/lsp-inlayhints.nvim",
-    config = true,
-  },
-
-  {
     "tami5/lspsaga.nvim",
-    enabled = false,
-    config = true,
+    enabled = true,
+    event = "LspAttach",
+    config = function() require("lspsaga").setup {} end,
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter",
+      "nvim-tree/nvim-web-devicons",
+    },
   },
 
   -- icons on completion
   "onsails/lspkind-nvim",
 
+  {
+    "lvimuser/lsp-inlayhints.nvim",
+    enabled = false,
+    config = true,
+  },
   -- lsp function signature help on wildmenu
   {
     "ray-x/lsp_signature.nvim",
+    enabled = true,
     opts = {
-      -- hint_enable = false,
-      -- transparency = 30,
+      hint_enable = true,
+      hint_inline = function() return false end,
       floating_window = false,
       bind = true,
-      -- shadow_blend = 36,
-      -- handler_opts = { border = "rounded" },
     },
   },
   {
@@ -55,16 +59,26 @@ return {
   {
     "folke/trouble.nvim",
     enabled = true,
+    config = true,
     dependencies = { "nvim-tree/nvim-web-devicons" },
     keys = {
-      { "<leader>tr", "<cmd>TroubleToggle<cr>", { desc = " Toggle Trouble" } },
+      { "<leader>tr", function() require("trouble").toggle() end, { desc = "Toggle Trouble" } },
+      {
+        "<leader>trw",
+        function() require("trouble").toggle "workspace_diagnostics" end,
+        { desc = "Toggle Trouble Type Definitions" },
+      },
+      {
+        "<leader>trd",
+        function() require("trouble").toggle "lsp_type_definitions" end,
+        { desc = "Toggle Trouble Type Definitions" },
+      },
+      {
+        "<leader>trr",
+        function() require("trouble").toggle "lsp_references" end,
+        { desc = "Toggle Trouble Type Definitions" },
+      },
     },
-    config = true,
-  },
-  -- ui elements
-  {
-    "MunifTanjim/nui.nvim",
-    enabled = true,
   },
   -- tailwind token colorizer
   {
@@ -79,12 +93,6 @@ return {
       docColors.buf_attach()
     end,
   },
-  -- terminal image viewer
-  {
-    "edluffy/hologram.nvim",
-    enabled = false,
-    config = function() require("hologram").setup { auto_display = true } end,
-  },
   -- cmp based copilot
   {
     "zbirenbaum/copilot.lua",
@@ -97,7 +105,7 @@ return {
       panel = { enabled = false },
       filetypes = {
         markdown = true,
-        help = true,
+        help = false,
         javascript = true,
         typescript = true,
         typescriptreact = true,
@@ -120,63 +128,6 @@ return {
     "github/copilot.vim",
     event = "InsertEnter",
     enabled = false,
-  },
-  {
-    "lukas-reineke/indent-blankline.nvim",
-    enabled = true,
-    main = "ibl",
-    opts = {
-      exclude = {
-        filetypes = {
-          "alpha",
-          "neo-tree",
-          "lsp-installer",
-          "lazy",
-          "packer",
-          "dashboard",
-        },
-      },
-      whitespace = {
-        remove_blankline_trail = true,
-      },
-      scope = {
-        enabled = true,
-        char = "▏",
-        show_start = false,
-        show_end = false,
-        highlight = {
-          "IndentBlanklineIndent1",
-          "IndentBlanklineIndent2",
-          "IndentBlanklineIndent3",
-          "IndentBlanklineIndent4",
-          "IndentBlanklineIndent5",
-          "IndentBlanklineIndent6",
-        },
-      },
-      indent = {
-        char = "▏",
-        highlight = {
-          "IndentBlanklineIndent1",
-          "IndentBlanklineIndent2",
-          "IndentBlanklineIndent3",
-          "IndentBlanklineIndent4",
-          "IndentBlanklineIndent5",
-          "IndentBlanklineIndent6",
-        },
-      },
-    },
-    config = function()
-      vim.cmd [[highlight IndentBlanklineIndent6 guifg=#E0DEF4 gui=nocombine]]
-      vim.cmd [[highlight IndentBlanklineIndent5 guifg=#908CAA gui=nocombine]]
-      vim.cmd [[highlight IndentBlanklineIndent4 guifg=#524F67 gui=nocombine]]
-      vim.cmd [[highlight IndentBlanklineIndent3 guifg=#403d42 gui=nocombine]]
-      vim.cmd [[highlight IndentBlanklineIndent2 guifg=#25233A gui=nocombine]]
-      vim.cmd [[highlight IndentBlanklineIndent1 guifg=#21202E gui=nocombine]]
-
-      -- Hide first line
-      local hooks = require "ibl.hooks"
-      hooks.register(hooks.type.WHITESPACE, hooks.builtin.hide_first_space_indent_level)
-    end,
   },
   {
     "RRethy/nvim-base16",

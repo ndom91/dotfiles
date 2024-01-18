@@ -9,18 +9,18 @@ return {
     ensure_installed = {
       -- https://mason-registry.dev/registry/list
       "js-debug-adapter",
-      "lua-language-server",
-      "typescript-language-server",
-      "bash-language-server",
-      "css-lsp",
-      "eslint-lsp",
-      "eslintd",
+      -- "lua-language-server",
+      -- -- "typescript-language-server",
+      -- "bash-language-server",
+      -- "css-lsp",
+      -- "eslint-lsp",
+      -- "eslintd",
       "prettierd",
       "rustywind",
-      "html-lsp",
-      "svelte-language-server",
-      "tailwindcss-language-server",
-      "vue-language-server",
+      -- "html-lsp",
+      -- "svelte-language-server",
+      -- "tailwindcss-language-server",
+      -- "vue-language-server",
       "shellcheck",
       "shfmt",
     },
@@ -28,24 +28,28 @@ return {
   {
     "williamboman/mason-lspconfig.nvim",
     opts = {
-      automatic_installation = true,
-      -- ensure_installed = {
-      -- 'lua_ls',
-      -- 'tsserver',
-      -- 'js-debug-adapter',
-      -- 'lua-language-server',
-      -- 'typescript-language-server',
-      -- 'bash-language-server',
-      -- 'css-lsp',
-      -- 'eslint-lsp',
-      -- 'eslintd',
-      -- 'html-lsp',
-      -- 'svelte-language-server',
-      -- 'tailwindcss-language-server',
-      -- 'vue-language-server',
-      -- 'shellcheck',
-      -- 'shfmt',
-      -- },
+      automatic_installation = { exclude = { "svelte", "tailwindcss", "css", "json", "vue", "html" } },
+      ensure_installed = {
+        "lua_ls",
+        -- "tsserver",
+        -- "js-debug-adapter",
+        "bashls",
+        "cssls",
+        -- "eslint",
+        "html",
+        "svelte",
+        "tailwindcss",
+        -- "vue",
+        "volar",
+      },
+      handlers = {
+        -- The first entry (without a key) will be the default handler
+        -- and will be called for each installed server that doesn't have
+        -- a dedicated handler.
+        function(server_name) -- default handler (optional)
+          require("lspconfig")[server_name].setup {}
+        end,
+      },
     },
   },
   {
@@ -275,15 +279,15 @@ return {
     enabled = false,
     dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
     opts = {
-      settings = {
-        tsserver_file_preferences = {
-          -- importModuleSpecifierPreference = "non-relative",
-          jsx_close_tag = {
-            enable = true,
-            filetypes = { "javascriptreact", "typescriptreact" },
-          },
-        },
-      },
+      -- settings = {
+      --   tsserver_file_preferences = {
+      --     -- importModuleSpecifierPreference = "non-relative",
+      --     jsx_close_tag = {
+      --       enable = true,
+      --       filetypes = { "javascriptreact", "typescriptreact" },
+      --     },
+      --   },
+      -- },
     },
   },
 }

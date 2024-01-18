@@ -23,6 +23,8 @@ return {
           "json",
           "yaml",
           "markdown",
+          "jsx",
+          "tsx",
           "html",
           "css",
           "graphql",
