@@ -32,19 +32,16 @@ prompt {
     padding: 			            8px;
     background-color: 		        @BG;
     text-color: 		            @FG;
-    border:                  	    0px 0px 2px 0px;
     border-color:                   @BDR;
     border-radius:                  10px;
 }
 
 textbox-prompt-colon {
     expand: 			            false;
-    str: 			                "";
-    border-radius:                  100%;
+    /* str: 			                ""; */
     background-color:               @BG;
     text-color:                     @FG;
-    padding:                        8px 12px 8px 12px;
-    font:			                "Iosevka Nerd Font 10";
+    font:			                "Geist Mono Black";
 }
 
 entry {
@@ -55,10 +52,8 @@ entry {
     horizontal-align:               0;
     placeholder:                    "Search...";
     blink:                          true;
-    border:                  	    0px 0px 2px 0px;
     border-color:                   @BDR;
     border-radius:                  10px;
-    padding:                        8px;
 }
 
 inputbar {
@@ -66,7 +61,6 @@ inputbar {
     background-color:               @BG;
     text-color:                     @FG;
     expand:                         false;
-    border:                  		0px 0px 0px 0px;
     border-radius:                  0px;
     border-color:                  	@BDR;
     margin:                         0px 0px 0px 0px;

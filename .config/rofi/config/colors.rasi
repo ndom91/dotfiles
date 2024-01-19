@@ -9,4 +9,5 @@
     IMG:   #b4befeff;
     OFF:   #575268ff;
     ON:    #ABE9B3ff;
+    TRANS: #00000000;
 }
