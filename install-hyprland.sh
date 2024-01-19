@@ -38,6 +38,7 @@ packages=(
   dracula-gtk-theme dracula-icons-git
   catppuccin-gtk-theme-mocha
   bibata-cursor-theme-bin
+  rose-pine-cursor
 )
 
 yay -S "${packages[@]}"
