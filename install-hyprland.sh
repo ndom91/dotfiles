@@ -27,7 +27,7 @@ packages=(
   polkit-gnome python-requests starship
   brightnessctl inotify-tools
   # Screenshots
-  swappy satty-bin grim slurp
+  swappy annotator grim slurp
   # Video
   wf-recorder
   # Audio
