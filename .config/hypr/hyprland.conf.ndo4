@@ -36,15 +36,19 @@ exec-once = systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESK
 exec-once = ~/.config/hypr/xdg-portal-hyprland
 
 # System Apps
+## unscale XWayland
+xwayland {
+  force_zero_scaling = true
+}
 ## xwayland scale
 env = GDK_SCALE,1.5
 exec-once = xprop -root -f _XWAYLAND_GLOBAL_OUTPUT_SCALE 32c -set _XWAYLAND_GLOBAL_OUTPUT_SCALE 2
 exec-once = xrdb -merge ~/.Xresources
 exec-once = xsettingsd
 ## Cursors
-## capitaine-cursors
-## Bibata-Modern-Classic
-## BreezeX-RosePine-Linux
+### capitaine-cursors
+### Bibata-Modern-Classic
+### BreezeX-RosePine-Linux
 exec-once = xsetroot -xcf /usr/share/icons/BreezeX-RosePine-Linux/cursors/left_ptr 24
 exec-once = hyprctl setcursor BreezeX-RosePine-Linux 24
 exec-once = gsettings set org.gnome.desktop.interface cursor-theme 'BreezeX-RosePine-Linux'
