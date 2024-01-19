@@ -1,16 +1,46 @@
-yay -S hyprland-hidpi-xprop-git waybar-hyprland \
-	swaybg swaylock-effects rofi-lbonn-wayland-git wlogout swaync \
-	noto-fonts-emoji cliphist nwg-look-bin \
-	polkit-gnome python-requests starship \
-	swappy satty-bin grim slurp pamixer brightnessctl inotify-tools \
-	bluez bluez-utils \
-	dracula-gtk-theme dracula-icons-git \
-	xdg-desktop-portal-hyprland-git \
-	xsettingsd xorg-xsetroot imv flemozi-bin \
-	swayidle bibata-cursor-theme-bin \
-	wf-recorder swayosd-git wlsunset \
-  python-neovim-git python-libtmux \
-	catppuccin-gtk-theme-mocha blueberry-wayland \
+#!/usr/bin/env bash
+
+packages=(
+  # main hyprland + patches
+  hyprland-hidpi-xprop-git
+  xdg-desktop-portal-hyprland-git
+  # i3 like tiling functionality
+  hy3-git
+  # Menu bar
+  waybar
+  rofi-lbonn-wayland-git
+  # Notifications
+  swaync
+  # Fonts
+  noto-fonts-emoji
+  # Misc tools
+  cliphist nwg-look-bin
+  swaybg swaylock-effects-git wlogout
+  swayidle swayosd-git wlsunset
+  imv flemozi-bin
+  python-neovim-git python-libtmux
+
+  # xwayland
+  xsettingsd xorg-xsetroot
+
+  # Deps
+  polkit-gnome python-requests starship
+  brightnessctl inotify-tools
+  # Screenshots
+  swappy satty-bin grim slurp
+  # Video
+  wf-recorder
+  # Audio
+  pamixer
+  # Bluetooth
+  bluez bluez-utils blueberry-wayland
+  # Themes
+  dracula-gtk-theme dracula-icons-git
+  catppuccin-gtk-theme-mocha
+  bibata-cursor-theme-bin
+)
+
+yay -S "${packages[@]}"
 
 # hidpi
 # hyprland-hidpi-xprop-git
