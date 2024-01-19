@@ -217,6 +217,7 @@ windowrule = float, pavucontrol-qt
 windowrule = float, pavucontrol
 windowrule = float, file-roller
 windowrulev2 = float, title:wlogout
+windowrulev2 = float, title:Annotator
 windowrulev2 = fullscreen, title:wlogout
 
 windowrulev2 = noshadow, floating:1
