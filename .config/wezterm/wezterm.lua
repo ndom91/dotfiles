@@ -38,9 +38,9 @@ config.keys = {
     action = wezterm.action.ReloadConfiguration,
   },
   {
-    key = 'Space',
+    key = 'S',
     mods = 'SHIFT|CTRL',
-    action = wezterm.action.QuickSelect
+    action = wezterm.action.QuickSelect,
   },
 }
 
