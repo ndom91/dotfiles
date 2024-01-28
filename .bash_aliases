@@ -12,16 +12,16 @@
 
 # Alias Functions
 if [ -f ~/.bash_aliases_functions ]; then
-	. ~/.bash_aliases_functions
+  . ~/.bash_aliases_functions
 fi
 
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
-	test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-	alias ls='ls --color=auto'
-	alias grep='grep --color=auto --exclude-dir={node_modules,.bzr,CVS,.git,.hg,.svn,.idea,.tox}'
-	alias fgrep='fgrep --color=auto --exclude-dir={node_modules,.bzr,CVS,.git,.hg,.svn,.idea,.tox}'
-	alias egrep='egrep --color=auto --exclude-dir={node_modules,.bzr,CVS,.git,.hg,.svn,.idea,.tox}'
+  test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+  alias ls='ls --color=auto'
+  alias grep='grep --color=auto --exclude-dir={node_modules,.bzr,CVS,.git,.hg,.svn,.idea,.tox}'
+  alias fgrep='fgrep --color=auto --exclude-dir={node_modules,.bzr,CVS,.git,.hg,.svn,.idea,.tox}'
+  alias egrep='egrep --color=auto --exclude-dir={node_modules,.bzr,CVS,.git,.hg,.svn,.idea,.tox}'
 fi
 
 #### DOTFILES GIT BARE REPO ####
@@ -31,15 +31,15 @@ alias lazydot='/bin/lazygit --git-dir=$HOME/public-dotfiles/ --work-tree=$HOME'
 
 #### APPLICATIONS ####
 if [ -f /bin/eza ]; then
-	alias ll='eza --icons -l -a --group-directories-first --time-style long-iso --classify --group'
-	alias llg='eza --icons --git-repos --git -l -a --group-directories-first --time-style long-iso --classify --group'
-	alias ls='eza --icons --group-directories-first --classify'
-	alias tree='eza --long --tree --time-style long-iso --icons --group'
+  alias ll='eza --icons -l -a --group-directories-first --time-style long-iso --classify --group'
+  alias llg='eza --icons --git-repos --git -l -a --group-directories-first --time-style long-iso --classify --group'
+  alias ls='eza --icons --group-directories-first --classify'
+  alias tree='eza --long --tree --time-style long-iso --icons --group'
 else
-	alias ll='ls -hal'
-	alias lls='ls -hSral'
-	alias ls='ls -h'
-	alias li='ls -laXh --group-directories-first --color=auto'
+  alias ll='ls -hal'
+  alias lls='ls -hSral'
+  alias ls='ls -h'
+  alias li='ls -laXh --group-directories-first --color=auto'
 fi
 
 alias greg='greg --highlight'
@@ -83,20 +83,20 @@ alias activeSysd='for i in $(cd /etc/systemd/system/multi-user.target.wants && l
 
 #### GIT ####
 if [ "$(command -v git)" ]; then
-	alias cob='git checkout $(git branch -a | cut -c 3- | sed "s/remotes\/origin\///g" | gum filter --reverse)'
-	alias gs='git status'
-	alias gss='git status --short'
-	alias gd='git diff'
-	alias gp='git pull'
-	alias gl='git log --oneline --color | emojify | most'
-	alias gm='gitmoji -c'
-	alias g='git'
-	alias gpb='git push origin `git rev-parse --abbrev-ref HEAD`'
-	alias gpl='git pull origin `git rev-parse --abbrev-ref HEAD`'
-	alias glb='git checkout $(git for-each-ref --sort=-committerdate --count=20 --format="%(refname:short)" refs/heads/ | gum filter --reverse)'
-	alias ds='dot status'
-	alias ddi='dot diff'
-	alias gitroot='cd "$(git rev-parse --show-toplevel)"'
+  alias cob='git checkout $(git branch -a | cut -c 3- | sed "s/remotes\/origin\///g" | gum filter --reverse)'
+  alias gs='git status'
+  alias gss='git status --short'
+  alias gd='git diff'
+  alias gp='git pull'
+  alias gl='git log --oneline --color | emojify | most'
+  alias gm='gitmoji -c'
+  alias g='git'
+  alias gpb='git push origin `git rev-parse --abbrev-ref HEAD`'
+  alias gpl='git pull origin `git rev-parse --abbrev-ref HEAD`'
+  alias glb='git checkout $(git for-each-ref --sort=-committerdate --count=20 --format="%(refname:short)" refs/heads/ | gum filter --reverse)'
+  alias ds='dot status'
+  alias ddi='dot diff'
+  alias gitroot='cd "$(git rev-parse --show-toplevel)"'
 fi
 
 #### TYPOS ####

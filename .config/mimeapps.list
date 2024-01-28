@@ -26,8 +26,6 @@ application/x-extension-shtml=vivaldi-stable.desktop
 application/xhtml+xml=vivaldi-stable.desktop
 application/x-extension-xhtml=vivaldi-stable.desktop
 application/x-extension-xht=vivaldi-stable.desktop
-
-[Added Associations]
 image/png=viewnior.desktop;
 image/jpeg=viewnior.desktop;
 application/pdf=org.pwmt.zathura.desktop;
