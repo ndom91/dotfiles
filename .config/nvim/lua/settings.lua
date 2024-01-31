@@ -31,7 +31,7 @@ opt.clipboard = "unnamedplus"
 opt.cursorline = true
 
 opt.breakindent = true
-opt.linebreak = true
+-- opt.linebreak = true
 
 opt.belloff = "all"
 opt.hidden = true
@@ -40,8 +40,8 @@ opt.inccommand = "split"
 opt.incsearch = true
 opt.laststatus = 3
 opt.mouse = "n"
-opt.number = true
 opt.path = ".,**"
+opt.number = true
 opt.relativenumber = true
 opt.signcolumn = "yes"
 opt.smartcase = true
@@ -50,8 +50,10 @@ opt.smartindent = true
 opt.splitbelow = true
 opt.splitright = true
 
-opt.textwidth = 100
-opt.cc = "+1"
+-- defaul 'tcqj'
+-- opt.formatoptions = "cqj"
+-- opt.textwidth = 100
+-- opt.colorcolumn = "+1"
 opt.scrolloff = 8
 opt.tabstop = 2
 opt.softtabstop = 2
@@ -67,5 +69,6 @@ opt.wildignore:append "**/.svelte-kit/*"
 opt.wildignore:append "**/venv/*"
 opt.wildmenu = true
 
+-- Psuendotransparency for popup-menu
 opt.pumblend = 20
 opt.wrap = true

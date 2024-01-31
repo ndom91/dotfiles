@@ -1,3 +1,4 @@
+# shellcheck shell=bash
 #
 #  _ __   __| | ___  _ __ ___ / _ \/ |
 # | '_ \ / _` |/ _ \| '_ ` _ \ (_) | |
@@ -81,10 +82,6 @@ if [ -f "$HOME/.dotfiles/colorscripts/blocks.sh" ]; then
   "$HOME/.dotfiles/colorscripts/blocks.sh"
 fi
 
-# make `less` more friendly for non-text input files,
-# see lesspipe(1)
-[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
-
 # Private Stuffs
 if [ -f ~/.bashrc_priv ]; then
   source "$HOME/.bashrc_priv"
@@ -109,11 +106,6 @@ fi
 # FinDomain - DNS Recon
 if [ -d /opt/ndomino/EchoPwn ]; then
   alias findomain='/opt/ndomino/EchoPwn/findomain-linux'
-fi
-
-# Vagrant
-if [ -d /mnt/data/vagrant_home ]; then
-  export VAGRANT_HOME="/mnt/data/vagrant_home"
 fi
 
 # Wasmer
@@ -218,14 +210,10 @@ if [ "$(command -v llama)" ]; then
   alias la='la'
 fi
 
-# add Pulumi to the PATH
+# Pulumi
 if [ -d "$HOME/.pulumi/bin" ]; then
   export PATH=$PATH:$HOME/.pulumi/bin
 fi
-
-# bun
-export BUN_INSTALL="$HOME/.bun"
-export PATH=$BUN_INSTALL/bin:$PATH
 
 # Turso
 export PATH="/home/ndo/.turso:$PATH"
