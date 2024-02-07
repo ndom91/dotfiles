@@ -1,6 +1,18 @@
 <h1 align="center">dotfiles ❤ ~/.</h1>
 
-![ndom91_desktop](https://i.imgur.com/SDAakwU.jpg)
+<p dir="auto">
+  <img src="https://img.shields.io/badge/arch-black?style=for-the-badge&logo=archlinux&logoColor=white" />
+  <img src="https://img.shields.io/badge/bash-black?style=for-the-badge&logo=gnu-bash&logoColor=white" />
+  <img src="https://img.shields.io/badge/hyprland-black?style=for-the-badge&logo=hyper&color=black&labelColor=black" />
+  <img src="https://img.shields.io/badge/neovim-black?style=for-the-badge&logo=neovim&logoColor=white" />
+  <img src="https://img.shields.io/badge/wezterm-black?style=for-the-badge&logo=wezterm&logoColor=white" />
+  <img src="https://img.shields.io/badge/typescript-black?style=for-the-badge&logo=typescript&logoColor=white" />
+  <img src="https://img.shields.io/badge/svelte-black?style=for-the-badge&logo=svelte&logoColor=white" />
+  <img src="https://img.shields.io/badge/raspberry_pi-black?style=for-the-badge&logo=raspberrypi&logoColor=white" />
+  <img src="https://img.shields.io/badge/proton-black?style=for-the-badge&logo=proton&logoColor=white" />
+</p>
+
+![ndom91_desktop](./.dotfiles/ndo4_1.png)
 
 ## 🎉 Setup
 
@@ -12,29 +24,28 @@ curl -Lks https://init.ndo.dev > /bin/bash
 
 - neovim
   - [`.config/nvim/lua/plugins.lua`](https://github.com/ndom91/dotfiles/blob/main/.config/nvim/lua/plugins.lua)
-
 - CLI
   - [bash](https://git.savannah.gnu.org/cgit/bash.git) - Unix shell
   - [tmux](https://github.com/tmux/tmux) - Terminal multiplexer
   - [nvim](https://github.com/neovim/neovim) - Vim fork focused on extensibility and usability
-  - [git](https://github.com/git/git) - Open-source version control
   - [htop](https://github.com/htop-dev/htop) - Go-to system monitor
   - [bat](https://github.com/sharkdp/bat) - A `cat` clone with wings
   - [ripgrep](https://github.com/BurntSushi/ripgrep) - Rust `grep` alternative
-  - [fzf](https://github.com/junegunn/fzf) - CLI Fuzzy finder
   - [fnm](https://github.com/Schniz/fnm) - Rust based node version manager
-  - [starship](https://github.com/starship/starship) - Minimal pretty shell prompt
-  - [exa](https://github.com/ogham/exa) - Modern rust version of `ls`
+  - [starship](https://github.com/starship/starship) - Minimal and pretty shell prompt
+  - [eza](https://github.com/eza-community/eza) - Modern rust alternative for `ls`
   - [lazygit](https://github.com/jesseduffield/lazygit) - TUI Git client
   - [lazydocker](https://github.com/jesseduffield/lazydocker) - TUI Docker client
 - GUI
-  - [i3](https://github.com/i3/i3) - Tiling window manager
-  - [i3lock-fancy](https://github.com/meskarune/i3lock-fancy) - Script that takes a screenshot of the desktop, blurs it, and locks the screen
-  - [polybar](https://github.com/polybar/polybar) - Window status-bar
-  - [dmenu](https://tools.suckless.org/dmenu/) - Suckless dynamic menu / app launcher
-  - [alacritty](https://github.com/alacritty/alacritty) - GPU-accelerated terminal emulator
+  - [hyprland](https://github.com/hyprwm/hyprland) - Wayland-based tiling window manager
+  - [hy3](https://github.com/outfoxxed/hy3) - Hyprland extension for i3-like tiling behaviour including grouping
+  - [waybar](https://github.com/Alexays/Waybar) - Window bar for wayland
+  - [rofi](https://github.com/davatorium/rofi) - Window switcher and launcher
+  - [wezterm](https://wezfurlong.org/wezterm/index.html) - Terminal emulator
 
 ## 📑 Notes
+
+Startup script inspiration:
 
 - Netdata Installer - [`kickstart.sh`](https://raw.githubusercontent.com/netdata/netdata/00bc58df4d0aaa8b6da987afdeb830003661a04c/packaging/installer/kickstart.sh)
 - Vercel Node.js Installer - [`install-node.vercel.app`](https://install-node.vercel.app/)
