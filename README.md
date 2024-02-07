@@ -1,8 +1,8 @@
 <h3 align="center"> <pre>  <br>   $ dotfiles   <br>  </pre> </h3>
 
-<br>
+![ndom91_desktop](./.dotfiles/ndo4_1.png)
 
-<p dir="auto">
+<p align="center">
   <img src="https://img.shields.io/badge/arch-black?style=for-the-badge&logo=archlinux&logoColor=white" />
   <img src="https://img.shields.io/badge/bash-black?style=for-the-badge&logo=gnu-bash&logoColor=white" />
   <img src="https://img.shields.io/badge/hyprland-black?style=for-the-badge&logo=hyper&color=black&labelColor=black" />
@@ -11,8 +11,6 @@
   <img src="https://img.shields.io/badge/typescript-black?style=for-the-badge&logo=typescript&logoColor=white" />
   <img src="https://img.shields.io/badge/proton-black?style=for-the-badge&logo=proton&logoColor=white" />
 </p>
-
-![ndom91_desktop](./.dotfiles/ndo4_1.png)
 
 ## 🚀 Setup
 
