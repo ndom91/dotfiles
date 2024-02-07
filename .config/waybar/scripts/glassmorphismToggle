@@ -3,9 +3,9 @@
 STATE=$(hyprctl -j getoption decoration:blur_passes | jq ".int")
 
 if [ "${STATE}" == "2" ]; then
-	hyprctl keyword decoration:inactive_opacity = 0.8
-	notify-send "Normal blur"
+  hyprctl keyword decoration:inactive_opacity = 0.8
+  notify-send "Normal blur"
 else
-	hyprctl keyword decoration:inactive_opacity = 0.9
-	notify-send "Glassmorphism activated"
+  hyprctl keyword decoration:inactive_opacity = 0.9
+  notify-send "Glassmorphism activated"
 fi
