@@ -9,7 +9,11 @@ return {
     "hrsh7th/cmp-cmdline",
     "saadparwaiz1/cmp_luasnip",
     "rafamadriz/friendly-snippets",
-    "L3MON4D3/LuaSnip",
+    {
+      "L3MON4D3/LuaSnip",
+      build = "make install_jsregexp",
+      config = function() require("luasnip.loaders.from_vscode").lazy_load() end,
+    },
     "onsails/lspkind-nvim",
     {
       "roobert/tailwindcss-colorizer-cmp.nvim",
@@ -22,7 +26,6 @@ return {
     },
     {
       "zbirenbaum/copilot-cmp",
-      verylazy = true,
       dependencies = "copilot.lua",
       opts = {},
       config = function(_, opts)
@@ -59,7 +62,7 @@ return {
         ["<C-u>"] = cmp.mapping.scroll_docs(4),
         ["<CR>"] = cmp.mapping.confirm { select = true },
         ["<Tab>"] = cmp.mapping(function(fallback)
-          if cmp.visible() then
+          if cmp.visible() and has_words_before() then
             -- You could replace select_next_item() with confirm({ select = true }) to get VS Code autocompletion behavior
             cmp.select_next_item()
             -- You could replace the expand_or_jumpable() calls with expand_or_locally_jumpable()
@@ -84,7 +87,6 @@ return {
       },
       sources = {
         { name = "copilot" },
-        -- { name = "nvim_lsp", max_item_count = 20 },
         {
           name = "nvim_lsp",
           max_item_count = 20,
@@ -93,12 +95,10 @@ return {
             return require("cmp.types").lsp.CompletionItemKind[entry:get_kind()] ~= "File"
           end,
         },
+        { name = "nvim_lsp_signature_help" },
         { name = "luasnip", keyword_length = 2 },
-        -- { name = "nvim_lsp_signature_help" },
-        -- { name = "treesitter" },
-        -- { name = "buffer", max_item_count = 5, keyword_length = 3 },
-        -- { name = "path" },
-        -- { name = "nvim_lua" },
+        { name = "treesitter" },
+        { name = "path" },
       },
       window = {
         documentation = cmp.config.window.bordered {
@@ -124,7 +124,6 @@ return {
             --     vi
             --   )
             -- end,
-            -- preset = "codicons",
           }(entry, vim_item)
 
           local strings = vim.split(kind.kind, "%s", { trimempty = true })

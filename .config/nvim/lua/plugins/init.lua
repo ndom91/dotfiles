@@ -93,7 +93,7 @@ return {
       docColors.buf_attach()
     end,
   },
-  -- cmp based copilot
+  -- lua based copilot replacement
   {
     "zbirenbaum/copilot.lua",
     enabled = true,

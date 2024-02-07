@@ -53,7 +53,7 @@ return {
         entry_prefix = "  ",
         set_env = { ["COLORTERM"] = "truecolor" },
         color_devicons = true,
-        -- path_dispay = { shorten = 2 },
+        -- path_display = { shorten = 2 },
         -- path_display = function(_, path)
         --   local filename = path:gsub(vim.pesc(vim.loop.cwd()) .. '/', ''):gsub(vim.pesc(vim.fn.expand '$HOME'), '~')
         --   local tail = require('telescope.utils').path_tail(filename)
@@ -113,7 +113,7 @@ return {
         live_grep = {
           prompt_title = "Grep",
           preview_title = "Results",
-          path_display = { "smart" },
+          -- path_display = { "smart" },
           dynamic_preview_title = true,
           file_ignore_patterns,
         },

@@ -23,15 +23,7 @@ return {
       popup_border_style = "rounded",
       enable_git_status = true,
       enable_diagnostics = true,
-      sort_case_insensitive = false, -- used when sorting files and directories in the tree
-      sort_function = nil, -- use a custom function for sorting files and directories in the tree
-      -- sort_function = function (a,b)
-      --       if a.type == b.type then
-      --           return a.path > b.path
-      --       else
-      --           return a.type > b.type
-      --       end
-      --   end , -- this sorts files and directories descendantly
+      sort_case_insensitive = true, -- used when sorting files and directories in the tree
       source_selector = {
         winbar = true,
         content_layout = "center",
@@ -64,7 +56,7 @@ return {
           folder_empty = "ﰊ",
           default = "*",
         },
-        modified = { symbol = "[+]", highlight = "NeoTreeModified" },
+        modified = { symbol = "", highlight = "NeoTreeModified" },
         name = {
           trailing_slash = false,
           use_git_status_colors = true,
@@ -127,7 +119,6 @@ return {
           ["]"] = "next_source",
           ["a"] = {
             "add",
-            -- some commands may take optional config options, see `:h neo-tree-mappings` for details
             config = {
               show_path = "relative", -- "none", "relative", "absolute"
             },
@@ -174,14 +165,6 @@ return {
             vim.fn.setreg("1", content)
             vim.fn.setreg("+", content)
           end,
-          -- ["y"] = function(state)
-          --   local node = state.tree:get_node()
-          --   local content = node.path -- absolute
-          --   vim.fn.setreg('"', content)
-          --   vim.fn.setreg("1", content)
-          --   vim.fn.setreg("+", content)
-          -- end,
-          -- ["y"] = "copy_to_clipboard",
           ["A"] = "add_directory",
           ["d"] = "delete",
           ["r"] = "rename",
@@ -189,7 +172,6 @@ return {
           ["p"] = "paste_from_clipboard",
           ["c"] = {
             "copy",
-            -- some commands may take optional config options, see `:h neo-tree-mappings` for details
             config = {
               show_path = "absolute", -- "none", "relative", "absolute"
             },
@@ -208,7 +190,6 @@ return {
           hide_by_name = {
             ".DS_Store",
             "thumbs.db",
-            -- "node_modules",
             ".docusaurus",
           },
           always_show = {
@@ -220,7 +201,6 @@ return {
           never_show = { -- remains hidden even if visible is toggled to true
             ".DS_Store",
             "thumbs.db",
-            -- "node_modules",
             ".docusaurus",
           },
         },
@@ -228,7 +208,7 @@ return {
           enabled = true, -- This will find and focus the file in the active buffer every
         },
         -- time the current file is changed while the tree is open.
-        group_empty_dirs = true,
+        group_empty_dirs = false,
         hijack_netrw_behavior = "open_default", -- netrw disabled, opening a directory opens neo-tree
         -- in whatever position is specified in window.position
         -- "open_current",  -- netrw disabled, opening a directory opens within the
@@ -254,7 +234,7 @@ return {
           enabled = true, -- This will find and focus the file in the active buffer every
         },
         -- time the current file is changed while the tree is open.
-        group_empty_dirs = true, -- when true, empty folders will be grouped together
+        group_empty_dirs = false, -- when true, empty folders will be grouped together
         show_unloaded = false,
         window = {
           mappings = {
