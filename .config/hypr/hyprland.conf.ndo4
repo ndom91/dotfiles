@@ -242,6 +242,10 @@ windowrulev2 = float, class:nemo
 # windowrulev2 = size 30% 40%, class:nemo
 windowrulev2 = center, class:nemo
 
+# float/slidein Flemoji
+windowrulev2 = animation slide, title:Flemoji
+windowrulev2 = float, title:Flemoji
+
 # float/slidein pavucontrol
 windowrulev2 = animation slide, class:pavucontrol
 windowrulev2 = float, class:pavucontrol
