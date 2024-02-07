@@ -2,7 +2,7 @@
 
 ![ndom91_desktop](./.dotfiles/ndo4_1.png)
 
-<p align="center">
+<p>
   <img src="https://img.shields.io/badge/arch-black?style=for-the-badge&logo=archlinux&logoColor=white" />
   <img src="https://img.shields.io/badge/bash-black?style=for-the-badge&logo=gnu-bash&logoColor=white" />
   <img src="https://img.shields.io/badge/hyprland-black?style=for-the-badge&logo=hyper&color=black&labelColor=black" />
