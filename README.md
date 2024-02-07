@@ -1,11 +1,4 @@
-
-<p align="center">
-  <kbd> 
-    <br>
-      $ dotfiles
-    <br> 
-  </kbd>
-</p>
+<h3 align="center"> <pre>  <br>   $ dotfiles   <br>  </pre> </h3>
 
 <br>
 
