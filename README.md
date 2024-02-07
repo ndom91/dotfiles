@@ -1,4 +1,13 @@
-<h1 align="center">dotfiles ❤ ~/.</h1>
+
+<p align="center">
+  <kbd> 
+    <br>
+      $ dotfiles
+    <br> 
+  </kbd>
+</p>
+
+<br>
 
 <p dir="auto">
   <img src="https://img.shields.io/badge/arch-black?style=for-the-badge&logo=archlinux&logoColor=white" />
@@ -12,13 +21,13 @@
 
 ![ndom91_desktop](./.dotfiles/ndo4_1.png)
 
-## 🎉 Setup
+## 🚀 Setup
 
 ```
 curl -Lks https://init.ndo.dev > /bin/bash
 ```
 
-## ️🚧 Details
+## ️🏗️ Favorites
 
 - neovim
   - [`.config/nvim/lua/plugins.lua`](https://github.com/ndom91/dotfiles/blob/main/.config/nvim/lua/plugins.lua)
