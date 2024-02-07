@@ -7,8 +7,6 @@
   <img src="https://img.shields.io/badge/neovim-black?style=for-the-badge&logo=neovim&logoColor=white" />
   <img src="https://img.shields.io/badge/wezterm-black?style=for-the-badge&logo=wezterm&logoColor=white" />
   <img src="https://img.shields.io/badge/typescript-black?style=for-the-badge&logo=typescript&logoColor=white" />
-  <img src="https://img.shields.io/badge/svelte-black?style=for-the-badge&logo=svelte&logoColor=white" />
-  <img src="https://img.shields.io/badge/raspberry_pi-black?style=for-the-badge&logo=raspberrypi&logoColor=white" />
   <img src="https://img.shields.io/badge/proton-black?style=for-the-badge&logo=proton&logoColor=white" />
 </p>
 
