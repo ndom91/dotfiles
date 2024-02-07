@@ -1,45 +1,24 @@
-local function goto_next_error() vim.diagnostic.goto_next { severity = "Error" } end
-local function goto_prev_error() vim.diagnostic.goto_prev { severity = "Error" } end
+local function goto_next_error() vim.diagnostic.goto_next { severity = vim.diagnostic.severity.Error } end
+local function goto_prev_error() vim.diagnostic.goto_prev { severity = vim.diagnostic.severity.Error } end
 
 return {
   {
     "williamboman/mason.nvim",
     lazy = false,
     opts = {},
-    ensure_installed = {
-      -- https://mason-registry.dev/registry/list
-      "js-debug-adapter",
-      -- "lua-language-server",
-      -- -- "typescript-language-server",
-      -- "bash-language-server",
-      -- "css-lsp",
-      -- "eslint-lsp",
-      -- "eslintd",
-      "prettierd",
-      "rustywind",
-      -- "html-lsp",
-      -- "svelte-language-server",
-      -- "tailwindcss-language-server",
-      -- "vue-language-server",
-      "shellcheck",
-      "shfmt",
-    },
   },
   {
     "williamboman/mason-lspconfig.nvim",
     opts = {
-      automatic_installation = { exclude = { "svelte", "tailwindcss", "css", "json", "vue", "html" } },
+      automatic_installation = true,
       ensure_installed = {
         "lua_ls",
-        -- "tsserver",
-        -- "js-debug-adapter",
+        "tsserver",
         "bashls",
         "cssls",
-        -- "eslint",
         "html",
         "svelte",
         "tailwindcss",
-        -- "vue",
         "volar",
       },
       handlers = {
@@ -50,6 +29,22 @@ return {
           require("lspconfig")[server_name].setup {}
         end,
       },
+    },
+  },
+  {
+    "WhoIsSethDaniel/mason-tool-installer.nvim",
+    opts = {
+      ensure_installed = {
+        "eslint_d",
+        "js-debug-adapter",
+        "prettierd",
+        "rustywind",
+        "shellcheck",
+        "shfmt",
+      },
+      auto_update = true,
+      run_on_start = true,
+      debounce_hours = 12,
     },
   },
   {
@@ -88,8 +83,11 @@ return {
         end, results)
       end
 
-      ---This function is mostly copied from Telescope, I only added the
-      ---`node_modules` filtering.
+      -- Designed to skip jumping to definitions found in node_modules instead
+      -- of the correct definition somewhere else in your codebase.
+      --
+      -- This function is mostly copied from Telescope, I only added the
+      -- `node_modules` filtering.
       local function list_or_jump(action, title, opts)
         local pickers = require "telescope.pickers"
         local finders = require "telescope.finders"
@@ -122,7 +120,7 @@ return {
             return
           elseif #flattened_results == 1 and opts.jump_type ~= "never" then
             local uri = params.textDocument.uri
-            if uri ~= flattened_results[1].uri and uri ~= flattened_results[1].targetUri then
+            if uri ~= flattened_results[1].targetUri then
               if opts.jump_type == "tab" then
                 vim.cmd.tabedit()
               elseif opts.jump_type == "split" then
@@ -130,7 +128,7 @@ return {
               elseif opts.jump_type == "vsplit" then
                 vim.cmd.vnew()
               elseif opts.jump_type == "tab drop" then
-                local file_uri = flattened_results[1].uri
+                local file_uri = flattened_results[1].targetUri
                 if file_uri == nil then file_uri = flattened_results[1].targetUri end
                 local file_path = vim.uri_to_fname(file_uri)
                 vim.cmd("tab drop " .. file_path)
@@ -166,13 +164,10 @@ return {
         }
       end, { silent = true, noremap = true, desc = "Format" })
 
-      -- vim.keymap.set('n', '<space>d', vim.diagnostic.open_float)
       vim.keymap.set("n", "[d", vim.diagnostic.goto_prev)
       vim.keymap.set("n", "]d", vim.diagnostic.goto_next)
       vim.keymap.set("n", "]e", goto_next_error)
       vim.keymap.set("n", "[e", goto_prev_error)
-
-      -- local on_attach = function(client, bufnr)
 
       vim.api.nvim_create_autocmd("LspAttach", {
         group = vim.api.nvim_create_augroup("UserLspConfig", {}),
@@ -196,27 +191,28 @@ return {
           vim.keymap.set("n", "<space>re", vim.lsp.buf.rename)
 
           local client = vim.lsp.get_client_by_id(event.data.client_id)
+          if client ~= nil then
+            -- Highlight symbol references on hover
+            if client.server_capabilities.documentHighlightProvider then
+              vim.api.nvim_create_augroup("LspDocumentHighlight", { clear = false })
+              vim.api.nvim_clear_autocmds {
+                buffer = event.buf,
+                group = "LspDocumentHighlight",
+              }
+              vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
+                group = "LspDocumentHighlight",
+                buffer = event.buf,
+                callback = vim.lsp.buf.document_highlight,
+              })
+              vim.api.nvim_create_autocmd("CursorMoved", {
+                group = "LspDocumentHighlight",
+                buffer = event.buf,
+                callback = vim.lsp.buf.clear_references,
+              })
+            end
 
-          -- Highlight symbol references on hover
-          if client.server_capabilities.documentHighlightProvider then
-            vim.api.nvim_create_augroup("LspDocumentHighlight", { clear = false })
-            vim.api.nvim_clear_autocmds {
-              buffer = event.buf,
-              group = "LspDocumentHighlight",
-            }
-            vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
-              group = "LspDocumentHighlight",
-              buffer = event.buf,
-              callback = vim.lsp.buf.document_highlight,
-            })
-            vim.api.nvim_create_autocmd("CursorMoved", {
-              group = "LspDocumentHighlight",
-              buffer = event.buf,
-              callback = vim.lsp.buf.clear_references,
-            })
+            client.server_capabilities.semanticTokensProvider = nil
           end
-
-          client.server_capabilities.semanticTokensProvider = nil
         end,
       })
 
@@ -227,7 +223,6 @@ return {
       require "plugins.lsp.langs.html"
       require "plugins.lsp.langs.tailwindcss"
       require "plugins.lsp.langs.svelte"
-      -- require 'plugins.lsp.langs.lua'
 
       -- vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
       --   border = "single",
