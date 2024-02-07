@@ -23,8 +23,7 @@ alias lazydot='/bin/lazygit --git-dir=$HOME/public-dotfiles/ --work-tree=$HOME'
 
 #### APPLICATIONS ####
 if [ -f /bin/eza ]; then
-  alias ll='eza --icons -l -a --group-directories-first --time-style long-iso --classify --group'
-  alias llg='eza --icons --git-repos --git -l -a --group-directories-first --time-style long-iso --classify --group'
+  alias ll='eza --icons -l -a --group-directories-first --time-style long-iso --classify --group --git'
   alias ls='eza --icons --group-directories-first --classify'
   alias tree='eza --long --tree --time-style long-iso --icons --group'
 else

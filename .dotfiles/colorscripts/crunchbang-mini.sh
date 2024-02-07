@@ -55,4 +55,3 @@ echo -e "   ${reset}${redf}  ██  ██   ${reset}${boldon}${redfbright}█�
 echo -e "   ${reset}${redf}██████████       ${reset}${greenf}██████████       ${reset}${yellowf}██████████       ${reset}${bluef}██████████       ${reset}${purplef}██████████       ${reset}${cyanf}██████████   "
 echo -e "   ${reset}${redf}  ██  ██   ${reset}${boldon}${redfbright}██    ${reset}${greenf}  ██  ██   ${reset}${boldon}${greenfbright}██    ${reset}${yellowf}  ██  ██   ${reset}${boldon}${yellowfbright}██    ${reset}${bluef}  ██  ██   ${reset}${boldon}${bluefbright}██    ${reset}${purplef}  ██  ██   ${reset}${boldon}${purplefbright}██    ${reset}${cyanf}  ██  ██   ${reset}${boldon}${cyanfbright}██ "
 echo -e " ${reset}"
-

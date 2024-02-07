@@ -41,7 +41,6 @@ function gitsetup() {
   git config --global user.name "$(whoami)@$(hostname)"
 }
 
-
 __set_trap() {
   trap -p "$1" | grep "$2" &>/dev/null ||
     trap '$2' "$1"
@@ -162,6 +161,5 @@ function execute() {
 
   return $exitCode
 }
-
 
 [ "$0" = "${BASH_SOURCE[0]}" ] && display_version 0.4.2 || true

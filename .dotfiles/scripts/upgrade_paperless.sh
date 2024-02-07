@@ -24,96 +24,98 @@ CYAN="$(tput setaf 6 2>/dev/null || echo '')"
 NO_COLOR="$(tput sgr0 2>/dev/null || echo '')"
 
 info() {
-    printf "${BOLD}${BLUE}>${NO_COLOR} $@\n"
+  printf "${BOLD}${BLUE}>${NO_COLOR} $@\n"
 }
 
 warn() {
-    printf "${YELLOW}! $@${NO_COLOR}\n"
+  printf "${YELLOW}! $@${NO_COLOR}\n"
 }
 
 error() {
-    printf "${RED}x $@${NO_COLOR}\n" >&2
+  printf "${RED}x $@${NO_COLOR}\n" >&2
 }
 
 complete() {
-    printf "${GREEN}✓${NO_COLOR} $@\n"
+  printf "${GREEN}✓${NO_COLOR} $@\n"
 }
 
 function _spinner() {
-    # https://github.com/tlatsas/bash-spinner
-    # $1 start/stop
-    #
-    # on start: $2 display message
-    # on stop : $2 process exit status
-    #           $3 spinner function pid (supplied from stop_spinner)
+  # https://github.com/tlatsas/bash-spinner
+  # $1 start/stop
+  #
+  # on start: $2 display message
+  # on stop : $2 process exit status
+  #           $3 spinner function pid (supplied from stop_spinner)
 
-    local on_success="DONE"
-    local on_fail="FAIL"
-    local white="\e[1;37m"
-    local green="\e[1;32m"
-    local red="\e[1;31m"
-    local nc="\e[0m"
+  local on_success="DONE"
+  local on_fail="FAIL"
+  local white="\e[1;37m"
+  local green="\e[1;32m"
+  local red="\e[1;31m"
+  local nc="\e[0m"
 
-    case $1 in
-        start)
-            # calculate the column where spinner and status msg will be displayed
-            let column=$(tput cols)-${#2}-8
-            # display message and position the cursor in $column column
-            echo -ne "${BOLD}${BLUE}>${NO_COLOR} ${2}"
-            printf "%${column}s"
+  case $1 in
+    start)
+      # calculate the column where spinner and status msg will be displayed
+      let column=$(tput cols)-${#2}-8
+      # display message and position the cursor in $column column
+      echo -ne "${BOLD}${BLUE}>${NO_COLOR} ${2}"
+      printf "%${column}s"
 
-            # start spinner
-            i=1
-            sp='\|/-'
-            delay=${SPINNER_DELAY:-0.15}
+      # start spinner
+      i=1
+      sp='\|/-'
+      delay=${SPINNER_DELAY:-0.15}
 
-            while :
-            do
-                printf "\b${sp:i++%${#sp}:1}"
-                sleep "$delay"
-            done
-            ;;
-        stop)
-            if [[ -z ${3} ]]; then
-                echo "spinner is not running.."
-                exit 1
-            fi
+      while :; do
+        printf "\b${sp:i++%${#sp}:1}"
+        sleep "$delay"
+      done
+      ;;
+    stop)
+      if [[ -z ${3} ]]; then
+        echo "spinner is not running.."
+        exit 1
+      fi
 
-            kill "$3" > /dev/null 2>&1
+      kill "$3" >/dev/null 2>&1
 
-            # inform the user uppon success or failure
-            echo -en "\b["
-            if [[ $2 -eq 0 ]]; then
-                echo -en "${green}${on_success}${nc}"
-            else
-                echo -en "${red}${on_fail}${nc}"
-            fi
-            echo -e "]"
-            ;;
-        *)
-            echo "invalid argument, try {start/stop}"
-            exit 1
-            ;;
-    esac
+      # inform the user uppon success or failure
+      echo -en "\b["
+      if [[ $2 -eq 0 ]]; then
+        echo -en "${green}${on_success}${nc}"
+      else
+        echo -en "${red}${on_fail}${nc}"
+      fi
+      echo -e "]"
+      ;;
+    *)
+      echo "invalid argument, try {start/stop}"
+      exit 1
+      ;;
+  esac
 }
 
 function start_spinner {
-    # $1 : msg to display
-    _spinner "start" "${1}" &
-    # set global spinner pid
-    _sp_pid=$!
-    disown
+  # $1 : msg to display
+  _spinner "start" "${1}" &
+  # set global spinner pid
+  _sp_pid=$!
+  disown
 }
 
 function stop_spinner {
-    # $1 : command exit status
-    _spinner "stop" "$1" $_sp_pid
-    unset _sp_pid
+  # $1 : command exit status
+  _spinner "stop" "$1" $_sp_pid
+  unset _sp_pid
 }
 
 #### Initial Checks
 # Must be root
-[ "$UID" -eq 0 ] || { echo "This script must be run as root."; exit 1;}
+[ "$UID" -eq 0 ] || {
+  echo "This script must be run as root."
+  exit 1
+}
 
 # Must pass valid Paperless-ngx version as first argument
 if [ ! "$1" ] || [[ ! $1 =~ ^[0-9]+.[0-9]+(.[0-9]+)?$ ]]; then
@@ -133,29 +135,29 @@ PAPERLESS_GROUP=paperless
 
 #### Begin installation
 
-start_spinner "Unpacking and Downloading $VERSION " 
+start_spinner "Unpacking and Downloading $VERSION "
 
 # Download requested version
 # sudo wget -q "https://github.com/netbox-community/netbox/archive/v$VERSION.tar.gz" "$PATH_PREFIX/v$VERSION.tar.gz" > /dev/null
-sudo wget -q "https://github.com/paperless-ngx/paperless-ngx/releases/download/v1.14.4/paperless-ngx-v$VERSION.tar.xz" > /dev/null
+sudo wget -q "https://github.com/paperless-ngx/paperless-ngx/releases/download/v1.14.4/paperless-ngx-v$VERSION.tar.xz" >/dev/null
 
-sudo tar -xf "paperless-ngx-v$VERSION.tar.xz" > /dev/null
+sudo tar -xf "paperless-ngx-v$VERSION.tar.xz" >/dev/null
 mv "$PATH_PREFIX/paperless-ngx" "$PATH_PREFIX/$NEW_PAPERLESS"
 
 stop_spinner $?
 
-start_spinner "Stopping all paperless services" 
+start_spinner "Stopping all paperless services"
 
 # Stop existing paperless service
 sudo systemctl stop \
- paperless-consumer \
- paperless-scheduler \
- paperless-task-queue \
- paperless-webserver
+  paperless-consumer \
+  paperless-scheduler \
+  paperless-task-queue \
+  paperless-webserver
 
 stop_spinner $?
 
-start_spinner "Setting up new directory" 
+start_spinner "Setting up new directory"
 
 # Setup new directories
 sudo chown -R "$PAPERLESS_USER":"$PAPERLESS_GROUP" "$NEW_PAPERLESS_PATH"
@@ -180,12 +182,12 @@ sudo ln -s "$NEW_PAPERLESS_PATH" "$OLD_PAPERLESS_PATH"
 
 stop_spinner $?
 
-start_spinner "Upgrading Paperless-ngx packages" 
+start_spinner "Upgrading Paperless-ngx packages"
 
 cd "$NEW_PAPERLESS_PATH"
 sudo -Hu paperless python3 -m venv venv
 source venv/bin/activate
-sudo -Hu paperless pip install --no-warn-script-location -r requirements.txt > /dev/null
+sudo -Hu paperless pip install --no-warn-script-location -r requirements.txt >/dev/null
 cd "$NEW_PAPERLESS_PATH/src"
 sudo -Hu paperless python3 manage.py migrate
 
@@ -193,16 +195,16 @@ stop_spinner $?
 
 # If install successful, clean-up
 if [ $? -eq 0 ]; then
-  start_spinner "Cleaning up and restarting Paperless " 
+  start_spinner "Cleaning up and restarting Paperless "
 
   sudo rm "/opt/paperless-ngx-v$VERSION.tar.xz"
   sudo chown -R "$PAPERLESS_USER":"$PAPERLESS_GROUP" "$NEW_PAPERLESS_PATH"
 
   sudo systemctl start \
-   paperless-consumer \
-   paperless-scheduler \
-   paperless-task-queue \
-   paperless-webserver
+    paperless-consumer \
+    paperless-scheduler \
+    paperless-task-queue \
+    paperless-webserver
 
   stop_spinner $?
 
@@ -210,4 +212,3 @@ if [ $? -eq 0 ]; then
 else
   error "Error in Upgrade Script, please check output above for errors!"
 fi
-

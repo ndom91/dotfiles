@@ -9,16 +9,16 @@ function laptopMonitor() {
   xrandr --output eDP1 --scale 0.7x0.7
 }
 
-function officeMonitor () {
-xrandr \
-  --output DVI-I-2-2 --primary --mode 1920x1080 --pos 3000x840 --rotate normal \
-  --output DVI-I-1-1 --mode 1920x1080 --pos 1080x840 --rotate normal \
-  --output DP1 --mode 1920x1080 --pos 0x840 --rotate left \
-  --output eDP1 --off
+function officeMonitor() {
+  xrandr \
+    --output DVI-I-2-2 --primary --mode 1920x1080 --pos 3000x840 --rotate normal \
+    --output DVI-I-1-1 --mode 1920x1080 --pos 1080x840 --rotate normal \
+    --output DP1 --mode 1920x1080 --pos 0x840 --rotate left \
+    --output eDP1 --off
   # --output HDMI-1 --off \
   # --output DP2 --mode 1920x1080 --pos 0x0 --rotate left \
   # --output DP1 --primary --mode 1920x1080 --pos 3000x840 --rotate normal  \
-	# --output DP2 --off \
+  # --output DP2 --off \
 }
 
 function setPowerSaving() {
@@ -26,7 +26,7 @@ function setPowerSaving() {
   # echo "    EUID: $EUID"
   # sudo sh -c "echo 'on' > /sys/bus/usb/devices/1-1.4.2/power/control" # Massdrop USB Hub
   # sudo sh -c "echo 'on' > /sys/bus/usb/devices/1-1.2.3/power/control" # Razer Wireless Mouse
-  sudo sh -c "echo 'on' > /sys/bus/usb/devices/1-1.4/power/control" # Massdrop CTRL + Varmilo Keyboard
+  sudo sh -c "echo 'on' > /sys/bus/usb/devices/1-1.4/power/control"   # Massdrop CTRL + Varmilo Keyboard
   sudo sh -c "echo 'on' > /sys/bus/usb/devices/1-1.2.2/power/control" # Razer Basilisk Wired Mouse
 }
 

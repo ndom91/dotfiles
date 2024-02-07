@@ -9,4 +9,3 @@ BLUE=$(tput setaf 6)
 WHITE=$(tput setaf 7)
 BOLD=$(tput bold)
 RESET=$(tput sgr0)
-

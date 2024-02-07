@@ -5,11 +5,11 @@
 #
 
 # Check which package managers are available
-apk=$(command -v apk 2> /dev/null)
-apt_get=$(command -v apt-get 2> /dev/null)
-brew=$(command -v brew 2> /dev/null)
-pacman=$(command -v pacman 2> /dev/null)
-yum=$(command -v yum 2> /dev/null)
+apk=$(command -v apk 2>/dev/null)
+apt_get=$(command -v apt-get 2>/dev/null)
+brew=$(command -v brew 2>/dev/null)
+pacman=$(command -v pacman 2>/dev/null)
+yum=$(command -v yum 2>/dev/null)
 
 distribution=
 release=
@@ -37,19 +37,19 @@ CYAN="$(tput setaf 6 2>/dev/null || echo '')"
 NO_COLOR="$(tput sgr0 2>/dev/null || echo '')"
 
 info() {
-    printf "${BOLD}${BLUE}>${NO_COLOR} $@\n"
+  printf "${BOLD}${BLUE}>${NO_COLOR} $@\n"
 }
 
 warn() {
-    printf "${YELLOW}! $@${NO_COLOR}\n"
+  printf "${YELLOW}! $@${NO_COLOR}\n"
 }
 
 error() {
-    printf "${RED}x $@${NO_COLOR}\n" >&2
+  printf "${RED}x $@${NO_COLOR}\n" >&2
 }
 
 complete() {
-    printf "${GREEN}✓${NO_COLOR} $@\n"
+  printf "${GREEN}✓${NO_COLOR} $@\n"
 }
 
 function not_installed() {
@@ -271,7 +271,7 @@ get_lsb_release() {
   if [ -z "${distribution}" ] && [ -n "${lsb_release}" ]; then
     echo >&2 "Cannot find distribution with /etc/lsb-release"
     echo >&2 "Running command: lsb_release ..."
-    eval "declare -A release=( $(lsb_release -a 2> /dev/null | sed -e "s|^\(.*\):[[:space:]]*\(.*\)$|[\1]=\"\2\"|g") )"
+    eval "declare -A release=( $(lsb_release -a 2>/dev/null | sed -e "s|^\(.*\):[[:space:]]*\(.*\)$|[\1]=\"\2\"|g") )"
     distribution="${release["Distributor ID"]}"
     version="${release[Release]}"
     codename="${release[Codename]}"
@@ -345,7 +345,7 @@ install_apt_get() {
     opts="${opts} -yq"
   fi
 
-  read -r -a apt_opts <<< "$opts"
+  read -r -a apt_opts <<<"$opts"
 
   # update apt repository caches
   echo >&2 "NOTE: Running apt-get update and updating your APT caches ..."
@@ -371,7 +371,7 @@ install_yum() {
     opts="-y"
   fi
 
-  read -r -a yum_opts <<< "${opts}"
+  read -r -a yum_opts <<<"${opts}"
 
   # install the required packages
   sudo yum "${yum_opts[@]}" install "${@}" # --enablerepo=epel-testing
@@ -393,7 +393,7 @@ install_apk() {
     opts="${opts} -i"
   fi
 
-  read -r -a apk_opts <<< "$opts"
+  read -r -a apk_opts <<<"$opts"
 
   # install the required packages
   sudo apk add "${apk_opts[@]}" "${@}"
@@ -411,7 +411,6 @@ install_brew() {
   brew install "${@}"
 }
 
-
 ##################
 #      MAIN      #
 ##################
@@ -428,7 +427,7 @@ if [ -z "${package_installer}" ] || [ -z "${tree}" ]; then
   fi
 fi
 
-[ "${detection}" = "/etc/os-release" ] && cat << EOF
+[ "${detection}" = "/etc/os-release" ] && cat <<EOF
 
 /etc/os-release information:
 NAME            : ${NAME}
@@ -438,7 +437,7 @@ ID_LIKE         : ${ID_LIKE}
 VERSION_ID      : ${VERSION_ID}
 EOF
 
-cat << EOF
+cat <<EOF
 
 We detected these:
 Distribution    : ${distribution}
@@ -450,17 +449,16 @@ Detection Method: ${detection}
 
 EOF
 
-
 info "${BOLD}Bootstrapping...${NO_COLOR}"
 
 setup() {
   info "Cloning ndom91/dotfiles into bare repo at ~/"
-  git clone --quiet --bare https://github.com/ndom91/dotfiles.git "$HOME"/dotfiles > /dev/null
+  git clone --quiet --bare https://github.com/ndom91/dotfiles.git "$HOME"/dotfiles >/dev/null
 
   if [ $? -ne 0 ]; then
     warn "Error cloning repo, trying again..."
-    dotfiles clean -n -f | grep -Eo '\.+[a-zA-Z1-9_./\-]+' 2> /dev/null | xargs -I{} mv {}{,.bak} > /dev/null
-    git clone --quiet --bare https://github.com/ndom91/dotfiles.git "$HOME"/dotfiles > /dev/null
+    dotfiles clean -n -f | grep -Eo '\.+[a-zA-Z1-9_./\-]+' 2>/dev/null | xargs -I{} mv {}{,.bak} >/dev/null
+    git clone --quiet --bare https://github.com/ndom91/dotfiles.git "$HOME"/dotfiles >/dev/null
   fi
 
   dotfiles checkout
@@ -471,7 +469,7 @@ setup() {
     warn "Existing files blocking git checkout"
     info "Backing up existing files"
     until dotfiles checkout 2>&1; do
-      dotfiles checkout 2>&1 | grep -Eo '\.+[a-zA-Z1-9_./\-]+' 2> /dev/null | xargs -I{} mv {}{,.bak} > /dev/null
+      dotfiles checkout 2>&1 | grep -Eo '\.+[a-zA-Z1-9_./\-]+' 2>/dev/null | xargs -I{} mv {}{,.bak} >/dev/null
     done
   fi
 
@@ -491,4 +489,3 @@ setup
 
 complete "Dotfiles setup script complete!"
 info "To continue, use '$HOME/.dotfiles/setup/deploy.sh' to install other package bundles!"
-

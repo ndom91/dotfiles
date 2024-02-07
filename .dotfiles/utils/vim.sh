@@ -11,9 +11,9 @@ function vim() {
   fi
   if ! hash vim 2>/dev/null; then
     case "$DISTRO" in
-    ubuntu | debian | raspbian)
-      add-apt-repository -y ppa:jonathonf/vim
-      ;;
+      ubuntu | debian | raspbian)
+        add-apt-repository -y ppa:jonathonf/vim
+        ;;
     esac
     PKGMGR install vim
   fi
@@ -104,4 +104,3 @@ function vim() {
 }
 
 [ "$0" = "${BASH_SOURCE[0]}" ] && display_version 0.0.1 || true
-

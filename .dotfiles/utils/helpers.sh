@@ -13,15 +13,15 @@ import colors.sh
 import logging.sh
 
 # needed commands
-lsb_release=$(command -v lsb_release 2> /dev/null)
+lsb_release=$(command -v lsb_release 2>/dev/null)
 
 # Check which package managers are available
-apk=$(command -v apk 2> /dev/null)
-apt_get=$(command -v apt-get 2> /dev/null)
-brew=$(command -v brew 2> /dev/null)
-pkg=$(command -v pkg 2> /dev/null)
-pacman=$(command -v pacman 2> /dev/null)
-yum=$(command -v yum 2> /dev/null)
+apk=$(command -v apk 2>/dev/null)
+apt_get=$(command -v apt-get 2>/dev/null)
+brew=$(command -v brew 2>/dev/null)
+pkg=$(command -v pkg 2>/dev/null)
+pacman=$(command -v pacman 2>/dev/null)
+yum=$(command -v yum 2>/dev/null)
 
 distribution=
 release=
@@ -113,7 +113,7 @@ get_lsb_release() {
   if [ -z "${distribution}" ] && [ -n "${lsb_release}" ]; then
     log_warn "Cannot find distribution with /etc/lsb-release"
     log_info "Running command: lsb_release ..."
-    eval "declare -A release=( $(lsb_release -a 2> /dev/null | sed -e "s|^\(.*\):[[:space:]]*\(.*\)$|[\1]=\"\2\"|g") )"
+    eval "declare -A release=( $(lsb_release -a 2>/dev/null | sed -e "s|^\(.*\):[[:space:]]*\(.*\)$|[\1]=\"\2\"|g") )"
     distribution="${release["Distributor ID"]}"
     version="${release[Release]}"
     codename="${release[Codename]}"
@@ -168,12 +168,11 @@ get_os_release() {
   return 0
 }
 
-
 autodetect_distribution() {
   # autodetection of distribution/OS
   case "$(uname -s)" in
     "Linux")
-      get_os_release || get_lsb_release 
+      get_os_release || get_lsb_release
       ;;
     "FreeBSD")
       distribution="freebsd"
@@ -264,7 +263,6 @@ user_picks_distribution() {
     check_package_manager "${REPLY}" || REPLY=
   done
 }
-
 
 detect_package_manager_from_distribution() {
   case "${1,,}" in
@@ -371,14 +369,14 @@ install_apt_get() {
     opts="${opts} -yq"
   fi
 
-  read -r -a apt_opts <<< "$opts"
+  read -r -a apt_opts <<<"$opts"
 
   # update apt repository caches
 
   echo >&2 "NOTE: Running apt-get update and updating your APT caches ..."
   if [ "${version}" = 8 ]; then
     echo >&2 "WARNING: You seem to be on Debian 8 (jessie) which is old enough we have to disable Check-Valid-Until checks"
-    if ! cat /etc/apt/sources.list /etc/apt/sources.list.d/* 2> /dev/null | grep -q jessie-backports; then
+    if ! cat /etc/apt/sources.list /etc/apt/sources.list.d/* 2>/dev/null | grep -q jessie-backports; then
       echo >&2 "We also have to enable the jessie-backports repository"
       if prompt "Is this okay?"; then
         ${sudo} /bin/sh -c 'echo "deb http://archive.debian.org/debian/ jessie-backports main contrib non-free" >> /etc/apt/sources.list.d/99-archived.list'
@@ -398,7 +396,7 @@ install_apt_get() {
 
 validate_install_yum() {
   echo >&2 " > Checking if package '${*}' is installed..."
-  yum list installed "${*}" > /dev/null 2>&1 || echo "${*}"
+  yum list installed "${*}" >/dev/null 2>&1 || echo "${*}"
 }
 
 install_yum() {
@@ -417,7 +415,7 @@ install_yum() {
     opts="-y"
   fi
 
-  read -r -a yum_opts <<< "${opts}"
+  read -r -a yum_opts <<<"${opts}"
 
   # install the required packages
   run ${sudo} yum "${yum_opts[@]}" install "${@}" # --enablerepo=epel-testing
@@ -428,7 +426,7 @@ install_yum() {
 
 validate_install_dnf() {
   echo >&2 " > Checking if package '${*}' is installed..."
-  dnf list installed "${*}" > /dev/null 2>&1 || echo "${*}"
+  dnf list installed "${*}" >/dev/null 2>&1 || echo "${*}"
 }
 
 install_dnf() {
@@ -452,7 +450,7 @@ install_dnf() {
   # installing whatever is available
   # even if a package is not found
   opts="$opts --setopt=strict=0"
-  read -r -a dnf_opts <<< "$opts"
+  read -r -a dnf_opts <<<"$opts"
   run ${sudo} dnf "${dnf_opts[@]}" install "${@}"
 }
 
@@ -479,7 +477,7 @@ install_apk() {
     opts="${opts} -i"
   fi
 
-  read -r -a apk_opts <<< "$opts"
+  read -r -a apk_opts <<<"$opts"
 
   # install the required packages
   run ${sudo} apk add "${apk_opts[@]}" "${@}"
@@ -571,7 +569,7 @@ install_pkg() {
     opts="-y"
   fi
 
-  read -r -a pkg_opts <<< "${opts}"
+  read -r -a pkg_opts <<<"${opts}"
 
   run ${sudo} pkg install "${pkg_opts[@]}" "${@}"
 }
@@ -587,7 +585,6 @@ install_brew() {
 
   run brew install "${@}"
 }
-
 
 # Currently known to support:
 #   - win (Git Bash)
@@ -611,7 +608,6 @@ detect_platform() {
 
   echo "${platform}"
 }
-
 
 # Currently known to support:
 #   - x64 (x86_64)
@@ -641,17 +637,14 @@ detect_arch() {
 }
 
 get_distribution() {
-	lsb_dist=""
-	# Every system that we officially support has /etc/os-release
-	if [ -r /etc/os-release ]; then
-		lsb_dist="$(. /etc/os-release && echo "$ID")"
-	fi
-	# Returning an empty string here should be alright since the
-	# case statements don't act unless you provide an actual value
-	echo "$lsb_dist"
+  lsb_dist=""
+  # Every system that we officially support has /etc/os-release
+  if [ -r /etc/os-release ]; then
+    lsb_dist="$(. /etc/os-release && echo "$ID")"
+  fi
+  # Returning an empty string here should be alright since the
+  # case statements don't act unless you provide an actual value
+  echo "$lsb_dist"
 }
 
-
-
 [ "$0" = "${BASH_SOURCE[0]}" ] && display_version 0.0.1 || true
-
