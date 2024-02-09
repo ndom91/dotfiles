@@ -260,6 +260,7 @@ return {
       "nvim-lua/plenary.nvim",
     },
   },
+  "segeljakt/vim-silicon",
   {
     "tpope/vim-surround",
     enabled = false,
