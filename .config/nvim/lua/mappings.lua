@@ -48,3 +48,6 @@ vim.keymap.set("t", "<esc>", [[<c-\><c-n>]], { silent = true })
 -- disable keys
 vim.keymap.set("n", "<c-z>", "<Nop>", { silent = true }) -- disable ctrl-z suspend
 vim.keymap.set("n", "Q", "<Nop>", { silent = true }) -- disable ex mode
+
+-- Map capital 'W' to also write
+vim.api.nvim_create_user_command("W", ":write", {})
