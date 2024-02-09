@@ -1,53 +1,49 @@
 {
-	"$schema": "/etc/xdg/swaync/configSchema.json",
+  "$schema": "/etc/xdg/swaync/configSchema.json",
 
-	"positionX": "right",
-	"positionY": "top",
-	"control-center-margin-top": 10,
-	"control-center-margin-bottom": 10,
-	"control-center-margin-right": 10,
-	"control-center-margin-left": 0,
-	"control-center-width": 350,
-	"control-center-height": 600,
-	"fit-to-screen": true,
+  "positionX": "right",
+  "positionY": "top",
+  "control-center-margin-top": 10,
+  "control-center-margin-bottom": 10,
+  "control-center-margin-right": 10,
+  "control-center-margin-left": 0,
+  "control-center-width": 350,
+  "control-center-height": 600,
+  "fit-to-screen": true,
 
-	"layer": "top",
-	"cssPriority": "user",
-	"notification-icon-size": 64,
-	"notification-body-image-height": 100,
-	"notification-body-image-width": 200,
-	"timeout": 10,
-	"timeout-low": 5,
-	"timeout-critical": 30,
-	"notification-window-width": 500,
-	"keyboard-shortcuts": true,
-	"image-visibility": "when-available",
-	"transition-time": 200,
-	"hide-on-clear": true,
-	"hide-on-action": true,
-	"script-fail-notify": true,
+  "layer": "top",
+  "cssPriority": "user",
+  "notification-icon-size": 64,
+  "notification-body-image-height": 100,
+  "notification-body-image-width": 200,
+  "timeout": 10,
+  "timeout-low": 5,
+  "timeout-critical": 30,
+  "notification-window-width": 500,
+  "keyboard-shortcuts": true,
+  "image-visibility": "when-available",
+  "transition-time": 200,
+  "hide-on-clear": true,
+  "hide-on-action": true,
+  "script-fail-notify": true,
 
-	"widgets": [
-		"title",
-		"dnd",
-		"notifications"
-	],
-	"widget-config": {
-		"title": {
-			"text": "Notifications",
-			"clear-all-button": true,
-			"button-text": "Clear All"
-		},
-		"dnd": {
-			"text": "Do Not Disturb"
-		},
-		"label": {
-			"max-lines": 5,
-			"text": "Label Text"
-		},
-		"mpris": {
-			"image-size": 96,
-			"image-radius": 12
-		}
-	}
+  "widgets": ["title", "dnd", "notifications"],
+  "widget-config": {
+    "title": {
+      "text": "Notifications",
+      "clear-all-button": true,
+      "button-text": "Clear All"
+    },
+    "dnd": {
+      "text": "Do Not Disturb"
+    },
+    "label": {
+      "max-lines": 5,
+      "text": "Label Text"
+    },
+    "mpris": {
+      "image-size": 96,
+      "image-radius": 12
+    }
+  }
 }
