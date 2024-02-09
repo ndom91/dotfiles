@@ -16,11 +16,6 @@ return {
   -- icons on completion
   "onsails/lspkind-nvim",
 
-  {
-    "lvimuser/lsp-inlayhints.nvim",
-    enabled = false,
-    config = true,
-  },
   -- lsp function signature help on wildmenu
   {
     "ray-x/lsp_signature.nvim",
@@ -36,11 +31,11 @@ return {
     "j-hui/fidget.nvim",
     event = "LspAttach",
     opts = {
-      integration = {
-        ["nvim-tree"] = {
-          enable = true,
-        },
-      },
+      -- integration = {
+      --   ["nvim-tree"] = {
+      --     enable = false,
+      --   },
+      -- },
       progress = {
         display = {
           progress_icon = {
@@ -147,16 +142,23 @@ return {
     },
   },
   {
-    "glepnir/dashboard-nvim",
+    "nvimdev/dashboard-nvim",
     event = "VimEnter",
+    enabled = true,
     dependencies = { "nvim-tree/nvim-web-devicons" },
     opts = {
       theme = "hyper",
       config = {
         week_header = { enable = true },
-        packages = { enable = true }, -- show how many plugins neovim loaded
-        project = { enable = false, limit = 8, icon = "your icon", label = "", action = "Telescope find_files cwd=" },
-        mru = { limit = 10, label = "Most Recent", cwd_only = false },
+        packages = { enable = true },
+        project = {
+          enable = false,
+          limit = 8,
+          icon = " ",
+          label = "",
+          action = function(path) vim.cmd("Telescope find_files cwd=" .. path) end,
+        },
+        mru = { limit = 10, label = "Most Recent", cwd_only = true },
         shortcut = {
           {
             desc = " Update",
@@ -169,7 +171,7 @@ return {
             icon_hl = "@variable",
             desc = "Files",
             group = "Label",
-            action = "Telescope find_files cwd=",
+            action = function(path) vim.cmd("Telescope find_files cwd=" .. path) end,
             key = "f",
           },
           {

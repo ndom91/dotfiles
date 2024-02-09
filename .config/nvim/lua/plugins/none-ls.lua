@@ -6,12 +6,10 @@ return {
   "nvimtools/none-ls.nvim",
   dependencies = { "mason.nvim" },
   opts = function(_, opts)
-    local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
     local nls = require "null-ls"
 
     opts.diagnostics_format = "[#{c}] #{m} (#{s})"
     opts.sources = vim.list_extend(opts.sources or {}, {
-      -- nls.builtins.formatting.biome,
       -- nls.builtins.formatting.deno_fmt,
       nls.builtins.formatting.prettierd.with {
         filetypes = {
@@ -42,6 +40,7 @@ return {
         --   return true
         -- end
       },
+      -- nls.builtins.formatting.biome,
       nls.builtins.formatting.eslint_d.with {
         filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact", "vue", "svelte" },
       },
@@ -55,25 +54,9 @@ return {
       nls.builtins.diagnostics.shellcheck,
       nls.builtins.diagnostics.tsc,
       -- nls.builtins.diagnostics.deno_lint,
-      -- require('typescript.extensions.null-ls.code-actions'),
+      -- require "typescript.extensions.null-ls.code-actions",
       nls.builtins.code_actions.shellcheck,
       nls.builtins.code_actions.eslint_d,
     })
-
-    opts.on_attach = function(client, bufnr)
-      if client.supports_method "textDocument/formatting" then
-        vim.api.nvim_clear_autocmds { group = augroup, buffer = bufnr }
-        vim.api.nvim_create_autocmd("BufWritePre", {
-          group = augroup,
-          buffer = bufnr,
-          callback = function()
-            vim.lsp.buf.format {
-              filter = function(filterClient) return filterClient.name == "null-ls" end,
-              bufnr = bufnr,
-            }
-          end,
-        })
-      end
-    end
   end,
 }
