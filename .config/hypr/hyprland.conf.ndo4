@@ -71,6 +71,7 @@ exec-once = blueberry
 
 debug {
   overlay = false
+  disable_logs = true
 }
 
 # Plugin hy3 
@@ -336,7 +337,8 @@ windowrulev2 = noinitialfocus,class:^(xwaylandvideobridge)$
 bind = $mainMod, D, exec, "$HOME/.config/rofi/bin/launcher"
 bind = $mainMod, M, exec, flemozi
 bind = $mainMod, T, hy3:makegroup, tab
-bind = $mainMod, Q, hy3:killactive,
+# bind = $mainMod, Q, killactive,
+ bind = $mainMod, Q, hy3:killactive,
 # bind = $mainMod, Return, exec, alacritty
 bind = $mainMod, Return, exec, wezterm
 bind = $mainMod SHIFT, R, exec, hyprctl reload
@@ -371,11 +373,17 @@ bind = $mainMod, H, exec, /home/ndo/.config/hypr/movefocus.sh l
 bind = $mainMod, L, exec, /home/ndo/.config/hypr/movefocus.sh r
 bind = $mainMod, K, hy3:movefocus, u
 bind = $mainMod, J, hy3:movefocus, d
+# bind = $mainMod, K, movefocus, u
+# bind = $mainMod, J, movefocus, d
 
 bind = $mainMod SHIFT, H, hy3:movewindow, l
 bind = $mainMod SHIFT, L, hy3:movewindow, r
 bind = $mainMod SHIFT, K, hy3:movewindow, u
 bind = $mainMod SHIFT, J, hy3:movewindow, d
+# bind = $mainMod SHIFT, H, movewindow, l
+# bind = $mainMod SHIFT, L, movewindow, r
+# bind = $mainMod SHIFT, K, movewindow, u
+# bind = $mainMod SHIFT, J, movewindow, d
 
 # Switch workspaces with mainMod + [0-9]
 bind = $mainMod, 1, workspace, 1
