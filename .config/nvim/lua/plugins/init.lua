@@ -6,7 +6,7 @@ return {
     "tami5/lspsaga.nvim",
     enabled = true,
     event = "LspAttach",
-    config = function() require("lspsaga").setup {} end,
+    config = function() require("lspsaga").setup({}) end,
     dependencies = {
       "nvim-treesitter/nvim-treesitter",
       "nvim-tree/nvim-web-devicons",
@@ -60,17 +60,17 @@ return {
       { "<leader>tr", function() require("trouble").toggle() end, { desc = "Toggle Trouble" } },
       {
         "<leader>trw",
-        function() require("trouble").toggle "workspace_diagnostics" end,
+        function() require("trouble").toggle("workspace_diagnostics") end,
         { desc = "Toggle Trouble Type Definitions" },
       },
       {
         "<leader>trd",
-        function() require("trouble").toggle "lsp_type_definitions" end,
+        function() require("trouble").toggle("lsp_type_definitions") end,
         { desc = "Toggle Trouble Type Definitions" },
       },
       {
         "<leader>trr",
-        function() require("trouble").toggle "lsp_references" end,
+        function() require("trouble").toggle("lsp_references") end,
         { desc = "Toggle Trouble Type Definitions" },
       },
     },
@@ -83,8 +83,8 @@ return {
       { "<leader>lC", "require('document-color').buf_toggle()" },
     },
     config = function()
-      local docColors = require "document-color"
-      docColors.setup { mode = "background" }
+      local docColors = require("document-color")
+      docColors.setup({ mode = "background" })
       docColors.buf_attach()
     end,
   },
@@ -188,8 +188,8 @@ return {
     "rcarriga/nvim-notify",
     lazy = false,
     config = function()
-      local notify = require "notify"
-      notify.setup {
+      local notify = require("notify")
+      notify.setup({
         render = "wrapped-compact",
         background_colour = "#191724",
         -- icons = {
@@ -199,7 +199,7 @@ return {
         --   DEBUG = '',
         --   TRACE = '✎',
         -- },
-      }
+      })
       vim.notify = notify
     end,
   },
@@ -209,11 +209,11 @@ return {
     config = function()
       vim.o.timeout = true
       vim.o.timeoutlen = 300
-      require("which-key").setup {
+      require("which-key").setup({
         -- your configuration comes here
         -- or leave it empty to use the default settings
         -- refer to the configuration section below
-      }
+      })
     end,
   },
   {
