@@ -69,6 +69,8 @@ exec-once = wl-paste --watch cliphist store
 exec-once = wlsunset -l 52.50 -L 12.76 -t 4500 -T 6500
 exec-once = blueberry
 
+exec-once = hyprpm reload -n
+
 debug {
   overlay = false
   disable_logs = true
