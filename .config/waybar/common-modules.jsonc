@@ -1,0 +1,45 @@
+{
+  "tray": {
+    "icon-size": 16,
+    "spacing": 10
+  },
+  "clock": {
+    "interval": 60,
+    "align": 0,
+    "rotate": 0,
+    "format": "🕐 {:%H:%M | %a %b %d}",
+    "format-alt": " {:%a %b %d}",
+    "tooltip-format": "<big>{:%B %Y}</big>\n<tt><small>{calendar}</small></tt>"
+  },
+  "wireplumber": {
+    "format": "<span font='15' rise='-2pt'></span> {volume}",
+    "format-muted": "<span font='15' rise='-2pt'></span>",
+    "on-click": "pavucontrol"
+  },
+  "pulseaudio": {
+    "format": "<span font='15' rise='-2pt'></span>  {volume}",
+    "format-muted": "<span font='15' rise='-2pt'></span>",
+    "format-bluetooth": "<span font='15' rise='-2pt'></span> {volume}% {format_source}",
+    "format-bluetooth-muted": "<span font='15' rise='-2pt'></span> Muted",
+    "format-icons": {
+      "headphone": "",
+      "hands-free": "",
+      "headset": "",
+      "phone": "",
+      "portable": "",
+      "car": "",
+      "default": [
+        "<span font='20' rise='-5pt'>奄</span>",
+        "<span font='20' rise='-5pt'>奔</span>",
+        "<span font='20' rise='-5pt'>墳</span>",
+        "<span font='20' rise='-5pt'>墳</span>"
+      ]
+    },
+    "scroll-step": 5,
+    "on-click": "pamixer -t",
+    "on-click-right": "pavucontrol",
+    "on-scroll-up": "wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 5%+",
+    "on-scroll-down": "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-",
+    "smooth-scrolling-threshold": 1
+  }
+}

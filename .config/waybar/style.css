@@ -1,19 +1,19 @@
 * {
   /* font-family: 'UbuntuMono Nerd Font Mono'; */
-    font-family: 'FiraCode Nerd Font';
-    font-size: 12px;
+  font-family: "FiraCode Nerd Font";
+  font-size: 12px;
 }
 
 window#waybar {
-    background: rgba(0, 0, 0, 0);
-    transition-property: background-color;
-    transition-duration: 0.5s;
+  background: rgba(0, 0, 0, 0);
+  transition-property: background-color;
+  transition-duration: 0.5s;
 }
 
 tooltip {
-    background-color: #26233a;
-    border-radius: 4px;
-    padding: 8px;
+  background-color: #26233a;
+  border-radius: 4px;
+  padding: 8px;
 }
 
 #backlight,
@@ -37,13 +37,13 @@ tooltip {
 #network,
 #submap,
 #window {
-    border-radius: 6px;
-    padding: 0px 12px;
-    margin: 0 2px;
-    background-color: #191724;
-    /*border: 2px solid #1e1e2e */
-    font-family: 'FiraCode Nerd Font';
-    font-size: 12px;
+  border-radius: 6px;
+  padding: 0px 12px;
+  margin: 0 2px;
+  background-color: #191724;
+  /*border: 2px solid #1e1e2e */
+  font-family: "FiraCode Nerd Font";
+  font-size: 12px;
 }
 
 #submap {
@@ -52,74 +52,74 @@ tooltip {
 }
 
 #window {
-    color: #cad3f5;
+  color: #cad3f5;
 }
 
 #temperature {
-    color: #eb6f92;
+  color: #eb6f92;
 }
 
 #bluetooth {
-    color: #89b4fa;
+  color: #89b4fa;
 }
 
 #backlight {
-    color: #94e2d5;
+  color: #94e2d5;
 }
 
 #custom-updater {
-    color: #eb6f92;
+  color: #eb6f92;
 }
 
 #wireplumber {
-    color: #f9e2af;
+  color: #f9e2af;
 }
 
 #battery {
-    color: #f9e2af;
+  color: #f9e2af;
 }
 
 @keyframes blink {
-    to {
-        color: #000000;
-    }
+  to {
+    color: #000000;
+  }
 }
 
 #battery.critical:not(.charging) {
-    background-color: #f38ba8;
-    color: #f38ba8;
-    animation-name: blink;
-    animation-duration: 0.5s;
-    animation-timing-function: linear;
-    animation-iteration-count: infinite;
-    animation-direction: alternate;
+  background-color: #f38ba8;
+  color: #f38ba8;
+  animation-name: blink;
+  animation-duration: 0.5s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
 }
 
 #clock {
-    color: #a6e3a1;
+  color: #a6e3a1;
 }
 
 #cpu {
-    color: #89dceb;
+  color: #89dceb;
 }
 
 #memory {
-    color: #fab387;
+  color: #fab387;
 }
 
 #disk {
-    color: #cba6f7;
+  color: #cba6f7;
 }
 
 #tray {
-    color: #89dceb;
+  color: #89dceb;
 }
 
 #tray > .passive {
-    -gtk-icon-effect: dim;
+  -gtk-icon-effect: dim;
 }
 #tray > .needs-attention {
-    -gtk-icon-effect: highlight;
+  -gtk-icon-effect: highlight;
 }
 
 #tray {
@@ -127,52 +127,52 @@ tooltip {
 }
 
 #workspaces button {
-    all: initial;
-    color: #494d64;
-    padding: 4px 8px;
-    transition: 0.25s linear;
+  all: initial;
+  color: #494d64;
+  padding: 4px 8px;
+  transition: 0.25s linear;
 }
 
 #workspaces button:first-child {
-    border-radius: 10px 0 0 10px;
+  border-radius: 10px 0 0 10px;
 }
 
 #workspaces button:last-child {
-    border-radius: 0 10px 10px 0;
+  border-radius: 0 10px 10px 0;
 }
 
 #workspaces button:only-child {
-    border-radius: 10px;
+  border-radius: 10px;
 }
 
 #workspaces button.active {
-    color: #cad3f5;
+  color: #cad3f5;
 }
 
 #custom-weather {
-    color: #cba6f7;
+  color: #cba6f7;
 }
 
 #custom-cycle_wall {
-    color: #eed49f;
+  color: #eed49f;
 }
 
 #pulseaudio {
-    color: #fab387;
+  color: #fab387;
 }
 
 #pulseaudio.bluetooth {
-    color: #c6a0f6;
+  color: #c6a0f6;
 }
 #pulseaudio.muted {
-    color: #cad3f5;
+  color: #cad3f5;
 }
 
 #network {
-    color: #b4befe;
+  color: #b4befe;
 }
 
 #network.disconnected,
 #network.disabled {
-    color: #cad3f5;
+  color: #cad3f5;
 }

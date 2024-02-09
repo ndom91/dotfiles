@@ -1,35 +1,67 @@
-{
-  "include": "~/.config/waybar/modules.jsonc",
-  "layer": "top",
-  // "mode": "dock",
-  "exclusive": true,
-  "passthrough": false,
-  "position": "top",
-  "fixed-center": true,
-  "ipc": true,
-  "margin-left": 5,
-  "margin-right": 5,
-  "margin-top": 5,
-  "margin-bottom": 0,
-  "height": 35,
-  "modules-left": [
-    "clock",
-    "cpu",
-    "memory",
-    "disk",
-    "custom/updater",
-    "hyprland/workspaces",
-    "hyprland/submap"
-  ],
-  "modules-center": [
-    "hyprland/window"
-  ],
-  "modules-right": [
-    "bluetooth",
-    "custom/weather",
-    "network",
-    // "wireplumber",
-    "pulseaudio",
-    "tray"
-  ]
-}
+[
+  {
+    "include": [
+      "~/.config/waybar/modules.jsonc",
+      "~/.config/waybar/common-modules.jsonc"
+    ],
+    "output": "DP-1",
+    "layer": "top",
+    // "mode": "dock",
+    "exclusive": true,
+    "passthrough": false,
+    "position": "top",
+    "fixed-center": true,
+    "ipc": true,
+    "margin-left": 5,
+    "margin-right": 5,
+    "margin-top": 5,
+    "margin-bottom": 0,
+    "height": 35,
+    "modules-left": [
+      "clock",
+      "cpu",
+      "memory",
+      "disk",
+      "custom/updater",
+      "hyprland/workspaces",
+      "hyprland/submap"
+    ],
+    "modules-center": [
+      "hyprland/window"
+    ],
+    "modules-right": [
+      "bluetooth",
+      "custom/weather",
+      "network",
+      // "wireplumber",
+      "pulseaudio",
+      "tray"
+    ]
+  },
+  {
+    "include": [
+      "~/.config/waybar/common-modules.jsonc"
+    ],
+    "output": "DP-2",
+    "layer": "top",
+    "exclusive": true,
+    "passthrough": false,
+    "position": "top",
+    "fixed-center": true,
+    "ipc": true,
+    "margin-left": 5,
+    "margin-right": 5,
+    "margin-top": 5,
+    "margin-bottom": 0,
+    "height": 35,
+    "modules-left": [
+      "clock"
+    ],
+    "modules-center": [
+      "hyprland/window"
+    ],
+    "modules-right": [
+      "tray"
+    ]
+  }
+]
