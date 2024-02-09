@@ -9,6 +9,9 @@ require("lspconfig").lua_ls.setup {
           "use",
         },
       },
+      hint = {
+        enable = true,
+      },
       format = {
         enable = false,
       },

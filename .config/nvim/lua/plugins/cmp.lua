@@ -62,7 +62,8 @@ return {
         ["<C-u>"] = cmp.mapping.scroll_docs(4),
         ["<CR>"] = cmp.mapping.confirm { select = true },
         ["<Tab>"] = cmp.mapping(function(fallback)
-          if cmp.visible() and has_words_before() then
+          -- if cmp.visible() and has_words_before() then
+          if cmp.visible() then
             -- You could replace select_next_item() with confirm({ select = true }) to get VS Code autocompletion behavior
             cmp.select_next_item()
             -- You could replace the expand_or_jumpable() calls with expand_or_locally_jumpable()
@@ -95,8 +96,9 @@ return {
             return require("cmp.types").lsp.CompletionItemKind[entry:get_kind()] ~= "File"
           end,
         },
-        { name = "nvim_lsp_signature_help" },
-        { name = "luasnip", keyword_length = 2 },
+        -- { name = "luasnip", keyword_length = 2 },
+        { name = "luasnip" },
+        -- { name = "nvim_lsp_signature_help" },
         { name = "treesitter" },
         { name = "path" },
       },
@@ -133,6 +135,7 @@ return {
           return kind
         end,
       },
+      experimental = { ghost_text = true },
     }
 
     cmp.setup.cmdline({ "/", "?" }, {
