@@ -59,6 +59,13 @@ alias daymode='echo 3000 > /sys/class/backlight/intel_backlight/brightness > /de
 [[ "$(command -v dua)" ]] && alias disklist="dua i"
 [[ "$(command -v nerdctl)" ]] && alias nerdctl="nerdctl --address /var/run/docker/containerd/containerd.sock"
 [[ "$(command -v obsidian)" ]] && alias obsidian="OBSIDIAN_USE_WAYLAND=1 obsidian -enable-features=UseOzonePlatform -ozone-platform=wayland"
+if [[ "$(command -v ouch)" ]]; then
+  # Rust based multi-extract util
+  alias extract="ouch"
+else
+  # From `.bash_aliases_functions` - reuses many built-in compression utils
+  alias extract="extractCore"
+fi
 
 # Wayland Electron Apps
 # alias 1password='1password --enable-features=WaylandWindowDecorations --ozone-platform-hint=auto --socket=wayland'
@@ -107,9 +114,10 @@ alias gam="/home/ndo/bin/gamadv-xtd3/gam"
 # alias npm="npx socket-npm"
 # alias npx="npx socket-npx"
 
+# Projects
 alias na='cd /opt/nextauthjs/next-auth/'
-alias naa='cd /opt/nextauthjs/next-auth/'
-alias nad='cd /opt/nextauthjs/nextra-docs/'
+alias sk='cd /opt/ndomino/sveltekasten'
+alias skd='cd /opt/ndomino/sveltekasten-docs'
 
 alias cast='mkchromecast -n "Kitchen speaker" --notifications'
 
