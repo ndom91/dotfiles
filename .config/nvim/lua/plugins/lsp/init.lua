@@ -66,7 +66,7 @@ return {
       { "nvim-telescope/telescope.nvim", dependencies = "nvim-lua/plenary.nvim" },
     },
     opts = {
-      inlay_hints = { enabled = true },
+      inlay_hints = { enabled = false },
     },
     config = function()
       local utils = require("plugins.lsp.utils")
@@ -133,6 +133,7 @@ return {
           local builtin = require("telescope.builtin")
 
           -- Enable inlay_hints on insert mode only
+          -- Currently DISABLED
           local inlay_group = vim.api.nvim_create_augroup("lsp_augroup", { clear = true })
           vim.api.nvim_create_autocmd("InsertEnter", {
             buffer = event.buf,
