@@ -3,9 +3,6 @@
   email = yo@ndo.dev
   signingkey = ~/.ssh/id_ndo4.pub
 
-[commit]
-  gpgsign = true
-
 [init]
   defaultBranch = main
 
@@ -16,6 +13,9 @@
   editor = nvim
   pager = diff-so-fancy | less --tabs=2 -RFX
   excludesfile = ~/.gitignore-global
+
+[includeIf "gitdir:/opt/socket"]
+  path = ~/.gitconfig-socket
 
 [add.interactive]
   useBuiltin = false # required for git 2.37.0
@@ -38,6 +38,8 @@
   undo = reset HEAD~1
   # change last commit message
   recommit = commit --amend
+  # safe force-push
+	fpush = push --force-with-lease
 
 [merge]
   tool = nvim
@@ -66,7 +68,15 @@
 
 [branch]
   autosetupmerge = always
+	sort = -committerdate
   # autosetuprebase = always
 
 [url "git@github.com:"]
   insteadOf = https://github.com/
+
+[rerere]
+	enabled = true
+  autoUpdate = true
+
+[maintenance]
+	repo = /opt/nextauthjs/next-auth

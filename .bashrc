@@ -56,6 +56,10 @@ bind "set mark-symlinked-directories on"
 # tab complete for sudo commands
 complete -cf sudo
 
+# tabtab completion source for packages
+# Used by pnpm
+[[ -f ~/.config/tabtab/bash/__tabtab.bash ]] && source "$HOME/.config/tabtab/bash/__tabtab.bash"
+
 # History Control
 shopt -s histappend
 HISTCONTROL="erasedups:ignoreboth"
