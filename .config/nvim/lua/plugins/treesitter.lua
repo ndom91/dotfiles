@@ -8,7 +8,7 @@ return {
     "nvim-treesitter/playground",
   },
   config = function()
-    require("nvim-treesitter.configs").setup {
+    require("nvim-treesitter.configs").setup({
       highlight = { enable = true },
       playground = {
         enable = false,
@@ -18,6 +18,10 @@ return {
       },
       autopairs = {
         enable = true,
+        enable_rename = true,
+        enable_close = true,
+        enable_close_on_slash = true,
+        filetypes = { "html", "xml", "typescriptreact", "javascriptreact", "svelte", "vue" },
       },
       autotag = {
         enable = true,
@@ -51,6 +55,6 @@ return {
       -- context_commentstring = { enable = true, enable_autocmd = false },
       sync_install = false,
       ensure_installed = "all",
-    }
+    })
   end,
 }
