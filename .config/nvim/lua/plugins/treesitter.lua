@@ -2,10 +2,23 @@ return {
   "nvim-treesitter/nvim-treesitter",
   build = ":TSUpdate",
   dependencies = {
+    -- "nvim-treesitter/playground",
+    "JopsepAlviste/nvim-ts-context-commentstring",
+    {
+      "nvim-treesitter/nvim-treesitter-context",
+      opts = {
+        max_lines = 5,
+      },
+    },
     "windwp/nvim-ts-autotag",
-    "nvim-treesitter/nvim-treesitter-context",
-    "JoosepAlviste/nvim-ts-context-commentstring",
-    "nvim-treesitter/playground",
+    {
+      "windwp/nvim-autopairs",
+      event = "InsertEnter",
+      opts = {
+        enable_check_bracket_line = false,
+        ignored_next_char = "[%w%.]", -- will ignore alphanumeric and `.` symbol
+      },
+    },
   },
   config = function()
     require("nvim-treesitter.configs").setup({
@@ -18,13 +31,12 @@ return {
       },
       autopairs = {
         enable = true,
-        enable_rename = true,
-        enable_close = true,
-        enable_close_on_slash = true,
-        filetypes = { "html", "xml", "typescriptreact", "javascriptreact", "svelte", "vue" },
       },
       autotag = {
         enable = true,
+        enable_rename = true,
+        enable_close = true,
+        enable_close_on_slash = true,
       },
       matchup = {
         enable = true,
