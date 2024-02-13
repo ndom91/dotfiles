@@ -75,50 +75,50 @@ return {
         return utils.list_or_jump("textDocument/definition", "LSP Definitions", options)
       end
 
-      -- Formattinggg
-      local augroup = vim.api.nvim_create_augroup("Autoformat", {})
+      -- Formatting Setup
+      -- Create an augroup that is used for managing our formatting autocmds.
+      --      We need one augroup per client to make sure that multiple clients
+      --      can attach to the same buffer without interfering with each other.
+      local _augroups = {}
+      local get_augroup = function(client)
+        if not _augroups[client.id] then
+          local group_name = "kickstart-lsp-format-" .. client.name
+          local id = vim.api.nvim_create_augroup(group_name, { clear = true })
+          _augroups[client.id] = id
+        end
 
-      local function is_null_ls_formatting_enabed(bufnr)
-        local file_type = vim.bo[bufnr].filetype
-        local generators =
-          require("null-ls.generators").get_available(file_type, require("null-ls.methods").internal.FORMATTING)
-        return #generators > 0
+        return _augroups[client.id]
       end
 
-      local function format(buf)
-        local null_ls_sources = require("null-ls.sources")
-        local ft = vim.bo[buf].filetype
+      -- Format function
+      local function format(client_id, bufnr)
+        -- vim.notify("id: " .. client_id .. "| buf: " .. bufnr)
+        local client = vim.lsp.get_client_by_id(client_id)
+        if client ~= nil then
+          if not client.server_capabilities.documentFormattingProvider then return end
 
-        local has_null_ls = #null_ls_sources.get_available(ft, "NULL_LS_FORMATTING") > 0
+          if client.name == "tsserver" then return end
 
-        vim.lsp.buf.format({
-          bufnr = buf,
-          async = false,
-          filter = function(client)
-            -- vim.notify(client.name)
-            if has_null_ls then
-              -- vim.notify "has null-ls"
-              return client.name == "null-ls"
-            else
-              return true
-            end
-          end,
-        })
-      end
-
-      local format_on_write = function(client, bufnr)
-        if client.supports_method("textDocument/formatting") then
-          vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
-          vim.api.nvim_create_autocmd("BufWritePre", {
-            group = augroup,
-            buffer = bufnr,
-            callback = function()
-              -- if vim.b.format_on_write ~= false then format(bufnr) end
-              format(bufnr)
-            end,
+          vim.lsp.buf.format({
+            client_id = client_id,
+            async = false,
+            -- filter = function(c) return c.id == client.id end,
           })
         end
       end
+
+      -- Whenever an LSP attaches to a buffer, add a BufWritePre autocmd
+      vim.api.nvim_create_autocmd("LspAttach", {
+        group = vim.api.nvim_create_augroup("kickstart-lsp-attach-format", { clear = true }),
+        callback = function(event)
+          local client = vim.lsp.get_client_by_id(event.data.client_id)
+          vim.api.nvim_create_autocmd("BufWritePre", {
+            group = get_augroup(client),
+            buffer = event.buf,
+            callback = function() format(event.data.client_id, event.buf) end,
+          })
+        end,
+      })
 
       vim.keymap.set("n", "[d", vim.diagnostic.goto_prev)
       vim.keymap.set("n", "]d", vim.diagnostic.goto_next)
@@ -132,66 +132,47 @@ return {
           local options = { buffer = event.buf }
           local builtin = require("telescope.builtin")
 
-          -- Enable inlay_hints on insert mode only
-          -- Currently DISABLED
-          local inlay_group = vim.api.nvim_create_augroup("lsp_augroup", { clear = true })
-          vim.api.nvim_create_autocmd("InsertEnter", {
-            buffer = event.buf,
-            callback = function() vim.lsp.inlay_hint.enable(event.buf, true) end,
-            group = inlay_group,
-          })
-          vim.api.nvim_create_autocmd("InsertLeave", {
-            buffer = event.buf,
-            callback = function() vim.lsp.inlay_hint.enable(event.buf, false) end,
-            group = inlay_group,
-          })
+          -- DISABLED: Enable inlay_hints on insert mode only
+          -- local inlay_group = vim.api.nvim_create_augroup("lsp_augroup", { clear = true })
+          -- vim.api.nvim_create_autocmd("InsertEnter", {
+          --   buffer = event.buf,
+          --   callback = function() vim.lsp.inlay_hint.enable(event.buf, true) end,
+          --   group = inlay_group,
+          -- })
+          -- vim.api.nvim_create_autocmd("InsertLeave", {
+          --   buffer = event.buf,
+          --   callback = function() vim.lsp.inlay_hint.enable(event.buf, false) end,
+          --   group = inlay_group,
+          -- })
 
           vim.bo[event.buf].omnifunc = "v:lua.vim.lsp.omnifunc"
 
           vim.keymap.set("n", "<Leader>e", builtin.diagnostics, options)
           vim.keymap.set("n", "gr", builtin.lsp_references, options)
-          vim.keymap.set("n", "gi", vim.lsp.buf.implementation)
+          vim.keymap.set("n", "gi", vim.lsp.buf.implementation, options)
           vim.keymap.set("n", "gD", vim.lsp.buf.type_definition, options)
           vim.keymap.set("n", "gd", definitions, options)
           -- vim.keymap.set('n', 'gd', vim.lsp.buf.definition, options)
 
           vim.keymap.set("n", "K", vim.lsp.buf.hover, options)
-          vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help)
+          vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, options)
           vim.keymap.set({ "n", "v" }, "<space>ca", vim.lsp.buf.code_action, options)
           vim.keymap.set("n", "gr", vim.lsp.buf.references, options)
-          vim.keymap.set("n", "<space>re", vim.lsp.buf.rename)
-          vim.keymap.set(
-            "n",
-            "<Leader>lf",
-            function() format(event.buf) end,
-            { silent = true, noremap = true, desc = "Format" }
-          )
+          vim.keymap.set("n", "<space>re", vim.lsp.buf.rename, options)
 
           local client = vim.lsp.get_client_by_id(event.data.client_id)
 
           if client ~= nil then
-            format_on_write(client, vim.api.nvim_get_current_buf())
+            -- Formatting keymap handler
+            local function attachFormatKeymap()
+              if not client.server_capabilities.documentFormattingProvider then return end
 
-            -- if client.supports_method "textDocument/formatting" then
-            --   vim.api.nvim_create_autocmd("BufWritePre", {
-            --     group = event.buf.group,
-            --     buffer = event.buf,
-            --     callback = function()
-            --       vim.lsp.buf.format {
-            --         filter = function(filterClient) return filterClient.name == "null-ls" end,
-            --         bufnr = event.buf,
-            --       }
-            --     end,
-            --   })
-            -- end
+              if client.name == "tsserver" then return end
 
-            if client.server_capabilities.documentFormattingProvider then
-              if client.name == "null-ls" and is_null_ls_formatting_enabed(event.buf) or client.name ~= "null-ls" then
-                vim.bo[event.buf].formatexpr = "v:lua.vim.lsp.formatexpr()"
-              else
-                vim.bo[event.buf].formatexpr = nil
-              end
+              vim.keymap.set("n", "<Leader>lf", function() format(client.id, event.buf) end, options)
             end
+            attachFormatKeymap()
+
             -- Highlight symbol references on hover
             if client.server_capabilities.documentHighlightProvider then
               vim.api.nvim_create_augroup("LspDocumentHighlight", { clear = false })
