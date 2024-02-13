@@ -16,9 +16,19 @@ return {
         ["cmp.entry.get_documentation"] = false,
       },
     },
-    -- messages = {
-    --   enabled = false, -- enables the Noice messages UI
-    -- },
+    notify = {
+      -- Noice can be used as `vim.notify` so you can route any notification like other messages
+      -- Notification messages have their level and other properties set.
+      -- event is always "notify" and kind can be any log level as a string
+      -- The default routes will forward notifications to nvim-notify
+      -- Benefit of using Noice for this is the routing and consistent history view
+      enabled = true,
+      view = "notify",
+    },
+    messages = {
+      enabled = true, -- enables the Noice messages UI
+      view_search = false,
+    },
     -- cmdline = {
     --   enabled = true, -- enables the Noice cmdline UI
     --   -- view = "cmdline_popup", -- view for rendering the cmdline. Change to `cmdline` to get a classic cmdline at the bottom
@@ -26,10 +36,10 @@ return {
     -- },
     presets = {
       bottom_search = true, -- use a classic bottom cmdline for search
-      --   command_palette = true,        -- position the cmdline and popupmenu together
-      --   long_message_to_split = false, -- long messages will be sent to a split
-      --   inc_rename = false,            -- enables an input dialog for inc-rename.nvim
-      --   lsp_doc_border = false,        -- add a border to hover docs and signature help
+      command_palette = true, -- position the cmdline and popupmenu together
+      -- long_message_to_split = true, -- long messages will be sent to a split
+      -- inc_rename = false,            -- enables an input dialog for inc-rename.nvim
+      -- lsp_doc_border = false, -- add a border to hover docs and signature help
     },
     -- commands = {
     --   history = {
@@ -42,45 +52,50 @@ return {
           style = "none",
           padding = { 1, 2 },
         },
-        filter_options = {},
         win_options = {
           winhighlight = "NormalFloat:NormalFloat,FloatBorder:FloatBorder",
         },
       },
-      popupmenu = {
-        relative = "editor",
-        position = {
-          row = 8,
-          col = "50%",
-        },
-        size = {
-          width = 60,
-          height = 10,
-        },
+      popup = {
         border = {
-          style = "none",
           padding = { 1, 2 },
         },
         win_options = {
-          -- winhighlight = { Normal = "Normal", FloatBorder = "DiagnosticInfo" },
-          winhighlight = "NormalFloat:NormalFloat,FloatBorder:FloatBorder",
+          winhighlight = { Normal = "Normal", FloatBorder = "DiagnosticInfo" },
+          foldenable = false,
+          cursorline = true,
+          cursorlineopt = "line",
+        },
+      },
+      popupmenu = {
+        relative = "editor",
+        border = {
+          padding = { 1, 2 },
+        },
+        win_options = {
+          winhighlight = { Normal = "Normal", FloatBorder = "DiagnosticInfo" },
+          -- winhighlight = "NormalFloat:NormalFloat,FloatBorder:FloatBorder",
         },
       },
     },
     routes = {
       {
         filter = {
-          event = "notify",
+          event = "msg_show",
           find = "E486: Pattern not found",
         },
         opts = { skip = true },
       },
       {
         filter = {
-          event = "notify",
+          event = "msg_show",
           find = "No information available",
         },
         opts = { skip = true },
+      },
+      {
+        view = "popup",
+        filter = { event = "msg_show", min_height = 5 },
       },
     },
   },

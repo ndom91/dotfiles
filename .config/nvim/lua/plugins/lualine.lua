@@ -79,6 +79,11 @@ return {
             colored = true, -- Displays a colored diff status if set to true
             symbols = { added = "+", modified = "~", removed = "-" }, -- Changes the symbols used by the diff.
           },
+          {
+            require("noice").api.status.search.get,
+            cond = require("noice").api.status.search.has,
+            color = { fg = "fg" },
+          },
         },
         lualine_x = {
           {
