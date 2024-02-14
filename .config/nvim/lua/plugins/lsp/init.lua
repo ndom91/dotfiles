@@ -149,15 +149,16 @@ return {
 
           vim.keymap.set("n", "<Leader>e", builtin.diagnostics, options)
           vim.keymap.set("n", "gr", builtin.lsp_references, options)
-          vim.keymap.set("n", "gi", vim.lsp.buf.implementation, options)
-          vim.keymap.set("n", "gD", vim.lsp.buf.type_definition, options)
+          vim.keymap.set("n", "gi", builtin.lsp_implementations, options)
+          vim.keymap.set("n", "gD", builtin.lsp_type_definitions, options)
+          -- vim.keymap.set("n", "gi", vim.lsp.buf.implementation, options)
+          -- vim.keymap.set("n", "gD", vim.lsp.buf.type_definition, options)
           vim.keymap.set("n", "gd", definitions, options)
           -- vim.keymap.set('n', 'gd', vim.lsp.buf.definition, options)
 
           vim.keymap.set("n", "K", vim.lsp.buf.hover, options)
           vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, options)
           vim.keymap.set({ "n", "v" }, "<space>ca", vim.lsp.buf.code_action, options)
-          vim.keymap.set("n", "gr", vim.lsp.buf.references, options)
           vim.keymap.set("n", "<space>re", vim.lsp.buf.rename, options)
 
           local client = vim.lsp.get_client_by_id(event.data.client_id)
