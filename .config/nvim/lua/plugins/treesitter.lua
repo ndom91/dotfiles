@@ -16,7 +16,7 @@ return {
       event = "InsertEnter",
       opts = {
         enable_check_bracket_line = false,
-        ignored_next_char = "[%w%.]", -- will ignore alphanumeric and `.` symbol
+        ignored_next_char = '[%w%.%"]', -- will ignore alphanumeric and `.` symbol
       },
     },
   },
@@ -26,7 +26,7 @@ return {
       playground = {
         enable = false,
         disable = {},
-        updatetime = 25, -- Debounced time for highlighting nodes in the playground from source code
+        updatetime = 25,         -- Debounced time for highlighting nodes in the playground from source code
         persist_queries = false, -- Whether the query persists across vim sessions
       },
       autopairs = {

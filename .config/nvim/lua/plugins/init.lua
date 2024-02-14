@@ -6,7 +6,8 @@ return {
     "tami5/lspsaga.nvim",
     enabled = true,
     event = "LspAttach",
-    config = function() require("lspsaga").setup({}) end,
+    -- config = function() require("lspsaga").setup({}) end,
+    opts = {},
     dependencies = {
       "nvim-treesitter/nvim-treesitter",
       "nvim-tree/nvim-web-devicons",
@@ -223,14 +224,14 @@ return {
     enabled = false,
     opts = {},
     keys = {
-      { "s", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" },
+      { "s", mode = { "n", "x", "o" }, function() require("flash").jump() end,   desc = "Flash" },
       {
         "S",
         mode = { "n", "x", "o" },
         function() require("flash").treesitter() end,
         desc = "Flash Treesitter",
       },
-      { "r", mode = "o", function() require("flash").remote() end, desc = "Remote Flash" },
+      { "r", mode = "o",               function() require("flash").remote() end, desc = "Remote Flash" },
       {
         "R",
         mode = { "o", "x" },
