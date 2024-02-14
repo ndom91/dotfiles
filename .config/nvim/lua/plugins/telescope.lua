@@ -5,21 +5,67 @@ return {
     "nvim-telescope/telescope-ui-select.nvim",
   },
   keys = {
-    { "<leader>.", "<cmd>Telescope find_files<CR>", { desc = "Telescope files" } },
-    { "<leader>,", "<cmd>Telescope buffers show_all_buffers=true<CR>", { desc = "Telescope buffers" } },
-    { "<leader>/", "<cmd>Telescope live_grep<CR>", { desc = "Telescope grep" } },
-    { "<leader>:", "<cmd>Telescope command_history<CR>" },
-    { "<leader>r", "<cmd>Telescope oldfiles<CR>", { desc = "Old Files" } },
-    { "<leader>h", "<cmd>Telescope help_tags<CR>", { desc = "All Help" } },
-    { "<leader>s", "<cmd>Telescope lsp_dynamic_workspace_symbols<CR>", { desc = "LSP Symbols" } },
-    { "<leader>gc", "<cmd>Telescope git_commits<CR>" },
-    { "<leader>gb", "<cmd>Telescope git_bcommits<CR>" },
-    { "<leader>gr", "<cmd>Telescope git_branches<CR>" },
-    { "<leader>d", "<cmd>Telescope diagnostics<CR>", { desc = "Show all diagnostics" } },
-    { "<leader>e", "<cmd>Telescope diagnostics { severity: 0 }<CR>", { desc = "Show only errors" } },
+    { "<leader>.", require("telescope.builtin").find_files, desc = "Find Files" },
+    {
+      "<leader>,",
+      function() require("telescope.builtin").buffers({ show_all_buffers = true }) end,
+      desc = "Find Buffers",
+    },
+    { "<leader>/", require("telescope.builtin").live_grep, desc = "Live Grep" },
+    { "<leader>:", require("telescope.builtin").command_history, desc = "Command History" },
+    { "<leader>r", require("telescope.builtin").oldfiles, desc = "Old Files" },
+    { "<leader>ft", require("telescope.builtin").builtin, desc = "[F]ind [B]uiltin" },
+    { "<leader>fh", require("telescope.builtin").help_tags, desc = "[F]ind [H]elp Tags" },
+    {
+      "<leader>fws",
+      require("telescope.builtin").lsp_dynamic_workspace_symbols,
+      desc = "[F]ind [W]orkspace [S]ymbols",
+    },
+    {
+      "<leader>fr",
+      require("telescope.builtin").lsp_references,
+      desc = "[F]ind [R]eferences",
+    },
+    { "<leader>fd", require("telescope.builtin").diagnostics, desc = "[F]ind [D]iagnostics" },
+    {
+      "<leader>fe",
+      function() require("telescope.builtin").diagnostics({ severity = 0 }) end,
+      desc = "[F]ind [E]rrors",
+    },
+    { "<leader>km", require("telescope.builtin").keymaps, desc = "[K]ey[m]aps" },
+    {
+      "<leader>fb",
+      function()
+        require("telescope.builtin").current_buffer_fuzzy_find(require("telescope.themes").get_dropdown({
+          winblend = 0,
+          border = {},
+          previewer = false,
+          layout_strategy = "vertical",
+          layout_config = {
+            vertical = {
+              mirror = true,
+            },
+          },
+        }))
+      end,
+      desc = "[F]ind in [B]uffer",
+    },
+    {
+      "<leader>fof",
+      function()
+        require("telescope.builtin").live_grep({
+          grep_open_files = true,
+          prompt_title = "Live Grep in Open Files",
+        })
+      end,
+      desc = "[F]ind [O]pen [F]iles",
+    },
+    { "<leader>gc", require("telescope.builtin").git_commits, desc = "[G]it [C]ommits" },
+    { "<leader>gfh", require("telescope.builtin").git_bcommits, desc = "[G]it [F]ile [H]istory" },
+    { "<leader>gb", require("telescope.builtin").git_branches, desc = "[G]it [B]ranches" },
   },
   config = function()
-    local actions = require "telescope.actions"
+    local actions = require("telescope.actions")
 
     local file_ignore_patterns = {
       "%.jpg",
@@ -43,7 +89,7 @@ return {
       "[.]svelte-kit/",
     }
 
-    require("telescope").setup {
+    require("telescope").setup({
       defaults = {
         preview = {
           filesize_limit = 10, -- MB
@@ -71,8 +117,7 @@ return {
             ["<s-up>"] = actions.cycle_history_prev,
             ["<s-down>"] = actions.cycle_history_next,
             ["<C-c>"] = actions.delete_buffer,
-            ["<C-d>"] = actions.delete_buffer,
-            ["<C-w>"] = function() vim.api.nvim_input "<c-s-w>" end,
+            ["<C-w>"] = function() vim.api.nvim_input("<c-s-w>") end,
           },
           n = {
             ["q"] = actions.close,
@@ -133,7 +178,7 @@ return {
       },
       extensions = {
         ["ui-select"] = {
-          require("telescope.themes").get_dropdown {},
+          require("telescope.themes").get_dropdown({}),
         },
         fzf = {
           fuzzy = true, -- false will only do exact matching
@@ -142,8 +187,8 @@ return {
           case_mode = "smart_case", -- or "ignore_case" or "respect_case"
         },
       },
-    }
-    require("telescope").load_extension "ui-select"
-    require("telescope").load_extension "fzf"
+    })
+    require("telescope").load_extension("ui-select")
+    require("telescope").load_extension("fzf")
   end,
 }
