@@ -221,3 +221,8 @@ fi
 
 # Turso
 export PATH="/home/ndo/.turso:$PATH"
+
+# Zoxide (cd)
+if [ "$(command -v zoxide)" ]; then
+  eval "$(zoxide init --cmd cd bash)"
+fi
