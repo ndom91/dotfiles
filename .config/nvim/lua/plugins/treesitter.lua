@@ -3,7 +3,12 @@ return {
   build = ":TSUpdate",
   dependencies = {
     -- "nvim-treesitter/playground",
-    "JopsepAlviste/nvim-ts-context-commentstring",
+    {
+      "JoosepAlviste/nvim-ts-context-commentstring",
+      -- opts = {
+      --   enable_autocmd = false,
+      -- },
+    },
     {
       "nvim-treesitter/nvim-treesitter-context",
       opts = {
@@ -26,7 +31,7 @@ return {
       playground = {
         enable = false,
         disable = {},
-        updatetime = 25,         -- Debounced time for highlighting nodes in the playground from source code
+        updatetime = 25, -- Debounced time for highlighting nodes in the playground from source code
         persist_queries = false, -- Whether the query persists across vim sessions
       },
       autopairs = {
@@ -45,7 +50,7 @@ return {
         highlight_definitions = { enable = true },
         highlight_current_scope = { enable = false },
         smart_rename = {
-          enable = false,
+          enable = true,
           keymaps = {
             -- mapping to rename reference under cursor
             -- smart_rename = "grr"
@@ -64,7 +69,6 @@ return {
       context = {
         separator = "⎽",
       },
-      -- context_commentstring = { enable = true, enable_autocmd = false },
       sync_install = false,
       ensure_installed = "all",
     })

@@ -5,9 +5,10 @@ vim.g.maplocalleader = " "
 
 vim.opt.swapfile = false
 vim.opt.backup = false
-vim.opt.undodir = os.getenv "HOME" .. "/.vim/undodir"
+vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
 vim.opt.undofile = true
 
+-- Skip compatibility routines and speed up loading
 vim.g.skip_ts_context_commentstring_module = true
 
 -- Markdown
@@ -20,11 +21,11 @@ vim.api.nvim_set_var("markdown_fenced_languages", {
   "typescript",
   "yaml",
 })
-vim.filetype.add {
+vim.filetype.add({
   extension = {
     mdx = "jsx",
   },
-}
+})
 
 opt.completeopt = "menu,menuone,noselect"
 opt.clipboard = "unnamedplus"
@@ -62,11 +63,11 @@ opt.expandtab = true
 opt.termguicolors = true
 
 opt.wildignorecase = true
-opt.wildignore:append "**/node_modules/*"
-opt.wildignore:append "**/.git/*"
-opt.wildignore:append "**/.next/*"
-opt.wildignore:append "**/.svelte-kit/*"
-opt.wildignore:append "**/venv/*"
+opt.wildignore:append("**/node_modules/*")
+opt.wildignore:append("**/.git/*")
+opt.wildignore:append("**/.next/*")
+opt.wildignore:append("**/.svelte-kit/*")
+opt.wildignore:append("**/venv/*")
 opt.wildmenu = true
 
 -- Psuendotransparency for popup-menu
