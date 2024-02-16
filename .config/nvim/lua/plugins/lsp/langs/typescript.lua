@@ -10,9 +10,10 @@ if not have_vue then
       client.server_capabilities.document_formatting = false
       -- null-ls messes with formatexpr for some reason, which messes up `gq`
       -- https://github.com/jose-elias-alvarez/null-ls.nvim/issues/1131
-      vim.bo[bufnr].formatexpr = nil
+      -- vim.bo[bufnr].formatexpr = nil
     end,
     handlers = {
+      -- Go right to first result if there is only 1
       ["textDocument/definition"] = function(err, result, ctx, ...)
         if #result > 1 then result = { result[1] } end
         vim.lsp.handlers["textDocument/definition"](err, result, ctx, ...)
@@ -23,26 +24,28 @@ if not have_vue then
       documentFormatting = false,
       -- taken from https://github.com/typescript-language-server/typescript-language-server#workspacedidchangeconfiguration
       javascript = {
-        inlayHints = {
-          includeInlayEnumMemberValueHints = true,
-          includeInlayFunctionLikeReturnTypeHints = true,
-          includeInlayFunctionParameterTypeHints = true,
-          includeInlayParameterNameHints = "all",
-          includeInlayParameterNameHintsWhenArgumentMatchesName = true,
-          includeInlayPropertyDeclarationTypeHints = true,
-          includeInlayVariableTypeHints = true,
-        },
+        inlayHints = false,
+        -- inlayHints = {
+        --   includeInlayEnumMemberValueHints = true,
+        --   includeInlayFunctionLikeReturnTypeHints = true,
+        --   includeInlayFunctionParameterTypeHints = true,
+        --   includeInlayParameterNameHints = "all",
+        --   includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+        --   includeInlayPropertyDeclarationTypeHints = true,
+        --   includeInlayVariableTypeHints = true,
+        -- },
       },
       typescript = {
-        inlayHints = {
-          includeInlayEnumMemberValueHints = true,
-          includeInlayFunctionLikeReturnTypeHints = true,
-          includeInlayFunctionParameterTypeHints = true,
-          includeInlayParameterNameHints = "all",
-          includeInlayParameterNameHintsWhenArgumentMatchesName = true,
-          includeInlayPropertyDeclarationTypeHints = true,
-          includeInlayVariableTypeHints = true,
-        },
+        inlayHints = false,
+        -- inlayHints = {
+        --   includeInlayEnumMemberValueHints = true,
+        --   includeInlayFunctionLikeReturnTypeHints = true,
+        --   includeInlayFunctionParameterTypeHints = true,
+        --   includeInlayParameterNameHints = "all",
+        --   includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+        --   includeInlayPropertyDeclarationTypeHints = true,
+        --   includeInlayVariableTypeHints = true,
+        -- },
       },
     },
     -- filetypes = {
