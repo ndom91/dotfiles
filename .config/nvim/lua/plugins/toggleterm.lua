@@ -1,9 +1,10 @@
 return {
   "akinsho/toggleterm.nvim", -- terminal splits / floating windows
+  enabled = false,
   config = function()
     local Terminal = require("toggleterm.terminal").Terminal
 
-    _G.lazygit = Terminal:new {
+    _G.lazygit = Terminal:new({
       cmd = "lazygit",
       hidden = true,
       direction = "float",
@@ -16,8 +17,8 @@ return {
         winblend = 0,
         highlights = { border = "Special", background = "Normal" },
       },
-    }
-    require("toggleterm").setup {
+    })
+    require("toggleterm").setup({
       size = function(term)
         if term.direction == "horizontal" then
           return 20
@@ -41,7 +42,7 @@ return {
         winblend = 3,
         highlights = { border = "Special", background = "Normal" },
       },
-    }
+    })
 
     -- See 'utils/term.lua' for lazygit floating term
     -- vim.api.nvim_set_keymap("n", "<leader>lg",
