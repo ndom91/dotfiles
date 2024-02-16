@@ -7,7 +7,7 @@ return {
     "MunifTanjim/nui.nvim",
   },
   keys = {
-    { "\\", "<cmd>Neotree toggle<cr>" },
+    { "\\", "<cmd>Neotree toggle<cr>", desc = "Neotree Toggle", silent = true },
   },
   config = function()
     -- If you want icons for diagnostic errors, you'll need to define them somewhere:
@@ -18,8 +18,8 @@ return {
     -- NOTE: this is changed from v1.x, which used the old style of highlight groups
     -- in the form "LspDiagnosticsSignWarning"
 
-    require("neo-tree").setup {
-      close_if_last_window = false, -- Close Neo-tree if it is the last window left in the tab
+    require("neo-tree").setup({
+      close_if_last_window = false, -- Close Neo-tree if it is the last window left in the tab; currently janky
       popup_border_style = "rounded",
       enable_git_status = true,
       enable_diagnostics = true,
@@ -258,6 +258,6 @@ return {
           },
         },
       },
-    }
+    })
   end,
 }
