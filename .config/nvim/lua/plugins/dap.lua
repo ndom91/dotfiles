@@ -13,19 +13,19 @@ return {
       },
     },
     keys = {
-      { "<leader>dr", function() require("dap").continue() end, { desc = "dap continue" } },
-      { "<leader>db", function() require("dap").toggle_breakpoint() end, { desc = "dap toggle breakpoint" } },
-      { "<leader>dv", function() require("dap").step_over() end, { desc = "dap step over" } },
-      { "<leader>di", function() require("dap").step_into() end, { desc = "dap step into" } },
-      { "<leader>do", function() require("dap").step_out() end, { desc = "dap step out" } },
+      { "<leader>dr", function() require("dap").continue() end, desc = "dap continue" },
+      { "<leader>db", function() require("dap").toggle_breakpoint() end, desc = "dap toggle breakpoint" },
+      { "<leader>dv", function() require("dap").step_over() end, desc = "dap step over" },
+      { "<leader>di", function() require("dap").step_into() end, desc = "dap step into" },
+      { "<leader>do", function() require("dap").step_out() end, desc = "dap step out" },
     },
     config = function()
-      require("dap-vscode-js").setup {
-        debugger_path = vim.fn.stdpath "data" .. "/lazy/vscode-js-debug",
+      require("dap-vscode-js").setup({
+        debugger_path = vim.fn.stdpath("data") .. "/lazy/vscode-js-debug",
         adapters = { "pwa-node", "pwa-chrome", "pwa-msedge", "node-terminal", "pwa-extensionHost" },
-      }
+      })
 
-      for _, language in ipairs { "typescript", "javascript", "svelte" } do
+      for _, language in ipairs({ "typescript", "javascript", "svelte" }) do
         require("dap").configurations[language] = {
           -- attach to a node process that has been started with
           -- `--inspect` for longrunning tasks or `--inspect-brk` for short tasks
@@ -82,17 +82,17 @@ return {
       end
 
       require("dapui").setup()
-      local dap, dapui = require "dap", require "dapui"
-      dap.listeners.after.event_initialized["dapui_config"] = function() dapui.open { reset = true } end
+      local dap, dapui = require("dap"), require("dapui")
+      dap.listeners.after.event_initialized["dapui_config"] = function() dapui.open({ reset = true }) end
       dap.listeners.before.event_terminated["dapui_config"] = dapui.close
       dap.listeners.before.event_exited["dapui_config"] = dapui.close
 
-      require("nvim-dap-virtual-text").setup {
+      require("nvim-dap-virtual-text").setup({
         virt_text_pos = "inline",
         virt_text_win_col = 80,
         highlight_changed_variables = true,
         -- show_stop_reason = false,
-      }
+      })
 
       vim.fn.sign_define("DapBreakpoint", { text = "🟥", texthl = "", linehl = "", numhl = "" })
       vim.fn.sign_define("DapBreakpointRejected", { text = "🟦", texthl = "", linehl = "", numhl = "" })
@@ -108,12 +108,12 @@ return {
       vim.keymap.set("n", "<leader>dn", function() dap.run_to_cursor() end)
       vim.keymap.set("n", "<leader>dc", function() dap.terminate() end)
       vim.keymap.set("n", "<leader>dR", function() dap.clear_breakpoints() end)
-      vim.keymap.set("n", "<leader>de", function() dap.set_exception_breakpoints { "all" } end)
+      vim.keymap.set("n", "<leader>de", function() dap.set_exception_breakpoints({ "all" }) end)
       vim.keymap.set("n", "<leader>da", function() require("debugHelper").attach() end)
       vim.keymap.set("n", "<leader>dA", function() require("debugHelper").attachToRemote() end)
       vim.keymap.set("n", "<leader>di", function() require("dap.ui.widgets").hover() end)
       vim.keymap.set("n", "<leader>d?", function()
-        local widgets = require "dap.ui.widgets"
+        local widgets = require("dap.ui.widgets")
         widgets.centered_float(widgets.scopes)
       end)
     end,

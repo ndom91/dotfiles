@@ -2,7 +2,7 @@ return {
   "folke/todo-comments.nvim", -- special highlight  @TODO, @FIXME, etc comments
   dependencies = "nvim-lua/plenary.nvim",
   keys = {
-    { "<leader>td", "<cmd>TodoTrouble<CR>", { desc = "Todo Trouble" } },
+    { "<leader>td", "<cmd>TodoTrouble<CR>", desc = "[T]o[d]o Trouble" },
   },
   opts = {
     signs = true, -- show icons in the signs column

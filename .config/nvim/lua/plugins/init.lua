@@ -3,11 +3,25 @@ return {
   "nvim-lua/plenary.nvim",
   "nvim-lua/popup.nvim",
   {
-    "tami5/lspsaga.nvim",
+    "nvimdev/lspsaga.nvim",
     enabled = true,
     event = "LspAttach",
+    keys = {
+      { "<leader>sf", "<cmd>Lspsaga finder<CR>", desc = "[S]ymbol [F]inder" },
+    },
     -- config = function() require("lspsaga").setup({}) end,
-    opts = {},
+    opts = {
+      symbol_in_winbar = {
+        enable = false,
+      },
+      lightbulb = {
+        enable = true,
+        enable_in_insert = false,
+        sign = false,
+        sign_priority = 40,
+        virtual_text = false,
+      },
+    },
     dependencies = {
       "nvim-treesitter/nvim-treesitter",
       "nvim-tree/nvim-web-devicons",
@@ -58,21 +72,21 @@ return {
     config = true,
     dependencies = { "nvim-tree/nvim-web-devicons" },
     keys = {
-      { "<leader>tr", function() require("trouble").toggle() end, { desc = "Toggle Trouble" } },
+      { "<leader>tr", function() require("trouble").toggle() end, desc = "[T]oggle [T]rouble" },
       {
         "<leader>trw",
         function() require("trouble").toggle("workspace_diagnostics") end,
-        { desc = "Toggle Trouble Type Definitions" },
+        desc = "[Tr]ouble [W]orkspace",
       },
       {
         "<leader>trd",
         function() require("trouble").toggle("lsp_type_definitions") end,
-        { desc = "Toggle Trouble Type Definitions" },
+        desc = "[Tr]ouble Type [D]efinitions",
       },
       {
         "<leader>trr",
         function() require("trouble").toggle("lsp_references") end,
-        { desc = "Toggle Trouble Type Definitions" },
+        desc = "[Tr]ouble [R]eferences",
       },
     },
   },
@@ -81,7 +95,7 @@ return {
     "mrshmllow/document-color.nvim",
     enabled = false,
     keys = {
-      { "<leader>lC", "require('document-color').buf_toggle()" },
+      { "<leader>tdc", "require('document-color').buf_toggle()", desc = "[T]oggle [D]ocument [C]olor" },
     },
     config = function()
       local docColors = require("document-color")
@@ -224,25 +238,25 @@ return {
     enabled = false,
     opts = {},
     keys = {
-      { "s", mode = { "n", "x", "o" }, function() require("flash").jump() end,   desc = "Flash" },
+      { "s", function() require("flash").jump() end, { "n", "x", "o" }, desc = "Flash Jump" },
       {
         "S",
         mode = { "n", "x", "o" },
         function() require("flash").treesitter() end,
         desc = "Flash Treesitter",
       },
-      { "r", mode = "o",               function() require("flash").remote() end, desc = "Remote Flash" },
+      { "r", function() require("flash").remote() end, "o", desc = "Remote Flash" },
       {
         "R",
-        mode = { "o", "x" },
         function() require("flash").treesitter_search() end,
-        desc = "Treesitter Search",
+        { "o", "x" },
+        desc = "Flash Treesitter Search",
       },
       {
         "<c-s>",
-        mode = { "c" },
         function() require("flash").toggle() end,
-        desc = "Toggle Flash Search",
+        { "c" },
+        desc = "Flash Toggle",
       },
     },
   },
@@ -255,7 +269,7 @@ return {
   {
     "kdheepak/lazygit.nvim",
     keys = {
-      { "<leader>lg", "<cmd>LazyGit<CR>", { noremap = true, silent = true } },
+      { "<leader>lg", "<cmd>LazyGit<CR>", desc = "[L]azy [G]it", noremap = true, silent = true },
     },
     -- optional for floating window border decoration
     dependencies = {
