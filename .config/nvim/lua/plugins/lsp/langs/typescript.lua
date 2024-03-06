@@ -48,14 +48,14 @@ if not have_vue then
         -- },
       },
     },
-    -- filetypes = {
-    --   "javascript",
-    --   "javascriptreact",
-    --   "javascript.jsx",
-    --   "typescript",
-    --   "typescriptreact",
-    --   "typescript.tsx",
-    -- },
+    filetypes = {
+      "javascript",
+      "javascriptreact",
+      "javascript.jsx",
+      "typescript",
+      "typescriptreact",
+      "typescript.tsx",
+    },
     -- root_dir = require("lspconfig.util").root_pattern("package.json", "package-lock.json", "tsconfig.json", "jsconfig.json", ".git"),
     -- single_file_support = true,
   })

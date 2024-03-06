@@ -68,8 +68,9 @@ shotwin() {
 shotarea() {
   # cd ${dir} && grim -c -g "$coords" - | tee "$file" | xclip -selection clipboard -t image/png
   coords=$(slurp -d)
+  # grim -c -g "$coords" - | annotator -i
   # grim -c -g "$coords" - | satty --copy-command wl-copy --early-exit --output-filename "$dir/$file" --filename -
-  grim -c -g "$coords" - | annotator -i
+  grim -c -g "$coords" - | swappy -f -
   # notify_view
 }
 

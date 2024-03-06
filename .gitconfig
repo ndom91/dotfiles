@@ -43,7 +43,7 @@
 
 [merge]
   tool = nvim
-  conflictstyle = diff3
+  conflictstyle = zdiff3
 
 [pull]
   rebase = false
