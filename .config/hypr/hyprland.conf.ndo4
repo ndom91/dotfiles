@@ -38,7 +38,7 @@ exec-once = ~/.config/hypr/xdg-portal-hyprland
 # System Apps
 ## unscale XWayland
 xwayland {
-  force_zero_scaling = true
+ force_zero_scaling = true
 }
 ## xwayland scale
 env = GDK_SCALE,1.5
@@ -151,6 +151,15 @@ decoration {
   active_opacity = 0.95
   inactive_opacity = 0.80
   fullscreen_opacity = 0.95
+
+  blur {
+    enabled = true
+    new_optimizations = true
+    xray = false
+    ignore_opacity = true
+    passes = 2
+    size = 5
+  }
 }
 
 animations {
