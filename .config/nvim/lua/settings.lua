@@ -68,6 +68,20 @@ opt.wildignore:append("**/.git/*")
 opt.wildignore:append("**/.next/*")
 opt.wildignore:append("**/.svelte-kit/*")
 opt.wildignore:append("**/venv/*")
+
+-- Ignore filetypes I'll never open with nvim
+opt.wildignore:append(".git,.hg,.svn")
+opt.wildignore:append(".aux,*.out,*.toc")
+opt.wildignore:append(".o,*.obj,*.exe,*.dll,*.manifest,*.rbc,*.class")
+opt.wildignore:append(".ai,*.bmp,*.gif,*.ico,*.jpg,*.jpeg,*.png,*.psd,*.webp")
+opt.wildignore:append(".avi,*.divx,*.mp4,*.webm,*.mov,*.m2ts,*.mkv,*.vob,*.mpg,*.mpeg")
+opt.wildignore:append(".mp3,*.oga,*.ogg,*.wav,*.flac")
+opt.wildignore:append(".eot,*.otf,*.ttf,*.woff")
+opt.wildignore:append(".doc,*.pdf,*.cbr,*.cbz")
+opt.wildignore:append(".zip,*.tar.gz,*.tar.bz2,*.rar,*.tar.xz,*.kgb")
+opt.wildignore:append(".swp,.lock,.DS_Store,._*")
+opt.wildignore:append(".,..")
+
 opt.wildmenu = true
 
 -- Psuendotransparency for popup-menu

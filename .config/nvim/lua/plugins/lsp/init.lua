@@ -19,10 +19,12 @@ return {
     opts = {
       automatic_installation = true,
       ensure_installed = {
+        "rnix",
         "lua_ls",
         "tsserver",
         "bashls",
         "cssls",
+        -- "eslint",
         "html",
         "svelte",
         "tailwindcss",
@@ -43,6 +45,7 @@ return {
     opts = {
       ensure_installed = {
         -- "biome",
+        "nixpkgs-fmt",
         "eslint_d",
         "js-debug-adapter",
         "prettierd",
@@ -199,17 +202,19 @@ return {
 
           -- Fix treesitter ts-autotag diagnostics fix - https://github.com/windwp/nvim-ts-autotag#enable-update-on-insert
           vim.lsp.handlers["textDocument/publishDiagnostics"] =
-            vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
-              underline = true,
-              virtual_text = {
-                spacing = 5,
-                severity_limit = "Warning",
-              },
-              update_in_insert = true,
-            })
+              vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
+                underline = true,
+                virtual_text = {
+                  spacing = 5,
+                  severity_limit = "Warning",
+                },
+                update_in_insert = true,
+              })
         end,
       })
 
+      -- Temporarily disabled
+      -- require("plugins.lsp.langs.eslint")
       require("plugins.lsp.langs.typescript")
       require("plugins.lsp.langs.vue")
       require("plugins.lsp.langs.json")
