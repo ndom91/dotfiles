@@ -9,7 +9,7 @@ configuration {
 }
 
 @import "font.rasi"
-@import "colors.rasi"
+@import "colors/rose-pine.rasi"
 
 window {
 transparency:                   "real";
@@ -37,7 +37,6 @@ textbox-prompt-colon {
   background-color:               @TRANS;
   text-color:                     @FG;
   padding:                  8px 0px 8px 8px;
-  font:			                "Geist Mono Light 18";
 }
 
 entry {
