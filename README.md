@@ -2,6 +2,9 @@
 
 ![ndom91_desktop](./.dotfiles/ndo4_1.png)
 
+> [!NOTE]
+> I've switched all my personal machines to NixOS, so all of the configuration in this repository has been more or less replaced with that in the [ndom91/nixos-config](https://github.com/ndom91/nixos-config).
+
 <p>
   <img src="https://img.shields.io/badge/arch-black?style=for-the-badge&logo=archlinux&logoColor=white" />
   <img src="https://img.shields.io/badge/bash-black?style=for-the-badge&logo=gnu-bash&logoColor=white" />
