@@ -1,0 +1,40 @@
+#:schema https://github.com/joshmedeski/sesh/raw/main/sesh.schema.json
+
+[[session]]
+name = "Downloads 📥"
+path = "~/Downloads"
+startup_command = "ll -sdate"
+
+[[session]]
+name = "tmux config"
+path = "~/.config/tmux"
+startup_command = "nvim tmux.conf"
+preview_command = "bat --color=always ~/.config/tmux/tmux.conf"
+windows = [ "git" ]
+
+[[window]]
+name = "git"
+startup_script = "lazygit"
+
+[[session]]
+name = "plain-code"
+# path = "~/.config/tmux"
+# startup_command = "nvim tmux.conf"
+# preview_command = "bat --color=always ~/.config/tmux/tmux.conf"
+windows = [ "supportapp", "services", "supportapp2", "services2" ]
+
+[[window]]
+name = "supportapp"
+path  = "/opt/plain/support-app"
+
+[[window]]
+name = "supportapp2"
+path  = "/opt/plain/support-app2"
+
+[[window]]
+name = "services"
+path  = "/opt/plain/services"
+
+[[window]]
+name = "services2"
+path  = "/opt/plain/services2"

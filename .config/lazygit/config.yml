@@ -1,0 +1,9 @@
+gui:
+  border: rounded
+  nerdFontsVersion: "3"
+  theme:
+    activeBorderColor:
+      - "#b4befe" # catppuccin mocha lavender
+      - bold
+    inactiveBorderColor:
+      - "#6c7086" # catppuccin mocha overlay0
