@@ -13,7 +13,7 @@
 </p>
 
 > [!NOTE]
-> `Mar 17, 2024` - My personal Linux machines are all now on NixOS, those configs can be found at [ndom91/nixos-config](https://github.com/ndom91/nixos-config)
+> `Mar 17, 2024` - My personal Linux computers are on NixOS, those configs can be found at [ndom91/nixos-config](https://github.com/ndom91/nixos-config)
 >   
 > `Apr 06, 2026` - I've put my MacOS specific dotfiles in a [`macos`](https://github.com/ndom91/dotfiles/tree/macos) branch in this repository
 
