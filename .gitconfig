@@ -1,0 +1,55 @@
+# vim: set ts=2 sw=2 expandtab:
+
+[merge]
+	conflictStyle = "zdiff3"
+	tool = "nvim"
+
+[protocol]
+	version = 2
+
+[pull]
+	default = "current"
+	rebase = false
+
+[push]
+	autoSetupRemote = true
+	default = "current"
+
+[remote]
+	pushDefault = "origin"
+
+[rerere]
+	autoupdate = true
+	enabled = true
+
+[status]
+	branch = true
+	short = true
+
+[tag]
+  gpgSign = true
+
+[gpg]
+	format = "ssh"
+
+[url "git@github.com:"]
+  insteadOf = "https://github.com/"
+
+[include]
+	path = ~/.gitconfig-user
+
+[includeIf "gitdir:/opt/plain/"]
+	path = /opt/plain/.gitconfig
+
+[init]
+	defaultBranch = main
+
+[gitbutler]
+	aiModelProvider = anthropic
+
+[alias]
+	firefight = "!git log --oneline --since='1 year ago' | grep -iE 'revert|hotfix|emergency|rollback'"
+	accelerate = "!git log --format='%ad' --date=format:'%Y-%m' | sort | uniq -c"
+	bugcluster = "!git log -i -E --grep='fix|bug|broken' --name-only --format='' | sort | uniq -c | sort -nr | head -20"
+	whobuiltthis = "shortlog -sn --no-merges"
+	topchanges = "!git log --format=format: --name-only --since='1 year ago' | sort | uniq -c | sort -nr | head -20"
