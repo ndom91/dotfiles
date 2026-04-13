@@ -4,20 +4,6 @@ return {
     vim.g.fff = vim.tbl_deep_extend("force", vim.g.fff or {}, {
       lazy_sync = true,
     })
-
-    -- HACK: Neovim treesitter crashes on markdown nodes with `node:range()` returning nil,
-    -- killing the highlighter decoration provider in fff preview buffers.
-    -- Likely caused by stale treesitter queries on nvim 0.13 nightly.
-    -- Track: https://github.com/neovim/neovim/issues/38303
-    -- Remove this workaround once the error no longer reproduces.
-    local _ts_start = vim.treesitter.start
-    vim.treesitter.start = function(bufnr, lang, ...)
-      bufnr = bufnr or vim.api.nvim_get_current_buf()
-      if (lang == "markdown" or lang == "markdown_inline") and vim.bo[bufnr].buftype == "nofile" then
-        return
-      end
-      return _ts_start(bufnr, lang, ...)
-    end
   end,
   build = function()
     require("fff.download").download_or_build_binary()

@@ -25,7 +25,7 @@ return {
       },
       doc = {
         inline = false,
-        float = false, -- nvim 0.13 treesitter range() bug on markdown
+        float = true,
         conceal = true,
       },
     },
@@ -61,7 +61,7 @@ return {
       },
     },
     indent = {
-      enabled = false, -- nvim 0.13 nightly treesitter range() bug in scope/parse
+      enabled = true,
     },
     styles = {
       lazygit = {
