@@ -19,7 +19,9 @@ return {
       opts = {
         max_lines = 4,
         on_attach = function(buf)
-          return vim.bo[buf].filetype ~= "markdown" -- nvim 0.13 treesitter range() bug
+          -- HACK: treesitter `node:range()` nil on markdown, see https://github.com/neovim/neovim/issues/38303
+          -- Remove this workaround once the error no longer reproduces.
+          return vim.bo[buf].filetype ~= "markdown"
         end,
       },
     },
