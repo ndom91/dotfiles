@@ -17,11 +17,32 @@ name = "git"
 startup_script = "lazygit"
 
 [[session]]
-name = "plain-code"
+name = "plain-app1"
 # path = "~/.config/tmux"
 # startup_command = "nvim tmux.conf"
 # preview_command = "bat --color=always ~/.config/tmux/tmux.conf"
-windows = [ "supportapp", "services", "supportapp2", "services2" ]
+windows = [ "supportapp", "services" ]
+
+[[session]]
+name = "plain-app2"
+# path = "~/.config/tmux"
+# startup_command = "nvim tmux.conf"
+# preview_command = "bat --color=always ~/.config/tmux/tmux.conf"
+windows = [ "supportapp2", "services2" ]
+
+[[session]]
+name = "plain-app3"
+# path = "~/.config/tmux"
+# startup_command = "nvim tmux.conf"
+# preview_command = "bat --color=always ~/.config/tmux/tmux.conf"
+windows = [ "supportapp3", "services4" ]
+
+[[session]]
+name = "plain-sales-dashboard"
+# path = "~/.config/tmux"
+# startup_command = "nvim tmux.conf"
+# preview_command = "bat --color=always ~/.config/tmux/tmux.conf"
+windows = [ "sales-dashboard" ]
 
 [[window]]
 name = "supportapp"
@@ -38,3 +59,15 @@ path  = "/opt/plain/services"
 [[window]]
 name = "services2"
 path  = "/opt/plain/services2"
+
+[[window]]
+name = "services4"
+path  = "/opt/plain/services4"
+
+[[window]]
+name = "supportapp3"
+path  = "/opt/plain/support-app3"
+
+[[window]]
+name = "sales-dashboard"
+path  = "/opt/plain/sales-dashboard"
