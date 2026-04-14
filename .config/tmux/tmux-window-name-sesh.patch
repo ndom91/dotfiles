@@ -1,0 +1,97 @@
+diff --git a/scripts/rename_session_windows.py b/scripts/rename_session_windows.py
+index 8d07d48..7ebb81a 100755
+--- a/scripts/rename_session_windows.py
++++ b/scripts/rename_session_windows.py
+@@ -122,11 +122,12 @@ def post_restore(server: Server):
+ 
+ def enable_user_rename_hook(server: Server):
+     """
+-    The hook:
+-        if window has name:
+-            set @tmux_window_name_enabled to 1
+-        else:
+-            set @tmux_window_name_enabled to 0
++    The hook keeps plugin renaming enabled and re-runs the rename script
++    when any window is renamed (e.g. by sesh). This ensures programmatic
++    renames don't permanently disable the plugin for those windows.
++
++    To opt a specific window out of auto-renaming, manually run:
++        tmux set -w @tmux_window_name_enabled 0
+ 
+     @tmux_window_name_enabled (window option):
+         Indicator if we should rename the window or not
+@@ -136,7 +137,7 @@ def enable_user_rename_hook(server: Server):
+         'set-hook',
+         '-g',
+         f'after-rename-window[{HOOK_INDEX}]',
+-        f'if-shell "[ #{{n:window_name}} -gt 0 ]" "set -w @tmux_window_name_enabled 0" "set -w @tmux_window_name_enabled 1; run-shell "{current_file}"',
++        f'set -w @tmux_window_name_enabled 1; run-shell -b "{current_file}"',
+     )
+ 
+ 
+@@ -421,6 +422,17 @@ def substitute_name(name: str, substitute_sets: List[Tuple]) -> str:
+     return name
+ 
+ 
++def init_windows(server: Server, options: Options):
++    """Force-enable plugin renaming for all existing windows.
++
++    This handles windows created before the plugin loaded (e.g. by sesh)
++    and windows that were incorrectly disabled by a prior after-rename-window hook.
++    """
++    for window in server.windows:
++        set_window_tmux_option(server, window.window_id, f'{OPTIONS_PREFIX}enabled', '1')
++        logging.debug(f'init_windows: window {window.window_id} force-enabled for renaming')
++
++
+ def print_programs(server: Server, options: Options):
+     current_session = get_current_session(server)
+ 
+@@ -445,6 +457,11 @@ def main():
+         action='store_true',
+         help='Restore tmux enabled option from automatic-rename, for internal use, enables rename hook too',
+     )
++    parser.add_argument(
++        '--init_windows',
++        action='store_true',
++        help='Initialize enabled flag for pre-existing windows (e.g. sesh-created), for internal use',
++    )
+ 
+     args = parser.parse_args()
+     options = Options.from_options(server)
+@@ -473,6 +490,8 @@ def main():
+         disable_user_rename_hook(server)
+     elif args.post_restore:
+         post_restore(server)
++    elif args.init_windows:
++        init_windows(server, options)
+     else:
+         rename_windows(server, options)
+ 
+diff --git a/tmux_window_name.tmux b/tmux_window_name.tmux
+index 1ec3502..d734202 100755
+--- a/tmux_window_name.tmux
++++ b/tmux_window_name.tmux
+@@ -9,7 +9,10 @@ if [ "$LIBTMUX_AVAILABLE" = "False" ]; then
+ fi
+ 
+ tmux set -g automatic-rename on # Set automatic-rename on to make #{automatic-rename} be on when a new window is been open without a name
+-tmux set-hook -g 'after-new-window[8921]' 'set -wF @tmux_window_name_enabled \#\{automatic-rename\} ; set -w automatic-rename off'
++
++# Always enable plugin renaming for new windows, including those created with explicit names
++# (e.g. by sesh). The after-rename-window hook still lets users opt-out via manual rename.
++tmux set-hook -g 'after-new-window[8921]' 'set -w @tmux_window_name_enabled 1 ; set -w automatic-rename off'
+ tmux set-hook -g 'after-select-window[8921]' "run-shell -b ""$CURRENT_DIR""/scripts/rename_session_windows.py"
+ 
+ ############################################################################################
+@@ -18,6 +21,10 @@ tmux set-hook -g 'after-select-window[8921]' "run-shell -b ""$CURRENT_DIR""/scri
+ 
+ "$CURRENT_DIR"/scripts/rename_session_windows.py --enable_rename_hook
+ 
++# Initialize @tmux_window_name_enabled for windows that existed before the plugin loaded
++# (e.g. sesh-created sessions). Forces enabled=1 so the plugin renames them.
++"$CURRENT_DIR"/scripts/rename_session_windows.py --init_windows
++
+ # Disabling rename hooks when tmux-ressurect restores the sessions
+ tmux set -g @resurrect-hook-pre-restore-all ""$CURRENT_DIR"/scripts/rename_session_windows.py --disable_rename_hook"
+ tmux set -g @resurrect-hook-post-restore-all ""$CURRENT_DIR"/scripts/rename_session_windows.py --post_restore"
