@@ -1,6 +1,6 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # setup-open-in-vim.sh
-# Opens files from Finder/Launch Services in vim inside an existing tmux session in Ghostty.
+# Opens text files from Finder/Launch Services in vim inside an existing tmux session in Ghostty.
 # Re-running this script is safe — it will recreate the app bundle from scratch.
 
 set -euo pipefail
