@@ -17,8 +17,8 @@ fi
 pane_count=$($TMUX_BIN list-panes -t "=$session_name" -F '#{pane_index}' | wc -l | tr -d ' ')
 
 if [ "$pane_count" -le 1 ]; then
-  # Single pane — just capture it directly
-  $TMUX_BIN capture-pane -t "=$session_name" -e -p
+  # Single pane — capture with explicit pane target
+  $TMUX_BIN capture-pane -t "=$session_name:.1" -e -p
   exit 0
 fi
 
