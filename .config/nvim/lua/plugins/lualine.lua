@@ -39,7 +39,7 @@ return {
     })
     require("lualine").setup({
       options = {
-        theme = "catppuccin-mocha",
+        theme = "rose-pine",
         globalstatus = true,
         -- Old
         -- component_separators = { left = "", right = "" },

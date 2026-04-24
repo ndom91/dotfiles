@@ -22,7 +22,7 @@ require("lazy").setup({
   },
   install = {
     missing = true,
-    colorscheme = { "catppuccin" },
+    colorscheme = { "rose-pine" },
   },
   dev = {
     path = "/opt/ndomino/nvim/",

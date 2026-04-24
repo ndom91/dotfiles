@@ -1,5 +1,5 @@
 return {
-  cmd = { "tsgo", "lsp", "--stdio" },
+  cmd = { "tsgo", "--lsp", "--stdio" },
   cmd_env = {
     GOMEMLIMIT = "4GiB",
   },

@@ -1,7 +1,7 @@
 return {
   "akinsho/bufferline.nvim",
   event = "VimEnter",
-  dependencies = { "catppuccin/nvim" },
+  dependencies = { "rose-pine/neovim" },
   keys = {
     {
       "<c-x>",
@@ -13,17 +13,17 @@ return {
     { "<S-Tab>", ":bprev<CR>", silent = true },
   },
   config = function()
-    local colors = require("catppuccin.palettes").get_palette("mocha")
+    local p = require("rose-pine.palette")
 
     require("bufferline").setup({
       options = {
         themable = true,
         indicator = { icon = "▎" },
-        buffer_close_icon = "",
+        buffer_close_icon = "",
         modified_icon = "●",
-        close_icon = "",
-        left_trunc_marker = "",
-        right_trunc_marker = "",
+        close_icon = "",
+        left_trunc_marker = "",
+        right_trunc_marker = "",
         right_mouse_command = "bdelete! %d",
         max_name_length = 25,
         truncate_names = true,
@@ -50,34 +50,30 @@ return {
       },
       highlights = {
         buffer_selected = {
-          fg = colors.text,
-          bg = colors.surface1,
+          fg = p.text,
+          bg = p.highlight_low,
           bold = true,
           italic = false,
         },
         indicator_selected = {
-          fg = colors.lavender,
-          bg = colors.surface1,
+          fg = p.foam,
+          bg = p.highlight_low,
         },
         background = {
-          fg = colors.overlay0,
-          -- bg = colors.mantle,
+          fg = p.muted,
         },
         buffer_visible = {
-          fg = colors.text,
-          bg = colors.mantle,
+          fg = p.text,
+          bg = p.surface,
         },
         close_button = {
-          fg = colors.overlay0,
-          bg = colors.mantle,
+          fg = p.muted,
+          bg = p.surface,
         },
         close_button_selected = {
-          fg = colors.red,
-          bg = colors.surface1,
+          fg = p.love,
+          bg = p.highlight_low,
         },
-        -- fill = {
-        --   bg = colors.base,
-        -- },
       },
     })
   end,

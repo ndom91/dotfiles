@@ -24,7 +24,7 @@ return {
   -- lua based copilot replacement
   {
     "zbirenbaum/copilot.lua",
-    enabled = false,
+    enabled = true,
     event = "VeryLazy",
     cmd = "Copilot",
     build = ":Copilot auth",
