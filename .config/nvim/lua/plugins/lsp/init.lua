@@ -52,7 +52,15 @@ return {
         },
       })
 
-      vim.diagnostic.config({ jump = { float = true } })
+      vim.diagnostic.config({
+        jump = {
+          on_jump = function(diagnostic, bufnr)
+            if diagnostic then
+              vim.diagnostic.open_float({ bufnr = bufnr, scope = "cursor" })
+            end
+          end,
+        },
+      })
 
       -- On Attach
       vim.api.nvim_create_autocmd("LspAttach", {
