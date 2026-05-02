@@ -1,0 +1,5 @@
+{
+	"searxngUrl": "http://10.0.3.3:8888",
+	"timeoutMs": 30000,
+	"maxResults": 10
+}

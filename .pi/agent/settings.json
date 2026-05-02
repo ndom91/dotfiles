@@ -1,0 +1,30 @@
+{
+  "lastChangelogVersion": "0.72.1",
+  "shellCommandPrefix": "shopt -s expand_aliases\neval \"$(grep '^alias ' ~/.zshrc)\"",
+  "sessionDir": ".pi/sessions",
+  "enabledModels": [
+    "gpt-5.4-mini",
+    "gpt-5.4",
+    "gpt-5.5"
+  ],
+  "defaultProvider": "openai-codex",
+  "defaultModel": "gpt-5.5",
+  "defaultThinkingLevel": "medium",
+  "theme": "dark",
+  "compaction": {
+    "enabled": true,
+    "reserveTokens": 16384,
+    "keepRecentTokens": 20000
+  },
+  "packages": [
+    "npm:pi-mcp-adapter",
+    "npm:@aliou/pi-processes",
+    "npm:@samfp/pi-memory",
+    "npm:pi-smart-fetch",
+    "npm:@tintinweb/pi-subagents",
+    "npm:pi-searxng",
+    "npm:pi-glance",
+    "npm:@victor-software-house/pi-curated-themes"
+  ],
+  "enableInstallTelemetry": false
+}

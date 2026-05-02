@@ -1,0 +1,50 @@
+{
+	"version": 2,
+	"enabled": true,
+	"theme": "dark",
+	"icons": "nerd",
+	"editor": {
+		"minContentRows": 3
+	},
+	"display": {
+		"adaptive": true,
+		"showProvider": "auto"
+	},
+	"segments": [
+		{
+			"id": "git",
+			"enabled": true,
+			"priority": 100
+		},
+		{
+			"id": "context",
+			"enabled": true,
+			"priority": 90
+		},
+		{
+			"id": "cost",
+			"enabled": false,
+			"priority": 80
+		},
+		{
+			"id": "tokens",
+			"enabled": true,
+			"priority": 70
+		},
+		{
+			"id": "model",
+			"enabled": true,
+			"priority": 60
+		}
+	],
+	"model": {
+		"customNames": {}
+	},
+	"git": {
+		"showDirty": true,
+		"showAheadBehind": true,
+		"timeoutMs": 1000,
+		"refreshDebounceMs": 1500,
+		"pollIntervalMs": 5000
+	}
+}
