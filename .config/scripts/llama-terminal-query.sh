@@ -5,6 +5,7 @@ set -euo pipefail
 URL="${LLAMA_API_URL:-http://llama-server.puff.lan:8080/v1/chat/completions}"
 MODEL="${LLAMA_MODEL:-gemma-4-26B-A4B-it}"
 SYSTEM_PROMPT="${LLAMA_SYSTEM_PROMPT:-you are a terminal expert designed to help answer questions about using command line tools. Keep your responses very terse, if possible answer just in bash / command line executable output. Do not wrap your response in markdown or code fences. Return only the raw output text.}"
+LLAMA_DASH_KEY=$(op read op://Private/puffy-key/credential)
 
 if [ "$#" -eq 0 ]; then
   printf 'Usage: %s <query>\n' "$(basename "$0")" >&2
@@ -33,6 +34,7 @@ PAYLOAD=$(jq -n \
 
 RESPONSE=$(curl -s "$URL" \
   -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $LLAMA_DASH_KEY" \
   -d "$PAYLOAD" | jq -r '.choices[0].message.content')
 
 # Strip a single outer fenced code block if the model adds one anyway.
