@@ -46,9 +46,6 @@ return {
           style = "none",
           padding = { 1, 2 },
         },
-        win_options = {
-          winhighlight = "NormalFloat:NormalFloat,FloatBorder:FloatBorder",
-        },
       },
       popup = {
         border = {

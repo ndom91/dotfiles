@@ -6,13 +6,8 @@ local delete_buffer = function(prompt_bufnr)
   local entry = action_state.get_selected_entry()
 
   if entry and entry.bufnr then
-    -- Delete the buffer
     vim.api.nvim_buf_delete(entry.bufnr, { force = false })
-
-    -- Remove the entry from the picker and refresh
-    current_picker:delete_selection(function(selection)
-      -- Buffer already deleted above, just need to update the picker
-    end)
+    current_picker:delete_selection(function() end)
   end
 end
 
@@ -52,6 +47,17 @@ return {
       function()
         require("telescope.builtin").buffers({
           show_all_buffers = true,
+          border = true,
+          borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
+          layout_strategy = "horizontal",
+          layout_config = {
+            width = 0.87,
+            height = 0.80,
+            horizontal = {
+              prompt_position = "bottom",
+              preview_width = 0.45,
+            },
+          },
           attach_mappings = function(_, map)
             map("i", "<C-c>", delete_buffer)
             map("n", "d", delete_buffer)
@@ -91,23 +97,6 @@ return {
     },
     { "<leader>km", require("telescope.builtin").keymaps, desc = "[K]ey[m]aps" },
     {
-      "<leader>fb",
-      function()
-        require("telescope.builtin").current_buffer_fuzzy_find(require("telescope.themes").get_dropdown({
-          winblend = 0,
-          border = {},
-          previewer = false,
-          layout_strategy = "vertical",
-          layout_config = {
-            vertical = {
-              mirror = true,
-            },
-          },
-        }))
-      end,
-      desc = "[F]ind in [B]uffer",
-    },
-    {
       "<leader>fof",
       function()
         require("telescope.builtin").live_grep({
@@ -138,7 +127,8 @@ return {
       results_title = "",
       prompt_title = "Search",
       winblend = 0,
-      border = false,
+      border = true,
+      borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
       -- borderchars = { "─", "│", "─", "│", "┌", "┐", "┘", "└" },
       mappings = {
         i = {

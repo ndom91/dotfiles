@@ -5,6 +5,7 @@ return {
   build = ":TSUpdate",
   config = function()
     require("nvim-treesitter").setup()
+    require("nvim-treesitter").install({ "markdown", "markdown_inline" })
   end,
   dependencies = {
     "IndianBoy42/tree-sitter-just", -- Just file syntax highlighting

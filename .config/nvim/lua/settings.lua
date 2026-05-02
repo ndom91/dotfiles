@@ -95,7 +95,7 @@ opt.wrap = true
 local _ts_start = vim.treesitter.start
 vim.treesitter.start = function(bufnr, lang)
   bufnr = bufnr or vim.api.nvim_get_current_buf()
-  if vim.bo[bufnr].filetype == "markdown" then return end -- nvim 0.13 range() bug
+  if vim.bo[bufnr].filetype == "markdown" and vim.api.nvim_buf_get_name(bufnr) ~= "" then return end -- nvim 0.13 range() bug
   vim.schedule(function()
     if vim.api.nvim_buf_is_valid(bufnr) then
       pcall(_ts_start, bufnr, lang)
