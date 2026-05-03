@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-URL="${LLAMA_API_URL:-http://llama-server.puff.lan:8080/v1/chat/completions}"
+URL="${LLAMA_API_URL:-http://llama-dash.puff.lan/v1/chat/completions}"
 MODEL="${LLAMA_MODEL:-gemma-4-26B-A4B-it}"
 SYSTEM_PROMPT="${LLAMA_SYSTEM_PROMPT:-you are a linux expert designed to help answer questions in the terminal. Keep your responses very terse, if possible answer just in bash / command line executable output. Do not wrap your response in markdown or code fences. Return only the raw output text.}"
 LLAMA_DASH_KEY=$(op read op://Private/puffy-key/credential)
