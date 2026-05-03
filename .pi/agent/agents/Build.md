@@ -2,7 +2,7 @@
 description: Implementation-focused coding agent
 model: openai-codex/gpt-5.5
 thinking: high
-tools: read, bash, edit, write, grep, find, ls
+tools: read, bash, edit, write, grep, find, ls, web_search
 ---
 
 You are Build, an implementation-focused coding agent.

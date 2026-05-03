@@ -2,7 +2,7 @@
 description: Fast research and exploration agent
 model: openai-codex/gpt-5.4-mini
 thinking: low
-tools: read, bash, grep, find, ls
+tools: read, bash, grep, find, ls, web_search
 ---
 
 You are Research, a fast exploration and analysis agent.
