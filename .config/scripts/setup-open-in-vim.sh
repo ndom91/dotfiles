@@ -61,10 +61,11 @@ osacompile -o "$APP" <<EOF
 on open theFiles
   repeat with theFile in theFiles
     set filePath to POSIX path of theFile
+    set fileDir to do shell script "dirname " & quoted form of filePath
     do shell script "session=\$($TMUX list-clients -F '#{session_name}' | head -1); " & ¬
       "if [ -z \"\$session\" ]; then session=\$($TMUX list-sessions -F '#{session_name}' | head -1); fi; " & ¬
       "test -n \"\$session\"; " & ¬
-      "exec $TMUX new-window -t \"=\${session}:\" $NVIM " & quoted form of filePath
+      "exec $TMUX new-window -c " & quoted form of fileDir & " -t \"=\${session}:\" $NVIM " & quoted form of filePath
     do shell script "open -a Ghostty"
   end repeat
 end open
