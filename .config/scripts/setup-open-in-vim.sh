@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 #
 # setup-open-in-vim.sh
-# Setup opening text/source files from Finder/Launch Services in vim inside an
+# Setup opening text/source files from Finder/Launch Services in nvim inside an
 # existing tmux session in Ghostty. After running, double clicking an associated
-# file in Finder will open it in a new window in your active tmux session in vim.
+# file in Finder will open it in a new window in your active tmux session in nvim.
 #
 # Re-running this script is safe — it will recreate the app bundle from scratch.
 
@@ -15,12 +15,13 @@ BUNDLE_ID="local.open-in-vim"
 # Homebrew prefix (supports both standard and custom prefixes)
 BREW_PREFIX="${HOMEBREW_PREFIX:-$(brew --prefix)}"
 TMUX="$BREW_PREFIX/bin/tmux"
+NVIM="$BREW_PREFIX/bin/nvim"
 
 EXTENSIONS=(
     .json .csv .md .yaml .yml .toml .txt .sh .env .conf .ini .log
     .js .jsx .ts .tsx .mjs .cjs .mts .cts
     .css .scss .sass .less
-    .html .vue .svelte .astro
+    .vue .svelte .astro
 )
 UTIS=(public.plain-text public.text public.source-code)
 
@@ -46,6 +47,11 @@ if [ ! -f "$TMUX" ]; then
     exit 1
 fi
 
+if [ ! -f "$NVIM" ]; then
+    echo "Error: nvim not found at $NVIM. Install with: brew install neovim" >&2
+    exit 1
+fi
+
 # ---- Build app bundle ----
 
 echo "Creating $APP..."
@@ -58,7 +64,7 @@ on open theFiles
     do shell script "session=\$($TMUX list-clients -F '#{session_name}' | head -1); " & ¬
       "if [ -z \"\$session\" ]; then session=\$($TMUX list-sessions -F '#{session_name}' | head -1); fi; " & ¬
       "test -n \"\$session\"; " & ¬
-      "exec $TMUX new-window -t \"=\${session}:\" vim " & quoted form of filePath
+      "exec $TMUX new-window -t \"=\${session}:\" $NVIM " & quoted form of filePath
     do shell script "open -a Ghostty"
   end repeat
 end open
@@ -82,19 +88,27 @@ echo "Registering with Launch Services..."
 
 echo "Setting file associations..."
 
+set_handler() {
+    local target="$1"
+
+    if ! duti -s "$BUNDLE_ID" "$target" all; then
+        echo "Warning: failed to set $BUNDLE_ID as handler for $target; skipping." >&2
+    fi
+}
+
 for uti in "${UTIS[@]}"; do
-    duti -s "$BUNDLE_ID" "$uti" all
+    set_handler "$uti"
 done
 
 for ext in "${EXTENSIONS[@]}"; do
-    duti -s "$BUNDLE_ID" "$ext" all
+    set_handler "$ext"
 done
 
 # ---- Verify ----
 
 echo ""
 echo "Done! Verifying a few associations:"
-for ext in json md yaml ts tsx jsx css html; do
+for ext in json md yaml ts tsx jsx css vue svelte astro; do
     result=$(duti -x "$ext" 2>/dev/null | head -1)
     echo "  .$ext -> $result"
 done
