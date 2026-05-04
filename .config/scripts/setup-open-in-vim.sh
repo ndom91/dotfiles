@@ -1,10 +1,9 @@
 #!/usr/bin/env bash
 #
 # setup-open-in-vim.sh
-# Setup opening text files from Finder/Launch Services in vim inside an
-# existing tmux session in Ghostty. After running, double clicking a text
-# file in Finder will open it in a new window in your active tmux session
-# in vim.
+# Setup opening text/source files from Finder/Launch Services in vim inside an
+# existing tmux session in Ghostty. After running, double clicking an associated
+# file in Finder will open it in a new window in your active tmux session in vim.
 #
 # Re-running this script is safe — it will recreate the app bundle from scratch.
 
@@ -17,7 +16,12 @@ BUNDLE_ID="local.open-in-vim"
 BREW_PREFIX="${HOMEBREW_PREFIX:-$(brew --prefix)}"
 TMUX="$BREW_PREFIX/bin/tmux"
 
-EXTENSIONS=(.json .csv .md .yaml .yml .toml .txt .sh .env .conf .ini .log)
+EXTENSIONS=(
+    .json .csv .md .yaml .yml .toml .txt .sh .env .conf .ini .log
+    .js .jsx .ts .tsx .mjs .cjs .mts .cts
+    .css .scss .sass .less
+    .html .vue .svelte .astro
+)
 UTIS=(public.plain-text public.text public.source-code)
 
 # ---- Sanity checks ----
@@ -90,7 +94,7 @@ done
 
 echo ""
 echo "Done! Verifying a few associations:"
-for ext in json md yaml; do
+for ext in json md yaml ts tsx jsx css html; do
     result=$(duti -x "$ext" 2>/dev/null | head -1)
     echo "  .$ext -> $result"
 done
