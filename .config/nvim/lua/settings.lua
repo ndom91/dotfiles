@@ -48,7 +48,7 @@ opt.mouse = "n"
 opt.path = ".,**"
 opt.number = true
 opt.relativenumber = true
-opt.signcolumn = "yes"
+opt.signcolumn = "yes:2"
 opt.smartcase = true
 opt.smartindent = true
 
