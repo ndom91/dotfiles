@@ -4,20 +4,20 @@ return {
   config = function()
     require('minuet').setup {
       provider = 'openai_compatible',
-      n_completions = 1,          -- single completion to save local resources
-      context_window = 4096,
-      request_timeout = 4,        -- abandon slow requests; stale ghost text is worthless
-      throttle = 1000,            -- min ms between requests (you're on a big local model)
-      debounce = 400,             -- wait after typing stops before firing
+      n_completions = 1,
+      context_window = 2048,      -- lowered: shrinks prefill, few-shots already eat ~700 tokens
+      request_timeout = 12,       -- raised: observed latency was ~9.3s (5s prefill + gen)
+      throttle = 1500,            -- spaced out a bit more for a slow local model
+      debounce = 500,
       provider_options = {
         openai_compatible = {
-          api_key = 'LLAMA_DASH_MINUTAE_KEY',       -- any non-empty env var name;
+          api_key = 'LLAMA_DASH_MINUTAE_KEY',
           name = 'llama.cpp',
           end_point = 'http://llama-dash.puff.lan/v1/chat/completions',
-          model = 'qwen3.6-35b',
+          model = 'qwen3.6-27b',
           optional = {
             max_tokens = 256,
-            temperature = 0.2,        -- low temp = stable, predictable completions
+            temperature = 0.2,
             top_p = 0.9,
             top_k = 20,
             chat_template_kwargs = { enable_thinking = false },

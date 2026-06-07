@@ -103,11 +103,12 @@ return {
           },
         },
       },
+      -- trigger = { prefetch_on_insert = false }, -- avoid wasted minuet requests
       documentation = {
         auto_show = true,
       },
       ghost_text = {
-        enabled = true,
+        enabled = false,
       },
     },
 
