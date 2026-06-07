@@ -1,7 +1,6 @@
 monitorBarOverrides = []
 monitorDwindleOverrides = []
 monitorNiriOverrides = []
-monitorOrientationOverrides = []
 
 [appearance]
 mode = "dark"
@@ -23,9 +22,9 @@ maxItems = 200
 maxTotalBytes = 67108864
 
 [dwindle]
-defaultSplitRatio = 1.0
+defaultSplitRatio = 1.3000000000000003
 moveToRootStable = true
-singleWindowAspectRatio = "4:3"
+singleWindowAspectRatio = "21:9"
 smartSplit = false
 splitWidthMultiplier = 1.0
 useGlobalGaps = true
@@ -48,13 +47,17 @@ top = 8.0
 animationsEnabled = true
 defaultLayoutType = "dwindle"
 hotkeysEnabled = true
+hyperTrigger = "Option"
 ipcEnabled = false
+leaderKey = "Hyper+Space"
 preventSleepEnabled = false
+sequenceTimeoutMilliseconds = 800
 updateChecksEnabled = true
 
 [gestures]
 fingerCount = 3
 invertDirection = true
+mouseResizeModifierKey = "option"
 scrollEnabled = true
 scrollModifierKey = "optionShift"
 scrollSensitivity = 5.0
@@ -62,7 +65,7 @@ scrollSensitivity = 5.0
 [mouseWarp]
 axis = "horizontal"
 margin = 1
-monitorOrder = ["DELL U2419HC", "Mi Monitor"]
+monitorOrder = ["DELL U2419HC", "Mi Monitor", "Built-in Retina Display"]
 
 [niri]
 alwaysCenterSingleColumn = false
@@ -71,23 +74,17 @@ columnWidthPresets = [0.3333333333333333, 0.5, 0.6666666666666666]
 defaultColumnWidth = 0.5
 infiniteLoop = false
 maxVisibleColumns = 2
-maxWindowsPerColumn = 10
 singleWindowAspectRatio = "none"
 
 [quakeTerminal]
 animationDuration = 0.2
 autoHide = false
-enabled = true
+enabled = false
 heightPercent = 50.0
 monitorMode = "focusedWindow"
 opacity = 1.0
-position = "center"
-useCustomFrame = false
+position = "top"
 widthPercent = 50.0
-
-[state]
-commandPaletteLastMode = "windows"
-hiddenBarIsCollapsed = true
 
 [statusBar]
 showAppNames = false
@@ -95,7 +92,7 @@ showWorkspaceName = false
 useWorkspaceId = false
 
 [workspaceBar]
-backgroundOpacity = 0.175
+backgroundOpacity = 0.1
 deduplicateAppIcons = false
 enabled = true
 height = 24.0
@@ -104,23 +101,17 @@ labelFontSize = 12.0
 notchAware = true
 position = "overlappingMenuBar"
 reserveLayoutSpace = false
-showFloatingWindows = false
+showFloatingWindows = true
 showLabels = true
-windowLevel = "popup"
+windowLevel = "floating"
 xOffset = 0.0
-yOffset = 0.0
+yOffset = -3.0
 
 [workspaceBar.accentColor]
 alpha = 1.0
-blue = -1.0
-green = -1.0
-red = -1.0
-
-[workspaceBar.textColor]
-alpha = 1.0
-blue = -1.0
-green = -1.0
-red = -1.0
+blue = 0.6261133551597595
+green = 0.6261133551597595
+red = 0.5957195029675382
 
 [[appRules]]
 bundleId = "com.openai.codex"
@@ -271,6 +262,23 @@ layout = "float"
 minHeight = 1126.0
 minWidth = 1045.0
 
+[[appRules]]
+bundleId = "app.cotypist.Cotypist"
+id = "01AC77D3-FACE-42FA-9DD5-9E8F22FA8BF7"
+layout = "float"
+minHeight = 1016.0
+minWidth = 800.0
+
+[[appRules]]
+bundleId = "org.openlogi.openlogi"
+id = "867B8ED9-0B7D-4DA0-A33A-4D035A3E00DB"
+layout = "float"
+
+[[appRules]]
+bundleId = "io.hanxiao.omni"
+id = "01C32C9A-7DA9-4F00-BF69-4D0AE6099DDD"
+layout = "float"
+
 [[hotkeys]]
 binding = "Command+1"
 id = "switchWorkspace.0"
@@ -304,7 +312,7 @@ binding = "Shift+Command+4"
 id = "moveToWorkspace.3"
 
 [[hotkeys]]
-binding = "Option+5"
+binding = "Hyper+5"
 id = "switchWorkspace.4"
 
 [[hotkeys]]
@@ -312,7 +320,7 @@ binding = "Shift+Command+5"
 id = "moveToWorkspace.4"
 
 [[hotkeys]]
-binding = "Option+6"
+binding = "Hyper+6"
 id = "switchWorkspace.5"
 
 [[hotkeys]]
@@ -320,7 +328,7 @@ binding = "Shift+Command+6"
 id = "moveToWorkspace.5"
 
 [[hotkeys]]
-binding = "Option+7"
+binding = "Hyper+7"
 id = "switchWorkspace.6"
 
 [[hotkeys]]
@@ -328,19 +336,19 @@ binding = "Shift+Command+7"
 id = "moveToWorkspace.6"
 
 [[hotkeys]]
-binding = "Option+8"
+binding = "Hyper+8"
 id = "switchWorkspace.7"
 
 [[hotkeys]]
-binding = "Option+Shift+8"
+binding = "Hyper+Shift+8"
 id = "moveToWorkspace.7"
 
 [[hotkeys]]
-binding = "Option+9"
+binding = "Hyper+9"
 id = "switchWorkspace.8"
 
 [[hotkeys]]
-binding = "Option+Shift+9"
+binding = "Hyper+Shift+9"
 id = "moveToWorkspace.8"
 
 [[hotkeys]]
@@ -556,11 +564,11 @@ binding = "Unassigned"
 id = "swapSplit"
 
 [[hotkeys]]
-binding = "Shift+Command+\\"
+binding = "Shift+Command+Backslash"
 id = "resizeGrow.left"
 
 [[hotkeys]]
-binding = "Shift+Command+'"
+binding = "Shift+Command+Quote"
 id = "resizeGrow.right"
 
 [[hotkeys]]
@@ -644,7 +652,7 @@ binding = "Unassigned"
 id = "toggleHiddenBar"
 
 [[hotkeys]]
-binding = "Option+`"
+binding = "Option+Grave"
 id = "toggleQuakeTerminal"
 
 [[hotkeys]]
@@ -654,6 +662,16 @@ id = "toggleWorkspaceLayout"
 [[hotkeys]]
 binding = "Option+Shift+O"
 id = "toggleOverview"
+
+[[monitorOrientationOverrides]]
+monitorDisplayId = 14
+monitorName = "Mi Monitor"
+orientation = "horizontal"
+
+[[monitorOrientationOverrides]]
+monitorDisplayId = 13
+monitorName = "DELL U2419HC"
+orientation = "vertical"
 
 [[workspaces]]
 id = "AD36F001-C57E-41A5-AC1D-DF5249D007F0"
