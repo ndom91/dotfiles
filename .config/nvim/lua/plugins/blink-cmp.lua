@@ -3,7 +3,7 @@ return {
   lazy = false, -- lazy loading handled internally
 
   dependencies = {
-    "giuxtaposition/blink-cmp-copilot",
+    -- "giuxtaposition/blink-cmp-copilot",
     -- "L3MON4D3/LuaSnip", -- Snippets Engine
     -- "rafamadriz/friendly-snippets", -- Snippets
     -- "onsails/lspkind-nvim", -- Icons
@@ -57,13 +57,13 @@ return {
 
     sources = {
       providers = {
-        copilot = {
-          name = "copilot",
-          module = "blink-cmp-copilot",
-        },
+        -- copilot = {
+        --   name = "copilot",
+        --   module = "blink-cmp-copilot",
+        -- },
         lazydev = { name = "LazyDev", module = "lazydev.integrations.blink", fallbacks = { "lsp" } },
       },
-      default = { "lsp", "copilot", "path", "snippets", "buffer", "lazydev", "omni" },
+      default = { "lsp", "path", "snippets", "buffer", "lazydev", "omni" },
     },
 
     completion = {
