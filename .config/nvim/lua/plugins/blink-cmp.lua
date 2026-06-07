@@ -61,9 +61,16 @@ return {
         --   name = "copilot",
         --   module = "blink-cmp-copilot",
         -- },
+        minuet = {
+          name = 'minuet',
+          module = 'minuet.blink',
+          async = true,
+          timeout_ms = 3000,   -- should be >= minuet request_timeout * 1000
+          score_offset = 50,   -- bumps minuet up the suggestion list
+        },
         lazydev = { name = "LazyDev", module = "lazydev.integrations.blink", fallbacks = { "lsp" } },
       },
-      default = { "lsp", "path", "snippets", "buffer", "lazydev", "omni" },
+      default = { "lsp", "path", "minuet", "snippets", "buffer", "lazydev", "omni" },
     },
 
     completion = {
