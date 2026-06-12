@@ -47,11 +47,10 @@ top = 8.0
 animationsEnabled = true
 defaultLayoutType = "dwindle"
 hotkeysEnabled = true
-hyperTrigger = "Option"
+hyperKeyHoldThresholdMilliseconds = 150
+hyperTrigger = "Left Option"
 ipcEnabled = false
-leaderKey = "Hyper+Space"
 preventSleepEnabled = false
-sequenceTimeoutMilliseconds = 800
 updateChecksEnabled = true
 
 [gestures]
