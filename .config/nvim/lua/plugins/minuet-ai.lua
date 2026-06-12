@@ -11,7 +11,11 @@ return {
       debounce = 500,
       provider_options = {
         openai_compatible = {
-          api_key = 'LLAMA_DASH_MINUTAE_KEY',
+          -- function form avoids a crash when nvim's process env lacks the
+          -- var (e.g. GUI launch); local llama.cpp ignores the key value
+          api_key = function()
+            return vim.env.LLAMA_DASH_MINUTAE_KEY or 'sk-no-key-required'
+          end,
           name = 'llama.cpp',
           end_point = 'http://llama-dash.puff.lan/v1/chat/completions',
           model = 'qwen3.6-27b',
@@ -32,6 +36,7 @@ return {
           'TelescopePrompt',
           'snacks_picker_input',
           'oil',
+          'term',
           'help',
         },
         keymap = {
