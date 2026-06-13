@@ -17,17 +17,17 @@ name = "git"
 startup_script = "lazygit"
 
 [[session]]
-name = "1 plain"
+name = "1-plain"
 path = "/opt/plain/support-app"
 windows = [ "services" ]
 
 [[session]]
-name = "2 plain"
+name = "2-plain"
 path = "/opt/plain/support-app2"
 windows = [ "services2" ]
 
 [[session]]
-name = "3 plain"
+name = "3-plain"
 path = "/opt/plain/support-app3"
 windows = [ "services4" ]
 
