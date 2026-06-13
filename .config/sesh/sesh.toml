@@ -32,7 +32,7 @@ path = "/opt/plain/support-app3"
 windows = [ "services4" ]
 
 [[session]]
-name = "sales-dashboard plain"
+name = "sales-dashboard-plain"
 # path = "~/.config/tmux"
 # startup_command = "nvim tmux.conf"
 # preview_command = "bat --color=always ~/.config/tmux/tmux.conf"

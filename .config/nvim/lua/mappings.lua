@@ -13,11 +13,7 @@ vim.keymap.set("n", "J", "mzJ`z", { silent = true })
 vim.keymap.set("n", "*", "*zz", { silent = true })
 vim.keymap.set("n", "#", "#zz", { silent = true })
 
--- window movement
-vim.keymap.set("n", "<C-h>", "<C-w>h", { silent = true })
-vim.keymap.set("n", "<C-j>", "<C-w>j", { silent = true })
-vim.keymap.set("n", "<C-k>", "<C-w>k", { silent = true })
-vim.keymap.set("n", "<C-l>", "<C-w>l", { silent = true })
+-- window movement: C-hjkl owned by vim-tmux-navigator (see lua/plugins/init.lua)
 
 -- resizing splits
 vim.keymap.set("n", "<C-Up>", ":resize +2<cr>", { silent = true })
