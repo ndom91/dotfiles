@@ -92,7 +92,7 @@ useWorkspaceId = false
 
 [workspaceBar]
 backgroundOpacity = 0.1
-deduplicateAppIcons = false
+deduplicateAppIcons = true
 enabled = true
 height = 24.0
 hideEmptyWorkspaces = false
