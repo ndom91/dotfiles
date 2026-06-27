@@ -1,5 +1,6 @@
 monitorBarOverrides = []
 monitorDwindleOverrides = []
+monitorGapOverrides = []
 monitorNiriOverrides = []
 
 [appearance]
@@ -24,14 +25,16 @@ maxTotalBytes = 67108864
 [dwindle]
 defaultSplitRatio = 1.3000000000000003
 moveToRootStable = true
-singleWindowAspectRatio = "21:9"
+singleWindowAspectRatio = "2520x1080"
 smartSplit = false
 splitWidthMultiplier = 1.0
 useGlobalGaps = true
 
 [focus]
+crossesMonitorAtEdge = true
 followsMouse = false
 followsWindowToMonitor = false
+moveCrossesMonitorAtEdge = true
 moveMouseToFocusedWindow = false
 
 [gaps]
@@ -47,10 +50,10 @@ top = 8.0
 animationsEnabled = true
 defaultLayoutType = "dwindle"
 hotkeysEnabled = true
-hyperKeyHoldThresholdMilliseconds = 150
-hyperTrigger = "Left Option"
 ipcEnabled = false
 preventSleepEnabled = false
+spacesTrackingEnabled = true
+systemHyperTrigger = "None"
 updateChecksEnabled = true
 
 [gestures]
@@ -60,11 +63,11 @@ mouseResizeModifierKey = "option"
 scrollEnabled = true
 scrollModifierKey = "optionShift"
 scrollSensitivity = 5.0
+trackpadScrollStyle = "snap"
 
 [mouseWarp]
-axis = "horizontal"
+enabled = true
 margin = 1
-monitorOrder = ["DELL U2419HC", "Mi Monitor", "Built-in Retina Display"]
 
 [niri]
 alwaysCenterSingleColumn = false
@@ -73,7 +76,7 @@ columnWidthPresets = [0.3333333333333333, 0.5, 0.6666666666666666]
 defaultColumnWidth = 0.5
 infiniteLoop = false
 maxVisibleColumns = 2
-singleWindowAspectRatio = "none"
+singleWindowAspectRatio = "fill"
 
 [quakeTerminal]
 animationDuration = 0.2
@@ -84,6 +87,9 @@ monitorMode = "focusedWindow"
 opacity = 1.0
 position = "top"
 widthPercent = 50.0
+
+[routing]
+mode = "custom"
 
 [statusBar]
 showAppNames = false
@@ -104,7 +110,7 @@ showFloatingWindows = true
 showLabels = true
 windowLevel = "floating"
 xOffset = 0.0
-yOffset = -3.0
+yOffset = 3.0
 
 [workspaceBar.accentColor]
 alpha = 1.0
@@ -278,6 +284,11 @@ bundleId = "io.hanxiao.omni"
 id = "01C32C9A-7DA9-4F00-BF69-4D0AE6099DDD"
 layout = "float"
 
+[[appRules]]
+bundleId = "app.tuple.app"
+id = "7DAE9108-71B9-4D6D-84F9-61A91C93441B"
+layout = "float"
+
 [[hotkeys]]
 binding = "Command+1"
 id = "switchWorkspace.0"
@@ -311,7 +322,7 @@ binding = "Shift+Command+4"
 id = "moveToWorkspace.3"
 
 [[hotkeys]]
-binding = "Hyper+5"
+binding = "Command+5"
 id = "switchWorkspace.4"
 
 [[hotkeys]]
@@ -319,7 +330,7 @@ binding = "Shift+Command+5"
 id = "moveToWorkspace.4"
 
 [[hotkeys]]
-binding = "Hyper+6"
+binding = "Command+6"
 id = "switchWorkspace.5"
 
 [[hotkeys]]
@@ -327,7 +338,7 @@ binding = "Shift+Command+6"
 id = "moveToWorkspace.5"
 
 [[hotkeys]]
-binding = "Hyper+7"
+binding = "Command+7"
 id = "switchWorkspace.6"
 
 [[hotkeys]]
@@ -335,11 +346,11 @@ binding = "Shift+Command+7"
 id = "moveToWorkspace.6"
 
 [[hotkeys]]
-binding = "Hyper+8"
+binding = "Command+8"
 id = "switchWorkspace.7"
 
 [[hotkeys]]
-binding = "Hyper+Shift+8"
+binding = "Shift+Command+8"
 id = "moveToWorkspace.7"
 
 [[hotkeys]]
@@ -347,7 +358,7 @@ binding = "Hyper+9"
 id = "switchWorkspace.8"
 
 [[hotkeys]]
-binding = "Hyper+Shift+9"
+binding = "Hyper+9"
 id = "moveToWorkspace.8"
 
 [[hotkeys]]
@@ -615,7 +626,7 @@ binding = "Unassigned"
 id = "preselectClear"
 
 [[hotkeys]]
-binding = "Control+Option+Space"
+binding = "Control+Space"
 id = "openCommandPalette"
 
 [[hotkeys]]
@@ -663,14 +674,26 @@ binding = "Option+Shift+O"
 id = "toggleOverview"
 
 [[monitorOrientationOverrides]]
-monitorDisplayId = 14
+monitorDisplayId = 20
 monitorName = "Mi Monitor"
 orientation = "horizontal"
 
 [[monitorOrientationOverrides]]
-monitorDisplayId = 13
+monitorDisplayId = 21
 monitorName = "DELL U2419HC"
 orientation = "vertical"
+
+[[monitorRoutingOverrides]]
+gridColumn = 1
+gridRow = 0
+monitorDisplayId = 20
+monitorName = "Mi Monitor"
+
+[[monitorRoutingOverrides]]
+gridColumn = 0
+gridRow = 0
+monitorDisplayId = 21
+monitorName = "DELL U2419HC"
 
 [[workspaces]]
 id = "AD36F001-C57E-41A5-AC1D-DF5249D007F0"
