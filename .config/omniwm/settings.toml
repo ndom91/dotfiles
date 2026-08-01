@@ -65,8 +65,17 @@ scrollEnabled = true
 scrollModifierKey = "optionShift"
 scrollSensitivity = 5.0
 trackpadScrollStyle = "snap"
+workspaceSwipeAxis = "vertical"
+workspaceSwipeEnabled = false
+workspaceSwipeFingerCount = 3
+
+[hiddenBar]
+enabled = true
+hiddenBundleIDs = []
+rehideIntervalSeconds = 5.0
 
 [mouseWarp]
+constrainToArrangement = false
 enabled = true
 margin = 1
 
@@ -78,6 +87,35 @@ defaultColumnWidth = 0.5
 infiniteLoop = false
 maxVisibleColumns = 2
 singleWindowAspectRatio = "fill"
+
+[overview]
+zoom = 1.0
+
+[overview.backdrop]
+alpha = 1.0
+blue = 0.08
+green = 0.05
+red = 0.05
+
+[overview.windowBorders]
+
+[overview.windowBorders.hovered]
+alpha = 1.0
+blue = 1.0
+green = 0.6
+red = 0.4
+
+[overview.windowBorders.normal]
+alpha = 0.5
+blue = 0.35
+green = 0.3
+red = 0.3
+
+[overview.windowBorders.selected]
+alpha = 1.0
+blue = 0.4
+green = 0.8
+red = 0.3
 
 [quakeTerminal]
 animationDuration = 0.2
@@ -101,6 +139,7 @@ useWorkspaceId = false
 backgroundOpacity = 0.1
 deduplicateAppIcons = true
 enabled = true
+excludedBundleIDs = []
 height = 24.0
 hideEmptyWorkspaces = false
 labelFontSize = 12.0
@@ -109,18 +148,14 @@ notchAware = true
 notchMode = "moveBelowMenuBar"
 position = "overlappingMenuBar"
 reserveLayoutSpace = false
+revealHoldMilliseconds = 200.0
+revealModifier = "off"
 showFloatingWindows = true
 showLabels = true
 systemStatsButton = false
 windowLevel = "floating"
 xOffset = 0.0
 yOffset = 3.0
-
-[workspaceBar.accentColor]
-alpha = 1.0
-blue = 0.6261133551597595
-green = 0.6261133551597595
-red = 0.5957195029675382
 
 [[appRules]]
 bundleId = "com.openai.codex"
@@ -382,7 +417,7 @@ binding = "Command+H"
 id = "focus.left"
 
 [[hotkeys]]
-binding = "Unassigned"
+binding = "Command+J"
 id = "focus.down"
 
 [[hotkeys]]
@@ -564,6 +599,14 @@ id = "moveColumn.left"
 [[hotkeys]]
 binding = "Unassigned"
 id = "moveColumn.right"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "moveColumn.up"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "moveColumn.down"
 
 [[hotkeys]]
 binding = "Control+Option+Home"
@@ -863,7 +906,7 @@ id = "toggleWorkspaceBarVisibility"
 
 [[hotkeys]]
 binding = "Unassigned"
-id = "toggleHiddenBar"
+id = "toggleHiddenBarPanel"
 
 [[hotkeys]]
 binding = "Option+Grave"
@@ -882,17 +925,18 @@ binding = "Unassigned"
 id = "toggleSystemStats"
 
 [[monitorOrientationOverrides]]
+monitorDisplayId = 6
 monitorName = "Mi Monitor"
 orientation = "horizontal"
 
 [[monitorOrientationOverrides]]
+monitorDisplayId = 7
 monitorName = "DELL U2419HC"
 orientation = "vertical"
 
 [[monitorRoutingOverrides]]
 gridColumn = 0
 gridRow = 0
-monitorDisplayId = 1
 monitorName = "Built-in Retina Display"
 
 [[workspaces]]
