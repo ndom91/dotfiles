@@ -143,6 +143,71 @@
     }
   },
   {
+    "plugin_id": "third774.last-workspace",
+    "name": "Last Workspace",
+    "version": "0.1.0",
+    "min_herdr_version": "0.7.0",
+    "description": "Toggle between the current and previously focused Herdr workspace.",
+    "manifest_path": "/Users/ndom91/.config/herdr/plugins/github/third774.last-workspace-5de7aeab3665/herdr-plugin.toml",
+    "plugin_root": "/Users/ndom91/.config/herdr/plugins/github/third774.last-workspace-5de7aeab3665",
+    "enabled": true,
+    "platforms": [
+      "linux",
+      "macos"
+    ],
+    "build": [
+      {
+        "platforms": [
+          "linux",
+          "macos"
+        ],
+        "command": [
+          "cargo",
+          "build",
+          "--release"
+        ]
+      }
+    ],
+    "actions": [
+      {
+        "id": "toggle",
+        "title": "Last workspace",
+        "contexts": [
+          "global",
+          "workspace"
+        ],
+        "command": [
+          "./target/release/herdr-last-workspace",
+          "toggle"
+        ]
+      }
+    ],
+    "events": [
+      {
+        "on": "workspace.closed",
+        "command": [
+          "./target/release/herdr-last-workspace",
+          "closed"
+        ]
+      },
+      {
+        "on": "workspace.focused",
+        "command": [
+          "./target/release/herdr-last-workspace",
+          "focused"
+        ]
+      }
+    ],
+    "source": {
+      "kind": "github",
+      "owner": "third774",
+      "repo": "herdr-last-workspace",
+      "resolved_commit": "8b55ebf15deaa52b49ff1c2500aab0c19c729420",
+      "managed_path": "/Users/ndom91/.config/herdr/plugins/github/third774.last-workspace-5de7aeab3665",
+      "installed_unix_ms": 1785607709728
+    }
+  },
+  {
     "plugin_id": "vim-herdr-navigation",
     "name": "Vim Herdr Navigation",
     "version": "0.1.0",
