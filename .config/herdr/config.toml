@@ -54,6 +54,18 @@ type = "plugin_action"
 command = "ndomino.ai-tab-name.refresh"
 description = "refresh AI tab name"
 
+[[keys.command]]
+key = ["prefix+k", "ctrl+alt+k"]
+type = "plugin_action"
+command = "herdr-bar.open"
+description = "command bar"
+
+[[keys.command]]
+key = "prefix+shift+f"
+type = "plugin_action"
+command = "rmarganti.herdr-pluck.pluck"
+description = "pluck visible token"
+
 [ui]
 show_agent_labels_on_pane_borders = true
 mouse_capture = true

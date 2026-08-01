@@ -1,0 +1,32 @@
+font-size = 12
+font-family = "Operator Mono"
+font-style = Light
+# theme = Solarized Osaka Night
+theme = Flexoki Dark
+# command = /opt/homebrew/bin/tmux new-session
+progress-style = true
+
+scrollback-limit = 20000
+
+# background = #191724
+background-opacity = 1.00
+window-padding-balance = false
+
+keybind = ctrl+enter=unbind
+keybind = ctrl+enter=unbind
+copy-on-select = clipboard
+
+macos-icon = retro
+# keybind = shift+enter=text:\x1b\r
+
+# kitty protocol modifier detection for oh-my-pi
+keybind = alt+backspace=text:\x1b\x7f
+# shift+enter: send native CSI-u (kitty proto) so it doesn't collide with C-j (LF).
+# tmux extended-keys on + csi-u forwards it; Claude Code reads it as newline.
+
+# opensession - Direct shortcuts (skip the Cmd+O leader)
+# keybind = cmd+shift+o=text:\x01\x13
+# keybind = cmd+e=text:\x01\x14
+
+# herdr cmd+k
+keybind = cmd+k=text:\x1b[107;7u

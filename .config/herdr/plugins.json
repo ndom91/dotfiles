@@ -1,5 +1,56 @@
 [
   {
+    "plugin_id": "herdr-bar",
+    "name": "Bar",
+    "version": "0.1.0",
+    "min_herdr_version": "0.7.4",
+    "description": "Cmd+K command bar: fuzzy-jump to any tab or agent",
+    "manifest_path": "/Users/ndom91/.config/herdr/plugins/github/herdr-bar-96eebe452a9c/herdr-plugin.toml",
+    "plugin_root": "/Users/ndom91/.config/herdr/plugins/github/herdr-bar-96eebe452a9c",
+    "enabled": true,
+    "platforms": [
+      "linux",
+      "macos"
+    ],
+    "actions": [
+      {
+        "id": "open",
+        "title": "Open bar",
+        "description": "Fuzzy-jump to any tab or agent",
+        "contexts": [
+          "global"
+        ],
+        "command": [
+          "sh",
+          "-c",
+          "herdr_bin=\"${HERDR_BIN_PATH:-herdr}\"; [ -x \"$herdr_bin\" ] || herdr_bin=herdr; exec \"$herdr_bin\" plugin pane open --plugin herdr-bar --entrypoint bar --placement popup"
+        ]
+      }
+    ],
+    "panes": [
+      {
+        "id": "bar",
+        "title": "Bar",
+        "description": "Fuzzy-jump to any tab or agent",
+        "placement": "popup",
+        "width": "74%",
+        "height": "62%",
+        "command": [
+          "python3",
+          "run.py"
+        ]
+      }
+    ],
+    "source": {
+      "kind": "github",
+      "owner": "jeffarese",
+      "repo": "herdr-bar",
+      "resolved_commit": "58c23e5c8d7926044f67524f403257bacdf88f6b",
+      "managed_path": "/Users/ndom91/.config/herdr/plugins/github/herdr-bar-96eebe452a9c",
+      "installed_unix_ms": 1785600267401
+    }
+  },
+  {
     "plugin_id": "ndomino.ai-tab-name",
     "name": "AI Tab Name",
     "version": "0.1.0",
@@ -34,6 +85,61 @@
     ],
     "source": {
       "kind": "local"
+    }
+  },
+  {
+    "plugin_id": "rmarganti.herdr-pluck",
+    "name": "Herdr Pluck",
+    "version": "0.3.0",
+    "min_herdr_version": "0.7.4",
+    "description": "Inline keyboard hints for copying visible tokens or opening URLs from Herdr panes",
+    "manifest_path": "/Users/ndom91/.config/herdr/plugins/github/rmarganti.herdr-pluck-9cc46c9a5509/herdr-plugin.toml",
+    "plugin_root": "/Users/ndom91/.config/herdr/plugins/github/rmarganti.herdr-pluck-9cc46c9a5509",
+    "enabled": true,
+    "platforms": [
+      "linux",
+      "macos"
+    ],
+    "build": [
+      {
+        "command": [
+          "./scripts/install-binary.sh"
+        ]
+      }
+    ],
+    "actions": [
+      {
+        "id": "open-url",
+        "title": "Open visible URL",
+        "contexts": [
+          "pane",
+          "workspace"
+        ],
+        "command": [
+          "./bin/herdr-pluck",
+          "open-url"
+        ]
+      },
+      {
+        "id": "pluck",
+        "title": "Pluck visible token",
+        "contexts": [
+          "pane",
+          "workspace"
+        ],
+        "command": [
+          "./bin/herdr-pluck",
+          "open"
+        ]
+      }
+    ],
+    "source": {
+      "kind": "github",
+      "owner": "rmarganti",
+      "repo": "herdr-pluck",
+      "resolved_commit": "29e12ea85d1ed948d329d4e0884d79c6fa938144",
+      "managed_path": "/Users/ndom91/.config/herdr/plugins/github/rmarganti.herdr-pluck-9cc46c9a5509",
+      "installed_unix_ms": 1785600813449
     }
   },
   {
