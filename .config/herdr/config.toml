@@ -9,7 +9,7 @@ new_cwd = "follow"
 [keys]
 # Keep the tmux prefix and the pane/window workflow learned over years.
 prefix = "ctrl+a"
-reload_config = "prefix+r"
+reload_config = "prefix+shift+r"
 new_tab = "prefix+m"
 rename_tab = "alt+a"
 previous_tab = "prefix+p"
@@ -20,14 +20,33 @@ close_pane = "prefix+x"
 close_workspace = "prefix+d"
 copy_mode = "prefix+["
 last_pane = "prefix+backtick"
-resize_mode = "prefix+shift+r"
-# Direct pane navigation, matching the vim-tmux-navigator bindings.
-focus_pane_left = "ctrl+h"
-focus_pane_down = "ctrl+j"
-focus_pane_up = "ctrl+k"
-focus_pane_right = "ctrl+l"
+resize_mode = "prefix+r"
 navigate_workspace_up = "k"
 navigate_workspace_down = "j"
+
+[[keys.command]]
+key = "ctrl+h"
+type = "plugin_action"
+command = "vim-herdr-navigation.left"
+description = "navigate left (vim/herdr)"
+
+[[keys.command]]
+key = "ctrl+j"
+type = "plugin_action"
+command = "vim-herdr-navigation.down"
+description = "navigate down (vim/herdr)"
+
+[[keys.command]]
+key = "ctrl+k"
+type = "plugin_action"
+command = "vim-herdr-navigation.up"
+description = "navigate up (vim/herdr)"
+
+[[keys.command]]
+key = "ctrl+l"
+type = "plugin_action"
+command = "vim-herdr-navigation.right"
+description = "navigate right (vim/herdr)"
 
 [[keys.command]]
 key = "prefix+shift+a"
