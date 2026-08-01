@@ -1,0 +1,39 @@
+[
+  {
+    "plugin_id": "ndomino.ai-tab-name",
+    "name": "AI Tab Name",
+    "version": "0.1.0",
+    "min_herdr_version": "0.7.5",
+    "description": "Rename focused Herdr tabs from pane context using a local LLM.",
+    "manifest_path": "/opt/ndomino/herdr-ai-tab-name/herdr-plugin.toml",
+    "plugin_root": "/opt/ndomino/herdr-ai-tab-name",
+    "enabled": true,
+    "platforms": [
+      "macos",
+      "linux"
+    ],
+    "actions": [
+      {
+        "id": "refresh",
+        "title": "Refresh AI tab name",
+        "command": [
+          "python3",
+          "scripts/rename_tab.py",
+          "--force"
+        ]
+      }
+    ],
+    "events": [
+      {
+        "on": "tab.focused",
+        "command": [
+          "python3",
+          "scripts/rename_tab.py"
+        ]
+      }
+    ],
+    "source": {
+      "kind": "local"
+    }
+  }
+]

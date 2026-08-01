@@ -1,0 +1,56 @@
+onboarding = false
+
+[theme]
+name = "rose-pine"
+
+[terminal]
+new_cwd = "follow"
+
+[keys]
+# Keep the tmux prefix and the pane/window workflow learned over years.
+prefix = "ctrl+a"
+reload_config = "prefix+r"
+new_tab = "prefix+m"
+rename_tab = "alt+a"
+previous_tab = "prefix+p"
+next_tab = "prefix+n"
+split_horizontal = "prefix+c"
+split_vertical = "prefix+v"
+close_pane = "prefix+x"
+close_workspace = "prefix+d"
+copy_mode = "prefix+["
+last_pane = "prefix+backtick"
+resize_mode = "prefix+shift+r"
+# Direct pane navigation, matching the vim-tmux-navigator bindings.
+focus_pane_left = "ctrl+h"
+focus_pane_down = "ctrl+j"
+focus_pane_up = "ctrl+k"
+focus_pane_right = "ctrl+l"
+navigate_workspace_up = "k"
+navigate_workspace_down = "j"
+
+[[keys.command]]
+key = "prefix+shift+a"
+type = "plugin_action"
+command = "ndomino.ai-tab-name.refresh"
+description = "refresh AI tab name"
+
+[ui]
+show_agent_labels_on_pane_borders = true
+mouse_capture = true
+copy_on_select = true
+prompt_new_tab_name = false
+pane_borders = true
+pane_gaps = true
+hide_tab_bar_when_single_tab = false
+
+agent_panel_sort = "spaces"
+[ui.sound]
+enabled = false
+
+[advanced]
+scrollback_limit_bytes = 10000000
+
+[experimental]
+switch_ascii_input_source_in_prefix = false
+pane_history = false
