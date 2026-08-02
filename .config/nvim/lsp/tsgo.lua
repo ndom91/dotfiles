@@ -1,5 +1,5 @@
 return {
-  cmd = { "tsgo", "--lsp", "--stdio" },
+  cmd = require("plugins.lsp.tsgo"),
   cmd_env = {
     GOMEMLIMIT = "4GiB",
   },

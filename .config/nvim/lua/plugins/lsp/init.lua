@@ -120,6 +120,8 @@ return {
         end,
       })
 
+      vim.lsp.config("tsgo", { cmd = require("plugins.lsp.tsgo") })
+
       -- Enable all LSP servers (configs auto-loaded from lsp/ directory)
       vim.lsp.enable({
         "astro",
