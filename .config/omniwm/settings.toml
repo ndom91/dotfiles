@@ -23,7 +23,7 @@ maxItems = 200
 maxTotalBytes = 67108864
 
 [dwindle]
-defaultSplitRatio = 1.3000000000000003
+defaultSplitRatio = 1.0
 moveToRootStable = true
 singleWindowAspectRatio = "2520x1080"
 smartSplit = false
@@ -128,7 +128,7 @@ position = "top"
 widthPercent = 50.0
 
 [routing]
-mode = "custom"
+mode = "macOS"
 
 [statusBar]
 showAppNames = false
@@ -938,6 +938,12 @@ orientation = "vertical"
 gridColumn = 0
 gridRow = 0
 monitorName = "Built-in Retina Display"
+
+[[monitorRoutingOverrides]]
+gridColumn = 1
+gridRow = 0
+monitorDisplayId = 3
+monitorName = "DELL S2725QC"
 
 [[workspaces]]
 id = "AD36F001-C57E-41A5-AC1D-DF5249D007F0"
