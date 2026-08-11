@@ -1,0 +1,185 @@
+#!/usr/bin/env bash
+#
+# copyClaudeSession — make a Claude Code session resumable from the current directory.
+#
+# Claude Code scopes `--resume` to ~/.claude/projects/<encoded-cwd>/, where the
+# encoded cwd is the absolute path with every non-alphanumeric character replaced
+# by a dash. This script finds a session transcript in any sibling project
+# directory, copies it into the one belonging to $PWD, and rewrites the recorded
+# cwd so the resumed session works on the current checkout.
+#
+# Usage:  cd /opt/plain/services && copyClaudeSession bd1f197f-ac3e-4ece-8372-4d8719146998
+
+set -uo pipefail
+
+PROJECTS_DIR="${CLAUDE_PROJECTS_DIR:-$HOME/.claude/projects}"
+# Searched first; anything else under ~/.claude/projects is used only as a fallback.
+PREFERRED_GLOB="${CLAUDE_SESSION_GLOB:--opt-plain-*}"
+
+FORCE=0
+STRIP_WORKTREE=0
+
+die() { printf 'error: %s\n' "$*" >&2; exit 1; }
+warn() { printf 'warning: %s\n' "$*" >&2; }
+note() { printf '  %s\n' "$*" >&2; }
+
+usage() {
+  cat <<'EOF'
+Usage: copyClaudeSession [-f] [-w] <session-id>
+
+Copies a Claude Code session transcript into the history directory for the
+current working directory, so `claude --resume <session-id>` works here.
+
+Options:
+  -f  overwrite an existing copy in the destination (keeps a .bak)
+  -w  strip worktree-state entries from the transcript
+  -h  show this help
+
+Environment:
+  CLAUDE_PROJECTS_DIR   default: ~/.claude/projects
+  CLAUDE_SESSION_GLOB   default: -opt-plain-*
+EOF
+}
+
+while getopts ':fwh' opt; do
+  case "$opt" in
+    f) FORCE=1 ;;
+    w) STRIP_WORKTREE=1 ;;
+    h) usage; exit 0 ;;
+    *) usage >&2; exit 2 ;;
+  esac
+done
+shift $((OPTIND - 1))
+
+[ $# -eq 1 ] || { usage >&2; exit 2; }
+ID="$1"
+ID="${ID%.jsonl}"
+
+encode_path() { printf '%s' "$1" | sed 's/[^a-zA-Z0-9]/-/g'; }
+sed_escape() { printf '%s' "$1" | sed 's/[\\&|]/\\&/g'; }
+
+DEST_CWD="$(pwd -P)"
+DEST_DIR="$PROJECTS_DIR/$(encode_path "$DEST_CWD")"
+
+[ -d "$PROJECTS_DIR" ] || die "no Claude projects directory at $PROJECTS_DIR"
+
+# ---------------------------------------------------------------- find source
+preferred=()
+fallback=()
+found_here=0
+
+shopt -s nullglob
+for f in "$PROJECTS_DIR"/*/"$ID.jsonl"; do
+  d="$(dirname "$f")"
+  if [ "$d" = "$DEST_DIR" ]; then
+    found_here=1
+    continue
+  fi
+  if [[ "$(basename "$d")" == $PREFERRED_GLOB ]]; then
+    preferred+=("$f")
+  else
+    fallback+=("$f")
+  fi
+done
+shopt -u nullglob
+
+candidates=()
+if [ ${#preferred[@]} -gt 0 ]; then
+  candidates=("${preferred[@]}")
+elif [ ${#fallback[@]} -gt 0 ]; then
+  candidates=("${fallback[@]}")
+fi
+
+if [ ${#candidates[@]} -eq 0 ]; then
+  if [ "$found_here" -eq 1 ]; then
+    printf 'Session %s already lives here. Just run:\n  claude --resume %s\n' "$ID" "$ID"
+    exit 0
+  fi
+  die "session $ID not found under $PROJECTS_DIR"
+fi
+
+if [ ${#candidates[@]} -gt 1 ]; then
+  warn "session $ID found in ${#candidates[@]} directories:"
+  sorted=()
+  while IFS= read -r line; do sorted+=("$line"); done < <(ls -t "${candidates[@]}")
+  candidates=("${sorted[@]}")
+  for f in "${candidates[@]}"; do note "$(basename "$(dirname "$f")")"; done
+  note "using the most recently modified one"
+fi
+
+SRC="${candidates[0]}"
+SRC_DIR="$(dirname "$SRC")"
+
+# Read the old cwd out of the transcript rather than decoding the directory
+# name, since the dash encoding is lossy.
+SRC_CWD="$(grep -o '"cwd":"[^"]*"' "$SRC" | head -n1 | cut -d'"' -f4)"
+[ -n "$SRC_CWD" ] || warn "no cwd field found in transcript; copying as-is"
+
+# ----------------------------------------------------------------- copy + fix
+DEST="$DEST_DIR/$ID.jsonl"
+if [ -e "$DEST" ] && [ "$FORCE" -eq 0 ]; then
+  die "$DEST already exists (re-run with -f to overwrite)"
+fi
+
+if grep -q '"worktree-state"' "$SRC"; then
+  if [ "$STRIP_WORKTREE" -eq 1 ]; then
+    note "stripping worktree-state entries"
+  else
+    warn "transcript contains worktree-state entries; the resumed session may"
+    note "still behave like a worktree session (re-run with -w to strip them)"
+  fi
+fi
+
+mkdir -p "$DEST_DIR" || die "could not create $DEST_DIR"
+tmp="$(mktemp "${TMPDIR:-/tmp}/claude-session.XXXXXX")" || die "mktemp failed"
+trap 'rm -f "$tmp"' EXIT
+
+filter() {
+  if [ "$STRIP_WORKTREE" -eq 1 ]; then
+    grep -v '"type":"worktree-state"'
+  else
+    cat
+  fi
+}
+
+rewrite_cwd() {
+  if [ -z "$SRC_CWD" ]; then
+    cat
+  elif command -v jq >/dev/null 2>&1; then
+    jq -c --arg new "$DEST_CWD" 'if has("cwd") then .cwd = $new else . end'
+  else
+    sed "s|\"cwd\":\"$(sed_escape "$SRC_CWD")\"|\"cwd\":\"$(sed_escape "$DEST_CWD")\"|g"
+  fi
+}
+
+if ! filter < "$SRC" | rewrite_cwd > "$tmp"; then
+  # jq chokes on a malformed line: fall back to a plain textual substitution.
+  warn "structured rewrite failed, falling back to sed"
+  filter < "$SRC" \
+    | sed "s|\"cwd\":\"$(sed_escape "$SRC_CWD")\"|\"cwd\":\"$(sed_escape "$DEST_CWD")\"|g" \
+    > "$tmp" || die "rewrite failed"
+fi
+
+[ -s "$tmp" ] || die "rewrite produced an empty transcript"
+
+if [ -e "$DEST" ]; then
+  bak="$DEST.bak.$(date +%Y%m%d%H%M%S)"
+  mv "$DEST" "$bak" || die "could not back up $DEST"
+  note "existing copy backed up to $(basename "$bak")"
+fi
+
+mv "$tmp" "$DEST" || die "could not write $DEST"
+trap - EXIT
+
+# Sub-agent logs live in a directory named after the session id.
+if [ -d "$SRC_DIR/$ID" ]; then
+  rm -rf "$DEST_DIR/$ID"
+  cp -R "$SRC_DIR/$ID" "$DEST_DIR/$ID" && note "copied sub-agent logs"
+fi
+
+printf 'Copied session %s\n  from %s\n  to   %s\n' \
+  "$ID" "$(basename "$SRC_DIR")" "$(basename "$DEST_DIR")"
+if [ -n "$SRC_CWD" ] && [ "$SRC_CWD" != "$DEST_CWD" ]; then
+  printf '  cwd  %s -> %s\n' "$SRC_CWD" "$DEST_CWD"
+fi
+printf '\nResume with:\n  claude --resume %s\n' "$ID"
