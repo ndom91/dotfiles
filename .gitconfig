@@ -53,3 +53,5 @@
 	bugcluster = "!git log -i -E --grep='fix|bug|broken' --name-only --format='' | sort | uniq -c | sort -nr | head -20"
 	whobuiltthis = "shortlog -sn --no-merges"
 	topchanges = "!git log --format=format: --name-only --since='1 year ago' | sort | uniq -c | sort -nr | head -20"
+[branch]
+	autoSetupMerge = simple
