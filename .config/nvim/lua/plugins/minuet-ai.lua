@@ -18,7 +18,7 @@ return {
           end,
           name = 'llama.cpp',
           end_point = 'http://llama-dash.puff.lan/v1/chat/completions',
-          model = 'qwen3.6-35b',
+          model = 'qwen3.8-27b',
           optional = {
             max_tokens = 256,
             temperature = 0.2,
