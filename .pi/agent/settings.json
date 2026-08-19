@@ -1,5 +1,5 @@
 {
-  "lastChangelogVersion": "0.73.0",
+  "lastChangelogVersion": "0.84.2",
   "shellCommandPrefix": "shopt -s expand_aliases\neval \"$(grep '^alias ' ~/.zshrc)\"",
   "sessionDir": "~/.pi/sessions",
   "enabledModels": [
@@ -24,7 +24,7 @@
     "npm:@tintinweb/pi-subagents",
     "npm:pi-searxng",
     "npm:pi-glance",
-    "npm:@open-plan-annotator/pi-extension",
+    "npm:@open-plan-annotator/pi-extension@1.10.10",
     "npm:pi-btw",
     "npm:pi-theme-flexoki",
     "npm:pi-tmux-cursor-focus"

@@ -23,7 +23,7 @@ maxItems = 200
 maxTotalBytes = 67108864
 
 [dwindle]
-defaultSplitRatio = 1.0
+defaultSplitRatio = 1.3000000000000003
 moveToRootStable = true
 singleWindowAspectRatio = "2520x1080"
 smartSplit = false
