@@ -18,9 +18,9 @@ return {
           end,
           name = 'llama.cpp',
           end_point = 'http://llama-dash.puff.lan/v1/chat/completions',
-          model = 'qwen3.8-27b',
+          model = 'qwen3.6-35b',
           optional = {
-            max_tokens = 256,
+            max_tokens = 64,
             temperature = 0.2,
             top_p = 0.9,
             top_k = 20,
@@ -29,7 +29,7 @@ return {
         },
       },
       virtualtext = {
-        auto_trigger_ft = { '*' },
+        auto_trigger_ft = {},
         auto_trigger_ignore_ft = {
           'gitcommit',
           'gitrebase',

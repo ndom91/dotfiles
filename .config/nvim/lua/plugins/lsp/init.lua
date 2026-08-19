@@ -120,7 +120,7 @@ return {
         end,
       })
 
-      vim.lsp.config("tsgo", { cmd = require("plugins.lsp.tsgo") })
+      vim.lsp.config("tsc", { cmd = require("plugins.lsp.tsc") })
 
       -- Enable all LSP servers (configs auto-loaded from lsp/ directory)
       vim.lsp.enable({
@@ -135,7 +135,7 @@ return {
         "tailwindcss",
         "terraformls",
         "taplo",
-        "tsgo",
+        "tsc",
         "yamlls",
       })
     end,

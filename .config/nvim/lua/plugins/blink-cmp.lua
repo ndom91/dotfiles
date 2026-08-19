@@ -10,7 +10,7 @@ return {
   },
 
   -- use a release tag to download pre-built binaries
-  version = "v0.*",
+  version = "v1.10.2",
   -- OR build from source, requires nightly: https://rust-lang.github.io/rustup/concepts/channels.html#working-with-nightly-rust
   -- build = 'cargo build --release',
   -- If you use nix, you can build from source using latest nightly rust with:
@@ -65,7 +65,6 @@ return {
           name = 'minuet',
           module = 'minuet.blink',
           async = true,
-          timeout_ms = 3000,   -- should be >= minuet request_timeout * 1000
           score_offset = 50,   -- bumps minuet up the suggestion list
         },
         lazydev = { name = "LazyDev", module = "lazydev.integrations.blink", fallbacks = { "lsp" } },
