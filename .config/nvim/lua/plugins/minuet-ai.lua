@@ -18,7 +18,7 @@ return {
           end,
           name = 'llama.cpp',
           end_point = 'http://llama-dash.puff.lan/v1/chat/completions',
-          model = 'ornith-35b-a3b',
+          model = 'ornith-1.5-35b-a3b',
           optional = {
             max_tokens = 64,
             temperature = 0.2,
