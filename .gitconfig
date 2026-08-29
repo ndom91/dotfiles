@@ -19,8 +19,8 @@
 	pushDefault = "origin"
 
 [rerere]
-	autoupdate = true
-	enabled = true
+	autoupdate = false
+	enabled = false
 
 [status]
 	branch = true
