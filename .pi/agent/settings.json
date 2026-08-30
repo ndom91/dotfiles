@@ -27,7 +27,8 @@
     "npm:@open-plan-annotator/pi-extension@1.10.10",
     "npm:pi-btw",
     "npm:pi-theme-flexoki",
-    "npm:pi-tmux-cursor-focus"
+    "npm:pi-tmux-cursor-focus",
+    "npm:pi-mcporter"
   ],
   "enableInstallTelemetry": false
 }
