@@ -21,6 +21,8 @@ close_workspace = "prefix+d"
 copy_mode = "prefix+["
 last_pane = "prefix+backtick"
 resize_mode = "prefix+r"
+resize_pane_up = "prefix+ctrl+k"
+resize_pane_down = "prefix+ctrl+j"
 navigate_workspace_up = "k"
 navigate_workspace_down = "j"
 
