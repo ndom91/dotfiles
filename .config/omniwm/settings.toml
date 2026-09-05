@@ -247,6 +247,116 @@ id = "552FB77D-BF0E-4737-90A6-B5BC6986C579"
 minHeight = 320.0
 minWidth = 660.0
 
+[[appRules]]
+assignToWorkspace = "3"
+bundleId = "com.bambulab.bambu-studio"
+id = "D7F35FBF-2739-43B3-803F-04111BEB0437"
+
+
+[[appRules]]
+assignToWorkspace = "1"
+bundleId = "com.mitchellh.ghostty"
+id = "5A0F2E5B-E7D8-4E10-9E68-1A73C61AD2F5"
+
+
+[[appRules]]
+assignToWorkspace = "1"
+bundleId = "com.vivaldi.Vivaldi"
+id = "AB0163AD-7273-4C32-B9A0-D6AE0360F4B6"
+
+
+[[appRules]]
+assignToWorkspace = "6"
+bundleId = "com.tinyspeck.slackmacgap"
+id = "3328255F-E4BE-4036-8C8E-39F9E9A86676"
+
+
+[[appRules]]
+bundleId = "com.itone.ProcessSpy"
+id = "3E09E6E9-CFD2-4D06-BC6E-74521969E3CB"
+layout = "float"
+minHeight = 1287.0
+minWidth = 1000.0
+
+
+[[appRules]]
+assignToWorkspace = "2"
+bundleId = "at.eggerapps.Postico"
+id = "7D48FECE-8B76-427E-989F-AF6F05FA33CB"
+
+
+[[appRules]]
+assignToWorkspace = "3"
+bundleId = "com.automattic.beeper.desktop"
+id = "9CBAB640-A9D7-4469-BB64-0537AB494833"
+
+
+[[appRules]]
+bundleId = "com.apple.finder"
+id = "3323D4A8-2807-49D7-998B-FCE859FC7455"
+layout = "float"
+
+
+[[appRules]]
+bundleId = "com.apple.Preview"
+id = "41F7DB78-41B6-4D4F-8793-8FB6DDDD7CAA"
+layout = "float"
+
+
+[[appRules]]
+bundleId = "com.1password.1password"
+id = "C5EBD676-47FC-4ABB-83F0-A9E47B5A3A27"
+layout = "float"
+minHeight = 995.0
+minWidth = 1178.0
+
+
+[[appRules]]
+bundleId = "cc.ffitch.shottr"
+id = "31A363A9-E045-457E-9EC4-35EEB40B13A7"
+layout = "float"
+
+
+[[appRules]]
+assignToWorkspace = "3"
+bundleId = "com.orcaslicer.OrcaSlicer"
+id = "689E65E1-253E-4968-AA68-2B7E77D25FDD"
+
+
+[[appRules]]
+bundleId = "com.stonerl.Thaw"
+id = "78FE3AD2-9C75-4D39-AF28-F7E8F6F0307F"
+layout = "float"
+minHeight = 1126.0
+minWidth = 1045.0
+
+
+[[appRules]]
+bundleId = "app.cotypist.Cotypist"
+id = "01AC77D3-FACE-42FA-9DD5-9E8F22FA8BF7"
+layout = "float"
+minHeight = 1016.0
+minWidth = 800.0
+
+
+[[appRules]]
+bundleId = "org.openlogi.openlogi"
+id = "867B8ED9-0B7D-4DA0-A33A-4D035A3E00DB"
+layout = "float"
+
+
+[[appRules]]
+bundleId = "io.hanxiao.omni"
+id = "01C32C9A-7DA9-4F00-BF69-4D0AE6099DDD"
+layout = "float"
+
+
+[[appRules]]
+bundleId = "app.tuple.app"
+id = "7DAE9108-71B9-4D6D-84F9-61A91C93441B"
+layout = "float"
+
+
 [[hotkeys]]
 binding = "Unassigned"
 id = "toggleScratchpad.1"
